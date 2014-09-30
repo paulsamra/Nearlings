@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public interface NavDrawerItemInterface {
 	public enum Type {
-		LOGOUT_TYPE, SECTION_TYPE, ITEM_TYPE
+		LOGOUT_TYPE, SECTION_TYPE, ITEM_TYPE, PROFILE_TYPE
 		}
 	
 	public void launchActivity(Context c);
@@ -18,6 +18,6 @@ public interface NavDrawerItemInterface {
 	public boolean updateActionBarTitle();
 	
 	public String actionBarTitle();
-
+	
 
 }

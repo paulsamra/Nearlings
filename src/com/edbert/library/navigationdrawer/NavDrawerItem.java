@@ -1,7 +1,5 @@
 package com.edbert.library.navigationdrawer;
 
-
-
 import java.util.ArrayList;
 
 import com.edbert.library.navigationdrawer.NavDrawerItemInterface.Type;
@@ -11,14 +9,13 @@ import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
 public abstract class NavDrawerItem implements NavDrawerItemInterface {
-	protected Type TYPE;
+
 	private String title;
 	private int icon;
 	private int count = 0;
 	// boolean to set visiblity of the counter
 	private boolean isCounterVisible = false;
-	private String svgImage;
-
+	public static final int NO_ICON = -1;
 	private String actionBarTitle;
 
 	public void setActionBarTitle(String actionBarTitle) {
@@ -34,17 +31,9 @@ public abstract class NavDrawerItem implements NavDrawerItemInterface {
 		this.icon = icon;
 	}
 
-	public NavDrawerItem(String title, String svgImage) {
+	public NavDrawerItem(String title) {
 		this.title = title;
-		this.svgImage = svgImage;
-	}
-
-	public String getsvgImage() {
-		return svgImage;
-	}
-
-	public void setsvgImage(String svgImage) {
-		this.svgImage = svgImage;
+		this.icon = NO_ICON;
 	}
 
 	public NavDrawerItem(String title, int icon, boolean isCounterVisible,
@@ -101,7 +90,11 @@ public abstract class NavDrawerItem implements NavDrawerItemInterface {
 	public boolean updateActionBarTitle() {
 		return true;
 	}
-	
-	public abstract Type navDrawerType();
+
+	public abstract Type getNavDrawerType();
+
+	public String actionBarTitle() {
+		return getTitle();
+	}
 
 }
