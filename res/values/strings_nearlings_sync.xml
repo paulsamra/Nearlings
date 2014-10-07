@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="nearlings_sync_contentAuthority">swipe.android.nearlings.NearlingsContentProvider</string>
+    <string name="nearlings_accountType">NearlingsSync</string>
+    <string name="nearlings_accountName">NearlingsAccount</string>
+</resources>

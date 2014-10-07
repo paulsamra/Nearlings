@@ -12,7 +12,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle args) {
         View view = inflater.inflate(R.layout.menu_detail_fragment, container, false);
-        String menu = getArguments().getString("Menu");
+        String menu = "menu";
         text= (TextView) view.findViewById(R.id.detail);
         text.setText(menu);
         return view;

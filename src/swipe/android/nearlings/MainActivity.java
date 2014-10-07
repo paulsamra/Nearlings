@@ -1,5 +1,7 @@
 package swipe.android.nearlings;
 
+import com.edbert.library.navigationdrawer.NavDrawerActivity;
+
 import swipe.android.nearlings.navigationdrawer.NavDrawerItemManager;
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,17 +18,22 @@ public class MainActivity extends NavDrawerActivity {
 	@Override
 	public void setUpNavDrawerTiles() {
 		NavDrawerItemManager.getInstance().setDefaultLayout();
-		super.setUpNavDrawerTiles();
 	}
 
 	@Override
 	protected void setUpNavDrawerHeader() {
-
+		return;
 	}
 
 	@Override
 	protected void setUpNavDrawerFooter() {
+		return;
+	}
 
+	@Override
+	protected void setNavDrawerManager() {
+		//this should just be a static refrence
+		navDrawerManager = NavDrawerItemManager.getInstance();
 	}
 
 }
