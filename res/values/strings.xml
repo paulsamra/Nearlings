@@ -3,5 +3,7 @@
 
     <string name="app_name">Sliding NavigationDrawer</string>
 
+    <string name="refresh_map_view">Refresh Map View</string>
+    
 
 </resources>

@@ -1,6 +1,9 @@
 package swipe.android.nearlings;
 
-
+/**
+ * Abstracted database command manager. We use this if we want to do speicfic operations with
+ * a table
+ */
 
 import java.util.Arrays;
 import java.util.HashSet;
