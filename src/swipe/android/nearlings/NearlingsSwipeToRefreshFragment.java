@@ -4,7 +4,7 @@ import swipe.android.nearlings.sync.NearlingsSyncAdapter;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.edbert.library.sendRequest.AbstractSourceHelper;
+import com.edbert.library.sendRequest.SendRequestInterface;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.edbert.library.swipeToRefresh.SwipeToRefreshFragment;
 
@@ -12,11 +12,11 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		SwipeToRefreshFragment {
 
 	// we use sourcehelpers
-	protected AbstractSourceHelper helper;
+	protected SendRequestInterface helper;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setSourceHelper();
+		setSourceRequestHelper();
 	}
 	@Override
 	public void requestSync() {
@@ -29,7 +29,7 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 	public void onRefresh() {
 		String TAG = NearlingsSyncAdapter.HELPER_FLAG_ID;
 		Bundle b = new Bundle();
-		b.putString(TAG, SendRequestStrategyManager.getTag(helper));
+		b.putString(TAG, SendRequestStrategyManager.generateTag(helper));
 		requestSync(b);
 	}
 	
@@ -49,6 +49,6 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 				.getSyncHelper().isSyncing();
 	}
 	
-	public abstract void setSourceHelper();
+	public abstract void setSourceRequestHelper();
 
 }

@@ -1,5 +1,7 @@
 package swipe.android.nearlings;
 
+import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
+import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -21,7 +23,13 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	protected CursorLoader generateCursorLoader() {
-		return null;
+		CursorLoader cursorLoader = new CursorLoader(this.getActivity(),
+				NearlingsContentProvider.contentURIbyTableName(MessagesDatabaseHelper.TABLE_NAME),
+				MessagesDatabaseHelper.COLUMNS, null, null,
+				MessagesDatabaseHelper.COLUMN_DATE + " DESC");
+
+		return cursorLoader;
+	
 	}
 
 	@Override
@@ -72,11 +80,8 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 	}
 
 	@Override
-	public void setSourceHelper() {
-		super.helper = new MessagesSourceHelper();
-		
+	public void setSourceRequestHelper() {
+		super.helper = new MessagesRequest();
 	}
-
-
 
 }

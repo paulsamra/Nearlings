@@ -2,6 +2,7 @@ package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
 import android.annotation.TargetApi;
 import android.app.Application;
@@ -11,6 +12,7 @@ import android.os.StrictMode;
 import android.provider.SyncStateContract.Constants;
 
 import com.edbert.library.database.DatabaseCommandManager;
+import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -27,12 +29,16 @@ public class NearlingsApplication extends Application {
 		helper = new NearlingsSyncHelper(this);
 		initImageLoader(getApplicationContext());
 		registerDatabaseTables();
+	//	Context c = this;
+		DatabaseCommandManager.createAllTables(NearlingsContentProvider
+				.getDBHelperInstance(this).getWritableDatabase());
+		
+		SendRequestStrategyManager.register(new MessagesRequest());
 	}
 
 	private void registerDatabaseTables(){
 		DatabaseCommandManager.register(new MessagesDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsDetailsDatabaseHelper());
-		
 	}
 	public static void initImageLoader(Context context) {
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(

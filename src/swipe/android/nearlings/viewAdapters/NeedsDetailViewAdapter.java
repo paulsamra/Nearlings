@@ -1,9 +1,13 @@
 package swipe.android.nearlings.viewAdapters;
 
+import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
+import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,20 +36,26 @@ public class NeedsDetailViewAdapter extends CursorAdapter {
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
 		ViewHolder holder = new ViewHolder();
-		View view = inflater.inflate(R.layout.needs_details, parent, false);
-		
-		 holder.title = (TextView) view.findViewById(R.id.needs_details_title);
-		 holder.price = (TextView) view.findViewById(R.id.needs_details_price);
-		 holder.date = (TextView) view.findViewById(R.id.needs_details_date);
-		 holder.personRequesting = (TextView) view.findViewById(R.id.needs_details_personRequesting);
-		 holder.description = (TextView) view.findViewById(R.id.needs_details_description);
-		 holder.location = (TextView) view.findViewById(R.id.needs_details_location);
-		 holder.numOfComments = (TextView) view.findViewById(R.id.needs_details_numOfComments);
-	holder.mapFragment = (Fragment) view.findViewById(R.id.needs_details_map);
-		 holder.personRequestingImage = (ImageView) view.findViewById(R.id.needs_details_personRequestingImage);
-			//this needs to have a live adapter attached.
-			
-		//view.setTag(holder);
+		/*View view = inflater.inflate(R.layout.needs_details, parent, false);
+
+		holder.title = (TextView) view.findViewById(R.id.needs_details_title);
+		holder.price = (TextView) view.findViewById(R.id.needs_details_price);
+		holder.date = (TextView) view.findViewById(R.id.needs_details_date);
+		holder.personRequesting = (TextView) view
+				.findViewById(R.id.needs_details_personRequesting);
+		holder.description = (TextView) view
+				.findViewById(R.id.needs_details_description);
+		holder.location = (TextView) view
+				.findViewById(R.id.needs_details_location);
+		holder.numOfComments = (TextView) view
+				.findViewById(R.id.needs_details_numOfComments);
+		holder.mapFragment = (Fragment) view
+				.findViewById(R.id.needs_details_map);
+		holder.personRequestingImage = (ImageView) view
+				.findViewById(R.id.needs_details_personRequestingImage);
+		// this needs to have a live adapter attached.
+
+		// view.setTag(holder);*/
 		return null;
 	}
 
@@ -53,6 +63,44 @@ public class NeedsDetailViewAdapter extends CursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
+
+		int title_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
+		int price_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_PRICE);
+		int date_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DATE);
+		int author_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR);
+
+		int description_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DESCRIPTION);
+		int latitude_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_GEOPOINT_LATITUDE);
+		int longitude_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_GEOPOINT_LONGITUDE);
+
+		int needs_id_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED);
+
+		// number of comments should be queried on the
+		// NeedsCommentsDatabaseHelper
+
+		String selectionClause = NeedsCommentsDatabaseHelper.COLUMN_NEEDS_ID
+				+ " = '" + cursor.getString(needs_id_index) + "'";
+
+		Cursor commentCursor = context
+				.getContentResolver()
+				.query(NearlingsContentProvider
+						.contentURIbyTableName(NeedsCommentsDatabaseHelper.TABLE_NAME),
+						NeedsCommentsDatabaseHelper.COLUMNS, selectionClause,
+						null, null);
+		// commentCursor.moveToFirst();
+
+		String count = String.valueOf(commentCursor.getCount());
+
+		int personRequestImage_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL);
 
 		/*
 		 * int sender_index = cursor
@@ -82,9 +130,10 @@ public class NeedsDetailViewAdapter extends CursorAdapter {
 	}
 
 	public static class ViewHolder {
-		public TextView title, price, date, personRequesting, description, location, numOfComments;
+		public TextView title, price, date, personRequesting, description,
+				location, numOfComments;
 
-		//this needs to have a live adapter attached.
+		// this needs to have a live adapter attached.
 		public ScrollView commentView;
 		public Fragment mapFragment;
 		public ImageView personRequestingImage;

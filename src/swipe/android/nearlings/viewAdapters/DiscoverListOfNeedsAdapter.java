@@ -57,8 +57,8 @@ public class DiscoverListOfNeedsAdapter extends CursorAdapter {
 		holder.price = (TextView) view.findViewById(R.id.needs_price);
 		holder.status = (TextView) view.findViewById(R.id.needs_status);
 		
-		holder.personImage = (ImageView) view
-				.findViewById(R.id.needs_person_image);
+		/*holder.personImage = (ImageView) view
+				.findViewById(R.id.needs_person_image);*/
 
 		view.setTag(holder);
 		return view;

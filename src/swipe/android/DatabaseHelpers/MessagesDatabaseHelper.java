@@ -6,7 +6,7 @@ public class MessagesDatabaseHelper implements DatabaseHelperInterface {
 
 	public static final String AUTHORITY = "";
 
-	public static final String TABLE_NAME = "alerts";
+	public static final String TABLE_NAME = "messages";
 
 	public static final String COLUMN_ID = "_id";
 

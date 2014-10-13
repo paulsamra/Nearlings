@@ -1,5 +1,6 @@
 package swipe.android.nearlings.viewAdapters;
 
+import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.nearlings.R;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,7 +35,8 @@ public class MessagesViewAdapter extends CursorAdapter {
 
 		holder.dateSent = (TextView) view.findViewById(R.id.message_date);
 		holder.sender = (TextView) view.findViewById(R.id.message_sender);
-		holder.unread_icon = (ImageView) view.findViewById(R.id.message_unread_icon);
+		holder.unread_icon = (ImageView) view
+				.findViewById(R.id.message_unread_icon);
 
 		holder.message = (TextView) view.findViewById(R.id.message_message);
 
@@ -47,30 +49,31 @@ public class MessagesViewAdapter extends CursorAdapter {
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
 
-		/*
-		 * int sender_index = cursor
-		 * .getColumnIndexOrThrow(BroadcastDBHelper.COLUMN_AUTHOR); int
-		 * time_index = cursor
-		 * .getColumnIndexOrThrow(BroadcastDBHelper.COLUMN_SENT); int
-		 * message_index = cursor
-		 * .getColumnIndexOrThrow(BroadcastDBHelper.COLUMN_MESSAGE);
-		 * 
-		 * int read_index = cursor
-		 * .getColumnIndexOrThrow(BroadcastDBHelper.COLUMN_READ);
-		 * 
-		 * holder.sender.setText(cursor.getString(sender_index));
-		 * 
-		 * // problem is processing. this should only happen once.
-		 * 
-		 * holder.timeStamp.setText(cursor.getString(time_index));
-		 * 
-		 * holder.message.setText(cursor.getString(message_index));
-		 * 
-		 * boolean unreadBroadcast =
-		 * Boolean.valueOf(cursor.getString(read_index)); if (unreadBroadcast) {
-		 * holder.unreadMarker.setVisibility(View.VISIBLE); } else {
-		 * holder.unreadMarker.setVisibility(View.GONE); }
-		 */
+		int sender_index = cursor
+				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_AUTHOR);
+		int time_index = cursor
+				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_DATE);
+		int message_index = cursor
+				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_MESSAGE);
+
+		int unread_index = cursor
+				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_UNREAD);
+
+		holder.sender.setText(cursor.getString(sender_index));
+
+		// problem is processing. this should only happen once.
+String s = cursor.getString(time_index);
+
+		holder.dateSent.setText(s);
+
+		holder.message.setText(cursor.getString(message_index));
+
+		boolean unreadBroadcast = Boolean.valueOf(cursor.getString(unread_index));
+		if (unreadBroadcast) {
+			holder.unread_icon.setVisibility(View.VISIBLE);
+		} else {
+			holder.unread_icon.setVisibility(View.GONE);
+		}
 
 	}
 

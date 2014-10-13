@@ -36,8 +36,15 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 			OperationApplicationException {
 		String TAG = extras.getString(HELPER_FLAG_ID);
 		requestInterface = SendRequestStrategyManager.getHelper(TAG);
-		return SendRequestStrategyManager.executeRequest(requestInterface,
+		if (requestInterface == null) {
+			Log.e("NearlingsSyncAdapter",
+					"No requestInterface was provided! Will not execute!");
+			return null;
+		}
+		Object o = SendRequestStrategyManager.executeRequest(requestInterface,
 				extras);
+		return o;
+
 	}
 
 	@Override
@@ -46,6 +53,8 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 
 		SendRequestStrategyManager.executeWriteToDatabase(requestInterface,
 				getContext(), o);
+
+		requestInterface = null;
 	}
 
 	@Override

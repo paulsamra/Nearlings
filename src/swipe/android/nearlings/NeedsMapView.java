@@ -74,14 +74,16 @@ public class NeedsMapView extends Fragment implements LoaderCallbacks<Cursor> {
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 
 		// Uri to the content provider LocationsContentProvider
-		Uri uri = LocationsContentProvider.CONTENT_URI;
-
+		Uri uri = NearlingsContentProvider.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME);
 		// Fetches all the rows from locations table
-		return new CursorLoader(this, uri, null, null, null, null);
+		return new CursorLoader(this.getActivity(), uri, null, null, null, null);
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
+		//should clear before loading
+		googleMap.clear();
+		
 		int locationCount = 0;
 		double lat = 0;
 		double lng = 0;
@@ -120,6 +122,12 @@ public class NeedsMapView extends Fragment implements LoaderCallbacks<Cursor> {
 			// Setting the zoom level in the map on last position is clicked
 			googleMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
 		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> arg0) {
+		// Nullify current cursor before reloading
+		
 	}
 
 }

@@ -16,6 +16,23 @@ public class NavDrawerItemManager extends AbstractNavDrawerItemManager {
 
 	@Override
 	public void setDefaultLayout() {
+
+		navDrawerButtonArrayList.clear();
+		register(new DiscoverNavDrawerItem());
+
+		register(new LoginNavDrawerItem());
+		
+		
+		register(new DashboardNavDrawerItem());
+		register(new NeedsNavDrawerItem());
+
+		register(new EventsNavDrawerItem());
+		register(new GroupsNavDrawerItem());
+		register(new MessagesNavDrawerItem());
+	}
+	
+	
+	public void setCurrentlySignedInLayout() {
 		navDrawerButtonArrayList.clear();
 		register(new DiscoverNavDrawerItem());
 		register(new DashboardNavDrawerItem());
