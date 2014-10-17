@@ -22,7 +22,7 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 			+ "_MESSAGES_FINISH_FLAG";
 
 	@Override
-	protected CursorLoader generateCursorLoader() {
+	public CursorLoader generateCursorLoader() {
 		CursorLoader cursorLoader = new CursorLoader(this.getActivity(),
 				NearlingsContentProvider.contentURIbyTableName(MessagesDatabaseHelper.TABLE_NAME),
 				MessagesDatabaseHelper.COLUMNS, null, null,
@@ -82,6 +82,11 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void setSourceRequestHelper() {
 		super.helper = new MessagesRequest();
+	}
+	@Override
+	public void onResume(){
+		super.onResume();
+		reloadData();
 	}
 
 }

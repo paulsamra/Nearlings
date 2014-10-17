@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Sliding NavigationDrawer</string>
+    <string name="app_name">Nearlings</string>
 
     <string name="refresh_map_view">Refresh Map View</string>
+        <string name="all">All</string>
+      <string name="switch_to_map">Map View</string>
+      <string name="switch_to_list">List View</string>
     
 
 </resources>

@@ -36,4 +36,5 @@ public class MainActivity extends NavDrawerActivity {
 		navDrawerManager = NavDrawerItemManager.getInstance();
 	}
 
+
 }

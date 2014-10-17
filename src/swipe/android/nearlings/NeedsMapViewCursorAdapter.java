@@ -17,7 +17,7 @@ public class NeedsMapViewCursorAdapter implements InfoWindowAdapter {
 
 	public NeedsMapViewCursorAdapter(LayoutInflater inflater) {
 
-		myContentsView = inflater.inflate(R.layout.list_of_needs_map_layout,
+		myContentsView = inflater.inflate(R.layout.discover_needs_map_layout,
 				null);
 	}
 

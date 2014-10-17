@@ -23,7 +23,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class NeedsMapView extends Fragment implements LoaderCallbacks<Cursor> {
+public class DiscoverMapViewFragment extends Fragment implements LoaderCallbacks<Cursor> {
 
 	private GoogleMap googleMap;
 	MapView mapView;
@@ -31,7 +31,7 @@ public class NeedsMapView extends Fragment implements LoaderCallbacks<Cursor> {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.list_of_needs_map_layout,
+		View view = inflater.inflate(R.layout.discover_needs_map_layout,
 				container, false);
 
 		mapView = (MapView) view.findViewById(R.id.needs_map_view_map);

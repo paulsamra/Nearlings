@@ -48,7 +48,9 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		return ((NearlingsApplication) getActivity().getApplication())
 				.getSyncHelper().isSyncing();
 	}
-	
+	public SendRequestInterface getHelper(){
+		return helper;
+	}
 	public abstract void setSourceRequestHelper();
 
 }
