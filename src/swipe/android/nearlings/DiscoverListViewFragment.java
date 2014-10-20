@@ -20,9 +20,9 @@ import android.widget.TextView;
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	ListView lView;
-	String MESSAGES_START_FLAG = DiscoverListViewFragment.class
+	String MESSAGES_START_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	String MESSAGES_FINISH_FLAG = DiscoverListViewFragment.class
+	String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 	TextView text;
 
@@ -49,18 +49,20 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 		return view;
 
 	}
-
+	@Override
+	public void onResume(){
+		super.onResume();
+		reloadData();
+	}
 	@Override
 	public String syncStartedFlag() {
-		return ((DiscoverContainerFragment) getParentFragment()).syncStartedFlag();
+		return MESSAGES_START_FLAG;
 	}
 
 	@Override
 	public String syncFinishedFlag() {
-
-		return ((DiscoverContainerFragment) getParentFragment()).syncFinishedFlag();
+		return MESSAGES_FINISH_FLAG;
 	}
-
 	@Override
 	public void setSourceRequestHelper() {
 		super.helper = new NeedsDetailsRequest();
@@ -89,11 +91,14 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 		mAdapter.notifyDataSetChanged();
 	
 		lView.setAdapter(mAdapter);
+		
+		//lView.invalidate();
 		//((DiscoverContainerFragment) getParentFragment()).reloadData();
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
 		super.onCreateOptionsMenu(menu, inflater);
+		 menu.clear();
 		inflater.inflate(R.menu.switch_to_map_view, menu);
 	}
 }

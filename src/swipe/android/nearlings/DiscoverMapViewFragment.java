@@ -1,60 +1,63 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import android.content.ContentValues;
+import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class DiscoverMapViewFragment extends Fragment implements LoaderCallbacks<Cursor> {
+public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment implements LoaderCallbacks<Cursor> {
 
-	private GoogleMap googleMap;
-	MapView mapView;
-
+	private GoogleMap mMap;
+	MapView mMapView;
+	String MESSAGES_START_FLAG = DiscoverMapViewFragment.class
+			.getCanonicalName() + "_MESSAGES_START_FLAG";
+	String MESSAGES_FINISH_FLAG = DiscoverMapViewFragment.class
+			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.discover_needs_map_layout,
 				container, false);
+		
+	        MapsInitializer.initialize(getActivity());
+	        
+	        mMapView = (MapView) view.findViewById(R.id.needs_map_view_map);
 
-		mapView = (MapView) view.findViewById(R.id.needs_map_view_map);
+	        mMapView.onCreate(savedInstanceState);
 
-		mapView.onCreate(savedInstanceState);
+		setUpMapIfNeeded(view);
+		
+		if (mMapView != null) {
+			mMap = mMapView.getMap();
 
-		if (mapView != null) {
-			googleMap = mapView.getMap();
+			mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-			googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+			mMap.setMyLocationEnabled(true);
 
-			googleMap.setMyLocationEnabled(true);
-
-			googleMap.getUiSettings().setZoomControlsEnabled(true);
+			mMap.getUiSettings().setZoomControlsEnabled(true);
 			
 			this.getLoaderManager().initLoader(0, null, this);
 		}
 		return view;
 
-	}
- 
- 
-    
+	} 
 	
 
 	private void drawMarker(LatLng point) {
@@ -65,7 +68,7 @@ public class DiscoverMapViewFragment extends Fragment implements LoaderCallbacks
 		markerOptions.position(point);
 
 		// Adding marker on the Google Map
-		googleMap.addMarker(markerOptions);
+		mMap.addMarker(markerOptions);
 	}
 
 	
@@ -82,12 +85,12 @@ public class DiscoverMapViewFragment extends Fragment implements LoaderCallbacks
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
 		//should clear before loading
-		googleMap.clear();
+		mMap.clear();
 		
 		int locationCount = 0;
 		double lat = 0;
 		double lng = 0;
-		float zoom = 0;
+		//float zoom = 0;
 
 		// Number of locations available in the SQLite database table
 		locationCount = arg1.getCount();
@@ -112,16 +115,22 @@ public class DiscoverMapViewFragment extends Fragment implements LoaderCallbacks
 			// Traverse the pointer to the next row
 			arg1.moveToNext();
 		}
+		 CameraUpdate center=
+			        CameraUpdateFactory.newLatLng(new LatLng(lat,
+			                                                lng));
+			    CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
 
+			    mMap.moveCamera(center);
+			    mMap.animateCamera(zoom, 0, null);
+			  //  mMap.animateCamera(zoom);
+//		mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );   
 		//we want to encompass all points. Remodify code for this
-		if (locationCount > 0) {
-			// Moving CameraPosition to last clicked position
-			googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat,
-					lng)));
-
+		/*if (locationCount > 0) {
+		
+			mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
 			// Setting the zoom level in the map on last position is clicked
-			googleMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
-		}
+			//mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
+		}*/
 	}
 
 	@Override
@@ -129,5 +138,66 @@ public class DiscoverMapViewFragment extends Fragment implements LoaderCallbacks
 		// Nullify current cursor before reloading
 		
 	}
+	
+	private void setUpMapIfNeeded(View inflatedView) {
+        if (mMap == null) {
+            mMap = ((MapView) inflatedView.findViewById(R.id.needs_map_view_map)).getMap();
+            if (mMap != null) {
+                setUpMap();
+            }
+        }
+    }
 
+    private void setUpMap() {
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
+
+	@Override
+	public void setSourceRequestHelper() {
+		super.helper = new NeedsDetailsRequest();
+	}
+//obsolete since we're using a cursor callback
+	@Override
+	public CursorLoader generateCursorLoader() {
+		return null;
+	}
+
+	//obsolete since we're not using a listview.
+	@Override
+	public void reloadData() {
+	}
+
+
+	@Override
+	public String syncStartedFlag() {
+		return MESSAGES_START_FLAG;
+	}
+
+	@Override
+	public String syncFinishedFlag() {
+		return MESSAGES_FINISH_FLAG;
+	}
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+		super.onCreateOptionsMenu(menu, inflater);
+		 menu.clear();
+		inflater.inflate(R.menu.switch_to_list_view, menu);
+	}
 }

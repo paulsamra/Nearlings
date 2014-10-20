@@ -1,3 +1,7 @@
+/**
+ * Class is the container for a listview and mapview. Both listview and mapview represent
+ * 2 views of the same action. 
+ */
 package swipe.android.nearlings;
 
 import java.util.ArrayList;
@@ -13,10 +17,13 @@ import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,13 +34,13 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
+public class DiscoverContainerFragment extends Fragment {
 	ListView lView;
-	String MESSAGES_START_FLAG = DiscoverContainerFragment.class
+
+	/*String MESSAGES_START_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
 	String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
-			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
-
+			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";*/
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -68,44 +75,63 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 		// Assign adapter to HorizontalListView
 		listview.setAdapter(adapter);
 
+		TextView filterResults = (TextView) rootView
+				.findViewById(R.id.search_options_filterresults);
+		filterResults.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// toggle
+				subbar_visible = !subbar_visible;
+				if (subbar_visible) {
+					listview.setVisibility(View.VISIBLE);
+				} else {
+					listview.setVisibility(View.GONE);
+				}
+			}
+
+		});
+		swapView();
+		return rootView;
+
+	}
+
+	boolean subbar_visible = false;
+	boolean isMapView = false;
+
+	public void swapView() {
 		Fragment newFragment;
+		
+		
 		if (isMapView) {
-			newFragment = new DiscoverListViewFragment();
+			newFragment = new DiscoverMapViewFragment();
 		} else {
 			// Create new fragment and transaction
 			newFragment = new DiscoverListViewFragment();
 		}
-		FragmentTransaction transaction = getChildFragmentManager()
+		
+		 String backStateName = newFragment.getClass().getName();
+
+		  FragmentManager manager = getChildFragmentManager();
+		  boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+
+		  if (!fragmentPopped){ //fragment not in back stack, create it.
+		    FragmentTransaction ft = manager.beginTransaction();
+		    ft.replace(R.id.needs_discover_fragment_view, newFragment);
+		    ft.addToBackStack(backStateName);
+		    ft.commit();
+		  }
+		  
+		/*FragmentTransaction transaction = getChildFragmentManager()
 				.beginTransaction();
 
 		transaction.addToBackStack(null);
-		transaction.add(R.id.needs_discover_fragment_view, newFragment);
+		transaction.replace(R.id.needs_discover_fragment_view, newFragment);*/
 
-		transaction.commit();
-
-		
-		TextView filterResults = (TextView) rootView.findViewById(R.id.search_options_filterresults);
-		filterResults.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-			//toggle
-				subbar_visible = !subbar_visible;
-				if(subbar_visible){
-					listview.setVisibility(View.VISIBLE);
-				}else{
-					listview.setVisibility(View.GONE);
-				}
-			}
-			
-		});
-		return rootView;
-
+		//transaction.commit();
 	}
-boolean subbar_visible = false;
-	boolean isMapView = false;
-	
-	@Override
+
+	/*	@Override
 	public String syncStartedFlag() {
 		return MESSAGES_START_FLAG;
 	}
@@ -141,21 +167,30 @@ boolean subbar_visible = false;
 
 	@Override
 	public void reloadData() {
+//leave as null since we arent actually displaying data.
+	}*/
 
-		/*getLoaderManager().initLoader(0, null, this);
-
-		Cursor c = generateCursor();
-
-		this.mAdapter = new MessagesViewAdapter(this.getActivity(), c);
-
-		mAdapter.notifyDataSetChanged();
-		lView.setAdapter(mAdapter);*/
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 
 	}
-	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-  
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.switch_to_map:
+			isMapView = true;
+			swapView();
+			return true;
+		case R.id.switch_to_list:
+			isMapView = false;
+			swapView();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }
