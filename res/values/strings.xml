@@ -2,11 +2,14 @@
 <resources>
 
     <string name="app_name">Nearlings</string>
-
     <string name="refresh_map_view">Refresh Map View</string>
-        <string name="all">All</string>
-      <string name="switch_to_map">Map View</string>
-      <string name="switch_to_list">List View</string>
-    
+    <string name="all">All</string>
+    <string name="switch_to_map">Map View</string>
+    <string name="switch_to_list">List View</string>
+<string name="title">Title</string>
+<string name="due">Due</string>
 
+<string name="by">By</string>
+<string name="description">Description</string>
+<string name="comments">Comments</string>
 </resources>

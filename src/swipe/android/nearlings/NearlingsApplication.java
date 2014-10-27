@@ -1,6 +1,7 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
+import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
@@ -44,6 +45,7 @@ public class NearlingsApplication extends Application {
 	private void registerDatabaseTables(){
 		DatabaseCommandManager.register(new MessagesDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsDetailsDatabaseHelper());
+		DatabaseCommandManager.register(new NeedsCommentsDatabaseHelper());
 	}
 	public static void initImageLoader(Context context) {
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(

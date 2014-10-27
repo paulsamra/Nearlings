@@ -1,5 +1,6 @@
 package swipe.android.nearlings;
 
+import com.crashlytics.android.Crashlytics;
 import com.edbert.library.navigationdrawer.NavDrawerActivity;
 
 import swipe.android.nearlings.navigationdrawer.NavDrawerItemManager;
@@ -15,6 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends NavDrawerActivity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		Crashlytics.start(this);
+	}
 	@Override
 	public void setUpNavDrawerTiles() {
 		NavDrawerItemManager.getInstance().setDefaultLayout();

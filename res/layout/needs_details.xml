@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/needs_details_title_label"
+                style="@style/form_label"
+                android:text="@+string/title" />
+
+            <TextView
+                android:id="@+id/needs_details_title"
+                style="@style/form_description" />
+
+            <TextView
+                android:id="@+id/needs_details_price_label"
+                style="@style/form_bold_title"
+                android:text="@+string/title" />
+
+            <TextView
+                android:id="@+id/needs_details_price"
+                style="@style/form_description" />
+
+            <TextView
+                android:id="@+id/needs_details_date_label"
+                style="@style/form_label"
+                android:text="@+string/due" />
+
+            <TextView
+                android:id="@+id/needs_details_date"
+                style="@style/form_bold_title" />
+
+            <TextView
+                android:id="@+id/needs_details_author_label"
+                style="@style/form_label"
+                android:text="@+string/by" />
+
+            <TextView
+                android:id="@+id/needs_details_author"
+                style="@style/form_description" />
+
+            <ImageView
+                android:id="@+id/needs_details_author_image_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/needs_details_description_label"
+                style="@style/form_label"
+                android:text="@+string/description" />
+
+            <TextView
+                android:id="@+id/needs_details_description"
+                style="@style/form_description" />
+
+            <TextView
+                android:id="@+id/needs_details_location_label"
+                style="@style/form_label"
+                android:text="@+string/location" />
+
+            <TextView
+                android:id="@+id/needs_details_location"
+                style="@style/form_description" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/needs_details_map"
+                android:layout_width="fill_parent"
+                android:layout_height="400dp"
+              
+      android:enabled="true"
+                android:apiKey="AIzaSyA5rUkHtoPSD-gXCIvxDdlsWMDdQcVIB6s"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/needs_details_comments_label"
+                style="@style/form_label"
+                android:text="@+string/comments" />
+
+            <TextView
+                android:id="@+id/needs_details_numOfComments"
+                style="@style/form_description"
+                android:text="@+string/comments" />
+            <!-- Put in our lazy load comments -->
+
+            <ListView
+                android:id="@+id/needs_details_comments_list"
+                android:layout_width="fill_parent"
+                android:layout_height="400dp" >
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

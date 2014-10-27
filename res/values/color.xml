@@ -17,19 +17,17 @@
     <color name="dark_grey_bg">#1f1c17</color>
     <color name="red">#ff0000</color>
     <color name="green">#00CC00</color>
-    
     <color name="navigation_drawer_text_color">@color/white</color>
     <color name="navigation_drawer_normal_color">@android:color/transparent</color>
- <color name="navigation_drawer_pressed_color">@color/grey</color>
- 
- 
-   <color name="actionbar_color">#3FBA91</color>
-
+    <color name="navigation_drawer_pressed_color">@color/grey</color>
+    <color name="actionbar_color">#3FBA91</color>
     <color name="titlestrip_background_color">#DEDEDE</color>
     <color name="titlestrip_text_color">#999999</color>
-
     <color name="item_border_color">#666666</color>
     <color name="item_default_color">#EEEEEE</color>
     <color name="item_pressed_color">#CCCCCC</color>
     <color name="item_activated_color">#77CEEE</color>
+    
+    <color name="form_text_color">#550000</color>
+
 </resources>

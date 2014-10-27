@@ -53,7 +53,7 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment imp
 
 			mMap.getUiSettings().setZoomControlsEnabled(true);
 			
-			this.getLoaderManager().initLoader(0, null, this);
+			this.getLoaderManager().initLoader(10, null, this);
 		}
 		return view;
 
@@ -121,16 +121,7 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment imp
 			    CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
 
 			    mMap.moveCamera(center);
-			    mMap.animateCamera(zoom, 0, null);
-			  //  mMap.animateCamera(zoom);
-//		mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );   
-		//we want to encompass all points. Remodify code for this
-		/*if (locationCount > 0) {
-		
-			mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
-			// Setting the zoom level in the map on last position is clicked
-			//mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
-		}*/
+			    mMap.animateCamera(zoom, 10, null);
 	}
 
 	@Override

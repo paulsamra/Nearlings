@@ -141,5 +141,5 @@ public class DiscoverListOfNeedsAdapter extends CursorAdapter {
 		public ImageView personImage;
 
 	}
-
+	
 }

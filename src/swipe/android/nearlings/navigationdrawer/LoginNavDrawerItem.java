@@ -1,13 +1,20 @@
 package swipe.android.nearlings.navigationdrawer;
 
+import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.DetailFragment;
+//import swipe.android.nearlings.LoginFragment;
+import swipe.android.nearlings.NeedsDetailsActivity;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 public class LoginNavDrawerItem extends NavDrawerItem {
-private static final String TITLE = "Logout";
+private static final String TITLE = "Login";
 	public LoginNavDrawerItem(int icon, boolean isCounterVisible, int count) {
 		super(TITLE, icon, isCounterVisible, count);
 		
@@ -35,6 +42,11 @@ private static final String TITLE = "Logout";
 	@Override
 	public boolean updateActionBarTitle() {
 		return false;
+	}
+	@Override
+	public void doAction(Context c){
+		//Intent intent = new Intent(c, LoginActivity.class);
+		//c.startActivity(intent);
 	}
 
 }

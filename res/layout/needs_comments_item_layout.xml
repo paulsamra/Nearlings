@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/needs_comments_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/needs_comments_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="5dip"
+        android:gravity="right"
+        android:textColor="@android:color/primary_text_light" />
+
+    <!-- Right Hand side -->
+
+    <LinearLayout
+        android:id="@+id/message_other_person_wrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/comment_text_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/needs_comments_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dip"
+                android:gravity="center"
+                android:paddingLeft="10dip"
+                android:text="4"
+                android:textColor="@color/black"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/needs_comments_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dip"
+                android:gravity="center"
+                android:paddingLeft="10dip" >
+            </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

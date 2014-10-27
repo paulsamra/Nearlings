@@ -40,14 +40,14 @@ public class NeedsDetailsRequest extends NearlingsRequest {
 		// for now we insert with
 
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_ID, System.currentTimeMillis());
-		cv.put(NeedsDetailsDatabaseHelper.COLUMN_TITLE, "Title");
+		cv.put(NeedsDetailsDatabaseHelper.COLUMN_TITLE, "Title data");
 
 		cv.put(MessagesDatabaseHelper.COLUMN_DATE, System.currentTimeMillis());
-		cv.put(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR, "Author");
+		cv.put(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR, "Author data");
 
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_PRICE, 25);
 
-		cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_NAME, "Location");
+		cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_NAME, "Location data");
 
 		
 		if(tracker == null){
@@ -89,10 +89,10 @@ public class NeedsDetailsRequest extends NearlingsRequest {
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_GEOPOINT_LONGITUDE,
 				longitude);
 
-		cv.put(NeedsDetailsDatabaseHelper.COLUMN_DESCRIPTION, "Description");
+		cv.put(NeedsDetailsDatabaseHelper.COLUMN_DESCRIPTION, "Description data");
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL,
 				"http://epicappsolutions.com/wp-content/uploads/2013/10/Android-icon.png");
-		cv.put(NeedsDetailsDatabaseHelper.COLUMN_STATUS, "Status");
+		cv.put(NeedsDetailsDatabaseHelper.COLUMN_STATUS, "Status data");
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED,
 				System.currentTimeMillis());
 

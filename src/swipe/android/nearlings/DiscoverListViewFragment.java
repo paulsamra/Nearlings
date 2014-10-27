@@ -4,6 +4,7 @@ import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -80,11 +82,11 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 		return cursorLoader;
 	
 	}
-
+Cursor c;
 	@Override
 	public void reloadData() {
 		getLoaderManager().initLoader(0, null, this);
-		Cursor c = generateCursor();
+		 c = generateCursor();
 
 		this.mAdapter = new DiscoverListOfNeedsAdapter(this.getActivity(), c);
 
@@ -100,5 +102,19 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 		 menu.clear();
 		inflater.inflate(R.menu.switch_to_map_view, menu);
+	}
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent intent = new Intent(this.getActivity(), NeedsDetailsActivity.class);
+		Bundle extras = new Bundle();
+		Cursor c = generateCursor();
+
+		c.moveToPosition(position);
+		String need_id = c.getString(c.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED));
+		extras.putString("id", need_id); 
+		intent.putExtras(extras);
+		startActivity(intent);
 	}
 }
