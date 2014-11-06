@@ -17,13 +17,21 @@ import android.widget.ListView;
 
 public class MainActivity extends NavDrawerActivity {
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Crashlytics.start(this);
 	}
+
 	@Override
 	public void setUpNavDrawerTiles() {
-		NavDrawerItemManager.getInstance().setDefaultLayout();
+		if (SessionManager.getInstance(this).isLoggedIn()) {
+			NavDrawerItemManager.getInstance().setCurrentlySignedInLayout();
+
+		} else {
+			NavDrawerItemManager.getInstance().setDefaultLayout();
+		}
+		if (adapter != null)
+			adapter.notifyDataSetInvalidated();
 	}
 
 	@Override
@@ -38,9 +46,18 @@ public class MainActivity extends NavDrawerActivity {
 
 	@Override
 	protected void setNavDrawerManager() {
-		//this should just be a static refrence
+		// this should just be a static refrence
 		navDrawerManager = NavDrawerItemManager.getInstance();
 	}
+	@Override
+	public void reloadNavigationDrawer() {
+		setUpNavDrawerTiles();
+		setUpNavDrawerHeader();
+		setUpNavDrawerFooter();
+		super.reloadNavigationDrawer();
+		//adapter.notifyDataSetInvalidated();
+	}
+
 
 
 }

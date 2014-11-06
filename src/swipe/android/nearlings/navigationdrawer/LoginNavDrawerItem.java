@@ -2,6 +2,7 @@ package swipe.android.nearlings.navigationdrawer;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.DetailFragment;
+import swipe.android.nearlings.LoginActivity;
 //import swipe.android.nearlings.LoginFragment;
 import swipe.android.nearlings.NeedsDetailsActivity;
 
@@ -45,8 +46,8 @@ private static final String TITLE = "Login";
 	}
 	@Override
 	public void doAction(Context c){
-		//Intent intent = new Intent(c, LoginActivity.class);
-		//c.startActivity(intent);
+		Intent intent = new Intent(c, LoginActivity.class);
+		c.startActivity(intent);
 	}
 
 }
