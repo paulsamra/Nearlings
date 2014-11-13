@@ -14,6 +14,8 @@ import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.discover.options.SearchRadiusFilter;
 import swipe.android.nearlings.discover.options.SearchRadiusOptionsListAdapter;
 import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,19 +31,34 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class DiscoverContainerFragment extends Fragment {
+public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	ListView lView;
 
-	/*String MESSAGES_START_FLAG = DiscoverContainerFragment.class
+	public static final String MESSAGES_START_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
-			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";*/
+	public static final String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
+			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
+
+	public static final String[] terms = new String[] { "Shopping", "Coffee",
+			"Dollar", "Meal", "School", "Computer", "Random" };
+	public static final int[] unselectedIcons = new int[] {
+			R.drawable.shopping_unselected, R.drawable.coffee_unselected,
+			R.drawable.dollar_unselected, R.drawable.meal_unselected,
+			R.drawable.school_unselected, R.drawable.computer_unselected,
+			R.drawable.random_unselected };
+	int[] selectedIcons = new int[] { R.drawable.shopping_selected,
+			R.drawable.coffee_selected, R.drawable.dollar_selected,
+			R.drawable.meal_selected, R.drawable.school_selected,
+			R.drawable.computer_selected, R.drawable.random_selected };
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -52,31 +70,48 @@ public class DiscoverContainerFragment extends Fragment {
 
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.search_options_listview_categories);
-		ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
-		listOfFilter.add(new SearchOptionsFilter(false,
-				R.drawable.filter_unselected, R.drawable.filter_selected));
-		listOfFilter.add(new SearchOptionsFilter(false,
-				R.drawable.filter_unselected, R.drawable.filter_selected));
-		listOfFilter.add(new SearchOptionsFilter(false,
-				R.drawable.filter_unselected, R.drawable.filter_selected));
-		listOfFilter.add(new SearchOptionsFilter(false,
-				R.drawable.filter_unselected, R.drawable.filter_selected));
-		listOfFilter.add(new SearchOptionsFilter(false,
-				R.drawable.filter_unselected, R.drawable.filter_selected));
-		listOfFilter.add(new SearchOptionsFilter(false,
-				R.drawable.filter_unselected, R.drawable.filter_selected));
-		listOfFilter.add(new SearchOptionsFilter(false,
-				R.drawable.filter_unselected, R.drawable.filter_selected));
+		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
+		for (int i = 0; i < terms.length; i++) {
+			listOfFilter.add(new SearchOptionsFilter(false, unselectedIcons[i],
+					selectedIcons[i], terms[i]));
+		}
 
 		final SearchFilterCategoryOptionsListAdapter adapter = new SearchFilterCategoryOptionsListAdapter(
 				this.getActivity(), R.layout.search_options_view_item,
 				listOfFilter);
 
-		// Assign adapter to HorizontalListView
 		listview.setAdapter(adapter);
 
-		TextView filterResults = (TextView) rootView
-				.findViewById(R.id.search_options_filterresults);
+		listview.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view,
+					int position, long id) {
+				boolean current = listOfFilter.get(position).isSelected();
+				for (SearchOptionsFilter f : listOfFilter)
+					f.setSelected(false);
+				listOfFilter.get(position).setSelected(!current);
+				adapter.notifyDataSetChanged();
+
+				// requeue with search filters. We should pass in filters at
+				// some point
+				DiscoverContainerFragment.this.onRefresh();
+			}
+		});
+
+		final Activity act = this.getActivity();
+		View textbar = (View) rootView.findViewById(R.id.search_bar_text_items);
+		textbar.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(act, SearchActivity.class);
+				// myIntent.putExtra("key", value); //Optional parameters
+				act.startActivity(myIntent);
+			}
+
+		});
+		ImageView filterResults = (ImageView) rootView
+				.findViewById(R.id.search_options_filter_results);
 		filterResults.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -101,81 +136,35 @@ public class DiscoverContainerFragment extends Fragment {
 
 	public void swapView() {
 		Fragment newFragment;
-		
-		
+
 		if (isMapView) {
 			newFragment = new DiscoverMapViewFragment();
 		} else {
 			// Create new fragment and transaction
 			newFragment = new DiscoverListViewFragment();
 		}
-		
-		 String backStateName = newFragment.getClass().getName();
 
-		  FragmentManager manager = getChildFragmentManager();
-		  boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+		String backStateName = newFragment.getClass().getName();
 
-		  if (!fragmentPopped){ //fragment not in back stack, create it.
-		    FragmentTransaction ft = manager.beginTransaction();
-		    ft.replace(R.id.needs_discover_fragment_view, newFragment);
-		    ft.addToBackStack(backStateName);
-		    ft.commit();
-		  }
-		  
-		/*FragmentTransaction transaction = getChildFragmentManager()
-				.beginTransaction();
+		FragmentManager manager = getChildFragmentManager();
+		boolean fragmentPopped = manager
+				.popBackStackImmediate(backStateName, 0);
 
-		transaction.addToBackStack(null);
-		transaction.replace(R.id.needs_discover_fragment_view, newFragment);*/
-
-		//transaction.commit();
-	}
-
-	/*	@Override
-	public String syncStartedFlag() {
-		return MESSAGES_START_FLAG;
-	}
-
-	@Override
-	public String syncFinishedFlag() {
-		return MESSAGES_FINISH_FLAG;
-	}
-
-	@Override
-	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		reloadData();
-	}
-
-	@Override
-	public CursorLoader generateCursorLoader() {
-		CursorLoader cursorLoader = new CursorLoader(
-				this.getActivity(),
-				NearlingsContentProvider
-						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-				NeedsDetailsDatabaseHelper.COLUMNS, null, null,
-				NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
-
-		return cursorLoader;
+		if (!fragmentPopped) { // fragment not in back stack, create it.
+			FragmentTransaction ft = manager.beginTransaction();
+			ft.replace(R.id.needs_discover_fragment_view, newFragment);
+			ft.addToBackStack(backStateName);
+			ft.commit();
+		}
 
 	}
-
-	@Override
-	public void reloadData() {
-//leave as null since we arent actually displaying data.
-	}*/
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
@@ -191,6 +180,34 @@ public class DiscoverContainerFragment extends Fragment {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void setSourceRequestHelper() {
+
+		super.helper = new NeedsDetailsRequest(this.getActivity());
+	}
+
+	@Override
+	public CursorLoader generateCursorLoader() {
+
+		return null;
+	}
+
+	@Override
+	public void reloadData() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String syncStartedFlag() {
+		return MESSAGES_START_FLAG;
+	}
+
+	@Override
+	public String syncFinishedFlag() {
+		return MESSAGES_FINISH_FLAG;
 	}
 
 }

@@ -5,25 +5,22 @@ import java.util.Calendar;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
-import swipe.android.nearlings.SessionManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class MessagesRequest extends NearlingsRequest {
-public MessagesRequest(Context c) {
+public class FollowersRequest extends NearlingsRequest {
+
+	public FollowersRequest(Context c) {
 		super(c);
 		// TODO Auto-generated constructor stub
 	}
 
-public static final String SEARCH_PARAMS_TAG = "SEARCH_PARAMS_TAG";
-
-//we will have a base URL as wel
 	@Override
 	public JsonResponseInterface makeRequest(Bundle b) {
-		// this is a request to a url via the socket operator.
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -39,7 +36,8 @@ public static final String SEARCH_PARAMS_TAG = "SEARCH_PARAMS_TAG";
 	
 		ContentValues cv = new ContentValues();
 
-		cv.put(MessagesDatabaseHelper.COLUMN_AUTHOR, "Author");
+	/*	cv.put(FollowersDatabaseHelper.-+0,0
+				98/9+"Author");
 		cv.put(MessagesDatabaseHelper.COLUMN_DATE, System.currentTimeMillis());
 		cv.put(MessagesDatabaseHelper.COLUMN_ID, System.currentTimeMillis());
 		cv.put(MessagesDatabaseHelper.COLUMN_MESSAGE, "Message " + counter);
@@ -53,7 +51,7 @@ public static final String SEARCH_PARAMS_TAG = "SEARCH_PARAMS_TAG";
 				.insert(NearlingsContentProvider
 						.contentURIbyTableName(MessagesDatabaseHelper.TABLE_NAME),
 						cv);
-
+*/
 		counter++;
 		return false;
 	}

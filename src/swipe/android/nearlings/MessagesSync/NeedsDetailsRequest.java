@@ -20,6 +20,11 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker.Provider
 
 public class NeedsDetailsRequest extends NearlingsRequest {
 
+	public NeedsDetailsRequest(Context c) {
+		super(c);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public JsonResponseInterface makeRequest(Bundle b) {
 		// TODO Auto-generated method stub

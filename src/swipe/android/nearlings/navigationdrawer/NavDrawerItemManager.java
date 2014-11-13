@@ -34,6 +34,7 @@ public class NavDrawerItemManager extends AbstractNavDrawerItemManager {
 	
 	public void setCurrentlySignedInLayout() {
 		navDrawerButtonArrayList.clear();
+		register(new ProfileNavDrawerItem());
 		register(new DiscoverNavDrawerItem());
 		register(new DashboardNavDrawerItem());
 		register(new NeedsNavDrawerItem());

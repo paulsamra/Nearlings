@@ -166,7 +166,7 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest();
+		super.helper = new NeedsDetailsRequest(this.getActivity());
 	}
 
 	// obsolete since we're using a cursor callback

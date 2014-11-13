@@ -1,13 +1,19 @@
 package swipe.android.nearlings;
 
+import java.util.ArrayList;
+
 import com.crashlytics.android.Crashlytics;
+import com.edbert.library.navigationdrawer.AbstractNavDrawerItemManager;
 import com.edbert.library.navigationdrawer.NavDrawerActivity;
+import com.edbert.library.navigationdrawer.NavDrawerItemInterface;
+import com.edbert.library.navigationdrawer.viewadapter.NavDrawerListAdapter;
 
 import swipe.android.nearlings.navigationdrawer.NavDrawerItemManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,8 +36,9 @@ public class MainActivity extends NavDrawerActivity {
 		} else {
 			NavDrawerItemManager.getInstance().setDefaultLayout();
 		}
-		if (adapter != null)
+		if (adapter != null){
 			adapter.notifyDataSetInvalidated();
+		}
 	}
 
 	@Override
@@ -55,6 +62,7 @@ public class MainActivity extends NavDrawerActivity {
 		setUpNavDrawerHeader();
 		setUpNavDrawerFooter();
 		super.reloadNavigationDrawer();
+		
 		//adapter.notifyDataSetInvalidated();
 	}
 

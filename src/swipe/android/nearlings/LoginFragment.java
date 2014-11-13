@@ -1,6 +1,13 @@
 package swipe.android.nearlings;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
+
 import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.utils.MapUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,27 +41,30 @@ public class LoginFragment extends Fragment implements
 	}
 
 	public void onTaskComplete(JsonLoginResponse result) {
-	//	if (result != null && result.isValid()) {
-
+		if (result != null && result.isValid()) {
 			SessionManager.getInstance(this.getActivity()).setIsLoggedIn(true);
-		 //SessionManager.getInstance(this.getActivity()).setUserName();
-			//  SessionManager.getInstance(this.getActivity()).setAuthToken();
-			
-			// now return
+			SessionManager.getInstance(this.getActivity()).setUserName(
+					String.valueOf(result.getUserID()));
+			SessionManager.getInstance(this.getActivity()).setAuthToken(
+					result.getToken());
+
 			Intent intent = new Intent(this.getActivity(), MainActivity.class);
 			this.getActivity().startActivity(intent);
 			this.getActivity().finish();
-			// userDataViewAdapter.validateAddressViews();
-//		}
+		}else{
+			//display error
+		}
 	}
 
 	public void login() {
-		/*
-		 * new PostDataWebTask<JsonCreateAlertResponse>(this.getActivity(),
-		 * this, JsonCreateAlertResponse.class).execute(SessionManager.BASE_URL
-		 * + "/api/v1/alerts", MapUtils.mapToString(params), jsonString);
-		 */
-		new DummyWebTask<JsonLoginResponse>(this.getActivity(), this, JsonLoginResponse.class).execute("text","lol","text");
+		Map<String, String> headers = SessionManager.getInstance(this.getActivity()).defaultSessionHeaders();
+
+		headers.put("username", "ramsin");
+		headers.put("password", "ramsin");
+		new PostDataWebTask<JsonLoginResponse>(this.getActivity(), this,
+				JsonLoginResponse.class).execute(
+				SessionManager.getInstance(this.getActivity()).loginURL(),
+				MapUtils.mapToString(headers));
 	}
 
 	protected void initializeButtons() {

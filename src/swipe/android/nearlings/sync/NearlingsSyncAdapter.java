@@ -41,6 +41,7 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 					"No requestInterface was provided! Will not execute!");
 			return null;
 		}
+	
 		Object o = SendRequestStrategyManager.executeRequest(requestInterface,
 				extras);
 		return o;
@@ -59,11 +60,13 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 
 	@Override
 	protected void turnOffSyncAdapterRunning(Bundle extras) {
-		String broadcastFinishString;
+		String broadcastFinishString = "";
 		if (extras == null) {
 			broadcastFinishString = SYNC_FINISHED;
-		} else {
+		} else if (extras.getString(SYNC_FINISHED_FLAG_ID) != null) {
 			broadcastFinishString = extras.getString(SYNC_FINISHED_FLAG_ID);
+		} else {
+			broadcastFinishString = "NO_SYNC_FINISHED_STRING";
 		}
 
 		LocalBroadcastManager.getInstance(this.getContext()).sendBroadcast(
@@ -74,11 +77,13 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 
 	@Override
 	protected void turnOnSyncAdapterRunning(Bundle extras) {
-		String broadcastStartString;
+		String broadcastStartString = "";
 		if (extras == null) {
 			broadcastStartString = SYNC_STARTED;
-		} else {
+		} else if (extras.getString(SYNC_STARTED_FLAG_ID) != null) {
 			broadcastStartString = extras.getString(SYNC_STARTED_FLAG_ID);
+		} else {
+			broadcastStartString = "NO_SYNC_START_STRING";
 		}
 
 		LocalBroadcastManager.getInstance(this.getContext()).sendBroadcast(

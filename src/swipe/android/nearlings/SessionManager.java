@@ -1,5 +1,8 @@
 package swipe.android.nearlings;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -30,6 +33,29 @@ public class SessionManager{
 
 	//keys
 	private static final String IS_LOGGED_IN = "IS_LOGGED_IN";
+	private static final String USER_NAME = "USER_NAME";
+	private static final String TOKEN = "TOKEN";
+	
+	private static final String URL_BASE="https://nearlings.com/api/2014-10-13";
+	public String loginURL(){
+		return URL_BASE + "/login";
+	}
+	public String needsDetailsFollowersURL(String id){
+		//TODO
+		return URL_BASE + "/login";
+	}
+	public String needsDetailsOffersURL(String id){
+		//TODO
+		return URL_BASE + "/login";
+	}
+	public String needDetailsURL(String id){
+		//TODO
+		return URL_BASE + "/login";
+	}
+	public String needDetailsQueryURL(String location, String searchFilter){
+		//TODO
+		return URL_BASE + "/login";
+	}
 	private SessionManager(Context c) {
 		this._context = c;
 		pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -51,6 +77,24 @@ public class SessionManager{
 
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGGED_IN, false);
+    }
+    public void setUserName(String username){
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(USER_NAME, username);
+        editor.commit();
+    }
+    public void setAuthToken(String token){
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(TOKEN, token);
+        editor.commit();
+    }
+    public Map<String, String> defaultSessionHeaders(){
+    	Map<String, String> headers = new LinkedHashMap<String, String>();
+
+		headers.put("Accept", "application/json");
+		headers.put("Content-Type", "application/json");
+		headers.put("Cache-Control", "none");
+		return headers;
     }
 
 

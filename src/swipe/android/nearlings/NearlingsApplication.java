@@ -45,8 +45,8 @@ GooglePlayServicesClient.OnConnectionFailedListener, Application.ActivityLifecyc
 		DatabaseCommandManager.createAllTables(NearlingsContentProvider
 				.getDBHelperInstance(this).getWritableDatabase());
 		
-		SendRequestStrategyManager.register(new MessagesRequest());
-		SendRequestStrategyManager.register(new NeedsDetailsRequest());
+		SendRequestStrategyManager.register(new MessagesRequest(this));
+		SendRequestStrategyManager.register(new NeedsDetailsRequest(this));
 		super.registerActivityLifecycleCallbacks(this);
 	}
 	@Override

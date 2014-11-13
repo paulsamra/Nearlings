@@ -1,8 +1,8 @@
-package swipe.android.nearlings;
+package swipe.android.nearlings.jsonResponses.register;
 
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonLoginResponse implements JsonResponseInterface{
+public class JsonRegisterResponse implements JsonResponseInterface{
 
 	@Override
 	public boolean isValid() {

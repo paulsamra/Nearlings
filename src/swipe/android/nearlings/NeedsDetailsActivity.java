@@ -31,10 +31,10 @@ public class NeedsDetailsActivity extends ActionBarActivity implements TabListen
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		Bundle b = getIntent().getExtras();
 		id = b.getString("id");
-		/*
-		 * mapFragList.put("Followers", new NeedsFollowersFragment());
-		 * mapFragList.put("Offers", new NeedsOffersFragment());
-		 */
+		
+		 mapFragList.put("Followers", new NeedsFollowersFragment());
+		//  mapFragList.put("Offers", new NeedsOffersFragment());
+		 
 		Iterator it = mapFragList.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry) it.next();

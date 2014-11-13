@@ -22,10 +22,8 @@ import android.widget.TextView;
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	ListView lView;
-	String MESSAGES_START_FLAG = DiscoverContainerFragment.class
-			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
-			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
+	String MESSAGES_START_FLAG = DiscoverContainerFragment.MESSAGES_START_FLAG;
+	String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.MESSAGES_FINISH_FLAG;
 	TextView text;
 
 	@Override
@@ -51,11 +49,13 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 		return view;
 
 	}
+
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
 		reloadData();
 	}
+
 	@Override
 	public String syncStartedFlag() {
 		return MESSAGES_START_FLAG;
@@ -65,55 +65,58 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	public String syncFinishedFlag() {
 		return MESSAGES_FINISH_FLAG;
 	}
+
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest();
+		super.helper = new NeedsDetailsRequest(this.getActivity());
 	}
-
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-	//	return ((DiscoverContainerFragment) getParentFragment()).generateCursorLoader();
-		CursorLoader cursorLoader = new CursorLoader(this.getActivity(),
-				NearlingsContentProvider.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
 				NeedsDetailsDatabaseHelper.COLUMNS, null, null,
 				NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
 
 		return cursorLoader;
-	
+
 	}
-Cursor c;
+
+	Cursor c;
+
 	@Override
 	public void reloadData() {
 		getLoaderManager().initLoader(0, null, this);
-		 c = generateCursor();
+		c = generateCursor();
 
 		this.mAdapter = new DiscoverListOfNeedsAdapter(this.getActivity(), c);
 
 		mAdapter.notifyDataSetChanged();
-	
+
 		lView.setAdapter(mAdapter);
-		
-		//lView.invalidate();
-		//((DiscoverContainerFragment) getParentFragment()).reloadData();
 	}
+
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		 menu.clear();
+		menu.clear();
 		inflater.inflate(R.menu.switch_to_map_view, menu);
 	}
-	
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Intent intent = new Intent(this.getActivity(), NeedsDetailsActivity.class);
+		Intent intent = new Intent(this.getActivity(),
+				NeedsDetailsActivity.class);
 		Bundle extras = new Bundle();
 		Cursor c = generateCursor();
 
 		c.moveToPosition(position);
-		String need_id = c.getString(c.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED));
-		extras.putString("id", need_id); 
+		String need_id = c.getString(c
+				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED));
+		extras.putString("id", need_id);
 		intent.putExtras(extras);
 		startActivity(intent);
 	}

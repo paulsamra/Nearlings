@@ -81,7 +81,7 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new MessagesRequest();
+		super.helper = new MessagesRequest(this.getActivity());
 	}
 	@Override
 	public void onResume(){
