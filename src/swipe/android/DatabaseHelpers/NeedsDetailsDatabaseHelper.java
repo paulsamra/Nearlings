@@ -27,13 +27,12 @@ public class NeedsDetailsDatabaseHelper implements DatabaseHelperInterface {
 
 	public static final String COLUMN_AUTHOR_IMAGE_PREVIEW_URL = "author_image_url";
 	
-	public static final String COLUMN_ID_OF_NEED = "_id_of_need";
 	// the comments messages should be stored elsewhere.
 
 	public static final String[] COLUMNS = { COLUMN_ID, COLUMN_TITLE,
 			COLUMN_DATE, COLUMN_AUTHOR, COLUMN_PRICE, COLUMN_LOCATION_NAME,
 			COLUMN_LOCATION_GEOPOINT_LATITUDE,COLUMN_LOCATION_GEOPOINT_LONGITUDE , COLUMN_DESCRIPTION,
-			COLUMN_AUTHOR_IMAGE_PREVIEW_URL, COLUMN_STATUS, COLUMN_ID_OF_NEED};
+			COLUMN_AUTHOR_IMAGE_PREVIEW_URL, COLUMN_STATUS};
 
 	public static final String TABLE_CREATE_ROUTES = "CREATE TABLE "
 			+ TABLE_NAME + "(" + COLUMN_ID + " TEXT NOT NULL primary key, "
@@ -41,7 +40,7 @@ public class NeedsDetailsDatabaseHelper implements DatabaseHelperInterface {
 			+" TEXT, " + COLUMN_AUTHOR + " TEXT, "
 			+ COLUMN_PRICE + " INTEGER, " + COLUMN_AUTHOR_IMAGE_PREVIEW_URL + " TEXT, "
 			+ COLUMN_STATUS + " TEXT, "
-			+ COLUMN_ID_OF_NEED + " TEXT, "
+			
 			+ COLUMN_LOCATION_GEOPOINT_LATITUDE + " DOUBLE, " + COLUMN_LOCATION_GEOPOINT_LONGITUDE + " DOUBLE, "
 			+ COLUMN_DESCRIPTION +" TEXT, " + COLUMN_LOCATION_NAME
 			+ " TEXT);";

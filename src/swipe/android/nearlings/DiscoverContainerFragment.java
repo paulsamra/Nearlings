@@ -162,7 +162,6 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-
 	}
 
 	@Override
@@ -184,7 +183,6 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-
 		super.helper = new NeedsDetailsRequest(this.getActivity());
 	}
 
@@ -208,6 +206,12 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public String syncFinishedFlag() {
 		return MESSAGES_FINISH_FLAG;
+	}
+
+	@Override
+	public void reloadAdapter() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

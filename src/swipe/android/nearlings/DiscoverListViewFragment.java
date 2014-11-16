@@ -115,9 +115,15 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 
 		c.moveToPosition(position);
 		String need_id = c.getString(c
-				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED));
+				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID));
 		extras.putString("id", need_id);
 		intent.putExtras(extras);
 		startActivity(intent);
+	}
+
+	@Override
+	public void reloadAdapter() {
+		// TODO Auto-generated method stub
+		
 	}
 }

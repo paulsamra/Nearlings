@@ -22,8 +22,12 @@ public class NeedsDetailsRequest extends NearlingsRequest {
 
 	public NeedsDetailsRequest(Context c) {
 		super(c);
-		// TODO Auto-generated constructor stub
 	}
+String id;
+public NeedsDetailsRequest(Context c, String id) {
+	super(c);
+	this.id = id;
+}
 
 	@Override
 	public JsonResponseInterface makeRequest(Bundle b) {
@@ -98,7 +102,7 @@ public class NeedsDetailsRequest extends NearlingsRequest {
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL,
 				"http://epicappsolutions.com/wp-content/uploads/2013/10/Android-icon.png");
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_STATUS, "Status data");
-		cv.put(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED,
+		cv.put(NeedsDetailsDatabaseHelper.COLUMN_ID,
 				System.currentTimeMillis());
 
 		context.getContentResolver()

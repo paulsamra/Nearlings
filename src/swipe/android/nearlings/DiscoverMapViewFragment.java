@@ -196,4 +196,10 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 		menu.clear();
 		inflater.inflate(R.menu.switch_to_list_view, menu);
 	}
+
+	@Override
+	public void reloadAdapter() {
+		// TODO Auto-generated method stub
+		
+	}
 }

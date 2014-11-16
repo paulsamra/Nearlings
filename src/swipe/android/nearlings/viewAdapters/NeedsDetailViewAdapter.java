@@ -45,11 +45,12 @@ public class NeedsDetailViewAdapter {
 	public ImageView personRequestingImage;
 	public ListView listOfComments;
 	private String idOfDetail;
-
+private Cursor cursor;
 	public NeedsDetailViewAdapter(View userDataView, Context context,
-			String idOfDetail, Bundle savedInstanceState) {
+			String idOfDetail, Cursor cursor, Bundle savedInstanceState) {
 		this.context = context;
 		this.idOfDetail = idOfDetail;
+		this.cursor = cursor;
 		MapsInitializer.initialize(context);
 		initializeView(userDataView, savedInstanceState);
 		reloadData();
@@ -95,12 +96,12 @@ public class NeedsDetailViewAdapter {
 	GoogleMap mMap;
 
 	public void reloadData() {
-
-		Cursor cursor = context
+cursor.requery();
+	/*	Cursor cursor = context
 				.getContentResolver()
 				.query(NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-						NeedsDetailsDatabaseHelper.COLUMNS, null, null, null);
+						NeedsDetailsDatabaseHelper.COLUMNS, null, null, null);*/
 		cursor.moveToFirst();
 		int title_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
@@ -120,7 +121,7 @@ public class NeedsDetailViewAdapter {
 		int location_name_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_NAME);
 		int needs_id_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID_OF_NEED);
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID);
 
 		int personRequestImage_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL);

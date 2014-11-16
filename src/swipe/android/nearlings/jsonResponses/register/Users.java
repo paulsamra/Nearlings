@@ -2,6 +2,13 @@ package swipe.android.nearlings.jsonResponses.register;
 
 //TODO: make this shared between JSON and stuff
 public class Users{
+	public Users(String id, String name, String iconURL) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.iconURL = iconURL;
+	}
+
 	public String getId() {
 		return id;
 	}

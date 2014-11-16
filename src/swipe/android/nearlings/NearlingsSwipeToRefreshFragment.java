@@ -9,7 +9,7 @@ import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.edbert.library.swipeToRefresh.SwipeToRefreshFragment;
 
 public abstract class NearlingsSwipeToRefreshFragment extends
-		SwipeToRefreshFragment {
+		SwipeToRefreshFragment implements Refreshable {
 
 	// we use sourcehelpers
 	protected SendRequestInterface helper;

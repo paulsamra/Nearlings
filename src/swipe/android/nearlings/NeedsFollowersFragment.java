@@ -1,74 +1,80 @@
 package swipe.android.nearlings;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import swipe.android.nearlings.jsonResponses.login.JsonFollowersResponse;
+import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
 import swipe.android.nearlings.jsonResponses.register.Users;
 import swipe.android.nearlings.viewAdapters.FollowersViewAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
 import com.edbert.library.network.SocketOperator;
+import com.edbert.library.utils.MapUtils;
 
 //TODO: Probably want to abstract this
-public class NeedsFollowersFragment extends Fragment implements
-		SwipeRefreshLayout.OnRefreshListener {
-	ListView lView;
+public class NeedsFollowersFragment extends
+		RefreshableListNonSwipeFragment<JsonFollowersResponse> {
+
 	protected ArrayAdapter<Users> mAdapter;
-	SwipeRefreshLayout swipeView;
-
-	//Extra stuff
+	// Extra stuff
 	String id;
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
-		View rootView = inflater.inflate(R.layout.pull_to_refresh_single_list,
-				container, false);
-
-		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-		swipeView.setColorScheme(android.R.color.holo_blue_dark,
-				android.R.color.holo_blue_light,
-				android.R.color.holo_green_light,
-				android.R.color.holo_green_light);
-
-		// we shoudl siable the pull to refresh
-		swipeView.setEnabled(false);
-		lView = (ListView) rootView.findViewById(R.id.list);
-
-		swipeView.setOnRefreshListener(this);
-		// lView.setOnItemClickListener(this);
-		return rootView;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-	}
 
 	@Override
 	public void onRefresh() {
 		// getLoaderManager().initLoader(0, null, this);
-
+		// /request the sync
+		super.onRefresh();
 		swipeView.setRefreshing(true);
-		JsonFollowersResponse followers = SocketOperator.getInstance(
-				JsonFollowersResponse.class).postResponse(
-				this.getActivity(),
-				SessionManager.getInstance(this.getActivity()).needsDetailsFollowersURL(id),
-				SessionManager.getInstance(this.getActivity())
-						.defaultSessionHeaders());
+		task = new DummyWebTask<JsonFollowersResponse>(this.getActivity(),
+				this, JsonFollowersResponse.class, false);
 
-		// extract the users from the followers
-		// then reload it into the adapter
+		task.execute();
+
+	}
+
+	static int lastInt = 1;
+	static ArrayList<Users> u = new ArrayList<Users>();
+
+	@Override
+	public void onTaskComplete(JsonFollowersResponse result) {
+		
+		if (lastInt == 1) {
+
+			u.add(new Users(
+					"id_1",
+					"Bob",
+					"http://icons.iconarchive.com/icons/designbolts/despicable-me-2/128/Minion-Amazed-icon.png"));
+			lastInt = 0;
+		} else {
+			u.clear();
+			lastInt = 1;
+		}
 		this.mAdapter = new FollowersViewAdapter(this.getActivity(),
-				R.layout.user_item, followers.getUsers());
+				R.layout.user_item, u);
+
+		mAdapter.notifyDataSetChanged();
+		lView.setAdapter(mAdapter);
+		swipeView.setRefreshing(false);
+	
+	}
+	@Override
+	public void onResume(){
+		super.onResume();
+		this.mAdapter = new FollowersViewAdapter(this.getActivity(),
+				R.layout.user_item, u);
 
 		mAdapter.notifyDataSetChanged();
 		lView.setAdapter(mAdapter);

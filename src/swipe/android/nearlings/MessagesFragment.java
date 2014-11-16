@@ -34,14 +34,7 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void reloadData() {
-		getLoaderManager().initLoader(0, null, this);
-
-		Cursor c = generateCursor();
-
-		this.mAdapter = new MessagesViewAdapter(this.getActivity(), c);
-
-		mAdapter.notifyDataSetChanged();
-		lView.setAdapter(mAdapter);
+		reloadAdapter();
 	}
 
 	@Override
@@ -88,5 +81,18 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 		super.onResume();
 		reloadData();
 	}
+
+	@Override
+	public void reloadAdapter() {
+		getLoaderManager().initLoader(0, null, this);
+
+		Cursor c = generateCursor();
+
+		this.mAdapter = new MessagesViewAdapter(this.getActivity(), c);
+
+		mAdapter.notifyDataSetChanged();
+		lView.setAdapter(mAdapter);
+	}
+	
 
 }

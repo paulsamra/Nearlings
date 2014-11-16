@@ -21,9 +21,13 @@ public class FollowersRequest extends NearlingsRequest {
 	@Override
 	public JsonResponseInterface makeRequest(Bundle b) {
 		// TODO Auto-generated method stub
+	
 		return null;
 	}
-
+	@Override
+	public void executePostRetrieval(Context c, Object o) {
+		
+	}
 	@Override
 	public Class getJSONclass() {
 		// TODO Auto-generated method stub
@@ -58,4 +62,8 @@ public class FollowersRequest extends NearlingsRequest {
 
 	// for testing purposes
 	public static int counter = 0;
+
+
+
+
 }

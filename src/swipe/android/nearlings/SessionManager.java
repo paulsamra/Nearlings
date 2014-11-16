@@ -13,7 +13,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 
-public class SessionManager{
+public class SessionManager {
 	// Shared Preferences
 	static SharedPreferences pref;
 
@@ -31,37 +31,45 @@ public class SessionManager{
 
 	private static SessionManager instance;
 
-	//keys
+	// keys
 	private static final String IS_LOGGED_IN = "IS_LOGGED_IN";
 	private static final String USER_NAME = "USER_NAME";
 	private static final String TOKEN = "TOKEN";
-	
-	private static final String URL_BASE="https://nearlings.com/api/2014-10-13";
-	public String loginURL(){
+
+	private static final String URL_BASE = "https://nearlings.com/api/2014-10-13";
+
+	public String loginURL() {
 		return URL_BASE + "/login";
 	}
-	public String needsDetailsFollowersURL(String id){
-		//TODO
+
+	public String needsDetailsFollowersURL(String id) {
+		// TODO
 		return URL_BASE + "/login";
 	}
-	public String needsDetailsOffersURL(String id){
-		//TODO
+
+	public String needsDetailsOffersURL(String id) {
+		// TODO
 		return URL_BASE + "/login";
 	}
-	public String needDetailsURL(String id){
-		//TODO
+
+	public String needDetailsURL(String id) {
+		// TODO
 		return URL_BASE + "/login";
 	}
-	public String needDetailsQueryURL(String location, String searchFilter){
-		//TODO
+	public String needsDetailsBidsURL(String id) {
+		// TODO
 		return URL_BASE + "/login";
 	}
+	public String needDetailsQueryURL(String location, String searchFilter) {
+		// TODO
+		return URL_BASE + "/login";
+	}
+
 	private SessionManager(Context c) {
 		this._context = c;
 		pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
 		editor = pref.edit();
 	}
-
 
 	public static synchronized SessionManager getInstance(Context c) {
 		if (instance == null)
@@ -70,32 +78,41 @@ public class SessionManager{
 	}
 
 	public void setIsLoggedIn(boolean showAbout) {
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(IS_LOGGED_IN, showAbout);
-        editor.commit();
-    }
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putBoolean(IS_LOGGED_IN, showAbout);
+		editor.commit();
+	}
 
-    public boolean isLoggedIn() {
-        return pref.getBoolean(IS_LOGGED_IN, false);
-    }
-    public void setUserName(String username){
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(USER_NAME, username);
-        editor.commit();
-    }
-    public void setAuthToken(String token){
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(TOKEN, token);
-        editor.commit();
-    }
-    public Map<String, String> defaultSessionHeaders(){
+	public boolean isLoggedIn() {
+		return pref.getBoolean(IS_LOGGED_IN, false);
+	}
+
+	public void setUserName(String username) {
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putString(USER_NAME, username);
+		editor.commit();
+	}
+
+	public void setAuthToken(String token) {
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putString(TOKEN, token);
+		editor.commit();
+	}
+
+	public String getAuthToken() {
+		return pref.getString(TOKEN, "");
+	}
+
+	public Map<String, String> defaultSessionHeaders(){
     	Map<String, String> headers = new LinkedHashMap<String, String>();
 
 		headers.put("Accept", "application/json");
 		headers.put("Content-Type", "application/json");
 		headers.put("Cache-Control", "none");
+		
+		if(getAuthToken() !=  null || getAuthToken() != "")
+			headers.put("token", getAuthToken());
 		return headers;
     }
-
 
 }

@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.edbert.library.containers.TabsActivityContainer;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,65 +17,50 @@ import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-public class NeedsDetailsActivity extends ActionBarActivity implements TabListener {
+public class NeedsDetailsActivity extends TabsActivityContainer {
 	String id = "0";
-	Map<String, Fragment> mapFragList = new LinkedHashMap<String, Fragment>();
+
+	Menu menu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.activity_main);
-
-		mapFragList.put("Details", new NeedsDetailsFragment());
-		ActionBar bar = this.getSupportActionBar();
-		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		Bundle b = getIntent().getExtras();
-		id = b.getString("id");
-		
-		 mapFragList.put("Followers", new NeedsFollowersFragment());
-		//  mapFragList.put("Offers", new NeedsOffersFragment());
-		 
-		Iterator it = mapFragList.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pairs = (Map.Entry) it.next();
-
-			Tab tab = bar.newTab();
-			tab.setText((String) pairs.getKey());
-
-			tab.setTabListener(this);
-			bar.addTab(tab);
-		}
+		setContentView(R.layout.activity_main);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-
+		getMenuInflater().inflate(R.menu.refresh_details, menu);
 		return true;
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.refresh_details:
+			int pos = this.getSupportActionBar().getSelectedTab().getPosition();
+			String tag = createTag(super.mapFragList.getValue(pos));
+			Refreshable f = ((Refreshable) getSupportFragmentManager()
+					.findFragmentByTag(tag));
+			f.onRefresh();
 
+			// refresh the child fragment
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		Fragment tf =   new NeedsDetailsFragment();
-//when is this called? this is a null
-		//if (mapFragList.size() > tab.getPosition())
-		Bundle data = new Bundle();
-		data.putString("id", id);
-		tf.setArguments(data);
-
-		ft.replace(android.R.id.content, tf);
-
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	protected void addDefaultFragments() {
+		mapFragList.put("Details", new NeedsDetailsFragment());
+		mapFragList.put("Followers", new NeedsFollowersFragment());
+		mapFragList.put("Offers", new NeedsBidsFragment());
 
 	}
 
