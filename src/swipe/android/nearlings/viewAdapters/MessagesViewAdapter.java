@@ -62,18 +62,16 @@ public class MessagesViewAdapter extends CursorAdapter {
 		holder.sender.setText(cursor.getString(sender_index));
 
 		// problem is processing. this should only happen once.
-String s = cursor.getString(time_index);
+		String s = cursor.getString(time_index);
 
 		holder.dateSent.setText(s);
 
 		holder.message.setText(cursor.getString(message_index));
 
-		boolean unreadBroadcast = Boolean.valueOf(cursor.getString(unread_index));
-		if (unreadBroadcast) {
-			holder.unread_icon.setVisibility(View.VISIBLE);
-		} else {
-			holder.unread_icon.setVisibility(View.GONE);
-		}
+		boolean unreadBroadcast = Boolean.valueOf(cursor
+				.getString(unread_index));
+
+		holder.unread_icon.setVisibility(View.GONE);
 
 	}
 

@@ -13,14 +13,14 @@ import android.os.Bundle;
 import com.edbert.library.network.sync.JsonResponseInterface;
 
 public class MessagesRequest extends NearlingsRequest {
-public MessagesRequest(Context c) {
+	public MessagesRequest(Context c) {
 		super(c);
 		// TODO Auto-generated constructor stub
 	}
 
-public static final String SEARCH_PARAMS_TAG = "SEARCH_PARAMS_TAG";
+	public static final String SEARCH_PARAMS_TAG = "SEARCH_PARAMS_TAG";
 
-//we will have a base URL as wel
+	// we will have a base URL as wel
 	@Override
 	public JsonResponseInterface makeRequest(Bundle b) {
 		// this is a request to a url via the socket operator.
@@ -36,7 +36,7 @@ public static final String SEARCH_PARAMS_TAG = "SEARCH_PARAMS_TAG";
 	@Override
 	public boolean writeToDatabase(Context c, Object o) {
 		// for now we will write random dummy stuff to the database
-	
+
 		ContentValues cv = new ContentValues();
 
 		cv.put(MessagesDatabaseHelper.COLUMN_AUTHOR, "Author");

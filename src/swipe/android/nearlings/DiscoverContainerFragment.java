@@ -41,7 +41,8 @@ import android.widget.TextView;
 
 public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	ListView lView;
-
+	TextView searchTerm;
+	TextView location;
 	public static final String MESSAGES_START_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
 	public static final String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
@@ -64,10 +65,13 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 			Bundle savedInstanceState) {
 
 		super.onCreateView(inflater, container, savedInstanceState);
-
+		// Log.e("CREATE VIEW", "CREATE");
 		LinearLayout rootView = (LinearLayout) inflater.inflate(
 				R.layout.discover_needs_container_layout, null);
 
+	
+		searchTerm = (TextView) rootView.findViewById(R.id.search_bar_search_term);
+		location = (TextView) rootView.findViewById(R.id.search_bar_search_location);
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.search_options_listview_categories);
 		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
@@ -90,6 +94,13 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 				for (SearchOptionsFilter f : listOfFilter)
 					f.setSelected(false);
 				listOfFilter.get(position).setSelected(!current);
+				String term = listOfFilter.get(position)
+						.getSearchTerm();
+				if (current) {
+					
+					term = "All";
+				}
+				searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
 
 				// requeue with search filters. We should pass in filters at
@@ -165,6 +176,33 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+	
+		// grab new search terms
+		String searchString = SessionManager.getInstance(this.getActivity())
+				.getSearchString();
+	
+			if (searchString != null && searchString != ""){
+				searchTerm.setText(searchString);
+			}
+			else{
+				searchTerm.setText("All");
+			}
+		
+		String locationString = SessionManager.getInstance(this.getActivity())
+				.getSearchLocation();
+
+			if (locationString != null && locationString != ""){
+				location.setText(locationString);
+			}
+			else {
+				location.setText("Unknown Location");
+				
+			}
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
@@ -211,7 +249,7 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void reloadAdapter() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

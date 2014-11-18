@@ -23,7 +23,7 @@
             </ImageView>
 
             <TextView
-                android:id="@+id/search_bar_all"
+                android:id="@+id/search_bar_search_term"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_toRightOf="@+id/search_bar_search_icon"
@@ -33,7 +33,8 @@
                 android:id="@+id/search_bar_search_location"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_toRightOf="@+id/search_bar_all" />
+                android:text="location"
+                android:layout_toRightOf="@+id/search_bar_search_term" />
 
             <ImageView
                 android:id="@+id/search_options_filter_results"

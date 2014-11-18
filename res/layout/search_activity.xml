@@ -1,76 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:zyh="http://schemas.android.com.zyh.deletableedittext"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:weightSum="2" >
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancel" >
-     </TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cancel" >
+       <Button
+        android:id="@+id/cancel"
+              android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_green"
+        android:text="Cancel" />
 
-       
-        </TextView>
+      <Button
+        android:id="@+id/search"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_green"
+        android:text="Search" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="48dp"
         android:layout_margin="2dp"
         android:orientation="horizontal" >
 
         <TextView
+            android:id="@+id/search_search_term"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Find" >
         </TextView>
 
-        <EditText
+        <com.example.deletableedittext.DeleteableEditText
+            android:id="@+id/search_item"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent" >
-        </EditText>
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/x_clear" >
-        </ImageView>
+            android:layout_height="50dp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="48dp"
         android:layout_margin="2dp"
         android:orientation="horizontal" >
 
         <TextView
+                android:id="@+id/search_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Near" >
         </TextView>
 
-        <EditText
+        <com.example.deletableedittext.DeleteableEditText
+            android:id="@+id/search_places"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent" >
-        </EditText>
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/x_clear" >
-        </ImageView>
+            android:layout_height="50dp" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/search_places_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>
