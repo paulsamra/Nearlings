@@ -38,7 +38,7 @@ public class NeedsDetailsDatabaseHelper implements DatabaseHelperInterface {
 			+ TABLE_NAME + "(" + COLUMN_ID + " TEXT NOT NULL primary key, "
 			+ COLUMN_TITLE + " TEXT, " + COLUMN_DATE
 			+" TEXT, " + COLUMN_AUTHOR + " TEXT, "
-			+ COLUMN_PRICE + " INTEGER, " + COLUMN_AUTHOR_IMAGE_PREVIEW_URL + " TEXT, "
+			+ COLUMN_PRICE + " FLOAT, " + COLUMN_AUTHOR_IMAGE_PREVIEW_URL + " TEXT, "
 			+ COLUMN_STATUS + " TEXT, "
 			
 			+ COLUMN_LOCATION_GEOPOINT_LATITUDE + " DOUBLE, " + COLUMN_LOCATION_GEOPOINT_LONGITUDE + " DOUBLE, "

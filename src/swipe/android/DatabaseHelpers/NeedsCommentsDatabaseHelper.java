@@ -19,7 +19,7 @@ public class NeedsCommentsDatabaseHelper implements DatabaseHelperInterface {
 	// the comments messages should be stored elsewhere.
 
 	public static final String[] COLUMNS = { COLUMN_ID,
-			COLUMN_DATE, COLUMN_AUTHOR, COLUMN_MESSAGE };
+			COLUMN_DATE, COLUMN_AUTHOR, COLUMN_MESSAGE, COLUMN_AUTHOR_IMAGE_PREVIEW_URL};
 
 	public static final String TABLE_CREATE_ROUTES = "CREATE TABLE "
 			+ TABLE_NAME + "(" + COLUMN_ID + " TEXT NOT NULL primary key, "

@@ -5,6 +5,8 @@
 package swipe.android.nearlings;
 
 import java.util.ArrayList;
+
+import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.meetme.android.horizontallistview.HorizontalListView;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
@@ -13,6 +15,7 @@ import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListA
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.discover.options.SearchRadiusFilter;
 import swipe.android.nearlings.discover.options.SearchRadiusOptionsListAdapter;
+import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
 import android.app.Activity;
 import android.content.Intent;
@@ -221,7 +224,7 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest(this.getActivity());
+		super.helper = SendRequestStrategyManager.getHelper(NeedsDetailsRequest.class);// new NeedsDetailsRequest(this.getActivity(), JsonExploreResponse.class);
 	}
 
 	@Override

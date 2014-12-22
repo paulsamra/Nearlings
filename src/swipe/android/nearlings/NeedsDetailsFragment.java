@@ -62,7 +62,8 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	@Override
 	public void onRefresh() {
 		// resync data?
-		requestSync();
+		super.onRefresh();
+		//reloadAdapter();
 	}
 
 	@Override
@@ -72,11 +73,6 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-		/*
-		 * String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID +
-		 * " = '" + id + "'";
-		 */
-
 		Log.i("CURSOR_ID_GEN", id);
 		String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
 		String[] mSelectionArgs = { "" };
@@ -93,14 +89,23 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	}
 
 	Cursor c;
+	@Override
+	public void onResume(){
+		super.onResume();
+		adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, c, savedInstanceState);
+		
+
+	}
 
 	@Override
 	public void reloadData() {
 		// TODO Auto-generated method stub
+
+		Log.e("ReloadAdapter", "adapter");
 		// getLoaderManager().initLoader(0, null, this);
 		reloadAdapter();
 
-		//adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, savedInstanceState);
+		//dapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, savedInstanceState);
 
 	
 		/*
@@ -127,7 +132,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	public void reloadAdapter() {
 		getLoaderManager().initLoader(0, null, this);
 		c = generateCursor();
-		
+		if(adapter == null)
 			adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, c, savedInstanceState);
 		
 		adapter.reloadData();

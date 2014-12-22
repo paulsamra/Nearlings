@@ -1,11 +1,14 @@
 package swipe.android.nearlings;
 
+import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.MessagesSync.EventsRequest;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
@@ -47,7 +50,8 @@ public class NearlingsApplication extends Application implements
 				.getDBHelperInstance(this).getWritableDatabase());
 
 		SendRequestStrategyManager.register(new MessagesRequest(this));
-		SendRequestStrategyManager.register(new NeedsDetailsRequest(this));
+		SendRequestStrategyManager.register(new NeedsDetailsRequest<JsonExploreResponse>(this, JsonExploreResponse.class));
+		SendRequestStrategyManager.register(new EventsRequest(this));
 		super.registerActivityLifecycleCallbacks(this);
 	}
 
@@ -65,6 +69,7 @@ public class NearlingsApplication extends Application implements
 		DatabaseCommandManager.register(new MessagesDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsDetailsDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsCommentsDatabaseHelper());
+		DatabaseCommandManager.register(new EventsDatabaseHelper());
 	}
 
 	public static void initImageLoader(Context context) {

@@ -12,4 +12,5 @@ public class LoginActivity extends TabsActivityContainer {
 		mapFragList.put("Login", new LoginFragment());
 		mapFragList.put("Sign Up", new SignUpFragment());
 	}
+
 }

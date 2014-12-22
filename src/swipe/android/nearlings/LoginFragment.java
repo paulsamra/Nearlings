@@ -49,6 +49,7 @@ public class LoginFragment extends Fragment implements
 					result.getToken());
 
 			Intent intent = new Intent(this.getActivity(), MainActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			this.getActivity().startActivity(intent);
 			this.getActivity().finish();
 		}else{

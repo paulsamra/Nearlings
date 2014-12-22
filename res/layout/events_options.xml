@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<LinearLayout android:id="@+id/back" android:tag="back"
+		style="@style/ListBackContent" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<Button android:id="@+id/event_yes" android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:text="@string/yes_RSVP" />
+
+		<Button android:id="@+id/event_dont_know" android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:text="@string/idk_RSVP" />
+
+		<Button android:id="@+id/event_no" android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:text="@string/no_RSVP" />
+	</LinearLayout>
+
+	<LinearLayout android:orientation="horizontal"
+
+		style="@style/ListFrontContent" android:id="@+id/front" android:tag="front"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+
+		<TextView android:id="@+id/event_time_of"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+			android:textColor="@color/black" />
+		<TextView android:id="@+id/event_name" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textColor="@color/black" />
+		<TextView android:id="@+id/event_location"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textColor="@color/black" />
+		<TextView android:id="@+id/event_time_sent"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textColor="@color/black" />
+		<TextView android:id="@+id/author" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textColor="@color/black" />
+		<TextView android:id="@+id/event_author"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+			android:textColor="@color/black" />
+	</LinearLayout>
+
+</FrameLayout>

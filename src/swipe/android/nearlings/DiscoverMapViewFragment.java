@@ -1,7 +1,9 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -77,12 +80,26 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-
+		/*
+//TODO:
 		// Uri to the content provider LocationsContentProvider
 		Uri uri = NearlingsContentProvider
 				.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME);
 		// Fetches all the rows from locations table
-		return new CursorLoader(this.getActivity(), uri, null, null, null, null);
+		return new CursorLoader(this.getActivity(), uri, null, null, null, null);*/
+		String allActiveSearch = NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR " + 
+				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR "+
+				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?";
+		String[] activeStates = {Needs.NOT_ACCEPTED_YET, Needs.DONE_WAITING_FOR_REVIEW, Needs.PENDING};
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch, activeStates,
+				NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
+
+		return cursorLoader;
+
 	}
 
 	@Override
@@ -166,8 +183,8 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest(this.getActivity());
-	}
+		super.helper = SendRequestStrategyManager.getHelper(NeedsDetailsRequest.class);// new NeedsDetailsRequest(this.getActivity(), JsonExploreResponse.class);
+		}
 
 	// obsolete since we're using a cursor callback
 	@Override

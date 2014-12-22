@@ -1,8 +1,12 @@
 package swipe.android.nearlings;
 
+import com.edbert.library.sendRequest.SendRequestStrategyManager;
+
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
 import android.content.Intent;
 import android.database.Cursor;
@@ -68,16 +72,20 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest(this.getActivity());
-	}
+		super.helper = SendRequestStrategyManager.getHelper(NeedsDetailsRequest.class);// new NeedsDetailsRequest(this.getActivity(), JsonExploreResponse.class);
+			}
 
 	@Override
 	public CursorLoader generateCursorLoader() {
+		String allActiveSearch = NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR " + 
+				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR "+
+				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?";
+		String[] activeStates = {Needs.NOT_ACCEPTED_YET, Needs.DONE_WAITING_FOR_REVIEW, Needs.PENDING};
 		CursorLoader cursorLoader = new CursorLoader(
 				this.getActivity(),
 				NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-				NeedsDetailsDatabaseHelper.COLUMNS, null, null,
+				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch, activeStates,
 				NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
 
 		return cursorLoader;
@@ -118,6 +126,7 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID));
 		extras.putString("id", need_id);
 		intent.putExtras(extras);
+		
 		startActivity(intent);
 	}
 

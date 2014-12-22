@@ -36,7 +36,7 @@ public class MainActivity extends NavDrawerActivity {
 		} else {
 			NavDrawerItemManager.getInstance().setDefaultLayout();
 		}
-		if (adapter != null){
+		if (adapter != null) {
 			adapter.notifyDataSetInvalidated();
 		}
 	}
@@ -56,16 +56,20 @@ public class MainActivity extends NavDrawerActivity {
 		// this should just be a static refrence
 		navDrawerManager = NavDrawerItemManager.getInstance();
 	}
+
 	@Override
 	public void reloadNavigationDrawer() {
 		setUpNavDrawerTiles();
 		setUpNavDrawerHeader();
 		setUpNavDrawerFooter();
 		super.reloadNavigationDrawer();
-		
-		//adapter.notifyDataSetInvalidated();
+
+		// adapter.notifyDataSetInvalidated();
 	}
 
-
+	@Override
+	public void onBackPressed() {
+		this.finish();
+	}
 
 }

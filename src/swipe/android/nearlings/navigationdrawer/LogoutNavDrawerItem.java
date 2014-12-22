@@ -1,11 +1,16 @@
 package swipe.android.nearlings.navigationdrawer;
 
+import java.util.Map;
+
 import swipe.android.nearlings.DetailFragment;
 import swipe.android.nearlings.LoginActivity;
 import swipe.android.nearlings.MainActivity;
 import swipe.android.nearlings.SessionManager;
+import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.utils.MapUtils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -45,6 +50,12 @@ private static final String TITLE = "Logout";
 
 	@Override
 	public void doAction(Context c){
+		/*Map<String, String> headers = SessionManager.getInstance(c).defaultSessionHeaders();
+
+		new PostDataWebTask<JsonLoginResponse>(c, null,
+				JsonLoginResponse.class).execute(
+				SessionManager.getInstance(c).loginURL(),
+				MapUtils.mapToString(headers));*/
 		SessionManager.getInstance(c).setIsLoggedIn(false);
 		//notfiy user of logged out?
 		((MainActivity) c).reloadNavigationDrawer();

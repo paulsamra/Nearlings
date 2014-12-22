@@ -12,6 +12,7 @@ import android.content.SharedPreferences.Editor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.util.Log;
 
 public class SessionManager {
 	// Shared Preferences
@@ -68,6 +69,15 @@ public class SessionManager {
 		// TODO
 		return URL_BASE + "/login";
 	}
+	public String exploreNeedsURL() {
+		// TODO
+		return URL_BASE + "/explore";
+	}
+	public String createEventURL() {
+		// TODO
+		return URL_BASE + "/events";
+	}
+	
 
 	private SessionManager(Context c) {
 		this._context = c;
@@ -114,8 +124,10 @@ public class SessionManager {
 		headers.put("Content-Type", "application/json");
 		headers.put("Cache-Control", "none");
 
-		if (getAuthToken() != null || getAuthToken() != "")
+		if (getAuthToken() != null || getAuthToken() != ""){
+			Log.e("Token", getAuthToken());
 			headers.put("token", getAuthToken());
+		}
 		return headers;
 	}
 
