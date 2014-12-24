@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.edbert.library.network.sync.JsonResponseInterface;
 import com.edbert.library.sendRequest.SendRequestInterface;
 
-public abstract class NearlingsRequest implements SendRequestInterface {
+public abstract class NearlingsRequest <T> implements SendRequestInterface<T>{
 
 	protected Context c;
 
@@ -18,7 +18,7 @@ public abstract class NearlingsRequest implements SendRequestInterface {
 	}
 	
 	@Override
-	public void executePostRetrieval(Context c, Object o) {
+	public void executePostRetrieval(Context c, T o) {
 		// TODO Auto-generated method stub
 		
 	}

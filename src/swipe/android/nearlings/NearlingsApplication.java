@@ -22,7 +22,10 @@ import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -32,16 +35,28 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 public class NearlingsApplication extends Application implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
-		Application.ActivityLifecycleCallbacks {
-	LocationClient mLocationClient;
+		Application.ActivityLifecycleCallbacks,
+	    GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener{
+
+    private GoogleApiClient mGoogleApiClient;
+
+    private LocationRequest mLocationRequest;
+    
 	NearlingsSyncHelper helper;
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
-		mLocationClient = new LocationClient(this, this, this);
+	
+	   
+	        mGoogleApiClient = new GoogleApiClient.Builder(this)
+	                .addApi(LocationServices.API)
+	                .addConnectionCallbacks(this)
+	                .addOnConnectionFailedListener(this)
+	                .build();
 		helper = new NearlingsSyncHelper(this);
 		initImageLoader(getApplicationContext());
 		registerDatabaseTables();
@@ -50,7 +65,7 @@ public class NearlingsApplication extends Application implements
 				.getDBHelperInstance(this).getWritableDatabase());
 
 		SendRequestStrategyManager.register(new MessagesRequest(this));
-		SendRequestStrategyManager.register(new NeedsDetailsRequest<JsonExploreResponse>(this, JsonExploreResponse.class));
+		SendRequestStrategyManager.register(new NeedsDetailsRequest(this, JsonExploreResponse.class));
 		SendRequestStrategyManager.register(new EventsRequest(this));
 		super.registerActivityLifecycleCallbacks(this);
 	}
@@ -62,7 +77,7 @@ public class NearlingsApplication extends Application implements
 	}
 
 	public Location getCurrentLocation() {
-		return mLocationClient.getLastLocation();
+		return location;
 	}
 
 	private void registerDatabaseTables() {
@@ -80,7 +95,7 @@ public class NearlingsApplication extends Application implements
 				.diskCacheSize(50 * 1024 * 1024)
 				// 50 Mb
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.writeDebugLogs() // Remove for release app
+				 // Remove for release app
 				.build();
 		ImageLoader.getInstance().init(config);
 	}
@@ -103,8 +118,13 @@ public class NearlingsApplication extends Application implements
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		// TODO Auto-generated method stub
 
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(1000); // Update location every second
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
 	}
 
 	@Override
@@ -127,20 +147,22 @@ public class NearlingsApplication extends Application implements
 
 	@Override
 	public void onActivityResumed(Activity activity) {
-		mLocationClient.connect();
+	//	mLocationClient.connect();
+	    mGoogleApiClient.connect();
 
 	}
 
 	@Override
 	public void onActivityPaused(Activity activity) {
-		mLocationClient.disconnect();
+	//	mLocationClient.disconnect();
 
+	    mGoogleApiClient.disconnect();
 	}
 
 	@Override
 	public void onActivityStopped(Activity activity) {
 		// TODO Auto-generated method stub
-
+      
 	}
 
 	@Override
@@ -153,5 +175,17 @@ public class NearlingsApplication extends Application implements
 	public void onActivityDestroyed(Activity activity) {
 		// TODO Auto-generated method stub
 
+	}
+Location location;
+	@Override
+	public void onLocationChanged(Location arg0) {
+		// TODO Auto-generated method stub
+		location = arg0;
+	}
+
+	@Override
+	public void onConnectionSuspended(int cause) {
+		// TODO Auto-generated method stub
+		
 	}
 }

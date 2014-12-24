@@ -1,27 +1,27 @@
 package swipe.android.nearlings;
 
-import com.edbert.library.sendRequest.SendRequestStrategyManager;
-
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+import android.support.v7.app.ActionBar.LayoutParams;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.edbert.library.sendRequest.SendRequestStrategyManager;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
@@ -29,7 +29,22 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	String MESSAGES_START_FLAG = DiscoverContainerFragment.MESSAGES_START_FLAG;
 	String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.MESSAGES_FINISH_FLAG;
 	TextView text;
+@Override
+public void onCreate(Bundle savedInstance){
+	super.onCreate(savedInstance);
+	ActionBar mActionBar = this.getActivity().getActionBar();
+	mActionBar.setDisplayShowHomeEnabled(false);
+	mActionBar.setDisplayShowTitleEnabled(false);
+	LayoutInflater mInflater = LayoutInflater.from(this.getActivity());
+	 LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+	            LayoutParams.MATCH_PARENT,
+	            LayoutParams.MATCH_PARENT);
+	View mCustomView = mInflater.inflate(R.layout.searchbar_actionbar, null);
+	mCustomView.setLayoutParams(param);
 
+	mActionBar.setCustomView(mCustomView);
+	mActionBar.setDisplayShowCustomEnabled(true);	
+}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

@@ -71,7 +71,7 @@ public class SessionManager {
 	}
 	public String exploreNeedsURL() {
 		// TODO
-		return URL_BASE + "/explore";
+		return URL_BASE + "/explore" +  "?limit=2";
 	}
 	public String createEventURL() {
 		// TODO
