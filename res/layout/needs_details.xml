@@ -20,6 +20,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scroll_frame"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/buttons" >
@@ -27,48 +28,75 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="15dip"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/needs_details_title_label"
-                style="@style/form_label"
-                android:text="@+string/title" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/needs_details_title"
-                style="@style/form_description" />
+                <TextView
+                    android:id="@+id/needs_details_title_label"
+                    style="@style/form_label"
+                    android:text="@+string/title" />
 
-            <TextView
-                android:id="@+id/needs_details_price_label"
-                style="@style/form_bold_title"
-                android:text="@+string/title" />
+                <TextView
+                    android:id="@+id/needs_details_title"
+                    style="@style/form_description"
+                    android:layout_below="@+id/needs_details_title_label"
+                    android:text="title_info" />
 
-            <TextView
-                android:id="@+id/needs_details_price"
-                style="@style/form_description" />
+                <TextView
+                    android:id="@+id/needs_details_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/needs_details_title_label"
+                    android:layout_marginRight="5dip"
+                    android:gravity="right"
+                    android:text="price_info"
+                    android:textColor="@color/green"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/needs_details_date_label"
-                style="@style/form_label"
-                android:text="@+string/due" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/needs_details_date"
-                style="@style/form_bold_title" />
+                <TextView
+                    android:id="@+id/needs_details_date_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/due" />
 
-            <TextView
-                android:id="@+id/needs_details_author_label"
-                style="@style/form_label"
-                android:text="@+string/by" />
+                <TextView
+                    android:id="@+id/needs_details_date"
+                    style="@style/form_description"
+                    android:text="date_info" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/needs_details_author"
-                style="@style/form_description" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
-            <ImageView
-                android:id="@+id/needs_details_author_image_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/needs_details_author_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/by" />
+
+                <TextView
+                    android:id="@+id/needs_details_author"
+                    style="@style/form_description"
+                    android:layout_marginRight="5dp"
+                    android:text="details_info" />
+
+                <ImageView
+                    android:id="@+id/needs_details_author_image_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/needs_details_description_label"
@@ -77,35 +105,69 @@
 
             <TextView
                 android:id="@+id/needs_details_description"
-                style="@style/form_description" />
+                style="@style/form_description"
+                android:text="description_info" />
 
-            <TextView
-                android:id="@+id/needs_details_location_label"
-                style="@style/form_label"
-                android:text="@+string/location" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/needs_details_location"
-                style="@style/form_description" />
+                <TextView
+                    android:id="@+id/needs_details_location_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/location" />
 
-     
-                <com.google.android.gms.maps.MapView
-        android:id="@+id/needs_details_map"
-        android:layout_width="fill_parent"
-        android:layout_height="400dp"
-        android:apiKey="AIzaSyA5rUkHtoPSD-gXCIvxDdlsWMDdQcVIB6s"
-        android:clickable="true" />
-           
+                <TextView
+                    android:id="@+id/needs_details_location"
+                    style="@style/form_description"
+                    android:text="" />
+            </LinearLayout>
+
+            <!--
+                 <com.google.android.gms.maps.MapView
+               
+               <swipe.android.nearlings.CustomMapView
+                    android:id="@+id/needs_details_map"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:apiKey="AIzaSyA5rUkHtoPSD-gXCIvxDdlsWMDdQcVIB6s"
+                android:clickable="true" />
+            -->
+
+            <RelativeLayout
+                android:id="@+id/map_layout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" >
+
+                <fragment
+                    android:id="@+id/mapview"
+                    class="com.google.android.gms.maps.MapFragment"
+                     android:name="swipe.android.nearlings.MainActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="-100dp"
+                    android:layout_marginTop="-100dp" />
+
+                <ImageView
+                    android:id="@+id/transparent_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:color/transparent" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/getDirectionsButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/get_directions" />
 
             <TextView
                 android:id="@+id/needs_details_comments_label"
                 style="@style/form_label"
                 android:text="@+string/comments" />
 
-            <TextView
-                android:id="@+id/needs_details_numOfComments"
-                style="@style/form_description"
-                android:text="@+string/comments" />
             <!-- Put in our lazy load comments -->
 
             <ListView

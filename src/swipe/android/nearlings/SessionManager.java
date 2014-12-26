@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.edbert.library.database.DatabaseCommandManager;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -38,7 +40,14 @@ public class SessionManager {
 	private static final String TOKEN = "TOKEN";
 	private static final String LOCATION = "LOCATION";
 	private static final String SEARCH_STRING = "SEARCH_STRING";
+	private static final String SEARCH_RADIUS = "SEARCH_RADIUS";
+	private static final String SEARCH_STATUS = "SEARCH_STATUS";
+	private static final String SEARCH_REWARD = "SEARCH_REWARD";
 
+	
+	public static final String SEARCH_DEFAULT_FILTER = "All";
+
+	public static final float SEARCH_DEFAULT_NUMERIC = -1;
 	private static final String URL_BASE = "https://nearlings.com/api/2014-10-13";
 
 	public String loginURL() {
@@ -71,7 +80,7 @@ public class SessionManager {
 	}
 	public String exploreNeedsURL() {
 		// TODO
-		return URL_BASE + "/explore" +  "?limit=2";
+		return URL_BASE + "/explore";
 	}
 	public String createEventURL() {
 		// TODO
@@ -106,7 +115,7 @@ public class SessionManager {
 		editor.putString(USER_NAME, username);
 		editor.commit();
 	}
-
+	
 	public void setAuthToken(String token) {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(TOKEN, token);
@@ -116,6 +125,9 @@ public class SessionManager {
 	public String getAuthToken() {
 		return pref.getString(TOKEN, "");
 	}
+	public String getUserName() {
+		return pref.getString(USER_NAME, "");
+	}
 
 	public Map<String, String> defaultSessionHeaders() {
 		Map<String, String> headers = new LinkedHashMap<String, String>();
@@ -124,7 +136,7 @@ public class SessionManager {
 		headers.put("Content-Type", "application/json");
 		headers.put("Cache-Control", "none");
 
-		if (getAuthToken() != null || getAuthToken() != ""){
+		if (getAuthToken() != null && getAuthToken() != ""){
 			Log.e("Token", getAuthToken());
 			headers.put("token", getAuthToken());
 		}
@@ -142,23 +154,6 @@ public class SessionManager {
 	}
 
 	public String getSearchString() {
-	/*	Location s = ((NearlingsApplication) this._context
-				.getApplicationContext()).getCurrentLocation();
-
-		Geocoder gcd = new Geocoder(_context, Locale.getDefault());
-		List<Address> addresses;
-		String loc = "";
-		try {
-			addresses = gcd.getFromLocation(s.getLatitude(), s.getLongitude(),
-					1);
-
-			if (addresses.size() > 0)
-				loc = addresses.get(0).getLocality();
-				//System.out.println(addresses.get(0).getLocality());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		return pref.getString(SEARCH_STRING, "All");
 	}
 
@@ -166,5 +161,47 @@ public class SessionManager {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(SEARCH_STRING, searchString);
 		editor.commit();
+	}
+	
+	public float getSearchRadius() {
+		return pref.getFloat(SEARCH_RADIUS, -1);
+	}
+
+	public void setSearchRadius(float searchRadius) {
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putFloat(SEARCH_RADIUS, searchRadius);
+		editor.commit();
+	}
+	
+	public String getSearchStatus() {
+		return pref.getString(SEARCH_STATUS, "All");
+	}
+
+	public void setSearchStatus(String searchStatus) {
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putString(SEARCH_STATUS, searchStatus);
+		editor.commit();
+	}
+	public float getSearchRewardMinimum() {
+		return pref.getFloat(SEARCH_REWARD, -1);
+	}
+
+	public void setSearchRewardMinimum(float searchStatus) {
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putFloat(SEARCH_REWARD, searchStatus);
+		editor.commit();
+	}
+	public void resetTables() {
+		DatabaseCommandManager.deleteAllTables(NearlingsContentProvider
+				.getDBHelperInstance(_context).getWritableDatabase());
+
+		DatabaseCommandManager.createAllTables(NearlingsContentProvider
+				.getDBHelperInstance(_context).getWritableDatabase());
+	}
+	public void clearUserPref() {
+		// destroy all shared preferences
+		SharedPreferences settings = _context.getSharedPreferences(
+				SessionManager.PREF_NAME, Context.MODE_PRIVATE);
+		settings.edit().clear().commit();
 	}
 }

@@ -48,7 +48,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp" />
     </LinearLayout>
-
+<!-- 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="48dp"
@@ -72,6 +72,6 @@
         android:id="@+id/search_places_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
-    </ListView>
+    </ListView> -->
 
 </LinearLayout>

@@ -1,5 +1,7 @@
 package swipe.android.nearlings.viewAdapters;
 
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
@@ -9,16 +11,21 @@ import swipe.android.nearlings.DummyWebTask;
 import swipe.android.nearlings.JsonChangeStateResponse;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
+import swipe.android.nearlings.NeedsDetailsFragment;
 import swipe.android.nearlings.R;
+import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.Needs;
+import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
 import swipe.android.nearlings.jsonResponses.login.JsonBidsResponse;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -35,33 +42,41 @@ import android.widget.TextView;
 
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.utils.MapUtils;
 import com.gabesechan.android.reusable.location.ProviderLocationTracker;
 import com.gabesechan.android.reusable.location.ProviderLocationTracker.ProviderType;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonChangeStateResponse>
-, LoaderCallbacks<Cursor>{
+public class NeedsDetailViewAdapter implements
+		AsyncTaskCompleteListener<JsonChangeStateResponse>,
+		LoaderCallbacks<Cursor> {
 
 	private Context context;
 
 	private Cursor cr;
 	public TextView title, price, date, personRequesting, description,
-			location, numOfComments;
+			location;
 
 	// this needs to have a live adapter attached.
-	public ScrollView commentView;
-	public MapView mapFragment;
+	public ScrollView commentView, fullScrollView;
+	public MapFragment mapFragment;
 	public ImageView personRequestingImage;
 	public ListView listOfComments;
 	private String idOfDetail;
 	private Cursor cursor;
 	private Cursor commentCursor;
-	public Button changeState;
+	public Button changeState, getDirections;
 
 	public NeedsDetailViewAdapter(View userDataView, Context context,
 			String idOfDetail, Cursor cursor, Bundle savedInstanceState) {
@@ -70,10 +85,12 @@ public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonCha
 		this.cursor = cursor;
 		MapsInitializer.initialize(context);
 		initializeView(userDataView, savedInstanceState);
+		
 		reloadData();
 	}
 
 	public View initializeView(View view, Bundle savedInstanceState) {
+		fullScrollView = (ScrollView) view.findViewById(R.id.scroll_frame);
 		changeState = (Button) view.findViewById(R.id.needs_change_state);
 		title = (TextView) view.findViewById(R.id.needs_details_title);
 		price = (TextView) view.findViewById(R.id.needs_details_price);
@@ -83,34 +100,47 @@ public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonCha
 		description = (TextView) view
 				.findViewById(R.id.needs_details_description);
 		location = (TextView) view.findViewById(R.id.needs_details_location);
-		numOfComments = (TextView) view
-				.findViewById(R.id.needs_details_numOfComments);
 		
-
+		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
+	
+		
+	
+		
 		MapsInitializer.initialize(((Activity) context));
-		mapFragment = (MapView) view.findViewById(R.id.needs_details_map);
 
-		mapFragment.onCreate(savedInstanceState);
+		mapFragment = (MapFragment) ((Activity) this.context)
+				.getFragmentManager().findFragmentById(R.id.mapview);
 
-		setUpMapIfNeeded(view);
+		ImageView transparentImageView = (ImageView) view
+				.findViewById(R.id.transparent_image);
 
-		if (mapFragment != null) {
-			mMap = mapFragment.getMap();
+		transparentImageView.setOnTouchListener(new View.OnTouchListener() {
 
-			mMap.getUiSettings().setMyLocationButtonEnabled(false);
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction();
+				switch (action) {
+				case MotionEvent.ACTION_DOWN:
+					// Disallow ScrollView to intercept touch events.
+					fullScrollView.requestDisallowInterceptTouchEvent(true);
+					// Disable touch on transparent view
+					return false;
 
-			mMap.setMyLocationEnabled(true);
+				case MotionEvent.ACTION_UP:
+					// Allow ScrollView to intercept touch events.
+					fullScrollView.requestDisallowInterceptTouchEvent(false);
+					return true;
 
-			mMap.getUiSettings().setZoomControlsEnabled(true);
+				case MotionEvent.ACTION_MOVE:
+					fullScrollView.requestDisallowInterceptTouchEvent(true);
+					return false;
 
-	//	((Activity)context).getLoaderManager().initLoader(10, null, this);
-		}
-		
-		mapFragment.onResume();
-		//mapFragment = (MapView) view.findViewById(R.id.needs_details_map);
-	//	mapFragment.onCreate(savedInstanceState);
-
-	//	setUpMapIfNeeded(view);
+				default:
+					return true;
+				}
+			}
+		});
+		// setUpMapIfNeeded(view);
 		personRequestingImage = (ImageView) view
 				.findViewById(R.id.needs_details_author_image_preview);
 		listOfComments = (ListView) view
@@ -126,15 +156,7 @@ public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonCha
 				return false;
 			}
 		});
-		// setListViewHeightBasedOnChildren(listOfComments);
-		// this needs to have a live adapter attached.
-		/*
-		 * String selectionClause = NeedsCommentsDatabaseHelper.COLUMN_ID +
-		 * " = '" + idOfDetail + "'"; commentCursor = context
-		 * .getContentResolver() .query(NearlingsContentProvider
-		 * .contentURIbyTableName(NeedsCommentsDatabaseHelper.TABLE_NAME),
-		 * NeedsCommentsDatabaseHelper.COLUMNS, selectionClause, null, null);
-		 */
+	
 		commentCursor = context
 				.getContentResolver()
 				.query(NearlingsContentProvider
@@ -143,6 +165,20 @@ public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonCha
 		commentAdapter = new NeedsDetailCommentsAdapter(context, commentCursor);
 		commentAdapter.notifyDataSetChanged();
 		listOfComments.setAdapter(commentAdapter);
+		listOfComments.setClickable(false);
+		listOfComments.requestDisallowInterceptTouchEvent(false);
+		listOfComments.setOnTouchListener(new OnTouchListener() {
+
+	        @Override
+	        public boolean onTouch(View v, MotionEvent event) {
+	            if(event.getAction()==MotionEvent.ACTION_MOVE)
+	            {
+	                return true;
+	            }
+	            return false;
+	        }
+	    });
+	
 		// view.setTag(holder);*/
 		return null;
 	}
@@ -179,20 +215,21 @@ public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonCha
 
 		int personRequestImage_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL);
-
-		title.setText(cursor.getString(title_index));
-		price.setText(String.valueOf(cursor.getDouble(price_index)));
+String titleString = cursor.getString(title_index);
+		title.setText(titleString);
+		price.setText("$" + String.valueOf(cursor.getDouble(price_index)));
 
 		date.setText(cursor.getString(date_index));
 
 		personRequesting.setText(cursor.getString(author_index));
 		description.setText(cursor.getString(description_index));
 		location.setText(cursor.getString(location_name_index));
+		// for now
+		location.setVisibility(View.GONE);
+		final double latitude = cursor.getDouble(latitude_index);
+		final double longitude = cursor.getDouble(longitude_index);
+		LatLng locationOfRequest = new LatLng(latitude, longitude);
 
-		double latitude = cursor.getDouble(latitude_index);
-		double longitude = cursor.getDouble(longitude_index);
-		LatLng locationOfRequest = new LatLng(0.0, 0.0);
-		
 		if (mapFragment != null) {
 			mMap = mapFragment.getMap();
 
@@ -201,15 +238,27 @@ public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonCha
 			mMap.setMyLocationEnabled(true);
 
 			mMap.getUiSettings().setZoomControlsEnabled(true);
-
-			drawMarker(locationOfRequest);
+			addUpMapMarker(latitude, longitude,titleString);
 
 		}
+		getDirections.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Location l = ((NearlingsApplication) NeedsDetailViewAdapter.this.context.getApplicationContext()).getLastLocation();
+				
+				String url= "http://maps.google.com/maps?saddr=" +l.getLatitude() + "," +l.getLongitude()+ "&daddr="+latitude+","+longitude;
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
+					    Uri.parse(url));
+				NeedsDetailViewAdapter.this.context.startActivity(intent);
+			}
+			
+		});
 		ImageLoader.getInstance()
 				.displayImage(cursor.getString(personRequestImage_index),
 						personRequestingImage,
 						NearlingsApplication.getDefaultOptions());
-		 state = cursor.getString(status_index);
+		state = cursor.getString(status_index);
 		if (state.equals(Needs.NOT_ACCEPTED_YET)) {
 			changeState.setText(this.context.getString(
 					R.string.mark_as_accepted,
@@ -221,86 +270,96 @@ public class NeedsDetailViewAdapter implements AsyncTaskCompleteListener<JsonCha
 			changeState.setText(this.context
 					.getString(R.string.mark_as_reviewed));
 		}
-		
-		changeState.setOnClickListener(new OnClickListener(){
+
+		changeState.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//launch the request
-				 new DummyWebTask<JsonChangeStateResponse>((Activity) context,(AsyncTaskCompleteListener) NeedsDetailViewAdapter.this,
-						 JsonChangeStateResponse.class).execute();
+				// launch the request
+				new DummyWebTask<JsonChangeStateResponse>(
+						(Activity) context,
+						(AsyncTaskCompleteListener) NeedsDetailViewAdapter.this,
+						JsonChangeStateResponse.class).execute();
 
 			}
-			
+
 		});
 
-//ContentValues retVal = new ContentValues();
-		valuesOfNeed =  new ContentValues();
-DatabaseUtils.cursorRowToContentValues(cursor, valuesOfNeed);
+		// ContentValues retVal = new ContentValues();
+		valuesOfNeed = new ContentValues();
+		DatabaseUtils.cursorRowToContentValues(cursor, valuesOfNeed);
 
 		reloadCommentData();
 	}
+
 	String state;
-ContentValues valuesOfNeed;
-
-	private void drawMarker(LatLng point) {
-		// Creating an instance of MarkerOptions
-		MarkerOptions markerOptions = new MarkerOptions();
-
-		// Setting latitude and longitude for the marker
-		markerOptions.position(point);
-
-		// Adding marker on the Google Map
-		mMap.addMarker(markerOptions);
-	}
+	ContentValues valuesOfNeed;
 
 	public void reloadCommentData() {
+		/*new PostDataWebTask<JsonNeedsCommentsResponse>(this,
+				JsonNeedsCommentsResponse.class).execute(SessionManager
+				.getInstance(this).(), MapUtils
+				.mapToString(headers));*/
 		commentCursor.requery();
 
 		commentAdapter = new NeedsDetailCommentsAdapter(context, commentCursor);
 		// commentAdapter.notifyDataSetChanged();
 		listOfComments.setAdapter(commentAdapter);
 
-		// commentCursor.moveToFirst();
-		// /String count = String.valueOf(commentCursor.getCount());
-
 	}
 
 	private void setUpMapIfNeeded(View inflatedView) {
 		if (mMap == null) {
-			mMap = ((MapView) inflatedView.findViewById(R.id.needs_details_map))
+			/*
+			 * mMap = ((MapView) inflatedView.findViewById(R.id.mapview))
+			 * .getMap();
+			 */
+			mMap = ((MapFragment) ((Activity) this.context)
+					.getFragmentManager().findFragmentById(R.id.mapview))
 					.getMap();
-			if (mMap != null) {
-				setUpMap();
-			}
+
 		}
 	}
 
-	private void setUpMap() {
-		mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title(
-				"Marker"));
+
+	//this one should only have 1.
+	private void addUpMapMarker(double lat, double log, String title) {
+		Marker m = mMap.addMarker(new MarkerOptions().position(
+				new LatLng(lat, log)).title(title));
+		LatLngBounds.Builder b = new LatLngBounds.Builder();
+	
+		    b.include(m.getPosition());
+	
+		LatLngBounds bounds = b.build();
+		//Change the padding as per needed
+		CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 25,25,5);
+		 CameraUpdate zoom=CameraUpdateFactory.zoomTo(14);
+		 mMap.moveCamera(cu);
+		mMap.animateCamera(zoom);
+		
 	}
+
+	
 
 	@Override
 	public void onTaskComplete(JsonChangeStateResponse result) {
 
-		//write out
-		Log.e("DONE","DONE");
-		if(valuesOfNeed != null && valuesOfNeed.size() != 0){
-			Log.e("STATE","state");
-			Log.e("NEW STATe", JsonChangeStateResponse.getStatus(state));
-			
-		valuesOfNeed.put(NeedsDetailsDatabaseHelper.COLUMN_STATUS, JsonChangeStateResponse.getStatus(state));
-		valuesOfNeed.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
-		context.getContentResolver()
-				.insert(NearlingsContentProvider
-						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-						valuesOfNeed);
-		((Activity)context).finish();
+		// write out
+		if (valuesOfNeed != null && valuesOfNeed.size() != 0) {
+
+			valuesOfNeed.put(NeedsDetailsDatabaseHelper.COLUMN_STATUS,
+					JsonChangeStateResponse.getStatus(state));
+			valuesOfNeed
+					.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
+			context.getContentResolver()
+					.insert(NearlingsContentProvider
+							.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+							valuesOfNeed);
+			((Activity) context).finish();
 
 		}
-	
+
 	}
 
 	@Override
@@ -312,12 +371,12 @@ ContentValues valuesOfNeed;
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

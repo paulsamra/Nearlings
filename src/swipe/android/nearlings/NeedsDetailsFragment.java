@@ -10,12 +10,15 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -32,11 +35,12 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
 	public static final String MESSAGES_FINISH_FLAG = NeedsDetailsFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
-
+	FragmentManager fm;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+	fm = this.getFragmentManager();
 	}
 
 	Bundle savedInstanceState;
@@ -48,7 +52,19 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		// we need to refrence our container class. For now, we should just
 		// return a text message
 		super.onCreateView(inflater, container, savedInstanceState);
-		view = inflater.inflate(R.layout.needs_details, container, false);
+		  if (view != null) {
+		        ViewGroup parent = (ViewGroup) view.getParent();
+		        if (parent != null)
+		            parent.removeView(view);
+		    }
+		    try {
+		        view = inflater.inflate(R.layout.needs_details, container, false);
+		   
+		//view = inflater.inflate(R.layout.needs_details, container, false);
+		    } catch (InflateException e) {
+		    	
+		    }
+		 
 		this.savedInstanceState = savedInstanceState;
 		Bundle b = getActivity().getIntent().getExtras();
 		id = b.getString("id");
@@ -92,8 +108,8 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	@Override
 	public void onResume(){
 		super.onResume();
-		adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, c, savedInstanceState);
-		
+		//adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, c, savedInstanceState);
+		reloadAdapter();
 
 	}
 

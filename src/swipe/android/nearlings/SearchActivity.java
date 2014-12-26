@@ -38,13 +38,13 @@ import com.example.deletableedittext.DeleteableEditText;
 public class SearchActivity extends Activity implements
 		AsyncTaskCompleteListener {
 	DeleteableEditText place;
-	EditText edt_input_place;
-	ImageButton btn_delete_place;
+	//EditText edt_input_place;
+	//ImageButton btn_delete_place;
 	DeleteableEditText search_item;
 	EditText edt_input_search_item;
 	ImageButton btn_delete_item;
 
-	ListView listOfPlaces;
+	//ListView listOfPlaces;
 	String[] from = new String[] { "description" };
 	int[] to = new int[] { android.R.id.text1 };
 
@@ -59,7 +59,7 @@ public class SearchActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_activity);
 
-		place = (DeleteableEditText) findViewById(R.id.search_places);
+		//place = (DeleteableEditText) findViewById(R.id.search_places);
 		search_item = (DeleteableEditText) findViewById(R.id.search_item);
 
 		cancel = (Button) findViewById(R.id.cancel);
@@ -76,13 +76,13 @@ public class SearchActivity extends Activity implements
 
 			@Override
 			public void onClick(View v) {
-				String s = edt_input_place.getText().toString();
+				/*String s = edt_input_place.getText().toString();
 				if (s == "") {
 					s = "All";
 				}
 				SessionManager
 						.getInstance(SearchActivity.this)
-						.setSearchLocation(edt_input_place.getText().toString());
+						.setSearchLocation(edt_input_place.getText().toString());*/
 				SessionManager.getInstance(SearchActivity.this)
 						.setSearchString(
 								edt_input_search_item.getText().toString());
@@ -91,12 +91,12 @@ public class SearchActivity extends Activity implements
 
 		});
 		// EditText searchTo = (EditText)findViewById(R.id.medittext);
-		edt_input_place = (EditText) place.findViewById(R.id.edt_input);
+		//edt_input_place = (EditText) place.findViewById(R.id.edt_input);
 		edt_input_search_item = (EditText) search_item
 				.findViewById(R.id.edt_input);
 		btn_delete_item = (ImageButton) search_item
 				.findViewById(R.id.btn_delete);
-		btn_delete_place = (ImageButton) place.findViewById(R.id.btn_delete);
+		/*btn_delete_place = (ImageButton) place.findViewById(R.id.btn_delete);
 		listOfPlaces = (ListView) findViewById(R.id.search_places_list);
 
 		edt_input_place.addTextChangedListener(new TextWatcher() {
@@ -119,7 +119,7 @@ public class SearchActivity extends Activity implements
 						&& s.length() > 0 ? View.VISIBLE : View.GONE);
 			}
 		});
-
+*/
 		edt_input_search_item
 				.setOnFocusChangeListener(new OnFocusChangeListener() {
 					public void onFocusChange(View v, boolean hasFocus) {
@@ -128,15 +128,15 @@ public class SearchActivity extends Activity implements
 
 						if (hasFocus) {
 
-							listOfPlaces.setAdapter(adapterWithoutItems);
+						//	listOfPlaces.setAdapter(adapterWithoutItems);
 						} else {
-							if (adapterWithItems != null)
-								listOfPlaces.setAdapter(adapterWithItems);
+						//	if (adapterWithItems != null)
+						//		listOfPlaces.setAdapter(adapterWithItems);
 						}
 					}
 				});
 
-		listOfPlaces.setOnItemClickListener(new OnItemClickListener() {
+		/*listOfPlaces.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -146,7 +146,7 @@ public class SearchActivity extends Activity implements
 				String s = description.get("description");
 				place.setText(s);
 			}
-		});
+		});*/
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class SearchActivity extends Activity implements
 				to);
 
 		// Setting the adapter
-		listOfPlaces.setAdapter(adapterWithItems);
+	//	listOfPlaces.setAdapter(adapterWithItems);
 	}
 
 }

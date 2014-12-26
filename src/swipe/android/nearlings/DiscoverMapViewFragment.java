@@ -87,10 +87,12 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 				.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME);
 		// Fetches all the rows from locations table
 		return new CursorLoader(this.getActivity(), uri, null, null, null, null);*/
-		String allActiveSearch = NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR " + 
+	/*	String allActiveSearch = NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR " + 
 				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR "+
 				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?";
-		String[] activeStates = {Needs.NOT_ACCEPTED_YET, Needs.DONE_WAITING_FOR_REVIEW, Needs.PENDING};
+	*/	//String[] activeStates = {Needs.NOT_ACCEPTED_YET, Needs.DONE_WAITING_FOR_REVIEW, Needs.PENDING};
+		String allActiveSearch ="";
+		String[] activeStates = null;
 		CursorLoader cursorLoader = new CursorLoader(
 				this.getActivity(),
 				NearlingsContentProvider
@@ -211,7 +213,7 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		menu.clear();
-		inflater.inflate(R.menu.switch_to_list_view, menu);
+		//inflater.inflate(R.menu.switch_to_list_view, menu);
 	}
 
 	@Override
@@ -219,4 +221,6 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 }

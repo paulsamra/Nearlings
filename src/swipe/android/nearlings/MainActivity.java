@@ -9,6 +9,7 @@ import com.edbert.library.navigationdrawer.NavDrawerItemInterface;
 import com.edbert.library.navigationdrawer.viewadapter.NavDrawerListAdapter;
 
 import swipe.android.nearlings.navigationdrawer.NavDrawerItemManager;
+import swipe.android.nearlings.viewAdapters.NearlingsNavDrawerListAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.Fragment;
@@ -71,5 +72,9 @@ public class MainActivity extends NavDrawerActivity {
 	public void onBackPressed() {
 		this.finish();
 	}
-
+@Override
+public void setUpNavigationAdapter(){
+	adapter = new NearlingsNavDrawerListAdapter(getApplicationContext(),
+			navDrawerItems);
+}
 }

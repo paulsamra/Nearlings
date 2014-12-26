@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="left|center_vertical"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4dip"
+        android:layout_marginLeft="4dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/home_bg"
+        android:id="@+id/search_actionbar_home"
+        android:paddingBottom="3dip"
+        android:src="@drawable/home_def" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left|center"
+        android:layout_marginTop="4dp"
+         android:layout_marginBottom="4dp"
+        android:background="@drawable/border_textbox"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal"
+      >
+
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+          android:id="@+id/search_bar_filter"
+        android:background="@drawable/home_bg"
+            android:paddingBottom="3dip"
+            android:src="@drawable/filter_action_bar_icon" />
+
+        <TextView
+            android:id="@+id/search_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="8dip"
+            android:layout_toLeftOf="@+id/search_bar_filter"
+            android:layout_marginTop="2dip"
+            android:text="All"
+            android:textSize="24dp" />
+    </RelativeLayout>
+
+</LinearLayout>

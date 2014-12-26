@@ -24,10 +24,7 @@ public class FollowersRequest extends NearlingsRequest {
 	
 		return null;
 	}
-	@Override
-	public void executePostRetrieval(Context c, Object o) {
-		
-	}
+	
 	@Override
 	public Class getJSONclass() {
 		// TODO Auto-generated method stub

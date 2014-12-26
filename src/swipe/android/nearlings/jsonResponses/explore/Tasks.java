@@ -2,6 +2,26 @@ package swipe.android.nearlings.jsonResponses.explore;
 
 public class Tasks{
 	String user, user_thumbnail, title, description, status, reward; 
+	String id;
+	DateNearlings created_at, due_date;
+	public DateNearlings getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(DateNearlings created_at) {
+		this.created_at = created_at;
+	}
+	public DateNearlings getDue_date() {
+		return due_date;
+	}
+	public void setDue_date(DateNearlings due_date) {
+		this.due_date = due_date;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getUser() {
 		return user;
 	}

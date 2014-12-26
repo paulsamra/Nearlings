@@ -30,7 +30,7 @@ public class EventsDatabaseHelper implements DatabaseHelperInterface {
 
 	public static final String TABLE_CREATE_ROUTES = "CREATE TABLE "
 			+ TABLE_NAME + "(" + COLUMN_ID + " TEXT NOT NULL primary key, "
-				+ COLUMN_LOCATION_NAME + " TEXT NOT NULL, "
+				+ COLUMN_LOCATION_NAME + " TEXT, "
 			+ COLUMN_AUTHOR + " TEXT NOT NULL, " + COLUMN_LOCATION_LATITUDE
 			+ " DOUBLE, " + COLUMN_LOCATION_LONGITUDE + " DOUBLE, "+
 COLUMN_EVENT_NAME + " TEXT NOT NULL, " 

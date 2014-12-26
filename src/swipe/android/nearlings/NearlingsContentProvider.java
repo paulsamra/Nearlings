@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import com.edbert.library.database.DatabaseCommandManager;
+import com.edbert.library.database.DatabaseHelperInterface;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -187,5 +188,10 @@ public class NearlingsContentProvider extends ContentProvider {
 	public static Uri contentURIbyTableName(String tableName) {
 		return Uri.parse("content://" + AUTHORITY + "/"
 				+ tableName);
+	}
+	public static void clearSingleTable(DatabaseHelperInterface tableName){
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		  db.execSQL("delete from " + tableName.getTableName()); //delete all rows in a table
+
 	}
 }

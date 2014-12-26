@@ -286,5 +286,14 @@ that were present in some languages.
         <item>on every fourth Saturday</item>
         <item>on every last Saturday</item>
     </string-array>
+    <string-array name="needs_statuses">
+         <item></item>
+        <item>Available</item>
+        <item>Assigned</item>
+        <item>Underway</item>
+        <item>Review</item>
+        <item>Accepted</item>
+        <item>Closed</item>
+    </string-array>
 
 </resources>

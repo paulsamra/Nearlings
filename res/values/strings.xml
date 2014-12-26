@@ -5,10 +5,11 @@
     <string name="refresh_map_view">Refresh Map View</string>
     <string name="all">All</string>
     <string name="switch_to_map">Map View</string>
+        <string name="get_directions">Get Directions</string>
     <string name="switch_to_list">List View</string>
     <string name="title">Title</string>
-    <string name="due">Due</string>
-    <string name="by">By</string>
+    <string name="due">Due: </string>
+    <string name="by">By: </string>
     <string name="description">Description</string>
     <string name="comments">Comments</string>
     <string name="username">Username</string>
@@ -710,7 +711,7 @@ Description: This is spoken to the user. [CHAR LIMIT="NONE"]
 <!-- Do Not Translate. Sender identity for global notification synchronization. -->
 <string name="notification_sender_id"></string>
   
-  
+  <string name="location">Location: </string>
   
   
 </resources>

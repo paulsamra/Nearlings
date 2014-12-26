@@ -5,7 +5,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" 
                 android:background="@color/blue">
-
+<!-- 
         <RelativeLayout
             android:id="@+id/search_bar_text_items"
             android:layout_width="fill_parent"
@@ -44,8 +44,8 @@
                 android:src="@drawable/filter_unselected" >
             </ImageView>
         </RelativeLayout>
-
-        <include layout="@layout/search_options_subbar" />
+   <include layout="@layout/search_options_subbar" />-->
+     
     </LinearLayout>
 
 </merge>

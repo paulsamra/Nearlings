@@ -36,27 +36,30 @@ public class NearlingsApplication extends Application implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
 		Application.ActivityLifecycleCallbacks,
-	    GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+		GoogleApiClient.ConnectionCallbacks,
+		GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    private GoogleApiClient mGoogleApiClient;
+	private GoogleApiClient mGoogleApiClient;
 
-    private LocationRequest mLocationRequest;
-    
+	private LocationRequest mLocationRequest;
+
 	NearlingsSyncHelper helper;
+
+	protected synchronized void buildGoogleApiClient() {
+		mGoogleApiClient = new GoogleApiClient.Builder(this)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.addApi(LocationServices.API).build();
+
+	}
+
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
 	public void onCreate() {
 		super.onCreate();
-	
-	   
-	        mGoogleApiClient = new GoogleApiClient.Builder(this)
-	                .addApi(LocationServices.API)
-	                .addConnectionCallbacks(this)
-	                .addOnConnectionFailedListener(this)
-	                .build();
+
+		buildGoogleApiClient();
 		helper = new NearlingsSyncHelper(this);
 		initImageLoader(getApplicationContext());
 		registerDatabaseTables();
@@ -65,7 +68,8 @@ public class NearlingsApplication extends Application implements
 				.getDBHelperInstance(this).getWritableDatabase());
 
 		SendRequestStrategyManager.register(new MessagesRequest(this));
-		SendRequestStrategyManager.register(new NeedsDetailsRequest(this, JsonExploreResponse.class));
+		SendRequestStrategyManager.register(new NeedsDetailsRequest(this,
+				JsonExploreResponse.class));
 		SendRequestStrategyManager.register(new EventsRequest(this));
 		super.registerActivityLifecycleCallbacks(this);
 	}
@@ -95,7 +99,7 @@ public class NearlingsApplication extends Application implements
 				.diskCacheSize(50 * 1024 * 1024)
 				// 50 Mb
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				 // Remove for release app
+				// Remove for release app
 				.build();
 		ImageLoader.getInstance().init(config);
 	}
@@ -119,12 +123,12 @@ public class NearlingsApplication extends Application implements
 	@Override
 	public void onConnected(Bundle connectionHint) {
 
-        mLocationRequest = LocationRequest.create();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(1000); // Update location every second
+		mLocationRequest = LocationRequest.create();
+		mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		mLocationRequest.setInterval(1000); // Update location every second
 
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
+		LocationServices.FusedLocationApi.requestLocationUpdates(
+				mGoogleApiClient, mLocationRequest, this);
 	}
 
 	@Override
@@ -147,22 +151,22 @@ public class NearlingsApplication extends Application implements
 
 	@Override
 	public void onActivityResumed(Activity activity) {
-	//	mLocationClient.connect();
-	    mGoogleApiClient.connect();
+		// mLocationClient.connect();
+		mGoogleApiClient.connect();
 
 	}
 
 	@Override
 	public void onActivityPaused(Activity activity) {
-	//	mLocationClient.disconnect();
+		// mLocationClient.disconnect();
 
-	    mGoogleApiClient.disconnect();
+		mGoogleApiClient.disconnect();
 	}
 
 	@Override
 	public void onActivityStopped(Activity activity) {
 		// TODO Auto-generated method stub
-      
+
 	}
 
 	@Override
@@ -176,16 +180,24 @@ public class NearlingsApplication extends Application implements
 		// TODO Auto-generated method stub
 
 	}
-Location location;
+
+	Location location;
+
 	@Override
 	public void onLocationChanged(Location arg0) {
 		// TODO Auto-generated method stub
+		// Log.e("Location","Location received: " + arg0.toString());
 		location = arg0;
 	}
 
 	@Override
 	public void onConnectionSuspended(int cause) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
+	public Location getLastLocation() {
+		return location;
+	}
+
 }

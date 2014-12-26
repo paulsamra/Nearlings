@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment implements
 	}
 
 	protected void initializeButtons() {
-		Button loginButton = (Button) rootView.findViewById(R.id.loginButton);
+		Button loginButton = (Button) rootView.findViewById(R.id.parse_login_button);
 
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override

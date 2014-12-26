@@ -32,7 +32,11 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		b.putString(TAG, SendRequestStrategyManager.generateTag(helper));
 		requestSync(b);
 	}
-	
+	public void onRefresh(Bundle b){
+		String TAG = NearlingsSyncAdapter.HELPER_FLAG_ID;
+		b.putString(TAG, SendRequestStrategyManager.generateTag(helper));
+		requestSync(b);
+	}
 	public void requestSync(Bundle b) {
 		//need to add the flags
 		Log.e("NearlingsSwipeFragment", "Sync requested with bundle");
