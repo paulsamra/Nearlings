@@ -1,5 +1,5 @@
 package swipe.android.nearlings.jsonResponses.explore;
-public class DateNearlings{
+public class NearlingsTime{
 	String date;
 	int timezone_type;
 	String timezone;

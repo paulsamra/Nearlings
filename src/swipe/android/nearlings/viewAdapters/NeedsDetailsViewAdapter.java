@@ -15,6 +15,7 @@ import swipe.android.nearlings.NeedsDetailsFragment;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.Needs;
+import swipe.android.nearlings.json.needs.comments.Comments;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
 import swipe.android.nearlings.jsonResponses.login.JsonBidsResponse;
 import android.app.Activity;
@@ -58,7 +59,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class NeedsDetailViewAdapter implements
+public class NeedsDetailsViewAdapter implements
 		AsyncTaskCompleteListener<JsonChangeStateResponse>,
 		LoaderCallbacks<Cursor> {
 
@@ -78,7 +79,7 @@ public class NeedsDetailViewAdapter implements
 	private Cursor commentCursor;
 	public Button changeState, getDirections;
 
-	public NeedsDetailViewAdapter(View userDataView, Context context,
+	public NeedsDetailsViewAdapter(View userDataView, Context context,
 			String idOfDetail, Cursor cursor, Bundle savedInstanceState) {
 		this.context = context;
 		this.idOfDetail = idOfDetail;
@@ -88,7 +89,7 @@ public class NeedsDetailViewAdapter implements
 		
 		reloadData();
 	}
-
+	 ArrayList<Comments> listofCommentsArrayList;
 	public View initializeView(View view, Bundle savedInstanceState) {
 		fullScrollView = (ScrollView) view.findViewById(R.id.scroll_frame);
 		changeState = (Button) view.findViewById(R.id.needs_change_state);
@@ -102,9 +103,8 @@ public class NeedsDetailViewAdapter implements
 		location = (TextView) view.findViewById(R.id.needs_details_location);
 		
 		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
-	
+
 		
-	
 		
 		MapsInitializer.initialize(((Activity) context));
 
@@ -157,15 +157,17 @@ public class NeedsDetailViewAdapter implements
 			}
 		});
 	
-		commentCursor = context
+		/*commentCursor = context
 				.getContentResolver()
 				.query(NearlingsContentProvider
 						.contentURIbyTableName(NeedsCommentsDatabaseHelper.TABLE_NAME),
-						NeedsCommentsDatabaseHelper.COLUMNS, null, null, null);
-		commentAdapter = new NeedsDetailCommentsAdapter(context, commentCursor);
-		commentAdapter.notifyDataSetChanged();
-		listOfComments.setAdapter(commentAdapter);
-		listOfComments.setClickable(false);
+						NeedsCommentsDatabaseHelper.COLUMNS, null, null, null);*/
+		//commentAdapter = new LazyDetailCommentsAdapter(context);
+		//commentAdapter.notifyDataSetChanged();
+		//listOfComments.setAdapter(commentAdapter);
+		
+		//listOfComments.invalidate();
+	/*	listOfComments.setClickable(false);
 		listOfComments.requestDisallowInterceptTouchEvent(false);
 		listOfComments.setOnTouchListener(new OnTouchListener() {
 
@@ -177,13 +179,17 @@ public class NeedsDetailViewAdapter implements
 	            }
 	            return false;
 	        }
-	    });
+	    });*/
+		 listofCommentsArrayList = new ArrayList<Comments>();
+		
+			commentAdapter = new LazyDetailCommentsAdapter(this.context, listofCommentsArrayList, idOfDetail, 2);
+			listOfComments.setAdapter(commentAdapter);
 	
 		// view.setTag(holder);*/
 		return null;
 	}
 
-	NeedsDetailCommentsAdapter commentAdapter;
+LazyDetailCommentsAdapter commentAdapter;
 	GoogleMap mMap;
 
 	public void reloadData() {
@@ -245,12 +251,12 @@ String titleString = cursor.getString(title_index);
 
 			@Override
 			public void onClick(View v) {
-				Location l = ((NearlingsApplication) NeedsDetailViewAdapter.this.context.getApplicationContext()).getLastLocation();
+				Location l = ((NearlingsApplication) NeedsDetailsViewAdapter.this.context.getApplicationContext()).getLastLocation();
 				
 				String url= "http://maps.google.com/maps?saddr=" +l.getLatitude() + "," +l.getLongitude()+ "&daddr="+latitude+","+longitude;
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
 					    Uri.parse(url));
-				NeedsDetailViewAdapter.this.context.startActivity(intent);
+				NeedsDetailsViewAdapter.this.context.startActivity(intent);
 			}
 			
 		});
@@ -279,7 +285,7 @@ String titleString = cursor.getString(title_index);
 				// launch the request
 				new DummyWebTask<JsonChangeStateResponse>(
 						(Activity) context,
-						(AsyncTaskCompleteListener) NeedsDetailViewAdapter.this,
+						(AsyncTaskCompleteListener) NeedsDetailsViewAdapter.this,
 						JsonChangeStateResponse.class).execute();
 
 			}
@@ -301,12 +307,14 @@ String titleString = cursor.getString(title_index);
 				JsonNeedsCommentsResponse.class).execute(SessionManager
 				.getInstance(this).(), MapUtils
 				.mapToString(headers));*/
-		commentCursor.requery();
-
-		commentAdapter = new NeedsDetailCommentsAdapter(context, commentCursor);
-		// commentAdapter.notifyDataSetChanged();
+		//commentCursor.requery();
+	/*	commentAdapter = new NeedsCommentsAdapter(this.context, listofCommentsArrayList);
 		listOfComments.setAdapter(commentAdapter);
-
+		//commentAdapter = new LazyDetailCommentsAdapter(context, commentCursor);
+	//	commentAdapter.requestUpdate();
+	commentAdapter.notifyDataSetChanged();
+	listOfComments.setAdapter(commentAdapter);
+*/
 	}
 
 	private void setUpMapIfNeeded(View inflatedView) {

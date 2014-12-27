@@ -23,7 +23,7 @@
         android:id="@+id/scroll_frame"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/buttons" >
+        android:layout_above="@+id/buttons">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -143,12 +143,12 @@
 
                 <fragment
                     android:id="@+id/mapview"
-                    class="com.google.android.gms.maps.MapFragment"
-                     android:name="swipe.android.nearlings.MainActivity"
+                    android:name="swipe.android.nearlings.MainActivity"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="-100dp"
-                    android:layout_marginTop="-100dp" />
+                    android:layout_marginTop="-100dp"
+                    class="com.google.android.gms.maps.MapFragment" />
 
                 <ImageView
                     android:id="@+id/transparent_image"
@@ -163,17 +163,29 @@
                 android:layout_height="wrap_content"
                 android:text="@string/get_directions" />
 
-            <TextView
-                android:id="@+id/needs_details_comments_label"
-                style="@style/form_label"
-                android:text="@+string/comments" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
+                <TextView
+                    android:id="@+id/needs_details_comments_label"
+                    style="@style/form_label"
+                    android:text="@+string/comments" />
+
+                <Button
+                    android:id="@+id/needs_view_more_comments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Add Comment" />
+            </RelativeLayout>
             <!-- Put in our lazy load comments -->
 
             <ListView
                 android:id="@+id/needs_details_comments_list"
                 android:layout_width="fill_parent"
-                android:layout_height="200dp" >
+                android:layout_height="200dp"
+                android:paddingBottom="10dp" >
             </ListView>
         </LinearLayout>
     </ScrollView>

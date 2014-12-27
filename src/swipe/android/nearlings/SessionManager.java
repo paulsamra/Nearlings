@@ -86,6 +86,9 @@ public class SessionManager {
 		// TODO
 		return URL_BASE + "/events";
 	}
+	public String commentsURL(String id) {
+		return URL_BASE + "/need/" +id+"/comments";
+	}
 	
 
 	private SessionManager(Context c) {

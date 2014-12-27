@@ -4,7 +4,7 @@ import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
-import swipe.android.nearlings.viewAdapters.NeedsDetailViewAdapter;
+import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -29,7 +29,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		implements Refreshable {
 	String id;
 	View view;
-	NeedsDetailViewAdapter adapter;
+	NeedsDetailsViewAdapter adapter;
 
 	public static final String MESSAGES_START_FLAG = NeedsDetailsFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
@@ -149,7 +149,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		getLoaderManager().initLoader(0, null, this);
 		c = generateCursor();
 		if(adapter == null)
-			adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, c, savedInstanceState);
+			adapter = new NeedsDetailsViewAdapter(view, this.getActivity(), id, c, savedInstanceState);
 		
 		adapter.reloadData();
 	}
