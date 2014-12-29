@@ -64,11 +64,7 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 				false);
 
 		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-		swipeView.setColorScheme(android.R.color.holo_blue_dark,
-				android.R.color.holo_blue_light,
-				android.R.color.holo_green_light,
-				android.R.color.holo_green_light);
-
+	
 		lView = (SwipeListView) rootView.findViewById(R.id.list);
 		swipeView.setEnabled(false);
 		lView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);

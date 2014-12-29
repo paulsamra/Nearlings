@@ -16,7 +16,8 @@
             android:id="@+id/needs_change_state"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Accept Task" />
+            android:text="Accept Task"
+            style="@style/ButtonBottom" />
     </LinearLayout>
 
     <ScrollView

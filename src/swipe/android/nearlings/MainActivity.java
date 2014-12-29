@@ -16,6 +16,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -72,9 +73,24 @@ public class MainActivity extends NavDrawerActivity {
 	public void onBackPressed() {
 		this.finish();
 	}
-@Override
-public void setUpNavigationAdapter(){
-	adapter = new NearlingsNavDrawerListAdapter(getApplicationContext(),
-			navDrawerItems);
-}
+
+	@Override
+	public void setUpNavigationAdapter() {
+		adapter = new NearlingsNavDrawerListAdapter(getApplicationContext(),
+				navDrawerItems);
+	}
+
+	protected void displayView(int position) {
+		super.displayView(position);
+		/*
+		 * if (adapter.getViewTypeCount() > position) { String s =
+		 * ((NavDrawerItemInterface) super.adapter
+		 * .getItem(position)).getTitle(); super.setTitle(s);
+		 * 
+		 * Log.d("Setting title", s); }else{ Log.d("Not setting title",
+		 * "not setting title"); }
+		 */
+		if (navDrawerItems.size() > position)
+			super.setTitle(navDrawerItems.get(position).getTitle());
+	}
 }

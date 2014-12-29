@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--
-Choices for the "Reminder method" spinner.
-These must be kept in sync with the reminder_methods_values array.
-[CHAR LIMIT=10]
-    -->
     <string-array name="reminder_methods_labels">
         <item>Notification</item>
         <item>Email</item>
@@ -287,7 +282,7 @@ that were present in some languages.
         <item>on every last Saturday</item>
     </string-array>
     <string-array name="needs_statuses">
-         <item></item>
+        <item></item>
         <item>Available</item>
         <item>Assigned</item>
         <item>Underway</item>
@@ -295,5 +290,40 @@ that were present in some languages.
         <item>Accepted</item>
         <item>Closed</item>
     </string-array>
+    <string-array name="needs_types">
+        <item>Carpool</item>
+        <item>Clean</item>
+        <item>Cook</item>
+        <item>Design</item>
+        <item>Entertain</item>
+        <item>Care</item>
+        <item>Repair</item>
+        <item>Health</item>
+        <item>Home</item>
+        <item>Learn</item>
+        <item>Office</item>
+        <item>Pets</item>
+        <item>Shop</item>
+        <item>Technical</item>
+        <item>Other</item>
+    </string-array>
+
+    <array name="needs_types_unchecked">
+        <item>@drawable/carpool_unchecked</item>
+        <item>@drawable/clean_unchecked</item>
+        <item>@drawable/cook_unchecked</item>
+        <item>@drawable/design_unchecked</item>
+        <item>@drawable/entertain_unchecked</item>
+        <item>@drawable/care_unchecked</item>
+        <item>@drawable/repair_unchecked</item>
+        <item>@drawable/health_unchecked</item>
+        <item>@drawable/home_unchecked</item>
+        <item>@drawable/learn_unchecked</item>
+        <item>@drawable/office_unchecked</item>
+        <item>@drawable/pets_unchecked</item>
+        <item>@drawable/shop_unchecked</item>
+        <item>@drawable/technical_unchecked</item>
+        <item>@drawable/other_unchecked</item>
+    </array>
 
 </resources>

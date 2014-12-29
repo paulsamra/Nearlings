@@ -37,16 +37,16 @@
                 android:textSize="16sp" >
             </TextView>
 
-            <TextView
-                android:id="@+id/message_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+    <com.github.curioustechizen.ago.RelativeTimeTextView
+        android:id="@+id/message_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_alignParentRight="true"
                 android:gravity="right"
                     android:text="date"
                 android:textColor="@color/black"
-                android:textSize="14sp" >
-            </TextView>
+                android:textSize="14sp" />
+        
         </RelativeLayout>
 
         <TextView

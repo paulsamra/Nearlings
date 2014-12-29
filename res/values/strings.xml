@@ -712,6 +712,10 @@ Description: This is spoken to the user. [CHAR LIMIT="NONE"]
 <string name="notification_sender_id"></string>
   
   <string name="location">Location: </string>
-  
+
+  <string name="not_connected_to_internet_msg">Please make sure you have an active internet connection.</string>
+    <string name="not_connected_to_internet_title">Check Internet Connection</string>
+    <string name="login_error_title">Login Error</string>
+  <string name="try_again">Try Again</string>
   
 </resources>

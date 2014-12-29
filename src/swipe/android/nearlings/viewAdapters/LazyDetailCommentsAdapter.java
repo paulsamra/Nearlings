@@ -47,7 +47,8 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 	private View pendingView = null;
 	String idOfNeed;
 	ArrayList<Comments> items;
-int limit = -1;
+	int limit = -1;
+
 	public LazyDetailCommentsAdapter(Context ctxt, ArrayList<Comments> list,
 			String idOfNeed, int limit) {
 		super(new NeedsCommentsAdapter(ctxt, list));
@@ -60,7 +61,7 @@ int limit = -1;
 		setRunInBackground(false);
 		this.idOfNeed = idOfNeed;
 		this.limit = limit;
-		//add sublist feature
+		// add sublist feature
 	}
 
 	@Override
@@ -90,10 +91,12 @@ int limit = -1;
 		String url = SessionManager.getInstance(mContext).commentsURL(idOfNeed);
 		Map headers = SessionManager.getInstance(mContext)
 				.defaultSessionHeaders();
-		if (!alreadyCalled)
+		if (!alreadyCalled){
+			Log.d("URL", url);
 			new GetDataWebTask<JsonCommentsResponse>(this, mContext,
 					JsonCommentsResponse.class, false).execute(url,
 					MapUtils.mapToString(headers));
+		}
 		return true;
 	}
 
@@ -135,7 +138,7 @@ int limit = -1;
 			hs.addAll(result.getComments());
 			items.clear();
 			items.addAll(hs);
-			
+
 			Collections.sort(items);
 
 			// items = result.getComments();

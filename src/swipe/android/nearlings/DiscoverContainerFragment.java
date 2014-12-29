@@ -11,10 +11,12 @@ import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +25,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -34,7 +35,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -54,18 +54,7 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	public static final String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 
-	public static final String[] terms = new String[] { "Carpool", "Clean",
-			"Cook", "Design", "Entertain", "Care", "Repair" };
-	public static final int[] unselectedIcons = new int[] {
-			R.drawable.shopping_unselected, R.drawable.coffee_unselected,
-			R.drawable.dollar_unselected, R.drawable.meal_unselected,
-			R.drawable.school_unselected, R.drawable.computer_unselected,
-			R.drawable.random_unselected };
-	int[] selectedIcons = new int[] { R.drawable.shopping_selected,
-			R.drawable.coffee_selected, R.drawable.dollar_selected,
-			R.drawable.meal_selected, R.drawable.school_selected,
-			R.drawable.computer_selected, R.drawable.random_selected };
-
+	
 	public static final String[] radius = new String[] { ".5", "1.0", "2.0",
 			"5.0" };
 	public static final int[] unselectedIconsRadius = new int[] {
@@ -95,12 +84,7 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 
 			@Override
 			public void onClick(View v) {
-				if (isMapView) {
-					isMapView = false;
-
-				} else {
-					isMapView = true;
-				}
+				isMapView = !isMapView;
 				swapView();
 			}
 
@@ -119,9 +103,12 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 
 		if (isMapView) {
 			newFragment = new DiscoverMapViewFragment();
+			needs_change_view.setText("List View");
 		} else {
 			// Create new fragment and transaction
 			newFragment = new DiscoverListViewFragment();
+
+			needs_change_view.setText("Map View");
 		}
 
 		String backStateName = newFragment.getClass().getName();
@@ -145,14 +132,10 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 		final ViewGroup actionBarLayout = (ViewGroup) this.getActivity()
 				.getLayoutInflater()
 				.inflate(R.layout.actionbar_searchbar, null);
+		final ActionBar actionBar = this.getActivity().getActionBar();
 
 		// Set up your ActionBar
-		final ActionBar actionBar = this.getActivity().getActionBar();
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setCustomView(actionBarLayout);
-
 		searchTerm = (TextView) actionBarLayout.findViewById(R.id.search_text);
 		// setHasOptionsMenu(true);
 		toggleFilter = (ImageView) actionBarLayout
@@ -204,14 +187,7 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 		super.onResume();
 
 		// grab new search terms
-		String searchString = SessionManager.getInstance(this.getActivity())
-				.getSearchString();
-
-		if (searchString != null && searchString != "") {
-			searchTerm.setText(searchString);
-		} else {
-			searchTerm.setText("All");
-		}
+		updateSearchString();
 
 		String locationString = SessionManager.getInstance(this.getActivity())
 				.getSearchLocation();
@@ -285,13 +261,20 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void onStop() {
 		super.onStop();
+		final ActionBar actionBar = this.getActivity().getActionBar();
+
 		getActivity().getActionBar().setDisplayShowCustomEnabled(false);
+		actionBar.setDisplayShowHomeEnabled(true);
+		actionBar.setDisplayShowTitleEnabled(true);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		getActivity().getActionBar().setDisplayShowCustomEnabled(true);
+		final ActionBar actionBar = this.getActivity().getActionBar();
+		actionBar.setDisplayShowHomeEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowCustomEnabled(true);
 
 	}
 
@@ -299,9 +282,15 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.search_options_listview_categories);
 		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
-		for (int i = 0; i < terms.length; i++) {
-			listOfFilter.add(new SearchOptionsFilter(false, unselectedIcons[i],
-					selectedIcons[i], terms[i]));
+		Resources res = getResources();
+		TypedArray icons = res.obtainTypedArray(R.array.needs_types_unchecked);
+		String[] terms = res.getStringArray(R.array.needs_types);
+		//Drawable drawable = icons.getDrawable(0);
+
+		for (int i = 0; i < icons.length(); i++) {
+		int resource = icons.getResourceId(i, 0);
+			listOfFilter.add(new SearchOptionsFilter(false,
+					resource, terms[i]));
 		}
 
 		final SearchFilterCategoryOptionsListAdapter adapter = new SearchFilterCategoryOptionsListAdapter(
@@ -513,6 +502,9 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
+								SessionManager.getInstance(DiscoverContainerFragment.this.getActivity()).commitPendingChanges();
+								DiscoverContainerFragment.this.updateSearchString();
+								
 								requestUpdate();
 							}
 						});
@@ -567,5 +559,16 @@ public class DiscoverContainerFragment extends NearlingsSwipeToRefreshFragment {
 		}
 
 		super.onRefresh(b);
+	}
+	public void updateSearchString(){
+		// grab new search terms
+		String searchString = SessionManager.getInstance(this.getActivity())
+				.getSearchString();
+
+		if (searchString != null && searchString != "") {
+			searchTerm.setText(searchString);
+		} else {
+			searchTerm.setText("All");
+		}
 	}
 }

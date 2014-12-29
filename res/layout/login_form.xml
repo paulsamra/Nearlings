@@ -15,7 +15,6 @@
         layout="@layout/com_parse_ui_parse_login_app_logo" />
 
     <LinearLayout
-   
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
@@ -49,12 +48,13 @@
                 android:layout_weight="0.5"
                 android:text="@string/com_parse_ui_create_account_button_label" />
         </LinearLayout>
-          <Button
-        android:id="@+id/parse_login_help"
-        style="@style/ParseLoginUI.HelpButton"
-        android:layout_marginTop="@dimen/com_parse_ui_small_vertical_spacing"
-        android:layout_marginBottom="@dimen/com_parse_ui_small_vertical_spacing"
-        android:text="@string/com_parse_ui_forgot_password_button_label" />
+
+        <Button
+            android:id="@+id/parse_login_help"
+            style="@style/ParseLoginUI.HelpButton"
+            android:layout_marginBottom="@dimen/com_parse_ui_small_vertical_spacing"
+            android:layout_marginTop="@dimen/com_parse_ui_small_vertical_spacing"
+            android:text="@string/com_parse_ui_forgot_password_button_label" />
     </LinearLayout>
 
 </LinearLayout>

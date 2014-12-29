@@ -11,10 +11,14 @@ import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -39,6 +43,7 @@ public class NearlingsApplication extends Application implements
 		GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+	public static final boolean DEVELOPER_MODE = true;
 	private GoogleApiClient mGoogleApiClient;
 
 	private LocationRequest mLocationRequest;
@@ -199,5 +204,30 @@ public class NearlingsApplication extends Application implements
 	public Location getLastLocation() {
 		return location;
 	}
+	public static void displayNetworkNotAvailableDialog(Context ctx){
+		AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+		String networkMessage = ctx.getString(R.string.not_connected_to_internet_msg);
+		String networkTitle = ctx.getString(R.string.not_connected_to_internet_title);
+		
+		builder.setMessage(networkMessage)
+				.setTitle(networkTitle)
+				.setCancelable(true)
+				.setPositiveButton("OK",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.dismiss();
+							}
+						});
+
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	public boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
 
 }

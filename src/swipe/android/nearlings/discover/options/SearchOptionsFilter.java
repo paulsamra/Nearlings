@@ -10,6 +10,12 @@ public class SearchOptionsFilter{
 		this.selectedIcon = selectedIcon;
 		this.searchTerm = searchTerm;
 	}
+	public SearchOptionsFilter(boolean isSelected, int unselectedIcon, String searchTerm){
+		this.isSelected = isSelected;
+		this.unselectedIcon = unselectedIcon;
+		this.selectedIcon = -1;
+		this.searchTerm = searchTerm;
+	}
 	public String getSearchTerm() {
 		return searchTerm;
 	}

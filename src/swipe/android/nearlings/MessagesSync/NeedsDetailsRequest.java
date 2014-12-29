@@ -40,19 +40,20 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker.Provider
 public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 
 	Class classType;
-public static final String BUNDLE_KEYWORDS = "KEYWORDS";
-public static final String BUNDLE_REWARD = "REWARD";
-public static final String BUNDLE_STATUS= "STATUS";
-public static final String BUNDLE_CATEGORY = "CATEGORY";
-public static final String BUNDLE_TIME_AGO = "TIME_AGO";
-public static final String BUNDLE_TIME_END = "TIME_END";
+	public static final String BUNDLE_KEYWORDS = "KEYWORDS";
+	public static final String BUNDLE_REWARD = "REWARD";
+	public static final String BUNDLE_STATUS = "STATUS";
+	public static final String BUNDLE_CATEGORY = "CATEGORY";
+	public static final String BUNDLE_TIME_AGO = "TIME_AGO";
+	public static final String BUNDLE_TIME_END = "TIME_END";
 
-public static final String BUNDLE_RADIUS = "RADIUS";
-public static final String BUNDLE_LOCATION_TYPE = "LOCATION_TYPE";
-public static final String BUNDLE_LOCATION = "LOCATION";
+	public static final String BUNDLE_RADIUS = "RADIUS";
+	public static final String BUNDLE_LOCATION_TYPE = "LOCATION_TYPE";
+	public static final String BUNDLE_LOCATION = "LOCATION";
 
-public static final String BUNDLE_LOCATION_TYPE_ADDRESS = "address";
-public static final String BUNDLE_LOCATION_TYPE_LATITUDE = "latlng";
+	public static final String BUNDLE_LOCATION_TYPE_ADDRESS = "address";
+	public static final String BUNDLE_LOCATION_TYPE_LATITUDE = "latlng";
+
 	public NeedsDetailsRequest(Context c, Class classType) {
 		super(c);
 		this.classType = classType;
@@ -64,47 +65,44 @@ public static final String BUNDLE_LOCATION_TYPE_LATITUDE = "latlng";
 		super(c);
 		this.id = id;
 	}
-	public static String bundle2string(Bundle bundle) {
-	    String string = "Bundle{";
-	    for (String key : bundle.keySet()) {
-	        string += " " + key + " => " + bundle.get(key) + ";";
-	    }
-	    string += " }Bundle";
-	    return string;
-	}
+
 	@Override
 	public JsonExploreResponse makeRequest(Bundle b) {
 		Map<String, String> headers = SessionManager.getInstance(c)
 				.defaultSessionHeaders();
-String url = SessionManager.getInstance(c).exploreNeedsURL() + "?";
+		String url = SessionManager.getInstance(c).exploreNeedsURL() + "?";
 
-if(b.containsKey(BUNDLE_RADIUS)){
-	url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
-}
-if(b.containsKey(BUNDLE_REWARD)){
-	url += ("&reward=" + b.getFloat(BUNDLE_REWARD));
-}if(b.containsKey(BUNDLE_STATUS)){
-	url += ("&status=" + b.getString(BUNDLE_STATUS));
-}if(b.containsKey(BUNDLE_CATEGORY)){
-	url += ("&category=" + b.getString(BUNDLE_CATEGORY));
-}if(b.containsKey(BUNDLE_TIME_AGO)){
-	url += ("&time_ago=" + b.getString(BUNDLE_TIME_AGO));
-}if(b.containsKey(BUNDLE_KEYWORDS)){
-	url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
-}
+		if (b.containsKey(BUNDLE_RADIUS)) {
+			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
+		}
+		if (b.containsKey(BUNDLE_REWARD)) {
+			url += ("&reward=" + b.getFloat(BUNDLE_REWARD));
+		}
+		if (b.containsKey(BUNDLE_STATUS)) {
+			url += ("&status=" + b.getString(BUNDLE_STATUS));
+		}
+		if (b.containsKey(BUNDLE_CATEGORY)) {
+			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
+		}
+		if (b.containsKey(BUNDLE_TIME_AGO)) {
+			url += ("&time_ago=" + b.getString(BUNDLE_TIME_AGO));
+		}
+		if (b.containsKey(BUNDLE_KEYWORDS)) {
+			url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
+		}
 
-if(b.containsKey(BUNDLE_LOCATION_TYPE)){
-	url += ("&location_type=" + b.getString(BUNDLE_LOCATION_TYPE));
-}
-if(b.containsKey(BUNDLE_LOCATION)){
-	url += ("&location=" + b.getString(BUNDLE_LOCATION));
-}
-if(b.containsKey(BUNDLE_TIME_END)){
-	url += ("&time_end=" + b.getString(BUNDLE_TIME_END));
-}
-Log.e("URL", url);
-		Object o = SocketOperator.getInstance(classType).getResponse(c,
-				url, headers);
+		if (b.containsKey(BUNDLE_LOCATION_TYPE)) {
+			url += ("&location_type=" + b.getString(BUNDLE_LOCATION_TYPE));
+		}
+		if (b.containsKey(BUNDLE_LOCATION)) {
+			url += ("&location=" + b.getString(BUNDLE_LOCATION));
+		}
+		if (b.containsKey(BUNDLE_TIME_END)) {
+			url += ("&time_end=" + b.getString(BUNDLE_TIME_END));
+		}
+		Log.e("URL", url);
+		Object o = SocketOperator.getInstance(classType).getResponse(c, url,
+				headers);
 		if (o == null)
 			return null;
 
@@ -124,10 +122,11 @@ Log.e("URL", url);
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)
-		return false;
+			return false;
 
-	NearlingsContentProvider.clearSingleTable(new NeedsDetailsDatabaseHelper());
-	 List<ContentValues>mValueList = new LinkedList<ContentValues>();
+		NearlingsContentProvider
+				.clearSingleTable(new NeedsDetailsDatabaseHelper());
+		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getTasks().size(); i++) {
 			Tasks tempNearlingTask = o.getTasks().get(i);
 			ContentValues cv = new ContentValues();
@@ -136,23 +135,22 @@ Log.e("URL", url);
 					tempNearlingTask.getId());
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_TITLE,
 					tempNearlingTask.getTitle());
-			 String myString = tempNearlingTask
-				.getDue_date().getDate();
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+			String myString = tempNearlingTask.getDue_date().getDate();
+			DateFormat format = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss.SSSSSS");
 			Date date;
 			try {
 				date = format.parse(myString);
-			
-			DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
-			String formattedDate = df2.format(date);
 
-			cv.put(MessagesDatabaseHelper.COLUMN_DATE,formattedDate);
+				DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+				String formattedDate = df2.format(date);
+
+				cv.put(MessagesDatabaseHelper.COLUMN_DATE, formattedDate);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR,
 					tempNearlingTask.getUser());
 
@@ -177,15 +175,15 @@ Log.e("URL", url);
 
 		}
 		ContentValues[] bulkToInsert;
-		 bulkToInsert = new ContentValues[mValueList.size()];
-		    mValueList.toArray(bulkToInsert);
+		bulkToInsert = new ContentValues[mValueList.size()];
+		mValueList.toArray(bulkToInsert);
 		c.getContentResolver()
 				.bulkInsert(
 						NearlingsContentProvider
 								.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-								bulkToInsert);
-	
-	return false;
+						bulkToInsert);
+
+		return true;
 
 	}
 }

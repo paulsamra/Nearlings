@@ -45,6 +45,8 @@ public class LoginFragment extends Fragment implements
 			SessionManager.getInstance(this.getActivity()).setIsLoggedIn(true);
 			SessionManager.getInstance(this.getActivity()).setUserName(
 					String.valueOf(result.getUserID()));
+			SessionManager.getInstance(this.getActivity()).setUserID(
+					String.valueOf(result.getUserID()));
 			SessionManager.getInstance(this.getActivity()).setAuthToken(
 					result.getToken());
 

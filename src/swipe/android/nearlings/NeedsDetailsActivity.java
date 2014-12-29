@@ -33,6 +33,11 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ActionBar ab = this.getSupportActionBar();
+		ab.setDisplayShowTitleEnabled(true);
+		ab.setDisplayHomeAsUpEnabled(true);
+		ab.setHomeButtonEnabled(true);
+
 	}
 
 	@Override
@@ -47,20 +52,22 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.refresh_details:
-			//for dev purpose add comment
+			// for dev purpose add comment
 			NeedsCommentsRequest rq = new NeedsCommentsRequest(this);
 			rq.writeToDatabase(this, null);
 			int pos = this.getSupportActionBar().getSelectedTab().getPosition();
 			String tag = createTag(super.mapFragList.getValue(pos));
-			
+
 			Refreshable f = ((Refreshable) getSupportFragmentManager()
 					.findFragmentByTag(tag));
 			f.onRefresh();
-
-			// refresh the child fragment
+			break;
+		// refresh the child fragment
 		default:
-			return super.onOptionsItemSelected(item);
+			onBackPressed();
+
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -70,8 +77,9 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 		mapFragList.put("Offers", new NeedsBidsFragment());
 
 	}
+
 	@Override
-	public void onBackPressed(){
+	public void onBackPressed() {
 		this.finish();
 	}
 

@@ -1,5 +1,9 @@
 package swipe.android.nearlings.viewAdapters;
 
+import java.util.Date;
+
+import com.github.curioustechizen.ago.RelativeTimeTextView;
+
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.nearlings.R;
 import android.content.Context;
@@ -26,14 +30,15 @@ public class MessagesViewAdapter extends CursorAdapter {
 		this.inflater = LayoutInflater.from(context);
 		this.cr = c;
 	}
-
+	private static final long NOW = new Date().getTime();
+	
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
 		ViewHolder holder = new ViewHolder();
 		View view = inflater.inflate(R.layout.messages_item, parent, false);
 
-		holder.dateSent = (TextView) view.findViewById(R.id.message_date);
+		holder.dateSent = (RelativeTimeTextView) view.findViewById(R.id.message_date);
 		holder.sender = (TextView) view.findViewById(R.id.message_sender);
 		holder.unread_icon = (ImageView) view
 				.findViewById(R.id.message_unread_icon);
@@ -49,8 +54,6 @@ public class MessagesViewAdapter extends CursorAdapter {
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
 
-		int sender_index = cursor
-				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_AUTHOR);
 		int time_index = cursor
 				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_DATE);
 		int message_index = cursor
@@ -59,12 +62,11 @@ public class MessagesViewAdapter extends CursorAdapter {
 		int unread_index = cursor
 				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_UNREAD);
 
-		holder.sender.setText(cursor.getString(sender_index));
-
+	
 		// problem is processing. this should only happen once.
-		String s = cursor.getString(time_index);
+		long s = cursor.getLong(time_index);
 
-		holder.dateSent.setText(s);
+		holder.dateSent.setReferenceTime(NOW - s);
 
 		holder.message.setText(cursor.getString(message_index));
 
@@ -76,7 +78,7 @@ public class MessagesViewAdapter extends CursorAdapter {
 	}
 
 	public static class ViewHolder {
-		public TextView dateSent;
+		public RelativeTimeTextView dateSent;
 		public TextView sender;
 		public ImageView unread_icon;
 

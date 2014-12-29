@@ -3,6 +3,7 @@ package swipe.android.nearlings;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
+import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
@@ -34,6 +35,7 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void reloadData() {
+		//onRefresh();
 		reloadAdapter();
 	}
 
@@ -53,6 +55,7 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 
 		swipeView.setOnRefreshListener(this);
 		lView.setOnItemClickListener(this);
+		reloadAdapter();
 		return rootView;
 	}
 
@@ -79,7 +82,8 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void onResume(){
 		super.onResume();
-		reloadData();
+		
+onRefresh();
 	}
 
 	@Override

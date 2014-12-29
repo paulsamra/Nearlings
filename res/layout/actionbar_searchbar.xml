@@ -16,7 +16,7 @@
         android:background="@drawable/home_bg"
         android:id="@+id/search_actionbar_home"
         android:paddingBottom="3dip"
-        android:src="@drawable/home_def" />
+        android:src="@drawable/nearlings_32x_icon" />
 
     <RelativeLayout
         android:layout_width="fill_parent"

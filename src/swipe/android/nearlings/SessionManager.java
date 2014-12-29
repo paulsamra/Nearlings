@@ -43,6 +43,7 @@ public class SessionManager {
 	private static final String SEARCH_RADIUS = "SEARCH_RADIUS";
 	private static final String SEARCH_STATUS = "SEARCH_STATUS";
 	private static final String SEARCH_REWARD = "SEARCH_REWARD";
+	private static final String USER_ID = "USER_ID";
 
 	
 	public static final String SEARCH_DEFAULT_FILTER = "All";
@@ -90,7 +91,10 @@ public class SessionManager {
 		return URL_BASE + "/need/" +id+"/comments";
 	}
 	
-
+	public String alertsURL() {
+		return URL_BASE + "/user/" +this.getUserID()+"/alerts";
+	}
+	
 	private SessionManager(Context c) {
 		this._context = c;
 		pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -153,7 +157,7 @@ public class SessionManager {
 	public void setSearchLocation(String location) {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(LOCATION, location);
-		editor.commit();
+
 	}
 
 	public String getSearchString() {
@@ -163,7 +167,7 @@ public class SessionManager {
 	public void setSearchString(String searchString) {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(SEARCH_STRING, searchString);
-		editor.commit();
+
 	}
 	
 	public float getSearchRadius() {
@@ -173,7 +177,7 @@ public class SessionManager {
 	public void setSearchRadius(float searchRadius) {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putFloat(SEARCH_RADIUS, searchRadius);
-		editor.commit();
+
 	}
 	
 	public String getSearchStatus() {
@@ -183,7 +187,7 @@ public class SessionManager {
 	public void setSearchStatus(String searchStatus) {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(SEARCH_STATUS, searchStatus);
-		editor.commit();
+
 	}
 	public float getSearchRewardMinimum() {
 		return pref.getFloat(SEARCH_REWARD, -1);
@@ -192,7 +196,19 @@ public class SessionManager {
 	public void setSearchRewardMinimum(float searchStatus) {
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putFloat(SEARCH_REWARD, searchStatus);
-		editor.commit();
+
+	}
+	public void setUserID(String id){
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putString(USER_ID, id);
+	
+	}
+public void commitPendingChanges(){
+	SharedPreferences.Editor editor = pref.edit();
+	editor.commit();
+}
+	public String getUserID() {
+		return pref.getString(USER_ID, "");
 	}
 	public void resetTables() {
 		DatabaseCommandManager.deleteAllTables(NearlingsContentProvider
