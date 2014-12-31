@@ -325,5 +325,19 @@ that were present in some languages.
         <item>@drawable/technical_unchecked</item>
         <item>@drawable/other_unchecked</item>
     </array>
+    <array name="home_options">
+        <item>Explore</item>
+        <item>Alerts</item>
+        <item>Create Need</item>
+        <item>Create Event</item>
+        <item>Create Group</item>
+    </array>
+    <array name="home_options_icon">
+        <item>@drawable/explore_icon</item>
+        <item>@drawable/message_icon</item>
+        <item>@drawable/create_need_icon</item>
+        <item>@drawable/create_event_icon</item>
+        <item>@drawable/create_group_icon</item>
+    </array>
 
 </resources>
