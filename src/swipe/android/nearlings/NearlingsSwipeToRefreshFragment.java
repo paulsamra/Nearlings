@@ -2,7 +2,14 @@ package swipe.android.nearlings;
 
 import swipe.android.nearlings.sync.NearlingsSyncAdapter;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ListView;
+import android.widget.AbsListView.OnScrollListener;
 
 import com.edbert.library.sendRequest.SendRequestInterface;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
@@ -24,7 +31,47 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		((NearlingsApplication) getActivity().getApplication()).getSyncHelper()
 				.performSync();
 	}
+	ListView lView;
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
+		// we need to refrence our container class. For now, we should just
+		// return a text message
+		super.onCreateView(inflater, container, savedInstanceState);
+		View view = inflater.inflate(R.layout.discover_needs_list_layout,
+				container, false);
+
+		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
+
+		lView = (ListView) view.findViewById(R.id.list);
+
+		lView.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+			        int visibleItemCount, int totalItemCount) {
+			    boolean enable = false;
+			    if(lView != null && lView.getChildCount() > 0){
+			        // check if the first item of the list is visible
+			        boolean firstItemVisible = lView.getFirstVisiblePosition() == 0;
+			        // check if the top of the first item is visible
+			        boolean topOfFirstItemVisible = lView.getChildAt(0).getTop() == 0;
+			        // enabling or disabling the refresh layout
+			        enable = firstItemVisible && topOfFirstItemVisible;
+			    }
+			    swipeView.setEnabled(enable);
+			}});
+		swipeView.setOnRefreshListener(this);
+		lView.setOnItemClickListener(this);
+
+		return view;
+
+	}
 	@Override
 	public void onRefresh() {
 		String TAG = NearlingsSyncAdapter.HELPER_FLAG_ID;

@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import com.edbert.library.swipeToRefresh.SwipeToRefreshFragment;
 
 public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 	ListView lView;
@@ -24,18 +24,20 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-		CursorLoader cursorLoader = new CursorLoader(this.getActivity(),
-				NearlingsContentProvider.contentURIbyTableName(MessagesDatabaseHelper.TABLE_NAME),
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(MessagesDatabaseHelper.TABLE_NAME),
 				MessagesDatabaseHelper.COLUMNS, null, null,
 				MessagesDatabaseHelper.COLUMN_DATE + " DESC");
 
 		return cursorLoader;
-	
+
 	}
 
 	@Override
 	public void reloadData() {
-		//onRefresh();
+		// onRefresh();
 		reloadAdapter();
 	}
 
@@ -46,6 +48,11 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 		View rootView = inflater.inflate(R.layout.pull_to_refresh_single_list,
 				container, false);
 
+		this.getActivity().getActionBar().setHomeButtonEnabled(true);
+		this.getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+		this.getActivity().getActionBar().setDisplayShowHomeEnabled(true);
+		this.getActivity().getActionBar().setDisplayShowTitleEnabled(true);
+		this.getActivity().getActionBar().setTitle("Messages");
 		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 		swipeView.setColorScheme(android.R.color.holo_blue_dark,
 				android.R.color.holo_blue_light,
@@ -79,11 +86,12 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 	public void setSourceRequestHelper() {
 		super.helper = new MessagesRequest(this.getActivity());
 	}
+
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
-		
-onRefresh();
+
+		onRefresh();
 	}
 
 	@Override
@@ -98,5 +106,14 @@ onRefresh();
 		lView.setAdapter(mAdapter);
 	}
 	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+			this.getActivity().onBackPressed();
+			
+		return true;
+	}
+
 
 }

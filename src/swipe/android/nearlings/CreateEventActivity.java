@@ -1,14 +1,20 @@
 package swipe.android.nearlings;
 
 import java.text.DateFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import swipe.android.nearlings.GoogleParser.PlacesTask;
+import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -47,7 +53,7 @@ public class CreateEventActivity extends FragmentActivity implements
 	public static final String TIMEPICKER_END_TAG = "timepicker_end";
 	AutoCompleteTextView edt_input_place;
 	ImageButton btn_delete_place;
-	Button start_date, start_time, end_date, end_time;
+	Button start_date, start_time, category;
 	DeleteableEditText search_item;
 	EditText edt_input_search_item;
 	ImageButton btn_delete_item;
@@ -65,7 +71,12 @@ public class CreateEventActivity extends FragmentActivity implements
 
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		
+		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowHomeEnabled(true);
+		getActionBar().setDisplayShowTitleEnabled(true);
+		getActionBar().setTitle("Create Event");
 		setContentView(R.layout.edit_event);
 
 		final Calendar calendar = Calendar.getInstance();
@@ -79,7 +90,7 @@ public class CreateEventActivity extends FragmentActivity implements
 				calendar.get(Calendar.MINUTE), false, false);
 
 		edt_input_place = (AutoCompleteTextView) findViewById(R.id.location);
-	
+
 		edt_input_place.addTextChangedListener(new TextWatcher() {
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
@@ -103,6 +114,19 @@ public class CreateEventActivity extends FragmentActivity implements
 				 */
 			}
 		});
+
+		edt_input_place.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				HashMap<String, String> description = (HashMap<String, String>) adapterWithItems
+						.getItem(position);
+				String s = description.get("description");
+				edt_input_place.setText(s);
+			}
+		});
+
 		Calendar c = Calendar.getInstance();
 		int seconds = c.get(Calendar.SECOND);
 		start_date = (Button) findViewById(R.id.start_date);
@@ -131,32 +155,7 @@ public class CreateEventActivity extends FragmentActivity implements
 			}
 
 		});
-		end_date = (Button) findViewById(R.id.end_date);
-		end_date.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				datePickerDialog.setVibrate(false);
-				datePickerDialog.setYearRange(1985, 2028);
-				datePickerDialog.show(getSupportFragmentManager(),
-						DATEPICKER_END_TAG);
-			}
-
-		});
-		end_time = (Button) findViewById(R.id.end_time);
-		end_time.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				timePickerDialog.setVibrate(false);
-				startTimeLastCalled = false;
-				timePickerDialog.show(getSupportFragmentManager(),
-						TIMEPICKER_END_TAG);
-
-			}
-
-		});
 		if (savedInstanceState != null) {
 			DatePickerDialog dpd = (DatePickerDialog) getSupportFragmentManager()
 					.findFragmentByTag(DATEPICKER_START_TAG);
@@ -188,20 +187,25 @@ public class CreateEventActivity extends FragmentActivity implements
 		String monthName = new DateFormatSymbols().getMonths()[month];
 
 		start_date.setText(monthName + " " + day + ", " + year);
-		end_date.setText(monthName + " " + day + ", " + year);
+		// end_date.setText(monthName + " " + day + ", " + year);
 		if (now.get(Calendar.AM_PM) == Calendar.PM) {
 			start_time.setText(hour + ":" + String.format("%02d", minute));
-			end_time.setText(hour + ":" + String.format("%02d", minute + 1));
+			// end_time.setText(hour + ":" + String.format("%02d", minute + 1));
 		} else {
 			start_time.setText(hour + ":" + String.format("%02d", minute));
-			end_time.setText(hour + ":" + String.format("%02d", minute + 1));
+			// end_time.setText(hour + ":" + String.format("%02d", minute + 1));
 		}
+		setUpPriceListener(findViewById(android.R.id.content));
+		
+		category = (Button) findViewById(R.id.category_button);
+		setUpCategory();
+		age_inequality = (Button) findViewById(R.id.age_inequality);
+		setUpAgeRequirements();
 	}
 
 	@Override
 	public void onTaskComplete(Object result) {
 		// TODO Auto-generated method stub
-		Log.e("Task complete", "task complete");
 		if (result instanceof List<?>) {
 			List<HashMap<String, String>> resultOfGooglePlace = (List<HashMap<String, String>>) result;
 
@@ -209,7 +213,6 @@ public class CreateEventActivity extends FragmentActivity implements
 			adapterWithItems = new SimpleAdapter(getBaseContext(),
 					resultOfGooglePlace, android.R.layout.simple_list_item_1,
 					from, to);
-			
 
 			// Setting the adapter
 			adapterWithItems.notifyDataSetChanged();
@@ -223,7 +226,59 @@ public class CreateEventActivity extends FragmentActivity implements
 		} else {
 			// something went wrong!
 		}
+	
+	}
 
+	Button age_inequality;
+
+	private void setUpAgeRequirements() {
+		age_inequality.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				final String[] items = getResources().getStringArray(
+						R.array.event_requirements_age_inequalities);
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						CreateEventActivity.this);
+
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) {
+
+						age_inequality.setText(items[item]);
+						dialog.cancel();
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+
+		});
+	}
+
+	private void setUpCategory() {
+		category.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				final String[] items = getResources().getStringArray(
+						R.array.event_types);
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						CreateEventActivity.this);
+
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) {
+
+						category.setText(items[item]);
+						dialog.cancel();
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+
+		});
 	}
 
 	@Override
@@ -237,10 +292,13 @@ public class CreateEventActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.save_event:
 			// save the thing
-			checkForValidInputs();
+			//checkForValidInputs();
+			break;
 		default:
-			return super.onOptionsItemSelected(item);
+			onBackPressed();
+			
 		}
+		return true;
 	}
 
 	public void populateInitialValues() {
@@ -276,7 +334,7 @@ public class CreateEventActivity extends FragmentActivity implements
 		if (datePickerDialog.getTag().equals(DATEPICKER_START_TAG)) {
 			start_date.setText(total);
 		} else if (datePickerDialog.getTag().equals(DATEPICKER_END_TAG)) {
-			end_date.setText(total);
+			// end_date.setText(total);
 		}
 	}
 
@@ -289,7 +347,50 @@ public class CreateEventActivity extends FragmentActivity implements
 		if (startTimeLastCalled) {
 			start_time.setText(total);
 		} else {
-			end_time.setText(total);
+			// end_time.setText(total);
 		}
 	}
+
+	private void setUpPriceListener(View rootView) {
+		final EditText et = (EditText) rootView.findViewById(R.id.price);
+		et.addTextChangedListener(new TextWatcher() {
+			private String current = "";
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (!s.toString().equals(current)) {
+					et.removeTextChangedListener(this);
+
+					String cleanString = s.toString().replaceAll("[$,.]", "");
+
+					double parsed = Double.parseDouble(cleanString);
+					
+					String formatted = NumberFormat.getCurrencyInstance()
+							.format((parsed / 100));
+
+					current = formatted;
+					et.setText(formatted);
+					et.setSelection(formatted.length());
+
+					et.addTextChangedListener(this);
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+	}
+
 }

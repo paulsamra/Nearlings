@@ -1,10 +1,12 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
+import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.EventsRequest;
+import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
@@ -68,7 +70,6 @@ public class NearlingsApplication extends Application implements
 		helper = new NearlingsSyncHelper(this);
 		initImageLoader(getApplicationContext());
 		registerDatabaseTables();
-		// Context c = this;
 		DatabaseCommandManager.createAllTables(NearlingsContentProvider
 				.getDBHelperInstance(this).getWritableDatabase());
 
@@ -76,6 +77,7 @@ public class NearlingsApplication extends Application implements
 		SendRequestStrategyManager.register(new NeedsDetailsRequest(this,
 				JsonExploreResponse.class));
 		SendRequestStrategyManager.register(new EventsRequest(this));
+		SendRequestStrategyManager.register(new GroupsRequest(this));
 		super.registerActivityLifecycleCallbacks(this);
 	}
 
@@ -94,6 +96,8 @@ public class NearlingsApplication extends Application implements
 		DatabaseCommandManager.register(new NeedsDetailsDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsCommentsDatabaseHelper());
 		DatabaseCommandManager.register(new EventsDatabaseHelper());
+
+		DatabaseCommandManager.register(new GroupsDatabaseHelper());
 	}
 
 	public static void initImageLoader(Context context) {

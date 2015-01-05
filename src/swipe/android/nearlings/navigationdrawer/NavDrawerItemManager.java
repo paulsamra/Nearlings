@@ -18,7 +18,7 @@ public class NavDrawerItemManager extends AbstractNavDrawerItemManager {
 	public void setDefaultLayout() {
 
 		navDrawerButtonArrayList.clear();
-		register(new DiscoverNavDrawerItem());
+		register(new NeedsNavDrawerItem());
 
 		register(new LoginNavDrawerItem());
 		
@@ -34,14 +34,17 @@ public class NavDrawerItemManager extends AbstractNavDrawerItemManager {
 	
 	public void setCurrentlySignedInLayout() {
 		navDrawerButtonArrayList.clear();
+		/*
 		register(new ProfileNavDrawerItem());
 		register(new DiscoverNavDrawerItem());
-		register(new DashboardNavDrawerItem());
+		register(new DashboardNavDrawerItem());*/
 		register(new NeedsNavDrawerItem());
 
 		register(new EventsNavDrawerItem());
 		register(new GroupsNavDrawerItem());
+		register(new ReturnToMainMenuNavDrawerItem());
+		/*
 		register(new MessagesNavDrawerItem());
-		register(new LogoutNavDrawerItem());
+		register(new LogoutNavDrawerItem());*/
 	}
 }

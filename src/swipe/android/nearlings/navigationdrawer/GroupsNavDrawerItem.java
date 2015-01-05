@@ -1,6 +1,7 @@
 package swipe.android.nearlings.navigationdrawer;
 
 import swipe.android.nearlings.DetailFragment;
+import swipe.android.nearlings.GroupsContainerFragment;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
 
@@ -24,7 +25,7 @@ private static final String TITLE = "Groups";
 	}
 	@Override
 	public Fragment getFragment() {
-		return new DetailFragment();
+		return new GroupsContainerFragment();
 	}
 
 

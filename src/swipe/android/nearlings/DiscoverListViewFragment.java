@@ -20,40 +20,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AbsListView.OnScrollListener;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
-	ListView lView;
+
 	String MESSAGES_START_FLAG = DiscoverContainerFragment.MESSAGES_START_FLAG;
 	String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.MESSAGES_FINISH_FLAG;
 	TextView text;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		// we need to refrence our container class. For now, we should just
-		// return a text message
-		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.discover_needs_list_layout,
-				container, false);
-
-		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
-		swipeView.setColorSchemeColors(android.R.color.holo_blue_dark,
-				android.R.color.holo_blue_light,
-				android.R.color.holo_green_light,
-				android.R.color.holo_green_light);
-		lView = (ListView) view.findViewById(R.id.list);
-
-		swipeView.setOnRefreshListener(this);
-		lView.setOnItemClickListener(this);
-
-		return view;
-
-	}
 
 	@Override
 	public void onResume() {
@@ -73,24 +52,23 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = SendRequestStrategyManager.getHelper(NeedsDetailsRequest.class);// new NeedsDetailsRequest(this.getActivity(), JsonExploreResponse.class);
-			}
+		super.helper = SendRequestStrategyManager
+				.getHelper(NeedsDetailsRequest.class);// new
+														// NeedsDetailsRequest(this.getActivity(),
+														// JsonExploreResponse.class);
+	}
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-	/*	String allActiveSearch = NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR " + 
-				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR "+
-				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?";
-		//String[] activeStates = {Needs.NOT_ACCEPTED_YET, Needs.DONE_WAITING_FOR_REVIEW, Needs.PENDING};
-		*/
+
 		String allActiveSearch = "";
 		String[] activeStates = null;
 		CursorLoader cursorLoader = new CursorLoader(
 				this.getActivity(),
 				NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch, activeStates,
-				NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
+				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch,
+				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
 
 		return cursorLoader;
 
@@ -114,7 +92,7 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		menu.clear();
-		//inflater.inflate(R.menu.switch_to_map_view, menu);
+		// inflater.inflate(R.menu.switch_to_map_view, menu);
 	}
 
 	@Override
@@ -130,18 +108,19 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID));
 		extras.putString("id", need_id);
 		intent.putExtras(extras);
-		
+
 		startActivity(intent);
 	}
 
 	@Override
 	public void reloadAdapter() {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void onRefresh() {
 		((DiscoverContainerFragment) this.getParentFragment()).requestUpdate();
-		//DiscoverContainerFragment.
+		// DiscoverContainerFragment.
 	}
 }

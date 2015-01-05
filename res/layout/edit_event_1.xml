@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-Copyright (C) 2010 The Android Open Source Project
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -33,6 +21,42 @@ limitations under the License.
     <!-- WHERE -->
 
     <LinearLayout
+        android:id="@+id/from_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-8dip"
+        android:minHeight="64dip"
+        android:orientation="vertical"
+        android:paddingTop="8dip" >
+
+        <TextView
+            android:id="@+id/person_or_online_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In Person or Online" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <Switch
+                android:id="@+id/switch_online_inperson"
+                style="@style/TextAppearance.Switch_LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:contentDescription="@string/accessibility_pick_start_date"
+                android:paddingRight="4dp"
+                android:textOff="In Person"
+                android:textOn="Online" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/where_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,6 +77,7 @@ limitations under the License.
 
         <View style="@style/EditEventSeparator" />
     </LinearLayout>
+
     <!-- WHEN - Read-only textview version of FROM/TO (below) -->
 
     <LinearLayout
@@ -124,11 +149,83 @@ limitations under the License.
                 android:contentDescription="@string/accessibility_pick_start_time" />
         </LinearLayout>
     </LinearLayout>
-
-    <!-- TO - Read/write version which launches the date/time pickers -->
+    <!-- Age Restriction - Read/write version which launches the date/time pickers -->
 
     <LinearLayout
-        android:id="@+id/to_row"
+        android:id="@+id/age_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/age_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Age Requirements" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/age_inequality"
+                style="@style/TextAppearance.EditEvent_SpinnerButton"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:layout_weight="7"
+                android:paddingRight="4dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/age_value"
+                style="@style/TextAppearance.EditEvent_SpinnerButton"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dip"
+                android:layout_weight="4"
+                android:inputType="number" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/event_price_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/price_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/price"
+                style="@style/TextAppearance.EditEvent_Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- Category -->
+
+    <LinearLayout
+        android:id="@+id/description_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="64dip"
@@ -139,7 +236,7 @@ limitations under the License.
             style="@style/TextAppearance.EditEvent_LabelSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_event_to_label" />
+            android:text="Category" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,86 +246,51 @@ limitations under the License.
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/end_date"
+                android:id="@+id/category_button"
                 style="@style/TextAppearance.EditEvent_SpinnerButton"
-                android:layout_width="0px"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="0dp"
-                android:layout_weight="7"
-                android:contentDescription="@string/accessibility_pick_end_date"
-                android:paddingRight="4dp"
                 android:singleLine="true" />
-
-            <Button
-                android:id="@+id/end_time"
-                style="@style/TextAppearance.EditEvent_SpinnerButton"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dip"
-                android:layout_weight="4"
-                android:contentDescription="@string/accessibility_pick_end_time" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/to_row_home_tz"
+        android:id="@+id/description_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dip"
-        android:layout_marginRight="16dip"
-        android:focusable="true"
-        android:orientation="horizontal"
-        android:paddingBottom="8dip"
-        android:visibility="gone" >
+        android:minHeight="64dip"
+        android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/end_date_home_tz"
-            style="@style/TextAppearance.EditEvent_homeTime"
-            android:layout_width="wrap_content"
+            android:id="@+id/to_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:gravity="left|center_vertical" />
+            android:text="Description" />
 
-        <TextView
-            android:id="@+id/end_time_home_tz"
-            style="@style/TextAppearance.EditEvent_homeTime"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:gravity="right|center_vertical" />
+            android:layout_marginTop="-6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/searchBox"
+                style="@style/TextAppearance.EditEvent_Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dip"
+                android:capitalize="sentences"
+                android:focusable="true"
+                android:hint="Event Description"
+                android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
+                android:maxLength="2000"
+                android:maxLines="4"
+                android:minHeight="48dip"
+                android:scrollHorizontally="false" />
+        </LinearLayout>
     </LinearLayout>
-    <!-- ALL DAY -->
-
-    <LinearLayout
-        android:id="@+id/all_day_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dip"
-        android:gravity="center_vertical"
-        android:minHeight="24dip"
-        android:orientation="horizontal" >
-
-        <CheckBox
-            android:id="@+id/is_all_day"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dip"
-            android:layout_marginRight="0dip"
-            android:contentDescription="@string/accessibility_all_day"
-            android:gravity="center_vertical" />
-
-        <TextView
-            android:id="@+id/is_all_day_label"
-            style="@style/TextAppearance.EditEvent_Small"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
-            android:layout_weight="1"
-            android:gravity="center_vertical|left"
-            android:text="@string/edit_event_all_day_label" />
-    </LinearLayout>
-    <!-- TIME ZONE - Read-only textview version -->
 
     <View style="@style/EditEventSeparator" />
 

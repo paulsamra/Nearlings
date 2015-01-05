@@ -139,6 +139,15 @@
         <item name="android:layout_marginBottom">-12dip</item>
     </style>
 
+    <style name="TextAppearance.Switch_LabelSmall">
+        <item name="android:minHeight">24dip</item>
+        <item name="android:layout_width">144dip</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:paddingRight">8dip</item>
+    </style>
+
     <style name="TextAppearance.EditEvent_Small">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textSize">14sp</item>

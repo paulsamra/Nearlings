@@ -1,31 +1,32 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
@@ -55,6 +56,50 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 		if (mMapView != null) {
 			mMap = mMapView.getMap();
 
+			mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
+				@Override
+				public View getInfoWindow(Marker arg0) {
+					return null;
+				}
+
+				@Override
+				public View getInfoContents(Marker marker) {
+					View myContentView = DiscoverMapViewFragment.this
+							.getActivity().getLayoutInflater()
+							.inflate(R.layout.needs_marker, null);
+					TextView needs_title = ((TextView) myContentView
+							.findViewById(R.id.needs_task));
+					needs_title.setText(marker.getTitle());
+					TextView needs_price = ((TextView) myContentView
+							.findViewById(R.id.needs_price));
+					String snip = marker.getSnippet();
+					needs_price.setText(snip.substring(0, snip.lastIndexOf(",")));
+					return myContentView;
+				}
+			});
+
+			mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+
+				@Override
+				public void onInfoWindowClick(Marker marker) {
+					Intent intent = new Intent(DiscoverMapViewFragment.this
+							.getActivity(), NeedsDetailsActivity.class);
+					Bundle extras = new Bundle();
+					Cursor c = generateCursor();
+					String snip = marker.getSnippet();
+
+					int position = Integer.valueOf(snip.substring(
+							snip.indexOf(",") + 1, snip.length()));
+					c.moveToPosition(position);
+					String need_id = c.getString(c
+							.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID));
+					extras.putString("id", need_id);
+					intent.putExtras(extras);
+
+					startActivity(intent);
+				}
+
+			});
 			mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
 			mMap.setMyLocationEnabled(true);
@@ -67,41 +112,21 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 
 	}
 
-	private void drawMarker(LatLng point) {
+	private void drawMarker(LatLng point, String title, double price, int pos) {
 		// Creating an instance of MarkerOptions
 		MarkerOptions markerOptions = new MarkerOptions();
 
 		// Setting latitude and longitude for the marker
 		markerOptions.position(point);
-
+		markerOptions.title(title);
+		markerOptions.snippet(String.valueOf(price) + "," + pos);
 		// Adding marker on the Google Map
 		mMap.addMarker(markerOptions);
 	}
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-		/*
-//TODO:
-		// Uri to the content provider LocationsContentProvider
-		Uri uri = NearlingsContentProvider
-				.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME);
-		// Fetches all the rows from locations table
-		return new CursorLoader(this.getActivity(), uri, null, null, null, null);*/
-	/*	String allActiveSearch = NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR " + 
-				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?" + " OR "+
-				NeedsDetailsDatabaseHelper.COLUMN_STATUS + "=?";
-	*/	//String[] activeStates = {Needs.NOT_ACCEPTED_YET, Needs.DONE_WAITING_FOR_REVIEW, Needs.PENDING};
-		String allActiveSearch ="";
-		String[] activeStates = null;
-		CursorLoader cursorLoader = new CursorLoader(
-				this.getActivity(),
-				NearlingsContentProvider
-						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch, activeStates,
-				NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
-
-		return cursorLoader;
-
+		return generateCursorLoader();
 	}
 
 	@Override
@@ -119,7 +144,7 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 
 		// Move the current record pointer to the first row of the table
 		arg1.moveToFirst();
-		
+
 		LatLngBounds.Builder bc = new LatLngBounds.Builder();
 		for (int i = 0; i < locationCount; i++) {
 
@@ -131,17 +156,21 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 					.getDouble(arg1
 							.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_GEOPOINT_LONGITUDE));
 			LatLng location = new LatLng(lat, lng);
-			drawMarker(location);
+			String title = arg1.getString(arg1
+					.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
+			drawMarker(location, title, arg1.getDouble(arg1
+					.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_PRICE)),
+					i);
 			bc.include(location);
 			arg1.moveToNext();
-			//fx zoom
+			// fx zoom
 		}
-		//bc needs to include your current location as well as the default
-		Location l = ((NearlingsApplication) this.getActivity().getApplication()).getCurrentLocation();
+		// bc needs to include your current location as well as the default
+		Location l = ((NearlingsApplication) this.getActivity()
+				.getApplication()).getCurrentLocation();
 		bc.include(new LatLng(l.getLatitude(), l.getLongitude()));
-		
-		
-	   mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bc.build(), 50));
+
+		mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bc.build(), 50));
 	}
 
 	@Override
@@ -155,14 +184,9 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 			mMap = ((MapView) inflatedView
 					.findViewById(R.id.needs_map_view_map)).getMap();
 			if (mMap != null) {
-				setUpMap();
+				// setUpMap();
 			}
 		}
-	}
-
-	private void setUpMap() {
-		mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title(
-				"Marker"));
 	}
 
 	@Override
@@ -185,13 +209,26 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = SendRequestStrategyManager.getHelper(NeedsDetailsRequest.class);// new NeedsDetailsRequest(this.getActivity(), JsonExploreResponse.class);
-		}
+		super.helper = SendRequestStrategyManager
+				.getHelper(NeedsDetailsRequest.class);// new
+														// NeedsDetailsRequest(this.getActivity(),
+														// JsonExploreResponse.class);
+	}
 
 	// obsolete since we're using a cursor callback
 	@Override
 	public CursorLoader generateCursorLoader() {
-		return null;
+
+		String allActiveSearch = "";
+		String[] activeStates = null;
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch,
+				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
+
+		return cursorLoader;
 	}
 
 	// obsolete since we're not using a listview.
@@ -213,14 +250,12 @@ public class DiscoverMapViewFragment extends NearlingsSwipeToRefreshFragment
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		menu.clear();
-		//inflater.inflate(R.menu.switch_to_list_view, menu);
 	}
 
 	@Override
 	public void reloadAdapter() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
 }

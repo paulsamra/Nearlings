@@ -9,37 +9,64 @@
 		<Button android:id="@+id/event_yes" android:layout_width="wrap_content"
 			android:layout_height="fill_parent" android:text="@string/yes_RSVP" />
 
-		<Button android:id="@+id/event_dont_know" android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:text="@string/idk_RSVP" />
 
 		<Button android:id="@+id/event_no" android:layout_width="wrap_content"
 			android:layout_height="fill_parent" android:text="@string/no_RSVP" />
 	</LinearLayout>
 
-	<LinearLayout android:orientation="horizontal"
+	<RelativeLayout android:orientation="horizontal"
 
 		style="@style/ListFrontContent" android:id="@+id/front" android:tag="front"
 		android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-
-		<TextView android:id="@+id/event_time_of"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-
-			android:textColor="@color/black" />
-		<TextView android:id="@+id/event_name" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:textColor="@color/black" />
-		<TextView android:id="@+id/event_location"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:textColor="@color/black" />
-		<TextView android:id="@+id/event_time_sent"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:textColor="@color/black" />
-		<TextView android:id="@+id/author" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:textColor="@color/black" />
-		<TextView android:id="@+id/event_author"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-
-			android:textColor="@color/black" />
-	</LinearLayout>
+ 
+    <TextView
+        android:id="@+id/event_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+ 
+    <TextView
+        android:id="@+id/event_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/event_title"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Just gona stand there and ..." />
+ 
+        <TextView
+        android:id="@+id/event_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/event_description"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Just gona stand there and ..." />
+    
+ 
+    <TextView
+        android:id="@+id/event_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/event_title"
+        android:gravity="right"
+        android:layout_marginRight="5dip"
+        android:textSize="20dp"
+        android:textColor="@color/green"
+        android:textStyle="bold"/>
+ 
+	</RelativeLayout>
 
 </FrameLayout>

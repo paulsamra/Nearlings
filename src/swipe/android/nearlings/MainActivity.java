@@ -27,7 +27,7 @@ public class MainActivity extends NavDrawerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Crashlytics.start(this);
+		//Crashlytics.start(this);
 	}
 
 	@Override
@@ -82,14 +82,7 @@ public class MainActivity extends NavDrawerActivity {
 
 	protected void displayView(int position) {
 		super.displayView(position);
-		/*
-		 * if (adapter.getViewTypeCount() > position) { String s =
-		 * ((NavDrawerItemInterface) super.adapter
-		 * .getItem(position)).getTitle(); super.setTitle(s);
-		 * 
-		 * Log.d("Setting title", s); }else{ Log.d("Not setting title",
-		 * "not setting title"); }
-		 */
+	
 		if (navDrawerItems.size() > position)
 			super.setTitle(navDrawerItems.get(position).getTitle());
 	}

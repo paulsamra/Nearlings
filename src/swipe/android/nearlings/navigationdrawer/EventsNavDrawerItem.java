@@ -1,6 +1,7 @@
 package swipe.android.nearlings.navigationdrawer;
 
 import swipe.android.nearlings.DetailFragment;
+import swipe.android.nearlings.EventsContainerFragment;
 import swipe.android.nearlings.EventsListFragment;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
@@ -25,7 +26,7 @@ private static final String TITLE = "Events";
 	}
 	@Override
 	public Fragment getFragment() {
-		return new EventsListFragment();
+	return new EventsContainerFragment();//	return new EventsListFragment();
 	}
 
 

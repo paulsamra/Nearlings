@@ -17,7 +17,10 @@
                 android:text="Categories" >
             </TextView>
 
-            <include layout="@layout/search_options_subbar" />
+            <com.meetme.android.horizontallistview.HorizontalListView
+                android:id="@+id/search_options_listview_categories"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
 
             <TextView
                 style="@style/DialogLabel"
@@ -37,10 +40,10 @@
             </TextView>
 
             <Button
+                android:id="@+id/status_button"
                 style="@style/TextAppearance.EditEvent_SpinnerButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                 android:id="@+id/status_button"
                 android:singleLine="true" />
 
             <TextView

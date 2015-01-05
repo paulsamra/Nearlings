@@ -34,10 +34,7 @@ public class LoginActivity extends Activity implements
 
 		setContentView(R.layout.login_form);
 		if (SessionManager.getInstance(this).isLoggedIn()) {
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+			goToNextActivity();
 		}
 		getActionBar().hide();
 		usernameET = (EditText) findViewById(R.id.login_username_input);
@@ -125,14 +122,16 @@ public class LoginActivity extends Activity implements
 			SessionManager.getInstance(this).setUserID(
 					String.valueOf(result.getUserID()));
 			SessionManager.getInstance(this).setAuthToken(result.getToken());
-
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+		
+			goToNextActivity();
 		}
 	}
-
+public void goToNextActivity(){
+	Intent intent = new Intent(this, HomeActivity.class);
+	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	startActivity(intent);
+	finish();
+}
 	public void doLogin() {
 		if (!((NearlingsApplication) this.getApplication())
 				.isNetworkAvailable()) {

@@ -69,6 +69,9 @@ public class SessionManager {
 		// TODO
 		return URL_BASE + "/login";
 	}
+	public String exploreGroupsURL() {
+		return URL_BASE + "/groups";
+	}
 
 	public String needsDetailsBidsURL(String id) {
 		// TODO
@@ -82,6 +85,9 @@ public class SessionManager {
 	public String exploreNeedsURL() {
 		// TODO
 		return URL_BASE + "/explore";
+	}
+	public String exploreEventsURL() {
+		return URL_BASE + "/events";
 	}
 	public String createEventURL() {
 		// TODO
@@ -118,13 +124,12 @@ public class SessionManager {
 	}
 
 	public void setUserName(String username) {
-		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(USER_NAME, username);
 		editor.commit();
 	}
 	
 	public void setAuthToken(String token) {
-		SharedPreferences.Editor editor = pref.edit();
+	
 		editor.putString(TOKEN, token);
 		editor.commit();
 	}
@@ -155,9 +160,7 @@ public class SessionManager {
 	}
 
 	public void setSearchLocation(String location) {
-		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(LOCATION, location);
-
 	}
 
 	public String getSearchString() {
@@ -165,7 +168,6 @@ public class SessionManager {
 	}
 
 	public void setSearchString(String searchString) {
-		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(SEARCH_STRING, searchString);
 
 	}
@@ -175,7 +177,6 @@ public class SessionManager {
 	}
 
 	public void setSearchRadius(float searchRadius) {
-		SharedPreferences.Editor editor = pref.edit();
 		editor.putFloat(SEARCH_RADIUS, searchRadius);
 
 	}
@@ -185,7 +186,6 @@ public class SessionManager {
 	}
 
 	public void setSearchStatus(String searchStatus) {
-		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(SEARCH_STATUS, searchStatus);
 
 	}
@@ -194,17 +194,15 @@ public class SessionManager {
 	}
 
 	public void setSearchRewardMinimum(float searchStatus) {
-		SharedPreferences.Editor editor = pref.edit();
 		editor.putFloat(SEARCH_REWARD, searchStatus);
 
 	}
 	public void setUserID(String id){
-		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(USER_ID, id);
+		editor.commit();
 	
 	}
 public void commitPendingChanges(){
-	SharedPreferences.Editor editor = pref.edit();
 	editor.commit();
 }
 	public String getUserID() {

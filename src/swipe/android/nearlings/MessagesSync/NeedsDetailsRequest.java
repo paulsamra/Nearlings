@@ -111,8 +111,7 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 
 	@Override
 	public Class getJSONclass() {
-		// TODO Auto-generated method stub
-		return null;
+		return JsonExploreResponse.class;
 	}
 
 	ProviderLocationTracker tracker;
@@ -126,6 +125,8 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 
 		NearlingsContentProvider
 				.clearSingleTable(new NeedsDetailsDatabaseHelper());
+		
+	
 		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getTasks().size(); i++) {
 			Tasks tempNearlingTask = o.getTasks().get(i);
@@ -135,6 +136,7 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 					tempNearlingTask.getId());
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_TITLE,
 					tempNearlingTask.getTitle());
+			
 			String myString = tempNearlingTask.getDue_date().getDate();
 			DateFormat format = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss.SSSSSS");

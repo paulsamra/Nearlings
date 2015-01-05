@@ -325,19 +325,83 @@ that were present in some languages.
         <item>@drawable/technical_unchecked</item>
         <item>@drawable/other_unchecked</item>
     </array>
-    <array name="home_options">
-        <item>Explore</item>
+
+    <string-array name="home_options">
         <item>Alerts</item>
+        <item>Explore</item>
         <item>Create Need</item>
         <item>Create Event</item>
         <item>Create Group</item>
-    </array>
+        <item>Logout</item>
+    </string-array>
+
     <array name="home_options_icon">
-        <item>@drawable/explore_icon</item>
         <item>@drawable/message_icon</item>
+        <item>@drawable/explore_icon</item>
         <item>@drawable/create_need_icon</item>
         <item>@drawable/create_event_icon</item>
         <item>@drawable/create_group_icon</item>
+        <item>@drawable/logout_icon</item>
+    </array>
+
+    <string-array name="event_types">
+        <item>Social</item>
+        <item>Business</item>
+        <item>Celebration</item>
+        <item>Planning</item>
+        <item>Fundraiser</item>
+        <item>Networking</item>
+        <item>Fitness</item>
+        <item>Other</item>
+    </string-array>
+    
+       <array name="event_types_unchecked">
+        <item>@drawable/social_unchecked</item>
+        <item>@drawable/business_unchecked</item>
+        <item>@drawable/celebration_unchecked</item>
+        <item>@drawable/planning_unchecked</item>
+        <item>@drawable/fundraiser_unchecked</item>
+        <item>@drawable/networking_unchecked</item>
+        <item>@drawable/fitness_unchecked</item>
+        <item>@drawable/other_unchecked</item>
+    </array>
+    <string-array name="event_requirements_age_inequalities">
+        <item>Older Than</item>
+        <item>Younger Than</item>
+    </string-array>
+    <string-array name="group_types">
+        <item>Friends</item>
+        <item>Charity</item>
+        <item>Church</item>
+        <item>Family</item>
+        <item>Outdoor</item>
+        <item>School</item>
+        <item>Sports</item>
+        <item>Work</item>
+    </string-array>
+    <string-array name="radius">
+        <item>.5</item>
+        <item>1.0</item>
+        <item>2.0</item>
+        <item>5.0</item>
+    </string-array>
+<string-array name="event_privacy">
+        <item>All</item>
+        <item>Public/item</item>
+        <item>Private</item>
+    </string-array>
+    
+    <array name="radius_unselected_icons">
+        <item>@drawable/half_mile_unselected</item>
+        <item>@drawable/one_mile_unselected</item>
+        <item>@drawable/two_mile_unselected</item>
+        <item>@drawable/five_mile_unselected</item>
+    </array>
+    <array name="radius_selected_icons">
+        <item>@drawable/half_mile_selected</item>
+        <item>@drawable/one_mile_selected</item>
+        <item>@drawable/two_mile_selected</item>
+        <item>@drawable/five_mile_selected</item>
     </array>
 
 </resources>

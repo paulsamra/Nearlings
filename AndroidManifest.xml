@@ -54,6 +54,14 @@
             android:name="swipe.android.nearlings.NeedsDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
+          <activity
+            android:name="swipe.android.nearlings.MessagesActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+           <activity
+            android:name="swipe.android.nearlings.HomeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="swipe.android.nearlings.MainActivity"
             android:screenOrientation="portrait" >
@@ -66,7 +74,10 @@
             android:name="swipe.android.nearlings.CreateEventActivity"
             android:screenOrientation="portrait" >
         </activity>
-
+ <activity
+            android:name="swipe.android.nearlings.CreateGroupActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <service
             android:name=".sync.NearlingsSyncService"
             android:exported="true" >

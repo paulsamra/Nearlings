@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
@@ -32,10 +33,9 @@ import com.fortysevendeg.swipelistview.SwipeListView;
 
 public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 	SwipeListView lView;
-	String MESSAGES_START_FLAG = EventsListFragment.class.getCanonicalName()
-			+ "_MESSAGES_START_FLAG";
-	String MESSAGES_FINISH_FLAG = EventsListFragment.class.getCanonicalName()
-			+ "_MESSAGES_FINISH_FLAG";
+	
+	String MESSAGES_START_FLAG = EventsContainerFragment.MESSAGES_START_FLAG;
+	String MESSAGES_FINISH_FLAG = EventsContainerFragment.MESSAGES_FINISH_FLAG;
 
 	@Override
 	public CursorLoader generateCursorLoader() {
@@ -52,9 +52,9 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void reloadData() {
-		reloadAdapter();
+reloadAdapter();
+		
 	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -165,6 +165,7 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 		return rootView;
 	}
 
+
 	public int convertDpToPixel(float dp) {
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
 		float px = dp * (metrics.densityDpi / 160f);
@@ -213,7 +214,7 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		inflater.inflate(R.menu.events_menu, menu);
+	//	inflater.inflate(R.menu.events_menu, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -235,7 +236,10 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 		}
 	}
 	
-	
+	@Override
+	public void onRefresh() {
+		((EventsContainerFragment) this.getParentFragment()).requestUpdate();
+	}
 	
 
 }

@@ -6,7 +6,8 @@
         android:id="@+id/save_event"
         android:showAsAction="always"
         app:showAsAction="always"
-        android:title="@string/save_event"/>
+        android:title="@string/save_event"
+         android:icon="@drawable/create_event_icon"/>
 
 
 </menu>

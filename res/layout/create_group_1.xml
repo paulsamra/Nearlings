@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- CALENDARS SELECTOR for new events -->
+
+    <EditText
+        android:id="@+id/title"
+        style="@style/TextAppearance.EditEvent_Value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:capitalize="sentences"
+        android:focusable="true"
+        android:hint="Group Name"
+        android:inputType="textAutoCorrect|textCapSentences"
+        android:minHeight="48dip"
+        android:singleLine="true" />
+    <!-- WHERE -->
+
+    <LinearLayout
+        android:id="@+id/from_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-8dip"
+        android:minHeight="64dip"
+        android:orientation="vertical"
+        android:paddingTop="8dip" >
+
+        <TextView
+            android:id="@+id/person_or_online_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Private or Public" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <Switch
+                android:id="@+id/switch_private_public"
+                style="@style/TextAppearance.Switch_LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:contentDescription="@string/accessibility_pick_start_date"
+                android:paddingRight="4dp"
+                android:textOff="Private"
+                android:textOn="Public" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/where_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dip"
+        android:focusable="true"
+        android:orientation="vertical" >
+
+        <AutoCompleteTextView
+            android:id="@+id/location"
+            style="@style/TextAppearance.EditEvent_Value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_where"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoCorrect|textCapSentences"
+            android:minHeight="48dip"
+            android:singleLine="false" />
+
+        <View style="@style/EditEventSeparator" />
+    </LinearLayout>
+    <!-- Category -->
+
+    <LinearLayout
+        android:id="@+id/description_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/to_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/category_button"
+                style="@style/TextAppearance.EditEvent_SpinnerButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/description_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/description_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/description_box"
+                style="@style/TextAppearance.EditEvent_Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dip"
+                android:capitalize="sentences"
+                android:focusable="true"
+                android:hint="Event Description"
+                android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
+                android:maxLength="2000"
+                android:maxLines="4"
+                android:minHeight="48dip"
+                android:scrollHorizontally="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/EditEventSeparator" />
+
+</LinearLayout>
