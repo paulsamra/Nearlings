@@ -1,9 +1,10 @@
-package swipe.android.nearlings.json.groups;
+package swipe.android.nearlings.groups;
 
 import swipe.android.nearlings.jsonResponses.explore.NearlingsTime;
 
 public class Groups{
-	String id, name, description, visibility, category, created_by, membercount, eventcount, needcount, address1, address2, city, state, zip;
+	String id, name, description, visibility, category, created_by,  address1, address2, city, state, zip;
+	int membercount, eventcount, needcount;
 	NearlingsTime created_at;
 	public String getId() {
 		return id;
@@ -41,22 +42,23 @@ public class Groups{
 	public void setCreated_by(String created_by) {
 		this.created_by = created_by;
 	}
-	public String getMembercount() {
+
+	public int getMembercount() {
 		return membercount;
 	}
-	public void setMembercount(String membercount) {
+	public void setMembercount(int membercount) {
 		this.membercount = membercount;
 	}
-	public String getEventcount() {
+	public int getEventcount() {
 		return eventcount;
 	}
-	public void setEventcount(String eventcount) {
+	public void setEventcount(int eventcount) {
 		this.eventcount = eventcount;
 	}
-	public String getNeedcount() {
+	public int getNeedcount() {
 		return needcount;
 	}
-	public void setNeedcount(String needcount) {
+	public void setNeedcount(int needcount) {
 		this.needcount = needcount;
 	}
 	public String getAddress1() {

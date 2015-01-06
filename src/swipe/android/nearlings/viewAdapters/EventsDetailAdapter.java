@@ -1,6 +1,7 @@
 package swipe.android.nearlings.viewAdapters;
 
 
+import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.DummyWebTask;
@@ -9,11 +10,6 @@ import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NeedsDetailsFragment;
 import swipe.android.nearlings.R;
-import swipe.android.nearlings.SessionManager;
-import swipe.android.nearlings.MessagesSync.Needs;
-import swipe.android.nearlings.json.needs.comments.Comments;
-import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
-import swipe.android.nearlings.jsonResponses.login.JsonBidsResponse;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -55,46 +51,47 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class GroupsViewAdapter implements
+public class EventsDetailAdapter implements
 		AsyncTaskCompleteListener<JsonChangeStateResponse>,
 		LoaderCallbacks<Cursor> {
 
 	private Context context;
 
 	private Cursor cr;
-	public TextView title, description, visibility, member_count, need_count, event_count,location;
-	
+	public TextView title, event_time_date, rsvp_count, fee, visibility, category, description,location;
 	// this needs to have a live adapter attached.
 	public ScrollView fullScrollView;
 	public MapFragment mapFragment;
 	//may or may not need
 	//public ImageView personRequestingImage;
-	private String idOfDetail;
+	private String idOfEvent;
 	private Cursor cursor;
-private Button joinLeaveBtn, getDirections;
-	public GroupsViewAdapter(View userDataView, Context context,
-			String idOfDetail, Cursor cursor, Bundle savedInstanceState) {
+private Button attend_event_btn, getDirections;
+	public EventsDetailAdapter(View userDataView, Context context,
+			String idOfEvent, Cursor cursor, Bundle savedInstanceState) {
 		this.context = context;
-		this.idOfDetail = idOfDetail;
+		this.idOfEvent = idOfEvent;
 		this.cursor = cursor;
 		MapsInitializer.initialize(context);
 		initializeView(userDataView, savedInstanceState);
 		reloadData();
 	}
+	
+	
 
 	public View initializeView(View view, Bundle savedInstanceState) {
 		fullScrollView = (ScrollView) view.findViewById(R.id.scroll_frame);
-		joinLeaveBtn = (Button) view.findViewById(R.id.group_join_leave_btn);
-		title = (TextView) view.findViewById(R.id.group_title);
-		description = (TextView) view.findViewById(R.id.group_description);
-		visibility = (TextView) view.findViewById(R.id.group_visibility);
-		member_count = (TextView) view.findViewById(R.id.group_member_count);
-		need_count = (TextView) view.findViewById(R.id.group_need_count);
-		event_count = (TextView) view.findViewById(R.id.group_event_count);
-		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
-
 		
-
+		title = (TextView) view.findViewById(R.id.event_title);
+		event_time_date = (TextView) view.findViewById(R.id.event_time);
+	
+		rsvp_count= (TextView) view.findViewById(R.id.event_rsvp_count);
+		fee= (TextView) view.findViewById(R.id.event_fee);
+		visibility = (TextView) view.findViewById(R.id.event_visibility);
+		category = (TextView) view.findViewById(R.id.event_category);
+		description = (TextView) view.findViewById(R.id.event_description );
+		location = (TextView) view.findViewById(R.id.event_location );
+	
 		MapsInitializer.initialize(((Activity) context));
 
 		mapFragment = (MapFragment) ((Activity) this.context)
@@ -141,41 +138,48 @@ private Button joinLeaveBtn, getDirections;
 		cursor.requery();
 
 		cursor.moveToFirst();
+		
 		int title_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_GROUP_NAME);
-		int description_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_DESCRIPTION);
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_EVENT_NAME);
+		int fee_index = cursor
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_FEE);
 		int visibility_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_VISIBILITY);
-		int member_count_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_MEMBER_COUNT);
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_VISIBILITY);
+		int description_index = cursor
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_DESCRIPTION);
 		
-		int event_count_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_EVENT_COUNT);
-		int need_count_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_NEED_COUNT);
+		int category_index = cursor
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_CATEGORY);
+		
 		int date_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_DATE);
-		
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_DATE_OF_EVENT);
+		int time_index = cursor
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_TIME_OF_EVENT);
+		int rsvp_count_index = cursor
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_RSVP_COUNT);
 		int latitude_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_LOCATION_LATITUDE);
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_LOCATION_LATITUDE);
 		int longitude_index = cursor
-				.getColumnIndexOrThrow(GroupsDatabaseHelper.COLUMN_LOCATION_LONGITUDE);
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_LOCATION_LONGITUDE);
+		
 		
 		String titleString = cursor.getString(title_index);
 		String description_string = cursor.getString(description_index);
 		String visibility_string = cursor.getString(visibility_index);
-		int member_count_int = cursor.getInt(member_count_index);
-		int event_count_int = cursor.getInt(event_count_index);
-		int need_count_int = cursor.getInt(need_count_index);
-		String date = cursor.getString(date_index);
+		int rsvp_count_int = cursor.getInt(rsvp_count_index);
+		double fee_amount = cursor.getDouble(fee_index);
+		String category_string = cursor.getString(category_index);
+		String date_string = cursor.getString(date_index);
+		String time_string = cursor.getString(time_index);
 		
 		title.setText(titleString);
 		description.setText(description_string);
 		visibility.setText(visibility_string);
-		member_count.setText(String.valueOf(member_count_int));
-		need_count.setText(String.valueOf(need_count_int));
-		event_count.setText(String.valueOf(event_count_int));
+		event_time_date.setText(time_string + " on " + date_string);
+		rsvp_count.setText(Integer.valueOf(rsvp_count_int));
+		fee.setText(String.valueOf(fee_amount));
+		category.setText(category_string);
+		
 		//MAP
 		//location.setText(cursor.getString(location_name_index));
 		// for now
@@ -199,7 +203,7 @@ private Button joinLeaveBtn, getDirections;
 
 			@Override
 			public void onClick(View v) {
-				Location l = ((NearlingsApplication) GroupsViewAdapter.this.context
+				Location l = ((NearlingsApplication) EventsDetailAdapter.this.context
 						.getApplicationContext()).getLastLocation();
 
 				String url = "http://maps.google.com/maps?saddr="
@@ -207,7 +211,7 @@ private Button joinLeaveBtn, getDirections;
 						+ latitude + "," + longitude;
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 						Uri.parse(url));
-				GroupsViewAdapter.this.context.startActivity(intent);
+				EventsDetailAdapter.this.context.startActivity(intent);
 			}
 
 		});

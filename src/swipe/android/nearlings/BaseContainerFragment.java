@@ -52,11 +52,11 @@ import com.meetme.android.horizontallistview.HorizontalListView;
 
 public abstract class BaseContainerFragment extends
 		NearlingsSwipeToRefreshFragment {
-	 Context context;
-	ListView lView;
-	TextView searchTerm;
-	Button needs_change_view;
-	ImageView toggleFilter;
+	 protected Context context;
+	protected ListView lView;
+	protected TextView searchTerm;
+	protected Button needs_change_view;
+	protected ImageView toggleFilter;
 
 
 	@Override

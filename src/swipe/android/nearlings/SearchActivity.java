@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import swipe.android.nearlings.GoogleParser.PlacesTask;
+import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 
 import android.app.Activity;
 import android.os.AsyncTask;

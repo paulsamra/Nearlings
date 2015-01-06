@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/group_join_leave_btn"
+            style="@style/ButtonBottom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Accept Task" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_frame"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/buttons" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dip"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/group_title_label"
+                    style="@style/form_label"
+                    android:text="@+string/title" />
+
+                <TextView
+                    android:id="@+id/group_title"
+                    style="@style/form_description"
+                    android:layout_below="@+id/needs_details_title_label"
+                    android:text="title_info" />
+            </RelativeLayout>
+
+            <!--
+                 <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/group_date_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/due" />
+
+                <TextView
+                    android:id="@+id/needs_details_date"
+                    style="@style/form_description"
+                    android:text="date_info" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/needs_details_author_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/by" />
+
+                <TextView
+                    android:id="@+id/needs_details_author"
+                    style="@style/form_description"
+                    android:layout_marginRight="5dp"
+                    android:text="details_info" />
+
+                <ImageView
+                    android:id="@+id/needs_details_author_image_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/group_visibility_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/visibility" />
+
+                <TextView
+                    android:id="@+id/group_visibility"
+                    style="@style/form_description"
+                    android:text="date_info" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/group_member_count_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/member_count" />
+
+                <TextView
+                    android:id="@+id/group_member_count"
+                    style="@style/form_description"
+                    android:text="date_info" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/group_need_count_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/need_count" />
+
+                <TextView
+                    android:id="@+id/group_need_count"
+                    style="@style/form_description"
+                    android:text="date_info" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/group_event_count_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/event_count" />
+
+                <TextView
+                    android:id="@+id/group_event_count"
+                    style="@style/form_description"
+                    android:text="date_info" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/group_description_label"
+                style="@style/form_label"
+                android:text="@+string/description" />
+
+            <TextView
+                android:id="@+id/group_description"
+                style="@style/form_description"
+                android:text="description_info" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/needs_details_location_label"
+                    style="@style/form_label"
+                    android:layout_marginRight="5dp"
+                    android:text="@+string/location" />
+
+                <TextView
+                    android:id="@+id/needs_details_location"
+                    style="@style/form_description"
+                    android:text="" />
+            </LinearLayout>
+
+            <!--
+                 <com.google.android.gms.maps.MapView
+               
+               <swipe.android.nearlings.CustomMapView
+                    android:id="@+id/needs_details_map"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:apiKey="AIzaSyA5rUkHtoPSD-gXCIvxDdlsWMDdQcVIB6s"
+                android:clickable="true" />
+            -->
+
+            <RelativeLayout
+                android:id="@+id/map_layout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" >
+
+                <fragment
+                    android:id="@+id/mapview"
+                    android:name="swipe.android.nearlings.MainActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="-100dp"
+                    android:layout_marginTop="-100dp"
+                    class="com.google.android.gms.maps.MapFragment" />
+
+                <ImageView
+                    android:id="@+id/transparent_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:color/transparent" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/getDirectionsButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/get_directions" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

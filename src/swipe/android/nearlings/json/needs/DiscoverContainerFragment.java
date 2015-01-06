@@ -2,13 +2,19 @@
  * Class is the container for a listview and mapview. Both listview and mapview represent
  * 2 views of the same action. 
  */
-package swipe.android.nearlings;
+package swipe.android.nearlings.json.needs;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import swipe.android.nearlings.MessagesSync.GroupsRequest;
+import swipe.android.nearlings.BaseContainerFragment;
+import swipe.android.nearlings.NearlingsApplication;
+import swipe.android.nearlings.R;
+import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.R.array;
+import swipe.android.nearlings.R.id;
+import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import android.app.ActionBar;
@@ -47,10 +53,10 @@ import android.widget.TextView;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.meetme.android.horizontallistview.HorizontalListView;
 
-public class GroupsContainerFragment extends BaseContainerFragment {
-	public static final String MESSAGES_START_FLAG = GroupsContainerFragment.class
+public class DiscoverContainerFragment extends BaseContainerFragment {
+	public static final String MESSAGES_START_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	public static final String MESSAGES_FINISH_FLAG = GroupsContainerFragment.class
+	public static final String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 
 	// setup filters! Begin area where we customize. All these functions are for
@@ -96,7 +102,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				// some point
 				// DiscoverContainerFragment.this.onRefresh();
 				SessionManager.getInstance(
-						GroupsContainerFragment.this.getActivity())
+						DiscoverContainerFragment.this.getActivity())
 						.setSearchString(term);
 			}
 		});
@@ -155,7 +161,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				// requeue with search filters. We should pass in filters at
 				// some point
 				SessionManager.getInstance(
-						GroupsContainerFragment.this.getActivity())
+						DiscoverContainerFragment.this.getActivity())
 						.setSearchRadius(Float.valueOf(term));
 			}
 		});
@@ -179,12 +185,12 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				final String[] items = getResources().getStringArray(
 						R.array.needs_statuses);
 				AlertDialog.Builder builder = new AlertDialog.Builder(
-						GroupsContainerFragment.this.getActivity());
+						DiscoverContainerFragment.this.getActivity());
 
 				builder.setItems(items, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 						SessionManager.getInstance(
-								GroupsContainerFragment.this.getActivity())
+								DiscoverContainerFragment.this.getActivity())
 								.setSearchStatus(items[item]);
 						b.setText(items[item]);
 						dialog.cancel();
@@ -196,7 +202,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 		});
 		String searchStatus = SessionManager.getInstance(
-				GroupsContainerFragment.this.getActivity()).getSearchStatus();
+				DiscoverContainerFragment.this.getActivity()).getSearchStatus();
 		if (!searchStatus.equals(SessionManager.SEARCH_DEFAULT_FILTER))
 			b.setText(searchStatus);
 	}
@@ -217,7 +223,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 					double parsed = Double.parseDouble(cleanString);
 					SessionManager.getInstance(
-							GroupsContainerFragment.this.getActivity())
+							DiscoverContainerFragment.this.getActivity())
 							.setSearchRewardMinimum((float) parsed);
 					String formatted = NumberFormat.getCurrencyInstance()
 							.format((parsed / 100));
@@ -245,7 +251,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 		});
 
 		float reward = SessionManager.getInstance(
-				GroupsContainerFragment.this.getActivity())
+				DiscoverContainerFragment.this.getActivity())
 				.getSearchRewardMinimum();
 		if (reward != SessionManager.SEARCH_DEFAULT_NUMERIC) {
 			double parsed = (double) reward;
@@ -289,10 +295,10 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 								SessionManager.getInstance(
-										GroupsContainerFragment.this
+										DiscoverContainerFragment.this
 												.getActivity())
 										.commitPendingChanges();
-								GroupsContainerFragment.this
+								DiscoverContainerFragment.this
 										.updateSearchString();
 
 								requestUpdate();
@@ -351,21 +357,25 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 	@Override
 	public Fragment listViewFragment() {
-		return new GroupsListFragment();
+		// TODO Auto-generated method stub
+		return new DiscoverListViewFragment();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("Resuming", "discover");
 	}
 
 	@Override
 	public String syncStartedFlag() {
+		// TODO Auto-generated method stub
 		return MESSAGES_START_FLAG;
 	}
 
 	@Override
 	public String syncFinishedFlag() {
+		// TODO Auto-generated method stub
 		return MESSAGES_FINISH_FLAG;
 	}
 
@@ -373,7 +383,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 	public void setSourceRequestHelper() {
 
 		super.helper = SendRequestStrategyManager
-				.getHelper(GroupsRequest.class);
+				.getHelper(NeedsDetailsRequest.class);
 
 	}
 }

@@ -1,4 +1,4 @@
-package swipe.android.nearlings;
+package swipe.android.nearlings.googleplaces;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
+
 
 import com.edbert.library.network.AsyncTaskCompleteListener;
 

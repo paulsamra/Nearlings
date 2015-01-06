@@ -369,16 +369,7 @@ that were present in some languages.
         <item>Older Than</item>
         <item>Younger Than</item>
     </string-array>
-    <string-array name="group_types">
-        <item>Friends</item>
-        <item>Charity</item>
-        <item>Church</item>
-        <item>Family</item>
-        <item>Outdoor</item>
-        <item>School</item>
-        <item>Sports</item>
-        <item>Work</item>
-    </string-array>
+  
     <string-array name="radius">
         <item>.5</item>
         <item>1.0</item>
@@ -387,7 +378,7 @@ that were present in some languages.
     </string-array>
 <string-array name="event_privacy">
         <item>All</item>
-        <item>Public/item</item>
+        <item>Public</item>
         <item>Private</item>
     </string-array>
     
@@ -403,5 +394,39 @@ that were present in some languages.
         <item>@drawable/two_mile_selected</item>
         <item>@drawable/five_mile_selected</item>
     </array>
+    <string-array name="group_types">
+        <item>Friends</item>
+        <item>Charity</item>
+        <item>Church</item>
+        <item>Family</item>
+        <item>Outdoor</item>
+        <item>School</item>
+        <item>Sports</item>
+        <item>Work</item>
+    </string-array>
+    
+    <string-array name="group_category_types">
+        <item>Charity</item>
+        <item>Church</item>
+        <item>Family</item>
+        <item>Friends</item>
+        <item>Outdoor</item>
+        <item>School</item>
+        <item>Sports</item>
+        <item>Work</item>
+    </string-array>
+    
+       <array name="group_category_types_unchecked">
+        <item>@drawable/charity_unchecked</item>
+        <item>@drawable/church_unchecked</item>
+        <item>@drawable/family_unchecked</item>
+        <item>@drawable/friends_unchecked</item>
+        <item>@drawable/outdoor_unchecked</item>
+        <item>@drawable/school_unchecked</item>
+        <item>@drawable/sports_unchecked</item>
+        <item>@drawable/work_unchecked</item>
+    </array>
+ 
+    
 
 </resources>

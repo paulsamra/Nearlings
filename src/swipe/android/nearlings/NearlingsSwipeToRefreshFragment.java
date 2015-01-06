@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ListView;
 
 import com.edbert.library.sendRequest.SendRequestInterface;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
@@ -17,7 +17,7 @@ import com.edbert.library.swipeToRefresh.SwipeToRefreshFragment;
 
 public abstract class NearlingsSwipeToRefreshFragment extends
 		SwipeToRefreshFragment implements Refreshable {
-
+	protected SwipeRefreshLayout mEmptyViewContainer;
 	// we use sourcehelpers
 	protected SendRequestInterface helper;
 	@Override
@@ -31,7 +31,7 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		((NearlingsApplication) getActivity().getApplication()).getSyncHelper()
 				.performSync();
 	}
-	ListView lView;
+	protected ListView lView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -44,8 +44,11 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 
 		swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
 
+		 mEmptyViewContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipe_empty);
+
 		lView = (ListView) view.findViewById(R.id.list);
 
+		 lView.setEmptyView(mEmptyViewContainer);
 		lView.setOnScrollListener(new OnScrollListener() {
 
 			@Override
@@ -66,7 +69,11 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 			    }
 			    swipeView.setEnabled(enable);
 			}});
+		
+		
 		swipeView.setOnRefreshListener(this);
+
+mEmptyViewContainer.setOnRefreshListener(this);
 		lView.setOnItemClickListener(this);
 
 		return view;
@@ -103,5 +110,15 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		return helper;
 	}
 	public abstract void setSourceRequestHelper();
-
+	protected void updateRefresh(boolean isSyncing) {
+		super.updateRefresh(isSyncing);
+		if (mEmptyViewContainer == null) {
+			return;
+		}
+		if (!isSyncing) {
+			mEmptyViewContainer.setRefreshing(false);
+		} else {
+			mEmptyViewContainer.setRefreshing(true);
+		}
+	}
 }

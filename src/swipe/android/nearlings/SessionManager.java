@@ -45,7 +45,6 @@ public class SessionManager {
 	private static final String SEARCH_REWARD = "SEARCH_REWARD";
 	private static final String USER_ID = "USER_ID";
 
-	
 	public static final String SEARCH_DEFAULT_FILTER = "All";
 
 	public static final float SEARCH_DEFAULT_NUMERIC = -1;
@@ -56,51 +55,49 @@ public class SessionManager {
 	}
 
 	public String needsDetailsFollowersURL(String id) {
-		// TODO
 		return URL_BASE + "/login";
 	}
 
 	public String needsDetailsOffersURL(String id) {
-		// TODO
 		return URL_BASE + "/login";
 	}
 
 	public String needDetailsURL(String id) {
-		// TODO
 		return URL_BASE + "/login";
 	}
+
 	public String exploreGroupsURL() {
 		return URL_BASE + "/groups";
 	}
 
 	public String needsDetailsBidsURL(String id) {
-		// TODO
 		return URL_BASE + "/login";
 	}
 
 	public String needDetailsQueryURL(String location, String searchFilter) {
-		// TODO
 		return URL_BASE + "/login";
 	}
+
 	public String exploreNeedsURL() {
-		// TODO
 		return URL_BASE + "/explore";
 	}
+
 	public String exploreEventsURL() {
 		return URL_BASE + "/events";
 	}
+
 	public String createEventURL() {
-		// TODO
 		return URL_BASE + "/events";
 	}
+
 	public String commentsURL(String id) {
-		return URL_BASE + "/need/" +id+"/comments";
+		return URL_BASE + "/need/" + id + "/comments";
 	}
-	
+
 	public String alertsURL() {
-		return URL_BASE + "/user/" +this.getUserID()+"/alerts";
+		return URL_BASE + "/user/" + this.getUserID() + "/alerts";
 	}
-	
+
 	private SessionManager(Context c) {
 		this._context = c;
 		pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -127,9 +124,9 @@ public class SessionManager {
 		editor.putString(USER_NAME, username);
 		editor.commit();
 	}
-	
+
 	public void setAuthToken(String token) {
-	
+
 		editor.putString(TOKEN, token);
 		editor.commit();
 	}
@@ -137,6 +134,7 @@ public class SessionManager {
 	public String getAuthToken() {
 		return pref.getString(TOKEN, "");
 	}
+
 	public String getUserName() {
 		return pref.getString(USER_NAME, "");
 	}
@@ -148,7 +146,7 @@ public class SessionManager {
 		headers.put("Content-Type", "application/json");
 		headers.put("Cache-Control", "none");
 
-		if (getAuthToken() != null && getAuthToken() != ""){
+		if (getAuthToken() != null && getAuthToken() != "") {
 			Log.e("Token", getAuthToken());
 			headers.put("token", getAuthToken());
 		}
@@ -171,7 +169,7 @@ public class SessionManager {
 		editor.putString(SEARCH_STRING, searchString);
 
 	}
-	
+
 	public float getSearchRadius() {
 		return pref.getFloat(SEARCH_RADIUS, -1);
 	}
@@ -180,7 +178,7 @@ public class SessionManager {
 		editor.putFloat(SEARCH_RADIUS, searchRadius);
 
 	}
-	
+
 	public String getSearchStatus() {
 		return pref.getString(SEARCH_STATUS, "All");
 	}
@@ -189,6 +187,7 @@ public class SessionManager {
 		editor.putString(SEARCH_STATUS, searchStatus);
 
 	}
+
 	public float getSearchRewardMinimum() {
 		return pref.getFloat(SEARCH_REWARD, -1);
 	}
@@ -197,17 +196,21 @@ public class SessionManager {
 		editor.putFloat(SEARCH_REWARD, searchStatus);
 
 	}
-	public void setUserID(String id){
+
+	public void setUserID(String id) {
 		editor.putString(USER_ID, id);
 		editor.commit();
-	
+
 	}
-public void commitPendingChanges(){
-	editor.commit();
-}
+
+	public void commitPendingChanges() {
+		editor.commit();
+	}
+
 	public String getUserID() {
 		return pref.getString(USER_ID, "");
 	}
+
 	public void resetTables() {
 		DatabaseCommandManager.deleteAllTables(NearlingsContentProvider
 				.getDBHelperInstance(_context).getWritableDatabase());
@@ -215,6 +218,7 @@ public void commitPendingChanges(){
 		DatabaseCommandManager.createAllTables(NearlingsContentProvider
 				.getDBHelperInstance(_context).getWritableDatabase());
 	}
+
 	public void clearUserPref() {
 		// destroy all shared preferences
 		SharedPreferences settings = _context.getSharedPreferences(

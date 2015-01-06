@@ -2,6 +2,8 @@ package swipe.android.nearlings.json.groups;
 
 import java.util.ArrayList;
 
+import swipe.android.nearlings.groups.Groups;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
 

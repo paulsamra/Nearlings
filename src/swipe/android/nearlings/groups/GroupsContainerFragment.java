@@ -2,14 +2,24 @@
  * Class is the container for a listview and mapview. Both listview and mapview represent
  * 2 views of the same action. 
  */
-package swipe.android.nearlings;
+package swipe.android.nearlings.groups;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import swipe.android.nearlings.BaseContainerFragment;
+import swipe.android.nearlings.NearlingsApplication;
+import swipe.android.nearlings.R;
+import swipe.android.nearlings.SessionManager;
+import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.R.array;
+import swipe.android.nearlings.R.id;
+import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
+import swipe.android.nearlings.events.EventsContainerFragment;
+import swipe.android.nearlings.json.groups.GroupsMapViewFragment;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -46,10 +56,10 @@ import android.widget.TextView;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.meetme.android.horizontallistview.HorizontalListView;
 
-public class DiscoverContainerFragment extends BaseContainerFragment {
-	public static final String MESSAGES_START_FLAG = DiscoverContainerFragment.class
+public class GroupsContainerFragment extends BaseContainerFragment {
+	public static final String MESSAGES_START_FLAG = GroupsContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	public static final String MESSAGES_FINISH_FLAG = DiscoverContainerFragment.class
+	public static final String MESSAGES_FINISH_FLAG = GroupsContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 
 	// setup filters! Begin area where we customize. All these functions are for
@@ -60,8 +70,8 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				.findViewById(R.id.search_options_listview_categories);
 		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
 		Resources res = getResources();
-		TypedArray icons = res.obtainTypedArray(R.array.needs_types_unchecked);
-		String[] terms = res.getStringArray(R.array.needs_types);
+		TypedArray icons = res.obtainTypedArray(R.array.group_category_types_unchecked);
+		String[] terms = res.getStringArray(R.array.group_category_types);
 		// Drawable drawable = icons.getDrawable(0);
 
 		for (int i = 0; i < icons.length(); i++) {
@@ -95,7 +105,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				// some point
 				// DiscoverContainerFragment.this.onRefresh();
 				SessionManager.getInstance(
-						DiscoverContainerFragment.this.getActivity())
+						GroupsContainerFragment.this.getActivity())
 						.setSearchString(term);
 			}
 		});
@@ -154,7 +164,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				// requeue with search filters. We should pass in filters at
 				// some point
 				SessionManager.getInstance(
-						DiscoverContainerFragment.this.getActivity())
+						GroupsContainerFragment.this.getActivity())
 						.setSearchRadius(Float.valueOf(term));
 			}
 		});
@@ -168,94 +178,40 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		}
 	}
 
-	private void setUpStatus(View rootView) {
-		final Button b = (Button) rootView.findViewById(R.id.status_button);
-		b.setOnClickListener(new OnClickListener() {
+	// privacy
+		private void setUpStatus(View rootView) {
+			final Button b = (Button) rootView.findViewById(R.id.private_public_btn);
+			b.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
+				@Override
+				public void onClick(View v) {
 
-				final String[] items = getResources().getStringArray(
-						R.array.needs_statuses);
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						DiscoverContainerFragment.this.getActivity());
+					final String[] items = getResources().getStringArray(
+							R.array.event_privacy);
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							GroupsContainerFragment.this.getActivity());
 
-				builder.setItems(items, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int item) {
-						SessionManager.getInstance(
-								DiscoverContainerFragment.this.getActivity())
-								.setSearchStatus(items[item]);
-						b.setText(items[item]);
-						dialog.cancel();
-					}
-				});
-				AlertDialog alert = builder.create();
-				alert.show();
-			}
+					builder.setItems(items, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							// change this
+							SessionManager.getInstance(
+									GroupsContainerFragment.this.getActivity())
+									.setSearchString(items[item]);
 
-		});
-		String searchStatus = SessionManager.getInstance(
-				DiscoverContainerFragment.this.getActivity()).getSearchStatus();
-		if (!searchStatus.equals(SessionManager.SEARCH_DEFAULT_FILTER))
-			b.setText(searchStatus);
-	}
-
-	private void setUpMinimumReward(View rootView) {
-		final EditText et = (EditText) rootView
-				.findViewById(R.id.reward_minimum);
-		et.addTextChangedListener(new TextWatcher() {
-			private String current = "";
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				if (!s.toString().equals(current)) {
-					et.removeTextChangedListener(this);
-
-					String cleanString = s.toString().replaceAll("[$,.]", "");
-
-					double parsed = Double.parseDouble(cleanString);
-					SessionManager.getInstance(
-							DiscoverContainerFragment.this.getActivity())
-							.setSearchRewardMinimum((float) parsed);
-					String formatted = NumberFormat.getCurrencyInstance()
-							.format((parsed / 100));
-
-					current = formatted;
-					et.setText(formatted);
-					et.setSelection(formatted.length());
-
-					et.addTextChangedListener(this);
+							b.setText(items[item]);
+							dialog.cancel();
+						}
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
 				}
-			}
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		float reward = SessionManager.getInstance(
-				DiscoverContainerFragment.this.getActivity())
-				.getSearchRewardMinimum();
-		if (reward != SessionManager.SEARCH_DEFAULT_NUMERIC) {
-			double parsed = (double) reward;
-			String formatted = NumberFormat.getCurrencyInstance().format(
-					(parsed / 100));
-
-			et.setText(formatted);
-			et.setSelection(formatted.length());
+			});
+			String searchStatus = SessionManager.getInstance(
+					GroupsContainerFragment.this.getActivity()).getSearchString();
+			if (!searchStatus.equals(SessionManager.SEARCH_DEFAULT_FILTER))
+				b.setText(searchStatus);
 		}
-
-	}
 
 	public void generatePopup() {
 		// custom dialog
@@ -288,10 +244,10 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 								SessionManager.getInstance(
-										DiscoverContainerFragment.this
+										GroupsContainerFragment.this
 												.getActivity())
 										.commitPendingChanges();
-								DiscoverContainerFragment.this
+								GroupsContainerFragment.this
 										.updateSearchString();
 
 								requestUpdate();
@@ -300,13 +256,12 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View dialoglayout = inflater.inflate(R.layout.search_popup, null);
+		View dialoglayout = inflater.inflate(R.layout.group_filters_popup, null);
 
 		// filters are the categories
 		setUpFilters(dialoglayout);
 		setUpStatus(dialoglayout);
 		setUpRadius(dialoglayout);
-		setUpMinimumReward(dialoglayout);
 
 		builder.setView(dialoglayout);
 		builder.show();
@@ -344,31 +299,26 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 
 	@Override
 	public Fragment mapViewFragment() {
-		// TODO Auto-generated method stub
-		return new DiscoverMapViewFragment();
+		return new GroupsMapViewFragment();
 	}
 
 	@Override
 	public Fragment listViewFragment() {
-		// TODO Auto-generated method stub
-		return new DiscoverListViewFragment();
+		return new GroupsListFragment();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("Resuming", "discover");
 	}
 
 	@Override
 	public String syncStartedFlag() {
-		// TODO Auto-generated method stub
 		return MESSAGES_START_FLAG;
 	}
 
 	@Override
 	public String syncFinishedFlag() {
-		// TODO Auto-generated method stub
 		return MESSAGES_FINISH_FLAG;
 	}
 
@@ -376,7 +326,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 	public void setSourceRequestHelper() {
 
 		super.helper = SendRequestStrategyManager
-				.getHelper(NeedsDetailsRequest.class);
+				.getHelper(GroupsRequest.class);
 
 	}
 }

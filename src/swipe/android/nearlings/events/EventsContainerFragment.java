@@ -2,14 +2,21 @@
  * Class is the container for a listview and mapview. Both listview and mapview represent
  * 2 views of the same action. 
  */
-package swipe.android.nearlings;
+package swipe.android.nearlings.events;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import swipe.android.nearlings.BaseContainerFragment;
+import swipe.android.nearlings.NearlingsApplication;
+import swipe.android.nearlings.R;
+import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.EventsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.R.array;
+import swipe.android.nearlings.R.id;
+import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import android.app.AlertDialog;
@@ -360,7 +367,7 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 
 	@Override
 	public Fragment mapViewFragment() {
-		return new DiscoverMapViewFragment();
+		return new EventsMapViewFragment();
 	}
 
 	@Override
@@ -395,13 +402,11 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 
 	@Override
 	public String syncStartedFlag() {
-		// TODO Auto-generated method stub
 		return MESSAGES_START_FLAG;
 	}
 
 	@Override
 	public String syncFinishedFlag() {
-		// TODO Auto-generated method stub
 		return MESSAGES_FINISH_FLAG;
 	}
 

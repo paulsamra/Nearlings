@@ -1,4 +1,4 @@
-package swipe.android.nearlings;
+package swipe.android.nearlings.googleplaces;
  
 import java.util.ArrayList;
 import java.util.HashMap;

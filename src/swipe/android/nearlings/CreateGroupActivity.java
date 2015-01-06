@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import swipe.android.nearlings.GoogleParser.PlacesTask;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
+import swipe.android.nearlings.googleplaces.GoogleParser;
+import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
 import android.app.Activity;
 import android.app.AlertDialog;

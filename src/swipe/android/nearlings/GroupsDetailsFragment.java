@@ -1,9 +1,11 @@
 package swipe.android.nearlings;
 
+import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
+import swipe.android.nearlings.viewAdapters.GroupsViewAdapter;
 import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
 import android.content.Context;
 import android.database.Cursor;
@@ -25,15 +27,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
-public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
+public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		implements Refreshable {
 	String id;
 	View view;
-	NeedsDetailsViewAdapter adapter;
+	GroupsViewAdapter adapter;
 
-	public static final String MESSAGES_START_FLAG = NeedsDetailsFragment.class
+	public static final String MESSAGES_START_FLAG = GroupsDetailsFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	public static final String MESSAGES_FINISH_FLAG = NeedsDetailsFragment.class
+	public static final String MESSAGES_FINISH_FLAG = GroupsDetailsFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 	FragmentManager fm;
 
@@ -61,8 +63,6 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		try {
 			view = inflater.inflate(R.layout.needs_details, container, false);
 
-			// view = inflater.inflate(R.layout.needs_details, container,
-			// false);
 		} catch (InflateException e) {
 
 		}
@@ -91,16 +91,15 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-		Log.i("CURSOR_ID_GEN", id);
-		String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
+		String selectionClause = GroupsDatabaseHelper.COLUMN_ID + " = ?";
 		String[] mSelectionArgs = { "" };
 		mSelectionArgs[0] = id;
 		CursorLoader cursorLoader = new CursorLoader(
 				this.getActivity(),
 				NearlingsContentProvider
-						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-				NeedsDetailsDatabaseHelper.COLUMNS, selectionClause,
-				mSelectionArgs, NeedsDetailsDatabaseHelper.COLUMN_DATE
+						.contentURIbyTableName(GroupsDatabaseHelper.TABLE_NAME),
+						GroupsDatabaseHelper.COLUMNS, selectionClause,
+				mSelectionArgs, GroupsDatabaseHelper.COLUMN_DATE
 						+ " DESC");
 		return cursorLoader;
 
@@ -111,31 +110,15 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	@Override
 	public void onResume() {
 		super.onResume();
-		// adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, c,
-		// savedInstanceState);
 		reloadAdapter();
 
 	}
 
 	@Override
 	public void reloadData() {
-		// TODO Auto-generated method stub
-
-		Log.e("ReloadAdapter", "adapter");
-		// getLoaderManager().initLoader(0, null, this);
+	
 		reloadAdapter();
 
-		// dapter = new NeedsDetailViewAdapter(view, this.getActivity(), id,
-		// savedInstanceState);
-
-		/*
-		 * mAdapter = new NeedsDetailViewAdapter(this.getActivity(), id, c,
-		 * savedInstanceState);
-		 * 
-		 * // this.mAdapter = new NeedsDetailViewAdapter(this.getActivity(), c);
-		 * 
-		 * mAdapter.();
-		 */
 	}
 
 	@Override
@@ -153,7 +136,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		getLoaderManager().initLoader(0, null, this);
 		c = generateCursor();
 		if (adapter == null)
-			adapter = new NeedsDetailsViewAdapter(view, this.getActivity(), id,
+			adapter = new GroupsViewAdapter(view, this.getActivity(), id,
 					c, savedInstanceState);
 
 		adapter.reloadData();

@@ -74,6 +74,10 @@
             android:name="swipe.android.nearlings.CreateEventActivity"
             android:screenOrientation="portrait" >
         </activity>
+           <activity
+            android:name="swipe.android.nearlings.GroupsDetailsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
  <activity
             android:name="swipe.android.nearlings.CreateGroupActivity"
             android:screenOrientation="portrait" >

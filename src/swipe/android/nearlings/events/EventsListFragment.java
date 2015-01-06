@@ -1,12 +1,18 @@
-package swipe.android.nearlings;
+package swipe.android.nearlings.events;
 
 import java.util.Calendar;
 
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
+import swipe.android.nearlings.CreateEventActivity;
+import swipe.android.nearlings.NearlingsContentProvider;
+import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
+import swipe.android.nearlings.R;
 import swipe.android.nearlings.MessagesSync.EventsRequest;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
+import swipe.android.nearlings.R.id;
+import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.viewAdapters.EventsViewAdapter;
 import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
 import android.content.Intent;
@@ -66,7 +72,12 @@ reloadAdapter();
 		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 	
 		lView = (SwipeListView) rootView.findViewById(R.id.list);
-		swipeView.setEnabled(false);
+		
+		 mEmptyViewContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_empty);
+
+			
+
+			 lView.setEmptyView(mEmptyViewContainer);
 		lView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -109,7 +120,26 @@ reloadAdapter();
 				}
 			});
 		}
+		lView.setOnScrollListener(new OnScrollListener() {
 
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+			        int visibleItemCount, int totalItemCount) {
+			    boolean enable = false;
+			    if(lView != null && lView.getChildCount() > 0){
+			        // check if the first item of the list is visible
+			        boolean firstItemVisible = lView.getFirstVisiblePosition() == 0;
+			        // check if the top of the first item is visible
+			        boolean topOfFirstItemVisible = lView.getChildAt(0).getTop() == 0;
+			        // enabling or disabling the refresh layout
+			        enable = firstItemVisible && topOfFirstItemVisible;
+			    }
+			    swipeView.setEnabled(enable);
+			}});
 		lView.setSwipeListViewListener(new BaseSwipeListViewListener() {
 			@Override
 			public void onOpened(int position, boolean toRight) {
@@ -155,6 +185,8 @@ reloadAdapter();
 
 		});
 		swipeView.setOnRefreshListener(this);
+
+mEmptyViewContainer.setOnRefreshListener(this);
 		// lView.setOnItemClickListener(this);
 		lView.setSwipeOpenOnLongPress(true);
 		lView.setSwipeCloseAllItemsWhenMoveList(true);

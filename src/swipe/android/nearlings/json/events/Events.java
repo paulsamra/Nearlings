@@ -39,16 +39,17 @@ public class Events{
 	public void setStarttime(String starttime) {
 		this.starttime = starttime;
 	}
-	public String getFee() {
+	
+	public double getFee() {
 		return fee;
 	}
-	public void setFee(String fee) {
+	public void setFee(double fee) {
 		this.fee = fee;
 	}
-	public String getRsvpcount() {
+	public int getRsvpcount() {
 		return rsvpcount;
 	}
-	public void setRsvpcount(String rsvpcount) {
+	public void setRsvpcount(int rsvpcount) {
 		this.rsvpcount = rsvpcount;
 	}
 	public String getStatus() {
@@ -117,7 +118,8 @@ public class Events{
 	public void setCreated_at(NearlingsTime created_at) {
 		this.created_at = created_at;
 	}
-	String id, created_by, group_id, title, description, starttime, fee, rsvpcount, status, visibility, category, address1, address2, city, state;
-	double latitude, longitude;
+	String id, created_by, group_id, title, description, starttime, status, visibility, category, address1, address2, city, state;
+	double latitude, longitude, fee;
+	int rsvpcount;
 	NearlingsTime startdate,created_at;
 }

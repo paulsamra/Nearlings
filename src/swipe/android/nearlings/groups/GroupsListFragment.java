@@ -1,10 +1,14 @@
-package swipe.android.nearlings;
+package swipe.android.nearlings.groups;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.GroupsDetailsActivity;
+import swipe.android.nearlings.NearlingsContentProvider;
+import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
+import swipe.android.nearlings.NeedsDetailsActivity;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
@@ -100,7 +104,7 @@ public class GroupsListFragment extends NearlingsSwipeToRefreshFragment {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Intent intent = new Intent(this.getActivity(),
-				NeedsDetailsActivity.class);
+				GroupsDetailsActivity.class);
 		Bundle extras = new Bundle();
 		Cursor c = generateCursor();
 

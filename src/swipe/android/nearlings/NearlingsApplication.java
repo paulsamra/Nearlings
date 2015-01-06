@@ -96,7 +96,6 @@ public class NearlingsApplication extends Application implements
 		DatabaseCommandManager.register(new NeedsDetailsDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsCommentsDatabaseHelper());
 		DatabaseCommandManager.register(new EventsDatabaseHelper());
-
 		DatabaseCommandManager.register(new GroupsDatabaseHelper());
 	}
 

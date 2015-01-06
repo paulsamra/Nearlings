@@ -1,9 +1,12 @@
-package swipe.android.nearlings;
+package swipe.android.nearlings.json.needs;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.NearlingsContentProvider;
+import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
+import swipe.android.nearlings.NeedsDetailsActivity;
 import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;

@@ -1,7 +1,7 @@
 package swipe.android.nearlings.navigationdrawer;
 
 import swipe.android.nearlings.DetailFragment;
-import swipe.android.nearlings.GroupsContainerFragment;
+import swipe.android.nearlings.groups.GroupsContainerFragment;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
 
