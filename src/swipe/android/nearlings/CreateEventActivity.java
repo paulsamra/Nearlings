@@ -7,20 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.googleplaces.GoogleParser;
 import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.edbert.library.network.PostDataWebTask;
@@ -129,7 +123,7 @@ public class CreateEventActivity extends FragmentActivity implements
 		});
 
 		Calendar c = Calendar.getInstance();
-		int seconds = c.get(Calendar.SECOND);
+		//int seconds = c.get(Calendar.SECOND);
 		start_date = (Button) findViewById(R.id.start_date);
 		start_date.setOnClickListener(new OnClickListener() {
 

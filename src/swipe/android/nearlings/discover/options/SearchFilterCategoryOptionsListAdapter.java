@@ -1,25 +1,19 @@
 package swipe.android.nearlings.discover.options;
 
+import java.util.ArrayList;
+
+import swipe.android.nearlings.R;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import java.util.ArrayList;
-
-import swipe.android.nearlings.R;
-import uk.co.senab.photup.views.CheckableImageView;
 
 public class SearchFilterCategoryOptionsListAdapter extends
 		ArrayAdapter<SearchOptionsFilter> {

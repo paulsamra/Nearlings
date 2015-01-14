@@ -1,10 +1,6 @@
 package swipe.android.nearlings;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
-import android.os.Bundle;
 
 import com.edbert.library.network.sync.JsonResponseInterface;
 import com.edbert.library.sendRequest.SendRequestInterface;

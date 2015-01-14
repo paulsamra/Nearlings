@@ -4,7 +4,6 @@
  */
 package swipe.android.nearlings.groups;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import swipe.android.nearlings.BaseContainerFragment;
@@ -13,44 +12,24 @@ import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.R.array;
-import swipe.android.nearlings.R.id;
-import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
-import swipe.android.nearlings.events.EventsContainerFragment;
 import swipe.android.nearlings.json.groups.GroupsMapViewFragment;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.CursorLoader;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
@@ -209,7 +188,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 			});
 			String searchStatus = SessionManager.getInstance(
 					GroupsContainerFragment.this.getActivity()).getSearchString();
-			if (!searchStatus.equals(SessionManager.SEARCH_DEFAULT_FILTER))
+			if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
 				b.setText(searchStatus);
 		}
 
@@ -289,7 +268,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 		if (sm.getSearchString() != ""
 				&& !sm.getSearchString().equals(
-						SessionManager.SEARCH_DEFAULT_FILTER)) {
+						SessionManager.DEFAULT_STRING)) {
 			b.putString(NeedsDetailsRequest.BUNDLE_KEYWORDS,
 					sm.getSearchString());
 		}

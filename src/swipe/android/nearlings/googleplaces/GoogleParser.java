@@ -13,12 +13,10 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-
-import com.edbert.library.network.AsyncTaskCompleteListener;
-
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.SimpleAdapter;
+
+import com.edbert.library.network.AsyncTaskCompleteListener;
 
 public class GoogleParser {
 

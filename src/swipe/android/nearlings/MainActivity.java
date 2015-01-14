@@ -1,27 +1,10 @@
 package swipe.android.nearlings;
 
-import java.util.ArrayList;
-
-import com.crashlytics.android.Crashlytics;
-import com.edbert.library.navigationdrawer.AbstractNavDrawerItemManager;
-import com.edbert.library.navigationdrawer.NavDrawerActivity;
-import com.edbert.library.navigationdrawer.NavDrawerItemInterface;
-import com.edbert.library.navigationdrawer.viewadapter.NavDrawerListAdapter;
-
 import swipe.android.nearlings.navigationdrawer.NavDrawerItemManager;
 import swipe.android.nearlings.viewAdapters.NearlingsNavDrawerListAdapter;
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
+import com.edbert.library.navigationdrawer.NavDrawerActivity;
 
 public class MainActivity extends NavDrawerActivity {
 	@Override

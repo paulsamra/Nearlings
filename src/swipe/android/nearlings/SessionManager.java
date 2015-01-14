@@ -1,20 +1,14 @@
 package swipe.android.nearlings;
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-
-import com.edbert.library.database.DatabaseCommandManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.util.Log;
+
+import com.edbert.library.database.DatabaseCommandManager;
 
 public class SessionManager {
 	// Shared Preferences
@@ -39,13 +33,29 @@ public class SessionManager {
 	private static final String USER_NAME = "USER_NAME";
 	private static final String TOKEN = "TOKEN";
 	private static final String LOCATION = "LOCATION";
+	
+	//same across all searches
 	private static final String SEARCH_STRING = "SEARCH_STRING";
 	private static final String SEARCH_RADIUS = "SEARCH_RADIUS";
-	private static final String SEARCH_STATUS = "SEARCH_STATUS";
-	private static final String SEARCH_REWARD = "SEARCH_REWARD";
-	private static final String USER_ID = "USER_ID";
+	private static final String SEARCH_VISIBILITY = "SEARCH_VISIBILITY";
+	//Explore
+	private static final String EXPLORE_SEARCH_STATUS = "EXPLORE_SEARCH_STATUS";
+	private static final String EXPLORE_SEARCH_REWARD = "EXPLORE_SEARCH_REWARD";
+	private static final String EXPLORE_SEARCH_CATEGORY = "EXPLORE_SEARCH_CATEGORY";
+	private static final String EXPLORE_TIME_AGO = "EXPLORE_TIME_AGO";
+	private static final String EXPLORE_TIME_ENDED = "EXPLORE_TIME_ENDED";
+	
+	//Group
+		private static final String GROUP_SEARCH_CATEGORY = "GROUP_SEARCH_CATEGORY";
+		
+		//Events
+		private static final String EVENTS_SEARCH_CATEGORY = "EVENTS_SEARCH_CATEGORY";
+		private static final String EVENTS_TIME_START = "EVENTS_TIME_START";
+		
+		public static final String DEFAULT_STRING = "All";
+		public static final int DEFAULT_VALUE = -1;
+		private static final String USER_ID = "USER_ID";
 
-	public static final String SEARCH_DEFAULT_FILTER = "All";
 
 	public static final float SEARCH_DEFAULT_NUMERIC = -1;
 	private static final String URL_BASE = "https://nearlings.com/api/2014-10-13";
@@ -162,12 +172,11 @@ public class SessionManager {
 	}
 
 	public String getSearchString() {
-		return pref.getString(SEARCH_STRING, "All");
+		return pref.getString(SEARCH_STRING, DEFAULT_STRING);
 	}
 
 	public void setSearchString(String searchString) {
 		editor.putString(SEARCH_STRING, searchString);
-
 	}
 
 	public float getSearchRadius() {
@@ -176,24 +185,23 @@ public class SessionManager {
 
 	public void setSearchRadius(float searchRadius) {
 		editor.putFloat(SEARCH_RADIUS, searchRadius);
-
 	}
 
 	public String getSearchStatus() {
-		return pref.getString(SEARCH_STATUS, "All");
+		return pref.getString(EXPLORE_SEARCH_STATUS,DEFAULT_STRING);
 	}
 
 	public void setSearchStatus(String searchStatus) {
-		editor.putString(SEARCH_STATUS, searchStatus);
+		editor.putString(EXPLORE_SEARCH_STATUS, searchStatus);
 
 	}
 
 	public float getSearchRewardMinimum() {
-		return pref.getFloat(SEARCH_REWARD, -1);
+		return pref.getFloat(EXPLORE_SEARCH_REWARD, DEFAULT_VALUE);
 	}
 
 	public void setSearchRewardMinimum(float searchStatus) {
-		editor.putFloat(SEARCH_REWARD, searchStatus);
+		editor.putFloat(EXPLORE_SEARCH_REWARD, searchStatus);
 
 	}
 

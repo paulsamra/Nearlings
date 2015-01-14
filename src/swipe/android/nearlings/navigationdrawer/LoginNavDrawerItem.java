@@ -1,18 +1,13 @@
 package swipe.android.nearlings.navigationdrawer;
 
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.DetailFragment;
 import swipe.android.nearlings.LoginActivity;
-//import swipe.android.nearlings.LoginFragment;
-import swipe.android.nearlings.NeedsDetailsActivity;
-
-import com.edbert.library.navigationdrawer.NavDrawerItem;
-
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import com.edbert.library.navigationdrawer.NavDrawerItem;
+//import swipe.android.nearlings.LoginFragment;
 
 public class LoginNavDrawerItem extends NavDrawerItem {
 private static final String TITLE = "Login";

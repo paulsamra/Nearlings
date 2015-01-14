@@ -1,13 +1,11 @@
 package swipe.android.nearlings.viewAdapters;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.json.needs.comments.Comments;
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

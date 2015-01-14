@@ -1,33 +1,18 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
 import swipe.android.nearlings.viewAdapters.GroupsViewAdapter;
-import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
 import android.app.ActionBar;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment

@@ -1,30 +1,21 @@
 package swipe.android.nearlings.MessagesSync;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.json.alerts.Alerts;
 import swipe.android.nearlings.json.alerts.JsonMessagesResponse;
-import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
-import swipe.android.nearlings.jsonResponses.explore.Tasks;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.edbert.library.network.SocketOperator;
-import com.edbert.library.network.sync.JsonResponseInterface;
 
 public class MessagesRequest extends NearlingsRequest <JsonMessagesResponse>{
 	public MessagesRequest(Context c) {

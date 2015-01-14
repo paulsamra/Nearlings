@@ -17,7 +17,6 @@ package uk.co.senab.photup.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.Checkable;
 import android.widget.ImageView;
 

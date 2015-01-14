@@ -3,39 +3,25 @@ package swipe.android.nearlings.MessagesSync;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
-import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import swipe.android.nearlings.jsonResponses.explore.Tasks;
-import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
 import android.content.ContentValues;
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.edbert.library.database.DatabaseCommandManager;
-import com.edbert.library.network.PostDataWebTask;
 import com.edbert.library.network.SocketOperator;
-import com.edbert.library.network.sync.JsonResponseInterface;
-import com.edbert.library.utils.MapUtils;
 import com.gabesechan.android.reusable.location.ProviderLocationTracker;
-import com.gabesechan.android.reusable.location.ProviderLocationTracker.ProviderType;
 
 public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 

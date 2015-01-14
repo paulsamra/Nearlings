@@ -1,9 +1,5 @@
 package swipe.android.nearlings.MessagesSync;
 
-import java.util.Calendar;
-
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
-import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
 import android.content.ContentValues;
 import android.content.Context;

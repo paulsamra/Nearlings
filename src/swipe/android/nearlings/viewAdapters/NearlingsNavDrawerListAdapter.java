@@ -4,18 +4,14 @@ import java.util.ArrayList;
 
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edbert.library.navigationdrawer.NavDrawerItemInterface;
 import com.edbert.library.navigationdrawer.viewadapter.NavDrawerListAdapter;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.readystatesoftware.viewbadger.BadgeView;
 
 public class NearlingsNavDrawerListAdapter extends NavDrawerListAdapter {
 

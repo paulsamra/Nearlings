@@ -1,12 +1,9 @@
 package swipe.android.nearlings.navigationdrawer;
 
-import swipe.android.nearlings.DetailFragment;
 import swipe.android.nearlings.events.EventsContainerFragment;
-import swipe.android.nearlings.events.EventsListFragment;
+import android.support.v4.app.Fragment;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
-
-import android.support.v4.app.Fragment;
 
 public class EventsNavDrawerItem extends NavDrawerItem {
 	private static final String TITLE = "Events";

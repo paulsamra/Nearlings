@@ -2,8 +2,6 @@ package swipe.android.nearlings.navigationdrawer;
 
 import com.edbert.library.navigationdrawer.AbstractNavDrawerItemManager;
 
-import android.content.Context;
-
 public class NavDrawerItemManager extends AbstractNavDrawerItemManager {
 	private static NavDrawerItemManager navDrawerManagerInstance;
 

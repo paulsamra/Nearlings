@@ -14,9 +14,6 @@ import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.EventsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.R.array;
-import swipe.android.nearlings.R.id;
-import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import android.app.AlertDialog;
@@ -27,7 +24,6 @@ import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -197,7 +193,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 		});
 		String searchStatus = SessionManager.getInstance(
 				EventsContainerFragment.this.getActivity()).getSearchString();
-		if (!searchStatus.equals(SessionManager.SEARCH_DEFAULT_FILTER))
+		if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
 			b.setText(searchStatus);
 	}
 
@@ -357,7 +353,7 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 
 		if (sm.getSearchString() != ""
 				&& !sm.getSearchString().equals(
-						SessionManager.SEARCH_DEFAULT_FILTER)) {
+						SessionManager.DEFAULT_STRING)) {
 			b.putString(NeedsDetailsRequest.BUNDLE_KEYWORDS,
 					sm.getSearchString());
 		}
