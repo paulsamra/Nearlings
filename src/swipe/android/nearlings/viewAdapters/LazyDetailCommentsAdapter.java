@@ -5,41 +5,22 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 
-import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.json.needs.comments.Comments;
 import swipe.android.nearlings.json.needs.comments.JsonCommentsResponse;
-import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.os.SystemClock;
-import android.support.v4.widget.CursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.commonsware.cwac.endless.EndlessAdapter;
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.edbert.library.network.GetDataWebTask;
-import com.edbert.library.network.PostDataWebTask;
-import com.edbert.library.network.SocketOperator;
 import com.edbert.library.utils.MapUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 		AsyncTaskCompleteListener<JsonCommentsResponse> {
@@ -89,7 +70,7 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 	protected boolean cacheInBackground() {
 		// SystemClock.sleep(10000); // pretend to do work
 		String url = SessionManager.getInstance(mContext).commentsURL(idOfNeed);
-		Map headers = SessionManager.getInstance(mContext)
+		Map<String, String> headers = SessionManager.getInstance(mContext)
 				.defaultSessionHeaders();
 		if (!alreadyCalled){
 			Log.d("URL", url);
@@ -133,7 +114,7 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 				alreadyCalled = true;
 				return;
 			}
-			HashSet hs = new HashSet();
+			HashSet<Comments> hs = new HashSet<Comments>();
 			hs.addAll(items);
 			hs.addAll(result.getComments());
 			items.clear();

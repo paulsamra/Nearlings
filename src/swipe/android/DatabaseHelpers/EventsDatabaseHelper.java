@@ -1,7 +1,5 @@
 package swipe.android.DatabaseHelpers;
 
-import swipe.android.nearlings.MessagesSync.NearlingEvent;
-
 import com.edbert.library.database.DatabaseHelperInterface;
 
 public class EventsDatabaseHelper implements DatabaseHelperInterface {

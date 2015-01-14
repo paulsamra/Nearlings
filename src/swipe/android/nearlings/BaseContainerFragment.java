@@ -7,48 +7,27 @@
  */
 package swipe.android.nearlings;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
-import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.CursorLoader;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.edbert.library.sendRequest.SendRequestStrategyManager;
-import com.meetme.android.horizontallistview.HorizontalListView;
 
 public abstract class BaseContainerFragment extends
 		NearlingsSwipeToRefreshFragment {

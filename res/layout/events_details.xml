@@ -14,17 +14,17 @@
 
         <Button
             android:id="@+id/attend_event_btn"
+            style="@style/ButtonBottom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Accept Task"
-            style="@style/ButtonBottom" />
+            android:text="Accept Task" />
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/scroll_frame"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/buttons">
+        android:layout_above="@+id/buttons" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -76,7 +76,7 @@
                     style="@style/form_description"
                     android:text="date_info" />
             </LinearLayout>
-            
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
@@ -92,7 +92,8 @@
                     style="@style/form_description"
                     android:text="date_info" />
             </LinearLayout>
-              <LinearLayout
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
@@ -107,8 +108,8 @@
                     style="@style/form_description"
                     android:text="date_info" />
             </LinearLayout>
-            
-               <LinearLayout
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
@@ -139,7 +140,6 @@
                     style="@style/form_description"
                     android:layout_marginRight="5dp"
                     android:text="details_info" />
-           
             </LinearLayout>
 
             <TextView
@@ -201,6 +201,11 @@
                     android:src="@android:color/transparent" />
             </RelativeLayout>
 
+            <Button
+                android:id="@+id/getDirectionsButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/get_directions" />
         </LinearLayout>
     </ScrollView>
 

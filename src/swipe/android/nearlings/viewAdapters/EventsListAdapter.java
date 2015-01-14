@@ -1,33 +1,28 @@
 package swipe.android.nearlings.viewAdapters;
 
-import com.edbert.library.database.DatabaseCommandManager;
-import com.fortysevendeg.swipelistview.SwipeListView;
-
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
-import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
-import swipe.android.nearlings.MessagesSync.NearlingEvent;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.support.v4.widget.CursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class EventsViewAdapter extends CursorAdapter {
+public class EventsListAdapter extends CursorAdapter {
 
 	private Context mContext;
 ListView lView;
 	private Cursor cr;
 	private final LayoutInflater inflater;
 
-	public EventsViewAdapter(Context context, Cursor c, ListView lView) {
+	public EventsListAdapter(Context context, Cursor c, ListView lView) {
 		super(context, c);
 this.lView = lView;
 		this.mContext = context;
@@ -47,7 +42,8 @@ this.lView = lView;
 		holder.price = (TextView) view.findViewById(R.id.event_price);
 		holder.bAction1 = (Button) view.findViewById(R.id.event_yes);
 		holder.bAction2 = (Button) view.findViewById(R.id.event_no);
-		
+holder.front_layout = (RelativeLayout) view.findViewById(R.id.front);
+
 		view.setTag(holder);
 		return view;
 	}
@@ -91,7 +87,7 @@ this.lView = lView;
 		holder.description.setText(description);
 		holder.timeOfEvent.setText(time_event);
 		holder.price.setText("$"+ String.valueOf(price));
-		
+
 		
 		int color = R.color.rsvp_unknown;
 		/*
@@ -158,6 +154,8 @@ this.lView = lView;
 	public static class ViewHolder {
 		public TextView title, description, timeOfEvent, price;
 		public Button bAction1, bAction2;
+		
+		public RelativeLayout front_layout;
 	}
 	private void resetAllButtons(ViewHolder h){
 		h.bAction1.setBackgroundResource(android.R.drawable.btn_default);

@@ -718,4 +718,13 @@ Description: This is spoken to the user. [CHAR LIMIT="NONE"]
     <string name="login_error_title">Login Error</string>
   <string name="try_again">Try Again</string>
   
+  
+  <string name="event_count">Event Count:</string>
+   <string name="need_count">Need Count:</string>
+     <string name="member_count">Member Count:</string>
+       <string name="visibility">Group Privacy:</string>
+  
+  
+  
+  
 </resources>

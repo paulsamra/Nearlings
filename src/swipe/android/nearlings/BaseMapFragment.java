@@ -1,43 +1,28 @@
 package swipe.android.nearlings;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 
-import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.EventsRequest;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.events.EventsContainerFragment;
-import android.content.Intent;
 import android.database.Cursor;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.edbert.library.sendRequest.SendRequestStrategyManager;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
-		implements LoaderCallbacks<Cursor> {
+		implements LoaderCallbacks<Cursor>, OnMapLoadedCallback {
 
 	protected GoogleMap mMap;
 	MapView mMapView;
@@ -60,8 +45,8 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 
 		if (mMapView != null) {
 			mMap = mMapView.getMap();
-			attachInfoWindowAdapter();
-			attachInfoWindowClickListener();
+			mMap.setOnMapLoadedCallback(this);
+		
 			mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
 			mMap.setMyLocationEnabled(true);
@@ -248,4 +233,12 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 
 		markerLocation.add(latitude + "," + longitude);
 	}
+	@Override
+	public void onMapLoaded() {
+	if (mMap != null) {
+		attachInfoWindowAdapter();
+		attachInfoWindowClickListener();
+	}
+	}
+	
 }

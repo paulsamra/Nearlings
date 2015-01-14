@@ -2,7 +2,7 @@
  * Class is the container for a listview and mapview. Both listview and mapview represent
  * 2 views of the same action. 
  */
-package swipe.android.nearlings.json.needs;
+package swipe.android.nearlings.needs;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -364,18 +364,15 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("Resuming", "discover");
 	}
 
 	@Override
 	public String syncStartedFlag() {
-		// TODO Auto-generated method stub
 		return MESSAGES_START_FLAG;
 	}
 
 	@Override
 	public String syncFinishedFlag() {
-		// TODO Auto-generated method stub
 		return MESSAGES_FINISH_FLAG;
 	}
 

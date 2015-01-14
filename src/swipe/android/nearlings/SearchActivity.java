@@ -36,7 +36,7 @@ import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.example.deletableedittext.DeleteableEditText;
 
 public class SearchActivity extends Activity implements
-		AsyncTaskCompleteListener {
+		AsyncTaskCompleteListener<List<HashMap<String, String>>> {
 	DeleteableEditText place;
 	//EditText edt_input_place;
 	//ImageButton btn_delete_place;
@@ -150,9 +150,8 @@ public class SearchActivity extends Activity implements
 	}
 
 	@Override
-	public void onTaskComplete(Object result) {
+	public void onTaskComplete(List<HashMap<String, String>>  resultOfGooglePlace) {
 		// TODO Auto-generated method stub
-		List<HashMap<String, String>> resultOfGooglePlace = (List<HashMap<String, String>>) result;
 
 		// Creating a SimpleAdapter for the AutoCompleteTextView
 		adapterWithItems = new SimpleAdapter(getBaseContext(),

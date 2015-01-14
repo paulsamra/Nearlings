@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.BaseMapFragment;
+import swipe.android.nearlings.EventsDetailsActivity;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NeedsDetailsActivity;
@@ -158,13 +159,13 @@ public class EventsMapViewFragment extends BaseMapFragment {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
 				Intent intent = new Intent(EventsMapViewFragment.this
-						.getActivity(), NeedsDetailsActivity.class);
+						.getActivity(), EventsDetailsActivity.class);
 				Bundle extras = new Bundle();
 				Cursor c = generateCursor();
 				String snip = marker.getSnippet();
 
 				int position = Integer.valueOf(snip.substring(
-						snip.indexOf(",") + 1, snip.length()));
+						snip.lastIndexOf(",") + 1, snip.length()));
 				c.moveToPosition(position);
 				String need_id = c.getString(c
 						.getColumnIndex(EventsDatabaseHelper.COLUMN_ID));

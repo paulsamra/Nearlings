@@ -84,7 +84,7 @@ private Button joinLeaveBtn, getDirections;
 
 	public View initializeView(View view, Bundle savedInstanceState) {
 		fullScrollView = (ScrollView) view.findViewById(R.id.scroll_frame);
-		joinLeaveBtn = (Button) view.findViewById(R.id.group_join_leave_btn);
+		//joinLeaveBtn = (Button) view.findViewById(R.id.group_join_leave_btn);
 		title = (TextView) view.findViewById(R.id.group_title);
 		description = (TextView) view.findViewById(R.id.group_description);
 		visibility = (TextView) view.findViewById(R.id.group_visibility);
@@ -94,7 +94,7 @@ private Button joinLeaveBtn, getDirections;
 		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
 
 		
-
+		location = (TextView) view.findViewById(R.id.groups_details_location_label);
 		MapsInitializer.initialize(((Activity) context));
 
 		mapFragment = (MapFragment) ((Activity) this.context)

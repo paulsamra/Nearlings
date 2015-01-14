@@ -1,7 +1,5 @@
 package swipe.android.DatabaseHelpers;
 
-import swipe.android.nearlings.MessagesSync.NearlingEvent;
-
 import com.edbert.library.database.DatabaseHelperInterface;
 
 public class GroupsDatabaseHelper implements DatabaseHelperInterface {
@@ -29,7 +27,7 @@ public class GroupsDatabaseHelper implements DatabaseHelperInterface {
 	
 	public static final String[] COLUMNS = { COLUMN_ID, COLUMN_DESCRIPTION,
 			COLUMN_LOCATION_LATITUDE, COLUMN_LOCATION_LONGITUDE,
-			COLUMN_DATE,COLUMN_GROUP_NAME,
+			COLUMN_DATE,COLUMN_GROUP_NAME,COLUMN_VISIBILITY,COLUMN_MEMBER_COUNT,
 			COLUMN_DESCRIPTION, COLUMN_DESCRIPTION, COLUMN_EVENT_COUNT,COLUMN_NEED_COUNT };
 
 	public static final String TABLE_CREATE_ROUTES = "CREATE TABLE "

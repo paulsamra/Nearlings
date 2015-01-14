@@ -83,7 +83,7 @@ private Button attend_event_btn, getDirections;
 		fullScrollView = (ScrollView) view.findViewById(R.id.scroll_frame);
 		
 		title = (TextView) view.findViewById(R.id.event_title);
-		event_time_date = (TextView) view.findViewById(R.id.event_time);
+		event_time_date = (TextView) view.findViewById(R.id.event_time_date);
 	
 		rsvp_count= (TextView) view.findViewById(R.id.event_rsvp_count);
 		fee= (TextView) view.findViewById(R.id.event_fee);
@@ -91,7 +91,7 @@ private Button attend_event_btn, getDirections;
 		category = (TextView) view.findViewById(R.id.event_category);
 		description = (TextView) view.findViewById(R.id.event_description );
 		location = (TextView) view.findViewById(R.id.event_location );
-	
+		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
 		MapsInitializer.initialize(((Activity) context));
 
 		mapFragment = (MapFragment) ((Activity) this.context)
@@ -176,7 +176,7 @@ private Button attend_event_btn, getDirections;
 		description.setText(description_string);
 		visibility.setText(visibility_string);
 		event_time_date.setText(time_string + " on " + date_string);
-		rsvp_count.setText(Integer.valueOf(rsvp_count_int));
+		rsvp_count.setText(String.valueOf(rsvp_count_int));
 		fee.setText(String.valueOf(fee_amount));
 		category.setText(category_string);
 		

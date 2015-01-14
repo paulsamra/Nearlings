@@ -1,4 +1,4 @@
-package swipe.android.nearlings.json.needs;
+package swipe.android.nearlings.needs;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 
@@ -101,6 +101,7 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		
 		Intent intent = new Intent(this.getActivity(),
 				NeedsDetailsActivity.class);
 		Bundle extras = new Bundle();

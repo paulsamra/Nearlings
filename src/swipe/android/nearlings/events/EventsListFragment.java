@@ -1,20 +1,12 @@
 package swipe.android.nearlings.events;
 
-import java.util.Calendar;
-
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.nearlings.CreateEventActivity;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.MessagesSync.EventsRequest;
-import swipe.android.nearlings.MessagesSync.MessagesRequest;
-import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
-import swipe.android.nearlings.R.id;
-import swipe.android.nearlings.R.layout;
-import swipe.android.nearlings.viewAdapters.EventsViewAdapter;
-import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
+import swipe.android.nearlings.viewAdapters.EventsListAdapter;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -32,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
@@ -39,7 +32,7 @@ import com.fortysevendeg.swipelistview.SwipeListView;
 
 public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 	SwipeListView lView;
-	
+
 	String MESSAGES_START_FLAG = EventsContainerFragment.MESSAGES_START_FLAG;
 	String MESSAGES_FINISH_FLAG = EventsContainerFragment.MESSAGES_FINISH_FLAG;
 
@@ -58,9 +51,10 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void reloadData() {
-reloadAdapter();
-		
+		reloadAdapter();
+
 	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -70,14 +64,13 @@ reloadAdapter();
 				false);
 
 		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-	
+
 		lView = (SwipeListView) rootView.findViewById(R.id.list);
-		
-		 mEmptyViewContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_empty);
 
-			
+		mEmptyViewContainer = (SwipeRefreshLayout) rootView
+				.findViewById(R.id.swipe_empty);
 
-			 lView.setEmptyView(mEmptyViewContainer);
+		lView.setEmptyView(mEmptyViewContainer);
 		lView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -92,20 +85,13 @@ reloadAdapter();
 				@Override
 				public boolean onActionItemClicked(ActionMode mode,
 						MenuItem item) {
-					/*
-					 * switch (item.getItemId()) { case R.id.menu_delete:
-					 * lView.dismissSelected(); mode.finish(); return true;
-					 * default: return false; }
-					 */
+				
 					return false;
 				}
 
 				@Override
 				public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-					/*
-					 * MenuInflater inflater = mode.getMenuInflater();
-					 * inflater.inflate(R.menu.menu_choice_items, menu);
-					 */
+				
 					return true;
 				}
 
@@ -128,18 +114,20 @@ reloadAdapter();
 
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
-			        int visibleItemCount, int totalItemCount) {
-			    boolean enable = false;
-			    if(lView != null && lView.getChildCount() > 0){
-			        // check if the first item of the list is visible
-			        boolean firstItemVisible = lView.getFirstVisiblePosition() == 0;
-			        // check if the top of the first item is visible
-			        boolean topOfFirstItemVisible = lView.getChildAt(0).getTop() == 0;
-			        // enabling or disabling the refresh layout
-			        enable = firstItemVisible && topOfFirstItemVisible;
-			    }
-			    swipeView.setEnabled(enable);
-			}});
+					int visibleItemCount, int totalItemCount) {
+				boolean enable = false;
+				if (lView != null && lView.getChildCount() > 0) {
+					// check if the first item of the list is visible
+					boolean firstItemVisible = lView.getFirstVisiblePosition() == 0;
+					// check if the top of the first item is visible
+					boolean topOfFirstItemVisible = lView.getChildAt(0)
+							.getTop() == 0;
+					// enabling or disabling the refresh layout
+					enable = firstItemVisible && topOfFirstItemVisible;
+				}
+				swipeView.setEnabled(enable);
+			}
+		});
 		lView.setSwipeListViewListener(new BaseSwipeListViewListener() {
 			@Override
 			public void onOpened(int position, boolean toRight) {
@@ -186,17 +174,17 @@ reloadAdapter();
 		});
 		swipeView.setOnRefreshListener(this);
 
-mEmptyViewContainer.setOnRefreshListener(this);
-		// lView.setOnItemClickListener(this);
+		mEmptyViewContainer.setOnRefreshListener(this);
+		//lView.setOnItemClickListener(this);
+		
 		lView.setSwipeOpenOnLongPress(true);
 		lView.setSwipeCloseAllItemsWhenMoveList(true);
 
 		// lView.setOffsetLeft(convertDpToPixel(100.0f));
 		// lView.setOffsetRight(convertDpToPixel(100.0f));
-
+	
 		return rootView;
 	}
-
 
 	public int convertDpToPixel(float dp) {
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -237,7 +225,7 @@ mEmptyViewContainer.setOnRefreshListener(this);
 
 		Cursor c = generateCursor();
 
-		this.mAdapter = new EventsViewAdapter(this.getActivity(), c, lView);
+		this.mAdapter = new EventsListAdapter(this.getActivity(), c, lView);
 
 		mAdapter.notifyDataSetChanged();
 		lView.setAdapter(mAdapter);
@@ -246,7 +234,7 @@ mEmptyViewContainer.setOnRefreshListener(this);
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-	//	inflater.inflate(R.menu.events_menu, menu);
+		// inflater.inflate(R.menu.events_menu, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -267,11 +255,28 @@ mEmptyViewContainer.setOnRefreshListener(this);
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	public void onRefresh() {
 		((EventsContainerFragment) this.getParentFragment()).requestUpdate();
 	}
-	
 
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		/*Intent intent = new Intent(this.getActivity(),
+				EventsDetailsActivity.class);
+		Bundle extras = new Bundle();
+		Cursor c = generateCursor();
+
+		c.moveToPosition(position);
+		String need_id = c.getString(c
+				.getColumnIndex(EventsDatabaseHelper.COLUMN_ID));
+		extras.putString("id", need_id);
+		intent.putExtras(extras);
+
+		startActivity(intent);*/
+		Log.d("CLICKEd", "CLICKED");
+	}
 }

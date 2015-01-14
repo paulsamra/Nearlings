@@ -1,44 +1,31 @@
 package swipe.android.nearlings;
 
-import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
+import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
+import swipe.android.nearlings.viewAdapters.EventsDetailAdapter;
+import swipe.android.nearlings.viewAdapters.EventsListAdapter;
 import swipe.android.nearlings.viewAdapters.GroupsViewAdapter;
-import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
 import android.app.ActionBar;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
-public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
+public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		implements Refreshable {
 	String id;
 	View view;
-	GroupsViewAdapter adapter;
+	EventsDetailAdapter adapter;
 
-	public static final String MESSAGES_START_FLAG = GroupsDetailsFragment.class
+	public static final String MESSAGES_START_FLAG = EventsDetailsFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	public static final String MESSAGES_FINISH_FLAG = GroupsDetailsFragment.class
+	public static final String MESSAGES_FINISH_FLAG = EventsDetailsFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 	FragmentManager fm;
 
@@ -71,7 +58,7 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 				parent.removeView(view);
 		}
 		try {
-			view = inflater.inflate(R.layout.groups_detail, container, false);
+			view = inflater.inflate(R.layout.events_details, container, false);
 
 		} catch (InflateException e) {
 
@@ -101,15 +88,15 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-		String selectionClause = GroupsDatabaseHelper.COLUMN_ID + " = ?";
+		String selectionClause = EventsDatabaseHelper.COLUMN_ID + " = ?";
 		String[] mSelectionArgs = { "" };
 		mSelectionArgs[0] = id;
 		CursorLoader cursorLoader = new CursorLoader(
 				this.getActivity(),
 				NearlingsContentProvider
-						.contentURIbyTableName(GroupsDatabaseHelper.TABLE_NAME),
-						GroupsDatabaseHelper.COLUMNS, selectionClause,
-				mSelectionArgs, GroupsDatabaseHelper.COLUMN_DATE
+						.contentURIbyTableName(EventsDatabaseHelper.TABLE_NAME),
+						EventsDatabaseHelper.COLUMNS, selectionClause,
+				mSelectionArgs, EventsDatabaseHelper.COLUMN_DATE_OF_EVENT
 						+ " DESC");
 		return cursorLoader;
 
@@ -146,7 +133,7 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		getLoaderManager().initLoader(0, null, this);
 		c = generateCursor();
 		if (adapter == null)
-			adapter = new GroupsViewAdapter(view, this.getActivity(), id,
+			adapter = new EventsDetailAdapter(view, this.getActivity(), id,
 					c, savedInstanceState);
 
 		adapter.reloadData();

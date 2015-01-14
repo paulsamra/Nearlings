@@ -7,6 +7,7 @@ import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.BaseMapFragment;
+import swipe.android.nearlings.GroupsDetailsActivity;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NeedsDetailsActivity;
@@ -87,7 +88,7 @@ public class GroupsMapViewFragment extends BaseMapFragment {
 			arg1.moveToNext();
 			// fx zoom
 		}
-	
+
 		// bc needs to include your current location as well as the default
 		Location l = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getCurrentLocation();
@@ -109,8 +110,8 @@ public class GroupsMapViewFragment extends BaseMapFragment {
 				this.getActivity(),
 				NearlingsContentProvider
 						.contentURIbyTableName(GroupsDatabaseHelper.TABLE_NAME),
-						GroupsDatabaseHelper.COLUMNS, null, null,
-						GroupsDatabaseHelper.COLUMN_DATE + " DESC");
+				GroupsDatabaseHelper.COLUMNS, null, null,
+				GroupsDatabaseHelper.COLUMN_DATE + " DESC");
 
 		return cursorLoader;
 
@@ -128,51 +129,53 @@ public class GroupsMapViewFragment extends BaseMapFragment {
 
 	@Override
 	protected void attachInfoWindowAdapter() {
+		if (mMap != null) {
+			mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
+				@Override
+				public View getInfoWindow(Marker arg0) {
+					return null;
+				}
 
-		mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
-			@Override
-			public View getInfoWindow(Marker arg0) {
-				return null;
-			}
+				@Override
+				public View getInfoContents(Marker marker) {
+					View myContentView = GroupsMapViewFragment.this
+							.getActivity().getLayoutInflater()
+							.inflate(R.layout.needs_marker, null);
+					TextView needs_title = ((TextView) myContentView
+							.findViewById(R.id.needs_task));
+					needs_title.setText(marker.getTitle());
 
-			@Override
-			public View getInfoContents(Marker marker) {
-				View myContentView = GroupsMapViewFragment.this.getActivity()
-						.getLayoutInflater()
-						.inflate(R.layout.needs_marker, null);
-				TextView needs_title = ((TextView) myContentView
-						.findViewById(R.id.needs_task));
-				needs_title.setText(marker.getTitle());
-
-				return myContentView;
-			}
-		});
-
+					return myContentView;
+				}
+			});
+		}
 	}
 
 	@Override
 	protected void attachInfoWindowClickListener() {
-		mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+		if (mMap != null) {
+			mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
-			@Override
-			public void onInfoWindowClick(Marker marker) {
-				Intent intent = new Intent(GroupsMapViewFragment.this
-						.getActivity(), NeedsDetailsActivity.class);
-				Bundle extras = new Bundle();
-				Cursor c = generateCursor();
-				String snip = marker.getSnippet();
+				@Override
+				public void onInfoWindowClick(Marker marker) {
+					Intent intent = new Intent(GroupsMapViewFragment.this
+							.getActivity(), GroupsDetailsActivity.class);
+					Bundle extras = new Bundle();
+					Cursor c = generateCursor();
+					String snip = marker.getSnippet();
 
-				int position = Integer.valueOf(snip.substring(
-						snip.indexOf(",") + 1, snip.length()));
-				c.moveToPosition(position);
-				String need_id = c.getString(c
-						.getColumnIndex(EventsDatabaseHelper.COLUMN_ID));
-				extras.putString("id", need_id);
-				intent.putExtras(extras);
+					int position = Integer.valueOf(snip.substring(
+							snip.lastIndexOf(",") + 1, snip.length()));
+					c.moveToPosition(position);
+					String need_id = c.getString(c
+							.getColumnIndex(GroupsDatabaseHelper.COLUMN_ID));
+					extras.putString("id", need_id);
+					intent.putExtras(extras);
 
-				startActivity(intent);
-			}
+					startActivity(intent);
+				}
 
-		});
+			});
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package swipe.android.nearlings.json.needs;
+package swipe.android.nearlings.needs;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.BaseMapFragment;
