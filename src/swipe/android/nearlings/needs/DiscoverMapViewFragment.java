@@ -13,6 +13,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -116,6 +117,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 
 	@Override
 	protected void attachInfoWindowAdapter() {
+	
 		mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
 			@Override
 			public View getInfoWindow(Marker arg0) {
@@ -143,6 +145,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 
 	@Override
 	protected void attachInfoWindowClickListener() {
+	
 		mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 			@Override

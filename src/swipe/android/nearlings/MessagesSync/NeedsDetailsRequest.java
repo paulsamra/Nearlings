@@ -32,7 +32,8 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 	public static final String BUNDLE_CATEGORY = "CATEGORY";
 	public static final String BUNDLE_TIME_AGO = "TIME_AGO";
 	public static final String BUNDLE_TIME_END = "TIME_END";
-
+public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
+	
 	public static final String BUNDLE_RADIUS = "RADIUS";
 	public static final String BUNDLE_LOCATION_TYPE = "LOCATION_TYPE";
 	public static final String BUNDLE_LOCATION = "LOCATION";
@@ -58,21 +59,30 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 				.defaultSessionHeaders();
 		String url = SessionManager.getInstance(c).exploreNeedsURL() + "?";
 
+		
+		//default the statuses to whatever 
+		if (b.containsKey(BUNDLE_STATUS)) {
+			url += ("&status=" + b.getString(BUNDLE_STATUS));
+		}
+		//TODO
+		if (b.containsKey(BUNDLE_TIME_END)) {
+			url += ("&time_end=" + b.getLong(BUNDLE_TIME_END));
+		}
+		if (b.containsKey(BUNDLE_TIME_AGO)) {
+			url += ("&time_ago=" + b.getLong(BUNDLE_TIME_AGO));
+		}
+		
 		if (b.containsKey(BUNDLE_RADIUS)) {
 			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
 		}
 		if (b.containsKey(BUNDLE_REWARD)) {
 			url += ("&reward=" + b.getFloat(BUNDLE_REWARD));
 		}
-		if (b.containsKey(BUNDLE_STATUS)) {
-			url += ("&status=" + b.getString(BUNDLE_STATUS));
-		}
+	
 		if (b.containsKey(BUNDLE_CATEGORY)) {
 			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
 		}
-		if (b.containsKey(BUNDLE_TIME_AGO)) {
-			url += ("&time_ago=" + b.getString(BUNDLE_TIME_AGO));
-		}
+		
 		if (b.containsKey(BUNDLE_KEYWORDS)) {
 			url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
 		}
@@ -83,8 +93,9 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 		if (b.containsKey(BUNDLE_LOCATION)) {
 			url += ("&location=" + b.getString(BUNDLE_LOCATION));
 		}
-		if (b.containsKey(BUNDLE_TIME_END)) {
-			url += ("&time_end=" + b.getString(BUNDLE_TIME_END));
+		
+		if (b.containsKey(BUNDLE_VISIBILITY)) {
+			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
 		}
 		Log.e("URL", url);
 		Object o = SocketOperator.getInstance(classType).getResponse(c, url,

@@ -71,10 +71,12 @@ public class NeedsDetailsViewAdapter implements
 		this.cursor = cursor;
 		MapsInitializer.initialize(context);
 		initializeView(userDataView, savedInstanceState);
-		
+
 		reloadData();
 	}
-	 ArrayList<Comments> listofCommentsArrayList;
+
+	ArrayList<Comments> listofCommentsArrayList;
+
 	public View initializeView(View view, Bundle savedInstanceState) {
 		fullScrollView = (ScrollView) view.findViewById(R.id.scroll_frame);
 		changeState = (Button) view.findViewById(R.id.needs_change_state);
@@ -86,11 +88,9 @@ public class NeedsDetailsViewAdapter implements
 		description = (TextView) view
 				.findViewById(R.id.needs_details_description);
 		location = (TextView) view.findViewById(R.id.needs_details_location);
-		
+
 		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
 
-		
-		
 		MapsInitializer.initialize(((Activity) context));
 
 		mapFragment = (MapFragment) ((Activity) this.context)
@@ -141,40 +141,38 @@ public class NeedsDetailsViewAdapter implements
 				return false;
 			}
 		});
-	
-		/*commentCursor = context
-				.getContentResolver()
-				.query(NearlingsContentProvider
-						.contentURIbyTableName(NeedsCommentsDatabaseHelper.TABLE_NAME),
-						NeedsCommentsDatabaseHelper.COLUMNS, null, null, null);*/
-		//commentAdapter = new LazyDetailCommentsAdapter(context);
-		//commentAdapter.notifyDataSetChanged();
-		//listOfComments.setAdapter(commentAdapter);
-		
-		//listOfComments.invalidate();
-	/*	listOfComments.setClickable(false);
-		listOfComments.requestDisallowInterceptTouchEvent(false);
-		listOfComments.setOnTouchListener(new OnTouchListener() {
 
-	        @Override
-	        public boolean onTouch(View v, MotionEvent event) {
-	            if(event.getAction()==MotionEvent.ACTION_MOVE)
-	            {
-	                return true;
-	            }
-	            return false;
-	        }
-	    });*/
-		 listofCommentsArrayList = new ArrayList<Comments>();
-		
-			commentAdapter = new LazyDetailCommentsAdapter(this.context, listofCommentsArrayList, idOfDetail, 2);
-			listOfComments.setAdapter(commentAdapter);
-	
+		/*
+		 * commentCursor = context .getContentResolver()
+		 * .query(NearlingsContentProvider
+		 * .contentURIbyTableName(NeedsCommentsDatabaseHelper.TABLE_NAME),
+		 * NeedsCommentsDatabaseHelper.COLUMNS, null, null, null);
+		 */
+		// commentAdapter = new LazyDetailCommentsAdapter(context);
+		// commentAdapter.notifyDataSetChanged();
+		// listOfComments.setAdapter(commentAdapter);
+
+		// listOfComments.invalidate();
+		/*
+		 * listOfComments.setClickable(false);
+		 * listOfComments.requestDisallowInterceptTouchEvent(false);
+		 * listOfComments.setOnTouchListener(new OnTouchListener() {
+		 * 
+		 * @Override public boolean onTouch(View v, MotionEvent event) {
+		 * if(event.getAction()==MotionEvent.ACTION_MOVE) { return true; }
+		 * return false; } });
+		 */
+		listofCommentsArrayList = new ArrayList<Comments>();
+
+		commentAdapter = new LazyDetailCommentsAdapter(this.context,
+				listofCommentsArrayList, idOfDetail, 2);
+		listOfComments.setAdapter(commentAdapter);
+
 		// view.setTag(holder);*/
 		return null;
 	}
 
-LazyDetailCommentsAdapter commentAdapter;
+	LazyDetailCommentsAdapter commentAdapter;
 	GoogleMap mMap;
 
 	public void reloadData() {
@@ -206,7 +204,7 @@ LazyDetailCommentsAdapter commentAdapter;
 
 		int personRequestImage_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL);
-String titleString = cursor.getString(title_index);
+		String titleString = cursor.getString(title_index);
 		title.setText(titleString);
 		price.setText("$" + String.valueOf(cursor.getDouble(price_index)));
 
@@ -223,27 +221,33 @@ String titleString = cursor.getString(title_index);
 
 		if (mapFragment != null) {
 			mMap = mapFragment.getMap();
-
+			if(mMap != null){
+				
+				
 			mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
 			mMap.setMyLocationEnabled(true);
 
 			mMap.getUiSettings().setZoomControlsEnabled(true);
-			addUpMapMarker(latitude, longitude,titleString);
+			addUpMapMarker(latitude, longitude, titleString);
+			}
 
 		}
-		getDirections.setOnClickListener(new OnClickListener(){
+		getDirections.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Location l = ((NearlingsApplication) NeedsDetailsViewAdapter.this.context.getApplicationContext()).getLastLocation();
-				
-				String url= "http://maps.google.com/maps?saddr=" +l.getLatitude() + "," +l.getLongitude()+ "&daddr="+latitude+","+longitude;
-				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
-					    Uri.parse(url));
+				Location l = ((NearlingsApplication) NeedsDetailsViewAdapter.this.context
+						.getApplicationContext()).getLastLocation();
+
+				String url = "http://maps.google.com/maps?saddr="
+						+ l.getLatitude() + "," + l.getLongitude() + "&daddr="
+						+ latitude + "," + longitude;
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+						Uri.parse(url));
 				NeedsDetailsViewAdapter.this.context.startActivity(intent);
 			}
-			
+
 		});
 		ImageLoader.getInstance()
 				.displayImage(cursor.getString(personRequestImage_index),
@@ -288,18 +292,20 @@ String titleString = cursor.getString(title_index);
 	ContentValues valuesOfNeed;
 
 	public void reloadCommentData() {
-		/*new PostDataWebTask<JsonNeedsCommentsResponse>(this,
-				JsonNeedsCommentsResponse.class).execute(SessionManager
-				.getInstance(this).(), MapUtils
-				.mapToString(headers));*/
-		//commentCursor.requery();
-	/*	commentAdapter = new NeedsCommentsAdapter(this.context, listofCommentsArrayList);
-		listOfComments.setAdapter(commentAdapter);
-		//commentAdapter = new LazyDetailCommentsAdapter(context, commentCursor);
-	//	commentAdapter.requestUpdate();
-	commentAdapter.notifyDataSetChanged();
-	listOfComments.setAdapter(commentAdapter);
-*/
+		/*
+		 * new PostDataWebTask<JsonNeedsCommentsResponse>(this,
+		 * JsonNeedsCommentsResponse.class).execute(SessionManager
+		 * .getInstance(this).(), MapUtils .mapToString(headers));
+		 */
+		// commentCursor.requery();
+		/*
+		 * commentAdapter = new NeedsCommentsAdapter(this.context,
+		 * listofCommentsArrayList); listOfComments.setAdapter(commentAdapter);
+		 * //commentAdapter = new LazyDetailCommentsAdapter(context,
+		 * commentCursor); // commentAdapter.requestUpdate();
+		 * commentAdapter.notifyDataSetChanged();
+		 * listOfComments.setAdapter(commentAdapter);
+		 */
 	}
 
 	private void setUpMapIfNeeded(View inflatedView) {
@@ -315,25 +321,23 @@ String titleString = cursor.getString(title_index);
 		}
 	}
 
-
-	//this one should only have 1.
+	// this one should only have 1.
 	private void addUpMapMarker(double lat, double log, String title) {
 		Marker m = mMap.addMarker(new MarkerOptions().position(
 				new LatLng(lat, log)).title(title));
 		LatLngBounds.Builder b = new LatLngBounds.Builder();
-	
-		    b.include(m.getPosition());
-	
-		LatLngBounds bounds = b.build();
-		//Change the padding as per needed
-		CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 25,25,5);
-		 CameraUpdate zoom=CameraUpdateFactory.zoomTo(14);
-		 mMap.moveCamera(cu);
-		mMap.animateCamera(zoom);
-		
-	}
 
-	
+		b.include(m.getPosition());
+
+		LatLngBounds bounds = b.build();
+		// Change the padding as per needed
+		CameraUpdate cu = CameraUpdateFactory
+				.newLatLngBounds(bounds, 25, 25, 5);
+		CameraUpdate zoom = CameraUpdateFactory.zoomTo(14);
+		mMap.moveCamera(cu);
+		mMap.animateCamera(zoom);
+
+	}
 
 	@Override
 	public void onTaskComplete(JsonChangeStateResponse result) {

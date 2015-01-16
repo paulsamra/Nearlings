@@ -45,8 +45,11 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 
 		if (mMapView != null) {
 			mMap = mMapView.getMap();
+			if(mMap != null){
+				
+			
 			mMap.setOnMapLoadedCallback(this);
-		
+
 			mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
 			mMap.setMyLocationEnabled(true);
@@ -54,6 +57,7 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 			mMap.getUiSettings().setZoomControlsEnabled(true);
 
 			this.getLoaderManager().initLoader(10, null, this);
+			}
 		}
 		return view;
 
@@ -63,7 +67,8 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 
 	protected abstract void attachInfoWindowClickListener();
 
-	protected void drawMarker(LatLng point, String title, String... snippetStuff) {
+	protected void drawMarker(LatLng point, String title,
+			String... snippetStuff) {
 		// Creating an instance of MarkerOptions
 		MarkerOptions markerOptions = new MarkerOptions();
 
@@ -125,18 +130,16 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 	}
 
 	protected void setUpMapIfNeeded(View inflatedView) {
-		if (mMap == null) {
+		if (mMap == null && inflatedView != null) {
 			mMap = ((MapView) inflatedView
 					.findViewById(R.id.needs_map_view_map)).getMap();
-			if (mMap != null) {
-				// setUpMap();
-			}
 		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		setUpMapIfNeeded(mMapView);
 		mMapView.onResume();
 	}
 
@@ -148,8 +151,14 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void onDestroy() {
-		mMapView.onDestroy();
 		super.onDestroy();
+		mMapView.onDestroy();
+	}
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+
+		setUpMapIfNeeded(mMapView);
 	}
 
 	public abstract void setSourceRequestHelper();
@@ -233,12 +242,13 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 
 		markerLocation.add(latitude + "," + longitude);
 	}
+
 	@Override
 	public void onMapLoaded() {
-	if (mMap != null) {
-		attachInfoWindowAdapter();
-		attachInfoWindowClickListener();
+		if (mMap != null) {
+			attachInfoWindowAdapter();
+			attachInfoWindowClickListener();
+		}
 	}
-	}
-	
+
 }

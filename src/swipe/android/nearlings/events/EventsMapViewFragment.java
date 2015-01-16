@@ -6,7 +6,7 @@ import swipe.android.nearlings.EventsDetailsActivity;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
-import swipe.android.nearlings.MessagesSync.EventsRequest;
+import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
@@ -81,7 +81,7 @@ public class EventsMapViewFragment extends BaseMapFragment {
 	@Override
 	public void setSourceRequestHelper() {
 		super.helper = SendRequestStrategyManager
-				.getHelper(EventsRequest.class);// new
+				.getHelper(EventsDetailsRequest.class);// new
 												// NeedsDetailsRequest(this.getActivity(),
 												// JsonExploreResponse.class);
 	}

@@ -15,6 +15,7 @@ import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.json.groups.GroupsMapViewFragment;
+import swipe.android.nearlings.needs.DiscoverContainerFragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -77,15 +78,19 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				String term = listOfFilter.get(position).getSearchTerm();
 				if (current) {
 					term = "All";
+					SessionManager.getInstance(
+							GroupsContainerFragment.this.getActivity())
+							.setGroupCategory(SessionManager.DEFAULT_STRING);
+				}else{
+					SessionManager.getInstance(
+							GroupsContainerFragment.this.getActivity())
+							.setGroupCategory(term);
 				}
 				// searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
 				// requeue with search filters. We should pass in filters at
 				// some point
 				// DiscoverContainerFragment.this.onRefresh();
-				SessionManager.getInstance(
-						GroupsContainerFragment.this.getActivity())
-						.setSearchString(term);
 			}
 		});
 
@@ -135,8 +140,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				listOfFilter.get(position).setSelected(!current);
 				String term = listOfFilter.get(position).getSearchTerm();
 				if (current) {
-
-					term = "-1";
+					term = String.valueOf(SessionManager.DEFAULT_VALUE);
 				}
 				// searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
@@ -252,7 +256,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getLastLocation();
 
-		if (sm.getSearchLocation() != "") {
+		if (!sm.getSearchLocation().equals("")) {
 			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION,
 					sm.getSearchLocation());
 			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION_TYPE,
@@ -266,7 +270,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 					sm.getSearchRewardMinimum());
 		}
 
-		if (sm.getSearchString() != ""
+		if (!sm.getSearchString().equals("")
 				&& !sm.getSearchString().equals(
 						SessionManager.DEFAULT_STRING)) {
 			b.putString(NeedsDetailsRequest.BUNDLE_KEYWORDS,

@@ -38,6 +38,7 @@ public class SessionManager {
 	private static final String SEARCH_STRING = "SEARCH_STRING";
 	private static final String SEARCH_RADIUS = "SEARCH_RADIUS";
 	private static final String SEARCH_VISIBILITY = "SEARCH_VISIBILITY";
+	
 	//Explore
 	private static final String EXPLORE_SEARCH_STATUS = "EXPLORE_SEARCH_STATUS";
 	private static final String EXPLORE_SEARCH_REWARD = "EXPLORE_SEARCH_REWARD";
@@ -51,8 +52,10 @@ public class SessionManager {
 		//Events
 		private static final String EVENTS_SEARCH_CATEGORY = "EVENTS_SEARCH_CATEGORY";
 		private static final String EVENTS_TIME_START = "EVENTS_TIME_START";
-		
-		public static final String DEFAULT_STRING = "All";
+
+		//Default values
+		public static final float DEFAULT_SEARCH_RADIUS = 20.0f;
+		public static final String DEFAULT_STRING = "";
 		public static final int DEFAULT_VALUE = -1;
 		private static final String USER_ID = "USER_ID";
 
@@ -186,7 +189,13 @@ public class SessionManager {
 	public void setSearchRadius(float searchRadius) {
 		editor.putFloat(SEARCH_RADIUS, searchRadius);
 	}
+	public String getExploreCategory() {
+		return pref.getString(EVENTS_SEARCH_CATEGORY, DEFAULT_STRING);
+	}
 
+	public void setExploreCategory(String category) {
+		editor.putString(EVENTS_SEARCH_CATEGORY, category);
+	}
 	public String getSearchStatus() {
 		return pref.getString(EXPLORE_SEARCH_STATUS,DEFAULT_STRING);
 	}
@@ -195,7 +204,13 @@ public class SessionManager {
 		editor.putString(EXPLORE_SEARCH_STATUS, searchStatus);
 
 	}
-
+	
+	public String getEventCategory(){
+		return pref.getString(EVENTS_SEARCH_CATEGORY, DEFAULT_STRING);
+	}
+	public void setEventCategory(String event_category){
+		editor.putString(EVENTS_SEARCH_CATEGORY, event_category);
+	}
 	public float getSearchRewardMinimum() {
 		return pref.getFloat(EXPLORE_SEARCH_REWARD, DEFAULT_VALUE);
 	}
@@ -219,6 +234,13 @@ public class SessionManager {
 		return pref.getString(USER_ID, "");
 	}
 
+	public void setSearchVisibility(String visibility){
+		editor.putString(SEARCH_VISIBILITY, visibility);
+	}
+	public String getSearchVisibility(){
+		return pref.getString(SEARCH_VISIBILITY, DEFAULT_STRING);
+	}
+	
 	public void resetTables() {
 		DatabaseCommandManager.deleteAllTables(NearlingsContentProvider
 				.getDBHelperInstance(_context).getWritableDatabase());

@@ -21,8 +21,8 @@ import android.os.Bundle;
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.network.SocketOperator;
 
-public class EventsRequest extends NearlingsRequest<JsonEventsResponse> {
-	public EventsRequest(Context c) {
+public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
+	public EventsDetailsRequest(Context c) {
 		super(c);
 		// TODO Auto-generated constructor stub
 	}

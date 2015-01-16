@@ -5,7 +5,7 @@ import swipe.android.nearlings.CreateEventActivity;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
 import swipe.android.nearlings.R;
-import swipe.android.nearlings.MessagesSync.EventsRequest;
+import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.viewAdapters.EventsListAdapter;
 import android.content.Intent;
 import android.database.Cursor;
@@ -210,7 +210,7 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new EventsRequest(this.getActivity());
+		super.helper = new EventsDetailsRequest(this.getActivity());
 	}
 
 	@Override
