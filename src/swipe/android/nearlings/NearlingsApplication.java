@@ -7,7 +7,7 @@ import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.EventsRequest;
+import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
@@ -100,7 +100,7 @@ public class NearlingsApplication extends Application implements
 		SendRequestStrategyManager.register(new MessagesRequest(this));
 		SendRequestStrategyManager.register(new NeedsDetailsRequest(this,
 				JsonExploreResponse.class));
-		SendRequestStrategyManager.register(new EventsRequest(this));
+		SendRequestStrategyManager.register(new EventsDetailsRequest(this));
 		SendRequestStrategyManager.register(new GroupsRequest(this));
 		super.registerActivityLifecycleCallbacks(this);
 		

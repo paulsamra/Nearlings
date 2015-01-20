@@ -1,8 +1,5 @@
 package swipe.android.nearlings;
 
-import java.text.DateFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,16 +11,12 @@ import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.googleplaces.GoogleParser;
 import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,17 +29,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.edbert.library.dialog.DialogManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.edbert.library.network.PostDataWebTask;
 import com.edbert.library.utils.MapUtils;
 import com.example.deletableedittext.DeleteableEditText;
-import com.fourmob.datetimepicker.date.DatePickerDialog;
-import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
-import com.sleepbot.datetimepicker.time.RadialPickerLayout;
-import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 public class CreateGroupActivity extends FragmentActivity implements
 		AsyncTaskCompleteListener {

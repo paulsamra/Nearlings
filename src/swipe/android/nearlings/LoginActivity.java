@@ -3,11 +3,6 @@ package swipe.android.nearlings;
 import java.util.Map;
 
 import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
-
-import com.edbert.library.network.AsyncTaskCompleteListener;
-import com.edbert.library.network.PostDataWebTask;
-import com.edbert.library.utils.MapUtils;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,6 +14,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
+import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.utils.MapUtils;
 
 public class LoginActivity extends Activity implements
 		AsyncTaskCompleteListener<JsonLoginResponse> {

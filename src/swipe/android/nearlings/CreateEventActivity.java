@@ -12,22 +12,22 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.googleplaces.GoogleParser;
 import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+<<<<<<< HEAD
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
+=======
+>>>>>>> branch 'master' of https://Edbertchan@bitbucket.org/SwipeDevelopment/nearlings-android.git
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,8 +40,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
+<<<<<<< HEAD
 import android.widget.Switch;
 import android.widget.Toast;
+=======
+>>>>>>> branch 'master' of https://Edbertchan@bitbucket.org/SwipeDevelopment/nearlings-android.git
 
 import com.edbert.library.dialog.DialogManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;

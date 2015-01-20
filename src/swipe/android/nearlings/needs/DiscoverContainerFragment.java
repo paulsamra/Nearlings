@@ -12,42 +12,26 @@ import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.R.array;
-import swipe.android.nearlings.R.id;
-import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
@@ -63,7 +47,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 	// dynamically adding behavior to the
 	// filter popup.
 	private void setUpFilters(View rootView) {
-		final HorizontalListView listview = (HorizontalListView) rootView
+		final HorizontalListView category_listview = (HorizontalListView) rootView
 				.findViewById(R.id.search_options_listview_categories);
 		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
 		Resources res = getResources();
@@ -81,9 +65,9 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				this.getActivity(), R.layout.search_options_view_item,
 				listOfFilter);
 
-		listview.setAdapter(adapter);
+		category_listview.setAdapter(adapter);
 
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		category_listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view,
 					int position, long id) {
@@ -95,22 +79,26 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				String term = listOfFilter.get(position).getSearchTerm();
 				if (current) {
 					term = "All";
+					SessionManager.getInstance(
+							DiscoverContainerFragment.this.getActivity())
+							.setExploreCategory(SessionManager.DEFAULT_STRING);
+				}else{
+					SessionManager.getInstance(
+							DiscoverContainerFragment.this.getActivity())
+							.setExploreCategory(term);
 				}
 				// searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
 				// requeue with search filters. We should pass in filters at
 				// some point
 				// DiscoverContainerFragment.this.onRefresh();
-				SessionManager.getInstance(
-						DiscoverContainerFragment.this.getActivity())
-						.setSearchString(term);
 			}
 		});
 
 		for (SearchOptionsFilter f : listOfFilter) {
 			if (f.getSearchTerm().equals(
 					SessionManager.getInstance(this.getActivity())
-							.getSearchString())) {
+							.getExploreCategory())) {
 				f.setSelected(true);
 			}
 		}
@@ -153,8 +141,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				listOfFilter.get(position).setSelected(!current);
 				String term = listOfFilter.get(position).getSearchTerm();
 				if (current) {
-
-					term = "-1";
+					term = String.valueOf(SessionManager.DEFAULT_VALUE);
 				}
 				// searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
@@ -203,7 +190,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		});
 		String searchStatus = SessionManager.getInstance(
 				DiscoverContainerFragment.this.getActivity()).getSearchStatus();
-		if (!searchStatus.equals(SessionManager.SEARCH_DEFAULT_FILTER))
+		if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
 			b.setText(searchStatus);
 	}
 
@@ -325,27 +312,43 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getLastLocation();
 
-		if (sm.getSearchLocation() != "") {
+		if (sm.getSearchLocation() != null && !sm.getSearchLocation().equals("")) {
 			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION,
 					sm.getSearchLocation());
 			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION_TYPE,
 					NeedsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(NeedsDetailsRequest.BUNDLE_RADIUS, 20.0f);
+			b.putFloat(NeedsDetailsRequest.BUNDLE_RADIUS, SessionManager.DEFAULT_SEARCH_RADIUS);
 		}
 
-		if (sm.getSearchRewardMinimum() != -1) {
-
+		if (sm.getSearchRewardMinimum() != sm.DEFAULT_VALUE && sm.getSearchRewardMinimum() != 0) {
 			b.putFloat(NeedsDetailsRequest.BUNDLE_REWARD,
 					sm.getSearchRewardMinimum());
 		}
 
-		if (sm.getSearchString() != ""
+		if (sm.getExploreCategory() != null
+				&& !sm.getExploreCategory().equals(
+						SessionManager.DEFAULT_STRING)) {
+			b.putString(NeedsDetailsRequest.BUNDLE_CATEGORY,
+					sm.getExploreCategory());
+		}
+		if (sm.getSearchString() != null
 				&& !sm.getSearchString().equals(
-						SessionManager.SEARCH_DEFAULT_FILTER)) {
+						SessionManager.DEFAULT_STRING)) {
 			b.putString(NeedsDetailsRequest.BUNDLE_KEYWORDS,
 					sm.getSearchString());
 		}
 
+		if(sm.getSearchVisibility() != null && !sm.getSearchVisibility().equals("")){
+			b.putString(NeedsDetailsRequest.BUNDLE_VISIBILITY, sm.getSearchVisibility());
+		}
+	
+/*		if(sm.getTimeEnd() != sm.DEFAULT_VALUE){
+			b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeEnd());
+		}
+		
+	if(sm.getTimeStart() != sm.DEFAULT_VALUE){
+		b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeStart());
+		}*/
 		super.onRefresh(b);
 	}
 
@@ -357,7 +360,6 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 
 	@Override
 	public Fragment listViewFragment() {
-		// TODO Auto-generated method stub
 		return new DiscoverListViewFragment();
 	}
 

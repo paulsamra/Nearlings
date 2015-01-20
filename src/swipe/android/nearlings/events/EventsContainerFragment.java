@@ -12,13 +12,11 @@ import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
-import swipe.android.nearlings.MessagesSync.EventsRequest;
+import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.R.array;
-import swipe.android.nearlings.R.id;
-import swipe.android.nearlings.R.layout;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
+import swipe.android.nearlings.needs.DiscoverContainerFragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,7 +25,6 @@ import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,16 +82,15 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 				listOfFilter.get(position).setSelected(!current);
 				String term = listOfFilter.get(position).getSearchTerm();
 				if (current) {
-					term = "All";
+					term = SessionManager.DEFAULT_STRING;
 				}
 				// searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
 				// requeue with search filters. We should pass in filters at
 				// some point
-				// DiscoverContainerFragment.this.onRefresh();
 				SessionManager.getInstance(
 						EventsContainerFragment.this.getActivity())
-						.setSearchString(term);
+						.setEventCategory(term);
 			}
 		});
 
@@ -143,9 +139,9 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 				listOfFilter.get(position).setSelected(!current);
 				String term = listOfFilter.get(position).getSearchTerm();
+				
 				if (current) {
-
-					term = "-1";
+					term = String.valueOf(SessionManager.DEFAULT_VALUE);
 				}
 				// searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
@@ -197,7 +193,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 		});
 		String searchStatus = SessionManager.getInstance(
 				EventsContainerFragment.this.getActivity()).getSearchString();
-		if (!searchStatus.equals(SessionManager.SEARCH_DEFAULT_FILTER))
+		if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
 			b.setText(searchStatus);
 	}
 
@@ -340,27 +336,25 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 		SessionManager sm = SessionManager.getInstance(this.getActivity());
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getLastLocation();
-
-		if (sm.getSearchLocation() != "") {
-			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION,
+		if (!sm.getSearchLocation().equals("")) {
+			b.putString(EventsDetailsRequest.BUNDLE_LOCATION,
 					sm.getSearchLocation());
-			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION_TYPE,
+			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
 					NeedsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(NeedsDetailsRequest.BUNDLE_RADIUS, 20.0f);
+			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS, 20.0f);
 		}
-
-		if (sm.getSearchRewardMinimum() != -1) {
-
-			b.putFloat(NeedsDetailsRequest.BUNDLE_REWARD,
-					sm.getSearchRewardMinimum());
-		}
-
-		if (sm.getSearchString() != ""
-				&& !sm.getSearchString().equals(
-						SessionManager.SEARCH_DEFAULT_FILTER)) {
-			b.putString(NeedsDetailsRequest.BUNDLE_KEYWORDS,
-					sm.getSearchString());
-		}
+	     if(sm.getSearchString() != null && !sm.getSearchString().equals( sm.DEFAULT_STRING)){
+				b.putString(EventsDetailsRequest.BUNDLE_KEYWORDS, sm.getSearchString());
+			}
+	     
+	     if(sm.getEventCategory() != null && !sm.getEventCategory().equals(sm.DEFAULT_STRING)){
+				b.putString(EventsDetailsRequest.BUNDLE_CATEGORY, sm.getEventCategory());
+			}
+	     
+	   /*  if(sm.getTimeStart() != null && sm.getTimeStart() != sm.DEFAULT_VALUE){
+				b.putString(EventsDetailsRequest.BUNDLE_TIME_START, sm.getTimeStart());
+			}
+		   */
 
 		super.onRefresh(b);
 	}
@@ -413,7 +407,7 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 	@Override
 	public void setSourceRequestHelper() {
 			super.helper = SendRequestStrategyManager
-					.getHelper(EventsRequest.class);
+					.getHelper(EventsDetailsRequest.class);
 		
 	}
 }

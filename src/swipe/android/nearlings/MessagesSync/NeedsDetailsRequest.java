@@ -3,39 +3,25 @@ package swipe.android.nearlings.MessagesSync;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
-import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import swipe.android.nearlings.jsonResponses.explore.Tasks;
-import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
 import android.content.ContentValues;
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.edbert.library.database.DatabaseCommandManager;
-import com.edbert.library.network.PostDataWebTask;
 import com.edbert.library.network.SocketOperator;
-import com.edbert.library.network.sync.JsonResponseInterface;
-import com.edbert.library.utils.MapUtils;
 import com.gabesechan.android.reusable.location.ProviderLocationTracker;
-import com.gabesechan.android.reusable.location.ProviderLocationTracker.ProviderType;
 
 public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 
@@ -46,7 +32,8 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 	public static final String BUNDLE_CATEGORY = "CATEGORY";
 	public static final String BUNDLE_TIME_AGO = "TIME_AGO";
 	public static final String BUNDLE_TIME_END = "TIME_END";
-
+public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
+	
 	public static final String BUNDLE_RADIUS = "RADIUS";
 	public static final String BUNDLE_LOCATION_TYPE = "LOCATION_TYPE";
 	public static final String BUNDLE_LOCATION = "LOCATION";
@@ -72,21 +59,30 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 				.defaultSessionHeaders();
 		String url = SessionManager.getInstance(c).exploreNeedsURL() + "?";
 
+		
+		//default the statuses to whatever 
+		if (b.containsKey(BUNDLE_STATUS)) {
+			url += ("&status=" + b.getString(BUNDLE_STATUS));
+		}
+		//TODO
+		if (b.containsKey(BUNDLE_TIME_END)) {
+			url += ("&time_end=" + b.getLong(BUNDLE_TIME_END));
+		}
+		if (b.containsKey(BUNDLE_TIME_AGO)) {
+			url += ("&time_ago=" + b.getLong(BUNDLE_TIME_AGO));
+		}
+		
 		if (b.containsKey(BUNDLE_RADIUS)) {
 			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
 		}
 		if (b.containsKey(BUNDLE_REWARD)) {
 			url += ("&reward=" + b.getFloat(BUNDLE_REWARD));
 		}
-		if (b.containsKey(BUNDLE_STATUS)) {
-			url += ("&status=" + b.getString(BUNDLE_STATUS));
-		}
+	
 		if (b.containsKey(BUNDLE_CATEGORY)) {
 			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
 		}
-		if (b.containsKey(BUNDLE_TIME_AGO)) {
-			url += ("&time_ago=" + b.getString(BUNDLE_TIME_AGO));
-		}
+		
 		if (b.containsKey(BUNDLE_KEYWORDS)) {
 			url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
 		}
@@ -97,8 +93,9 @@ public class NeedsDetailsRequest extends NearlingsRequest<JsonExploreResponse> {
 		if (b.containsKey(BUNDLE_LOCATION)) {
 			url += ("&location=" + b.getString(BUNDLE_LOCATION));
 		}
-		if (b.containsKey(BUNDLE_TIME_END)) {
-			url += ("&time_end=" + b.getString(BUNDLE_TIME_END));
+		
+		if (b.containsKey(BUNDLE_VISIBILITY)) {
+			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
 		}
 		Log.e("URL", url);
 		Object o = SocketOperator.getInstance(classType).getResponse(c, url,

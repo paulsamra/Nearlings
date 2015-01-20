@@ -1,11 +1,9 @@
 package swipe.android.nearlings.navigationdrawer;
 
-import swipe.android.nearlings.DetailFragment;
 import swipe.android.nearlings.MessagesFragment;
+import android.support.v4.app.Fragment;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
-
-import android.support.v4.app.Fragment;
 
 public class MessagesNavDrawerItem extends NavDrawerItem {
 private static final String TITLE = "Messages";

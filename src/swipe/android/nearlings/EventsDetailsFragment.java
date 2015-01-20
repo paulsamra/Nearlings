@@ -3,8 +3,6 @@ package swipe.android.nearlings;
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.viewAdapters.EventsDetailAdapter;
-import swipe.android.nearlings.viewAdapters.EventsListAdapter;
-import swipe.android.nearlings.viewAdapters.GroupsViewAdapter;
 import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;

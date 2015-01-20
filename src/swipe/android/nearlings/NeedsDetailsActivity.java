@@ -1,12 +1,10 @@
 package swipe.android.nearlings;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.edbert.library.containers.TabsActivityContainer;
 

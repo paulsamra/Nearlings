@@ -1,11 +1,9 @@
 package swipe.android.nearlings;
 
 import android.content.Context;
-import android.support.v7.app.ActionBar.LayoutParams;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;

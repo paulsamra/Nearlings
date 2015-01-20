@@ -3,17 +3,10 @@ package swipe.android.nearlings.viewAdapters;
 
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.DummyWebTask;
 import swipe.android.nearlings.JsonChangeStateResponse;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
-import swipe.android.nearlings.NeedsDetailsFragment;
 import swipe.android.nearlings.R;
-import swipe.android.nearlings.SessionManager;
-import swipe.android.nearlings.MessagesSync.Needs;
-import swipe.android.nearlings.json.needs.comments.Comments;
-import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
-import swipe.android.nearlings.jsonResponses.login.JsonBidsResponse;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,39 +14,29 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;
-import com.edbert.library.network.PostDataWebTask;
-import com.edbert.library.utils.MapUtils;
-import com.gabesechan.android.reusable.location.ProviderLocationTracker;
-import com.gabesechan.android.reusable.location.ProviderLocationTracker.ProviderType;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class GroupsViewAdapter implements
 		AsyncTaskCompleteListener<JsonChangeStateResponse>,

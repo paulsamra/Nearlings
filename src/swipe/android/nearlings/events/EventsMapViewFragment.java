@@ -1,47 +1,29 @@
 package swipe.android.nearlings.events;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.BaseMapFragment;
 import swipe.android.nearlings.EventsDetailsActivity;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
-import swipe.android.nearlings.NeedsDetailsActivity;
 import swipe.android.nearlings.R;
-import swipe.android.nearlings.MessagesSync.EventsRequest;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.R.id;
-import swipe.android.nearlings.R.layout;
+import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class EventsMapViewFragment extends BaseMapFragment {
 
@@ -99,7 +81,7 @@ public class EventsMapViewFragment extends BaseMapFragment {
 	@Override
 	public void setSourceRequestHelper() {
 		super.helper = SendRequestStrategyManager
-				.getHelper(EventsRequest.class);// new
+				.getHelper(EventsDetailsRequest.class);// new
 												// NeedsDetailsRequest(this.getActivity(),
 												// JsonExploreResponse.class);
 	}

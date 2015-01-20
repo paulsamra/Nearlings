@@ -8,9 +8,6 @@ package swipe.android.nearlings;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import com.edbert.library.database.DatabaseCommandManager;
-import com.edbert.library.database.DatabaseHelperInterface;
-
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -21,6 +18,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
+
+import com.edbert.library.database.DatabaseCommandManager;
+import com.edbert.library.database.DatabaseHelperInterface;
 
 public class NearlingsContentProvider extends ContentProvider {
 

@@ -1,24 +1,15 @@
 package swipe.android.nearlings.viewAdapters;
 
+import java.util.ArrayList;
+
+import swipe.android.nearlings.R;
+import swipe.android.nearlings.jsonResponses.register.Bids;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import java.util.ArrayList;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import swipe.android.nearlings.NearlingsApplication;
-import swipe.android.nearlings.R;
-import swipe.android.nearlings.jsonResponses.register.Bids;
-import swipe.android.nearlings.jsonResponses.register.Users;
-import uk.co.senab.photup.views.CheckableImageView;
 
 public class BidsViewAdapter extends ArrayAdapter<Bids> {
 	View row;

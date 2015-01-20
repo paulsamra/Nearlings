@@ -3,7 +3,6 @@ package swipe.android.nearlings.jsonResponses.login;
 import java.util.ArrayList;
 
 import swipe.android.nearlings.jsonResponses.register.Bids;
-import swipe.android.nearlings.jsonResponses.register.Users;
 
 import com.edbert.library.network.sync.JsonResponseInterface;
 

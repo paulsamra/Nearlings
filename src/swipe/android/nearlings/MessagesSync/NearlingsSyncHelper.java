@@ -4,8 +4,6 @@ import org.michenux.drodrolib.network.sync.AbstractSyncHelper;
 import org.michenux.drodrolib.network.sync.SyncHelperInterface;
 
 import swipe.android.nearlings.R;
-
-import android.content.ContentResolver;
 import android.content.Context;
 
 

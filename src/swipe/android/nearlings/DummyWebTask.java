@@ -1,14 +1,10 @@
 package swipe.android.nearlings;
 
-import java.util.Map;
+import android.app.Activity;
+import android.support.v4.app.Fragment;
 
-import com.edbert.library.utils.MapUtils;
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.edbert.library.network.GetDataWebTask;
-
-import android.app.Activity;
-import android.content.Context;
-import android.support.v4.app.Fragment;
 
 public class DummyWebTask<T> extends GetDataWebTask<T> {
 

@@ -1,11 +1,9 @@
 package swipe.android.nearlings.navigationdrawer;
 
-import swipe.android.nearlings.DetailFragment;
 import swipe.android.nearlings.needs.DiscoverContainerFragment;
+import android.support.v4.app.Fragment;
 
 import com.edbert.library.navigationdrawer.NavDrawerItem;
-
-import android.support.v4.app.Fragment;
 
 public class NeedsNavDrawerItem extends NavDrawerItem {
 private static final String TITLE = "Needs";

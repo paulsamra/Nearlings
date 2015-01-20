@@ -1,23 +1,14 @@
 package swipe.android.nearlings.MessagesSync;
 
-import java.util.Calendar;
-import java.util.Random;
-
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
-import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
 import android.content.ContentValues;
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.edbert.library.network.sync.JsonResponseInterface;
 import com.gabesechan.android.reusable.location.ProviderLocationTracker;
-import com.gabesechan.android.reusable.location.ProviderLocationTracker.ProviderType;
 
 public class NeedsCommentsRequest extends NearlingsRequest {
 

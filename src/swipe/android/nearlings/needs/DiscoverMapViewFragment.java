@@ -7,34 +7,23 @@ import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NeedsDetailsActivity;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.R.id;
-import swipe.android.nearlings.R.layout;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DiscoverMapViewFragment extends BaseMapFragment {
 
@@ -128,6 +117,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 
 	@Override
 	protected void attachInfoWindowAdapter() {
+	
 		mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
 			@Override
 			public View getInfoWindow(Marker arg0) {
@@ -155,6 +145,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 
 	@Override
 	protected void attachInfoWindowClickListener() {
+	
 		mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 			@Override

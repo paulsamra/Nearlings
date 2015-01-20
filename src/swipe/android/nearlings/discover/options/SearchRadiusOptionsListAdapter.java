@@ -1,17 +1,14 @@
 package swipe.android.nearlings.discover.options;
 
+import java.util.ArrayList;
+
+import swipe.android.nearlings.R;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
-
-import swipe.android.nearlings.R;
-import uk.co.senab.photup.views.CheckableImageView;
 
 public class SearchRadiusOptionsListAdapter extends
 		ArrayAdapter<SearchRadiusFilter> {
