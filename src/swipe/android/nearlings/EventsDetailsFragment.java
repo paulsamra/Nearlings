@@ -142,7 +142,6 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 			this.getActivity().onBackPressed();
-
 		return super.onOptionsItemSelected(item);
 	}
 }

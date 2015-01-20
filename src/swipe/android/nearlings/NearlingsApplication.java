@@ -1,5 +1,7 @@
 package swipe.android.nearlings;
 
+import java.math.BigDecimal;
+
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
@@ -17,10 +19,12 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -37,6 +41,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
 
 public class NearlingsApplication extends Application implements
 		GooglePlayServicesClient.ConnectionCallbacks,
@@ -51,6 +58,23 @@ public class NearlingsApplication extends Application implements
 	private LocationRequest mLocationRequest;
 
 	NearlingsSyncHelper helper;
+	//paypal stuff
+	 private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
+
+	    // note that these credentials will differ between live & sandbox environments.
+	    private static final String CONFIG_CLIENT_ID = "credential from developer.paypal.com";
+
+	    public static final int REQUEST_CODE_PAYMENT = 1;
+	    public static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
+	    public static final int REQUEST_CODE_PROFILE_SHARING = 3;
+
+	    public static PayPalConfiguration config = new PayPalConfiguration()
+	            .environment(CONFIG_ENVIRONMENT)
+	            .clientId(CONFIG_CLIENT_ID)
+	            // The following are only used in PayPalFuturePaymentActivity.
+	            .merchantName("Nearlings Store Title")
+	            .merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
+	            .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
 
 	protected synchronized void buildGoogleApiClient() {
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -79,8 +103,15 @@ public class NearlingsApplication extends Application implements
 		SendRequestStrategyManager.register(new EventsRequest(this));
 		SendRequestStrategyManager.register(new GroupsRequest(this));
 		super.registerActivityLifecycleCallbacks(this);
+		
+		   Intent intent = new Intent(this, PayPalService.class);
+	        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+	        startService(intent);
 	}
-
+	  public static PayPalPayment generatePayObject(double price, String item, String paymentIntent) {
+	        return new PayPalPayment(new BigDecimal(price), "USD", item,
+	                paymentIntent);
+	    }
 	@Override
 	public void onTerminate() {
 		super.unregisterActivityLifecycleCallbacks(this);

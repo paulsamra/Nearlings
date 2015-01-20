@@ -7,6 +7,7 @@ import java.util.Random;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.ActivityCallbackFromAdapter;
 import swipe.android.nearlings.DummyWebTask;
 import swipe.android.nearlings.JsonChangeStateResponse;
 import swipe.android.nearlings.NearlingsApplication;
@@ -28,6 +29,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.util.Log;
@@ -58,6 +60,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
 
 public class NeedsDetailsViewAdapter implements
 		AsyncTaskCompleteListener<JsonChangeStateResponse>,
@@ -78,12 +83,13 @@ public class NeedsDetailsViewAdapter implements
 	private Cursor cursor;
 	private Cursor commentCursor;
 	public Button changeState, getDirections;
-
+public ActivityCallbackFromAdapter callback;
 	public NeedsDetailsViewAdapter(View userDataView, Context context,
-			String idOfDetail, Cursor cursor, Bundle savedInstanceState) {
+			String idOfDetail, Cursor cursor, Bundle savedInstanceState, ActivityCallbackFromAdapter callback) {
 		this.context = context;
 		this.idOfDetail = idOfDetail;
 		this.cursor = cursor;
+		this.callback = callback;
 		MapsInitializer.initialize(context);
 		initializeView(userDataView, savedInstanceState);
 		
@@ -277,17 +283,13 @@ String titleString = cursor.getString(title_index);
 					.getString(R.string.mark_as_reviewed));
 		}
 
-		changeState.setOnClickListener(new OnClickListener() {
+	changeState.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// launch the request
-				new DummyWebTask<JsonChangeStateResponse>(
-						(Activity) context,
-						(AsyncTaskCompleteListener) NeedsDetailsViewAdapter.this,
-						JsonChangeStateResponse.class).execute();
-
+		//		acceptNeedPurchase();
 			}
 
 		});
@@ -386,5 +388,22 @@ String titleString = cursor.getString(title_index);
 	public void onLoaderReset(Loader<Cursor> arg0) {
 		// TODO Auto-generated method stub
 
+	}
+	
+public void acceptNeedPurchase(){
+		
+		double price = cursor.getDouble(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_PRICE));
+		String item = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
+		  PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(price, item, PayPalPayment.PAYMENT_INTENT_SALE);
+
+
+	        Intent intent = new Intent(context, PaymentActivity.class);
+
+	        // send the same configuration for restart resiliency
+	        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, NearlingsApplication.config);
+
+	        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+	        callback.startActivityForResultBridge(intent, NearlingsApplication.REQUEST_CODE_PAYMENT);
 	}
 }

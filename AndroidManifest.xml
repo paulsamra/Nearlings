@@ -54,11 +54,11 @@
             android:name="swipe.android.nearlings.NeedsDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
-          <activity
+        <activity
             android:name="swipe.android.nearlings.MessagesActivity"
             android:screenOrientation="portrait" >
         </activity>
-           <activity
+        <activity
             android:name="swipe.android.nearlings.HomeActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -74,19 +74,19 @@
             android:name="swipe.android.nearlings.CreateEventActivity"
             android:screenOrientation="portrait" >
         </activity>
-           <activity
+        <activity
             android:name="swipe.android.nearlings.GroupsDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
- <activity
+        <activity
             android:name="swipe.android.nearlings.CreateGroupActivity"
             android:screenOrientation="portrait" >
         </activity>
-     <activity
+        <activity
             android:name="swipe.android.nearlings.EventsDetailsActivity"
             android:screenOrientation="portrait" >
-        </activity>    
- 
+        </activity>
+
         <service
             android:name=".sync.NearlingsSyncService"
             android:exported="true" >
@@ -116,6 +116,19 @@
             android:exported="false"
             android:syncable="true" >
         </provider>
+        
+          <service android:name="com.paypal.android.sdk.payments.PayPalService"
+            android:exported="false" />
+        
+        <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PayPalFuturePaymentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.FuturePaymentConsentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
     </application>
 
 </manifest>

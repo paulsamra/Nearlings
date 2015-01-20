@@ -8,6 +8,12 @@
         <string name="get_directions">Get Directions</string>
     <string name="switch_to_list">List View</string>
     <string name="title">Title</string>
+    
+    <string name="title">Title</string>
+    <string name="age">Age</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
+    
     <string name="due">Due: </string>
     <string name="by">By: </string>
     <string name="description">Description</string>
@@ -29,6 +35,8 @@
     <string name="create_event_description"> Event Description</string>
     <string name="create_event_date">Event Date</string>
        <string name="save_event">Create</string>
+       
+       <string name="network_error">An unknown error occured. Please ensure you are connected to the internet.</string>
     
     
     

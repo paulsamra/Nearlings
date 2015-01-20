@@ -1,32 +1,32 @@
 package swipe.android.nearlings;
 
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
+import org.json.JSONException;
+
+import com.paypal.android.sdk.payments.PayPalAuthorization;
+import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
+import com.paypal.android.sdk.payments.PayPalProfileSharingActivity;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
-import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
 import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
-		implements Refreshable {
+		implements Refreshable, ActivityCallbackFromAdapter {
 	String id;
 	View view;
 	NeedsDetailsViewAdapter adapter;
@@ -154,9 +154,63 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		c = generateCursor();
 		if (adapter == null)
 			adapter = new NeedsDetailsViewAdapter(view, this.getActivity(), id,
-					c, savedInstanceState);
+					c, savedInstanceState, this);
 
 		adapter.reloadData();
+	}
+
+	String TAG = "Details Fragment";
+	String TAG2 = "Details Fragment Next";
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == NearlingsApplication.REQUEST_CODE_PAYMENT) {
+			if (resultCode == Activity.RESULT_OK) {
+				PaymentConfirmation confirm = data
+						.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+				if (confirm != null) {
+					try {
+						Log.i(TAG, confirm.toJSONObject().toString(4));
+						Log.i(TAG2, confirm.getPayment().toJSONObject()
+								.toString(4));
+						
+						/**
+						 * TODO: send 'confirm' (and possibly
+						 * confirm.getPayment() to your server for verification
+						 * or consent completion. See
+						 * https://developer.paypal.com
+						 * /webapps/developer/docs/integration
+						 * /mobile/verify-mobile-payment/ for more details.
+						 * 
+						 * For sample mobile backend interactions, see
+						 * https://github
+						 * .com/paypal/rest-api-sdk-python/tree/master
+						 * /samples/mobile_backend
+						 */
+						Toast.makeText(
+								this.getActivity().getApplicationContext(),
+								"PaymentConfirmation info received from PayPal",
+								Toast.LENGTH_LONG).show();
+
+					} catch (JSONException e) {
+						Log.e(TAG, "an extremely unlikely failure occurred: ",
+								e);
+					}
+				}
+			} else if (resultCode == Activity.RESULT_CANCELED) {
+				Log.i(TAG, "The user canceled.");
+			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+				Log.i(TAG,
+						"An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+			}
+
+		}
+	}
+
+	@Override
+	public void startActivityForResultBridge(Intent i, int request_code) {
+
+		startActivityForResult(i, NearlingsApplication.REQUEST_CODE_PAYMENT);
 	}
 
 }

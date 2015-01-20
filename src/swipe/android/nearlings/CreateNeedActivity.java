@@ -2,13 +2,15 @@ package swipe.android.nearlings;
 
 import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.TimeZone;
 
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.googleplaces.GoogleParser;
@@ -16,9 +18,11 @@ import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -36,21 +40,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.edbert.library.dialog.DialogManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.network.SocketOperator;
 import com.edbert.library.utils.MapUtils;
 import com.example.deletableedittext.DeleteableEditText;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
-public class CreateGroupActivity extends FragmentActivity implements
+public class CreateNeedActivity extends FragmentActivity implements
 		AsyncTaskCompleteListener {
-	GroupFormViewAdapter groupFormViewAdapter;
+
+	NeedFormViewAdapter needFormViewAdapter;
 
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -61,15 +71,15 @@ public class CreateGroupActivity extends FragmentActivity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(true);
-		getActionBar().setTitle("Create Group");
+		getActionBar().setTitle("Create Need");
 
-		setContentView(R.layout.create_group);
-		groupFormViewAdapter = new GroupFormViewAdapter(this, getWindow()
+		setContentView(R.layout.create_need);
+		needFormViewAdapter = new NeedFormViewAdapter(this, getWindow()
 				.getDecorView().findViewById(android.R.id.content),
 				savedInstanceState);
-		
+		// eventFormViewAdapter.addTextWatcherToAll(textWatcher);
+		// //-------------------
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,12 +92,11 @@ public class CreateGroupActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.save_event:
 			// submitEvent();
-			if (groupFormViewAdapter.areAllViewsValid()) {
+			if (needFormViewAdapter.areAllViewsValid()) {
 				submitEvent();
 			} else {
-				DialogManager
-				.showOkDialog(this, "OK",
-						"Network Error", getString(R.string.network_error));
+				DialogManager.showOkDialog(this, "OK", "Network Error",
+						getString(R.string.network_error));
 			}
 			break;
 		default:
@@ -103,7 +112,7 @@ public class CreateGroupActivity extends FragmentActivity implements
 				.defaultSessionHeaders();
 
 		try {
-			JSONObject jsonObject = this.groupFormViewAdapter.getJSONObject();
+			JSONObject jsonObject = this.needFormViewAdapter.getJSONObject();
 
 			new CreateItemNearlings(this).execute(
 					SessionManager.getInstance(this).createEventURL(),
@@ -126,9 +135,9 @@ public class CreateGroupActivity extends FragmentActivity implements
 				JSONObject result1 = new JSONObject(s);
 
 				if (result1.get("error") != null) {
-					DialogManager.showOkDialog(this,
-							"OK", "Error", (String) (result1.get("error")));
-return;
+					DialogManager.showOkDialog(this, "OK", "Error",
+							(String) (result1.get("error")));
+					return;
 				} else {
 					// we're good
 				}
@@ -137,9 +146,8 @@ return;
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		DialogManager
-				.showOkDialog(this, "OK",
-						"Network Error", getString(R.string.network_error));
+		DialogManager.showOkDialog(this, "OK", "Network Error",
+				getString(R.string.network_error));
 
 	}
 }

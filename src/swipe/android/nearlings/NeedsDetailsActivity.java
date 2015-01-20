@@ -11,6 +11,7 @@ import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
 import com.edbert.library.containers.TabsActivityContainer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -81,6 +82,11 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 	@Override
 	public void onBackPressed() {
 		this.finish();
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	   super.onActivityResult(requestCode, resultCode, data);
 	}
 
 }

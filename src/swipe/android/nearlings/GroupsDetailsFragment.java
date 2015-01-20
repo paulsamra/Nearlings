@@ -63,8 +63,6 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		ab.setDisplayHomeAsUpEnabled(true);
 		ab.setHomeButtonEnabled(true);
 
-
-	
 		if (view != null) {
 			ViewGroup parent = (ViewGroup) view.getParent();
 			if (parent != null)
@@ -108,9 +106,8 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 				this.getActivity(),
 				NearlingsContentProvider
 						.contentURIbyTableName(GroupsDatabaseHelper.TABLE_NAME),
-						GroupsDatabaseHelper.COLUMNS, selectionClause,
-				mSelectionArgs, GroupsDatabaseHelper.COLUMN_DATE
-						+ " DESC");
+				GroupsDatabaseHelper.COLUMNS, selectionClause, mSelectionArgs,
+				GroupsDatabaseHelper.COLUMN_DATE + " DESC");
 		return cursorLoader;
 
 	}
@@ -126,7 +123,7 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void reloadData() {
-	
+
 		reloadAdapter();
 
 	}
@@ -146,15 +143,16 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		getLoaderManager().initLoader(0, null, this);
 		c = generateCursor();
 		if (adapter == null)
-			adapter = new GroupsViewAdapter(view, this.getActivity(), id,
-					c, savedInstanceState);
+			adapter = new GroupsViewAdapter(view, this.getActivity(), id, c,
+					savedInstanceState);
 
 		adapter.reloadData();
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-			this.getActivity().onBackPressed();
+
+		this.getActivity().onBackPressed();
 
 		return super.onOptionsItemSelected(item);
 	}

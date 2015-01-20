@@ -87,7 +87,7 @@ public class SessionManager {
 	}
 
 	public String createEventURL() {
-		return URL_BASE + "/events";
+		return URL_BASE + "/event";
 	}
 
 	public String commentsURL(String id) {
