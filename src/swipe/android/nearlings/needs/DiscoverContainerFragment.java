@@ -211,7 +211,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 					double parsed = Double.parseDouble(cleanString);
 					SessionManager.getInstance(
 							DiscoverContainerFragment.this.getActivity())
-							.setSearchRewardMinimum((float) parsed);
+							.setSearchRewardMinimum(((float) parsed) /100);
 					String formatted = NumberFormat.getCurrencyInstance()
 							.format((parsed / 100));
 

@@ -18,12 +18,10 @@ import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitRespon
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-<<<<<<< HEAD
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
-=======
->>>>>>> branch 'master' of https://Edbertchan@bitbucket.org/SwipeDevelopment/nearlings-android.git
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -40,11 +38,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
-<<<<<<< HEAD
 import android.widget.Switch;
 import android.widget.Toast;
-=======
->>>>>>> branch 'master' of https://Edbertchan@bitbucket.org/SwipeDevelopment/nearlings-android.git
 
 import com.edbert.library.dialog.DialogManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;
@@ -144,7 +139,12 @@ public class CreateEventActivity extends FragmentActivity implements
 return;
 				} else {
 					// we're good
-				}
+					Intent intent = new Intent(this, HomeActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					DialogManager.createSingleButtonDialogWithIntent(this,
+							"Ok", "Event Created",
+							"Event was successfully created!", intent, true);
+	}
 
 			}
 		} catch (JSONException e) {
@@ -155,4 +155,6 @@ return;
 						"Network Error", getString(R.string.network_error));
 
 	}
+	
+	
 }

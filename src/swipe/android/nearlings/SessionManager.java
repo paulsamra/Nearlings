@@ -1,7 +1,9 @@
 package swipe.android.nearlings;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,46 +27,101 @@ public class SessionManager {
 
 	// Sharedpref file name
 	public static final String PREF_NAME = "NearlingsPreference";
-
 	private static SessionManager instance;
 
 	// keys
+	// USER
 	private static final String IS_LOGGED_IN = "IS_LOGGED_IN";
 	private static final String USER_NAME = "USER_NAME";
 	private static final String TOKEN = "TOKEN";
 	private static final String LOCATION = "LOCATION";
-	
-	//same across all searches
+	private static final String FIRST_NAME = "FIRST_NAME";
+	private static final String LAST_NAME = "LAST_NAME";
+	private static final String MOBILE = "MOBILE";
+	private static final String EMAIL = "EMAIL";
+	private static final String GRAVITAR = "GRAVITAR";
+	private static final String ALERT_COUNT = "ALERT_COUNT";
+	private static final String MEMBERSHIPS = "MEMBERSHIPS";
+
+	// same across all searches
 	private static final String SEARCH_STRING = "SEARCH_STRING";
 	private static final String SEARCH_RADIUS = "SEARCH_RADIUS";
 	private static final String SEARCH_VISIBILITY = "SEARCH_VISIBILITY";
-	
-	//Explore
+
+	// Explore
 	private static final String EXPLORE_SEARCH_STATUS = "EXPLORE_SEARCH_STATUS";
 	private static final String EXPLORE_SEARCH_REWARD = "EXPLORE_SEARCH_REWARD";
 	private static final String EXPLORE_SEARCH_CATEGORY = "EXPLORE_SEARCH_CATEGORY";
 	private static final String EXPLORE_TIME_AGO = "EXPLORE_TIME_AGO";
 	private static final String EXPLORE_TIME_ENDED = "EXPLORE_TIME_ENDED";
-	
-	//Group
-		private static final String GROUP_SEARCH_CATEGORY = "GROUP_SEARCH_CATEGORY";
-		
-		//Events
-		private static final String EVENTS_SEARCH_CATEGORY = "EVENTS_SEARCH_CATEGORY";
-		private static final String EVENTS_TIME_START = "EVENTS_TIME_START";
 
-		//Default values
-		public static final float DEFAULT_SEARCH_RADIUS = 20.0f;
-		public static final String DEFAULT_STRING = "";
-		public static final int DEFAULT_VALUE = -1;
-		private static final String USER_ID = "USER_ID";
+	// Group
+	private static final String GROUP_SEARCH_CATEGORY = "GROUP_SEARCH_CATEGORY";
 
+	// Events
+	private static final String EVENTS_SEARCH_CATEGORY = "EVENTS_SEARCH_CATEGORY";
+	private static final String EVENTS_TIME_START = "EVENTS_TIME_START";
+	// Default values
+	public static final float DEFAULT_SEARCH_RADIUS = 20.0f;
+	public static final String DEFAULT_STRING = "";
+	public static final int DEFAULT_VALUE = -1;
+	private static final String USER_ID = "USER_ID";
 
 	public static final float SEARCH_DEFAULT_NUMERIC = -1;
 	private static final String URL_BASE = "https://nearlings.com/api/2014-10-13";
 
 	public String loginURL() {
 		return URL_BASE + "/login";
+	}
+
+	public void setFirstName(String name) {
+		editor.putString(FIRST_NAME, name);
+		editor.commit();
+	}
+
+	public void setLastName(String name) {
+		editor.putString(LAST_NAME, name);
+		editor.commit();
+	}
+
+	public void setMobile(String mobile) {
+		editor.putString(MOBILE, mobile);
+		editor.commit();
+	}
+
+	public void setEmail(String email) {
+		editor.putString(EMAIL, email);
+		editor.commit();
+	}
+
+	public void setGravitar(String gravitar) {
+		editor.putString(GRAVITAR, gravitar);
+		editor.commit();
+	}
+
+	public void setAlertCount(int count) {
+		editor.putInt(ALERT_COUNT, count);
+		editor.commit();
+	}
+
+	public void setMemberships(int[] list) {
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < list.length; i++) {
+			str.append(list[i]).append(",");
+		}
+		editor.putString(MEMBERSHIPS, str.toString());
+		editor.commit();
+	}
+
+	public int[] getMemberships() {
+		String savedString = pref.getString(MEMBERSHIPS, "");
+		StringTokenizer st = new StringTokenizer(savedString, ",");
+		int count = st.countTokens();
+		int[] memberships = new int[count];
+		for (int i = 0; i < count; i++)
+			memberships[i] = Integer.valueOf(st.nextToken());
+
+		return memberships;
 	}
 
 	public String needsDetailsFollowersURL(String id) {
@@ -189,6 +246,7 @@ public class SessionManager {
 	public void setSearchRadius(float searchRadius) {
 		editor.putFloat(SEARCH_RADIUS, searchRadius);
 	}
+
 	public String getExploreCategory() {
 		return pref.getString(EVENTS_SEARCH_CATEGORY, DEFAULT_STRING);
 	}
@@ -196,21 +254,32 @@ public class SessionManager {
 	public void setExploreCategory(String category) {
 		editor.putString(EVENTS_SEARCH_CATEGORY, category);
 	}
+
 	public String getSearchStatus() {
-		return pref.getString(EXPLORE_SEARCH_STATUS,DEFAULT_STRING);
+		return pref.getString(EXPLORE_SEARCH_STATUS, DEFAULT_STRING);
 	}
 
 	public void setSearchStatus(String searchStatus) {
 		editor.putString(EXPLORE_SEARCH_STATUS, searchStatus);
 
 	}
-	
-	public String getEventCategory(){
+
+	public String getEventCategory() {
 		return pref.getString(EVENTS_SEARCH_CATEGORY, DEFAULT_STRING);
 	}
-	public void setEventCategory(String event_category){
+
+	public void setEventCategory(String event_category) {
 		editor.putString(EVENTS_SEARCH_CATEGORY, event_category);
 	}
+
+	public String getGroupCategory() {
+		return pref.getString(GROUP_SEARCH_CATEGORY, DEFAULT_STRING);
+	}
+
+	public void setGroupCategory(String group_category) {
+		editor.putString(GROUP_SEARCH_CATEGORY, group_category);
+	}
+
 	public float getSearchRewardMinimum() {
 		return pref.getFloat(EXPLORE_SEARCH_REWARD, DEFAULT_VALUE);
 	}
@@ -234,13 +303,14 @@ public class SessionManager {
 		return pref.getString(USER_ID, "");
 	}
 
-	public void setSearchVisibility(String visibility){
+	public void setSearchVisibility(String visibility) {
 		editor.putString(SEARCH_VISIBILITY, visibility);
 	}
-	public String getSearchVisibility(){
+
+	public String getSearchVisibility() {
 		return pref.getString(SEARCH_VISIBILITY, DEFAULT_STRING);
 	}
-	
+
 	public void resetTables() {
 		DatabaseCommandManager.deleteAllTables(NearlingsContentProvider
 				.getDBHelperInstance(_context).getWritableDatabase());

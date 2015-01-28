@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
@@ -140,6 +141,12 @@ public class CreateNeedActivity extends FragmentActivity implements
 					return;
 				} else {
 					// we're good
+					Intent intent = new Intent(this, HomeActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					DialogManager.createSingleButtonDialogWithIntent(this,
+							"Ok", "Need Created",
+							"Need was successfully created!", intent, true);
+
 				}
 
 			}
@@ -150,4 +157,5 @@ public class CreateNeedActivity extends FragmentActivity implements
 				getString(R.string.network_error));
 
 	}
+
 }

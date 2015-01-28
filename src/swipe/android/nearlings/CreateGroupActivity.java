@@ -13,6 +13,7 @@ import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 import swipe.android.nearlings.jsonResponses.events.create.JsonEventSubmitResponse;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -55,9 +56,8 @@ public class CreateGroupActivity extends FragmentActivity implements
 		groupFormViewAdapter = new GroupFormViewAdapter(this, getWindow()
 				.getDecorView().findViewById(android.R.id.content),
 				savedInstanceState);
-		
+
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,9 +73,8 @@ public class CreateGroupActivity extends FragmentActivity implements
 			if (groupFormViewAdapter.areAllViewsValid()) {
 				submitEvent();
 			} else {
-				DialogManager
-				.showOkDialog(this, "OK",
-						"Network Error", getString(R.string.network_error));
+				DialogManager.showOkDialog(this, "OK", "Network Error",
+						getString(R.string.network_error));
 			}
 			break;
 		default:
@@ -114,20 +113,24 @@ public class CreateGroupActivity extends FragmentActivity implements
 				JSONObject result1 = new JSONObject(s);
 
 				if (result1.get("error") != null) {
-					DialogManager.showOkDialog(this,
-							"OK", "Error", (String) (result1.get("error")));
-return;
+					DialogManager.showOkDialog(this, "OK", "Error",
+							(String) (result1.get("error")));
+					return;
 				} else {
-					// we're good
+					Intent intent = new Intent(this, HomeActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					DialogManager.createSingleButtonDialogWithIntent(this, "Ok", "Group Created", "Group was successfully created!", intent, true);
+				
 				}
 
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		DialogManager
-				.showOkDialog(this, "OK",
-						"Network Error", getString(R.string.network_error));
+		DialogManager.showOkDialog(this, "OK", "Network Error",
+				getString(R.string.network_error));
 
 	}
+
+
 }

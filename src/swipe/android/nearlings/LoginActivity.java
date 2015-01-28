@@ -1,6 +1,7 @@
 package swipe.android.nearlings;
 
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
 import android.app.Activity;
@@ -121,16 +122,28 @@ public class LoginActivity extends Activity implements
 			SessionManager.getInstance(this).setUserID(
 					String.valueOf(result.getUserID()));
 			SessionManager.getInstance(this).setAuthToken(result.getToken());
-		
+			
+			
+			SessionManager.getInstance(this).setFirstName(result.getFirstname());
+			SessionManager.getInstance(this).setLastName(result.getLastname());
+			SessionManager.getInstance(this).setMobile(result.getMobile());
+			SessionManager.getInstance(this).setEmail(result.getEmail());
+			SessionManager.getInstance(this).setGravitar(result.getGravitar());
+			SessionManager.getInstance(this).setAlertCount(result.getAlertcount());
+			SessionManager.getInstance(this).setMemberships(result.getMemberships());
+			
+			
 			goToNextActivity();
 		}
 	}
-public void goToNextActivity(){
-	Intent intent = new Intent(this, HomeActivity.class);
-	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	startActivity(intent);
-	finish();
-}
+
+	public void goToNextActivity() {
+		Intent intent = new Intent(this, HomeActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		finish();
+	}
+
 	public void doLogin() {
 		if (!((NearlingsApplication) this.getApplication())
 				.isNetworkAvailable()) {
