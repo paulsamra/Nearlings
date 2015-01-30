@@ -13,7 +13,7 @@ public class JsonChangeStateResponse implements JsonResponseInterface{
 	}
 	//dummy
 	public static String getStatus(String state){
-		if (state.equals(Needs.NOT_ACCEPTED_YET)) {
+	/*	if (state.equals(Needs.NOT_ACCEPTED_YET)) {
 		return Needs.PENDING;
 		} else if (state.equals(Needs.PENDING)) {
 			return Needs.DONE_WAITING_FOR_REVIEW;
@@ -21,8 +21,8 @@ public class JsonChangeStateResponse implements JsonResponseInterface{
 			return Needs.FINISHED;
 		}else{
 			return "UKNOWN STATE";
-		}
-		
+		}*/
+		return state;
 	}
 	
 }

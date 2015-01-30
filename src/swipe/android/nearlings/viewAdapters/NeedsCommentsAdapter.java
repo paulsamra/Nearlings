@@ -1,7 +1,10 @@
 package swipe.android.nearlings.viewAdapters;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import swipe.android.nearlings.FieldsParsingUtils;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.json.needs.comments.Comments;
@@ -48,21 +51,23 @@ public class NeedsCommentsAdapter extends ArrayAdapter<Comments> {
 					.findViewById(R.id.needs_comments_name);
 			holder.personImage = (ImageView) convertView
 					.findViewById(R.id.needs_comments_image);
-holder.date =(TextView) convertView
-.findViewById(R.id.needs_comments_date);
+			holder.date = (TextView) convertView
+					.findViewById(R.id.needs_comments_date);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		/*holder.sender.setText(comment.getSender());
-
-		// problem is processing. this should only happen once.
-*/
+		/*
+		 * holder.sender.setText(comment.getSender());
+		 * 
+		 * // problem is processing. this should only happen once.
+		 */
 		holder.comment.setText(comment.getMessage());
 		holder.sender.setText(comment.getSender());
-	holder.date.setText(comment.getTime().getDate());
-		//holder.comment.setText("comment");
+		
+		holder.date.setText(FieldsParsingUtils.getTime((comment.getTime())));
+		// holder.comment.setText("comment");
 		ImageLoader.getInstance().displayImage(comment.getSender_thumbnail(),
 				holder.personImage, NearlingsApplication.getDefaultOptions());
 

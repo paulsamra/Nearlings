@@ -1,10 +1,8 @@
 package swipe.android.nearlings.json.needs.comments;
 
-import swipe.android.nearlings.jsonResponses.explore.NearlingsTime;
-
 public class Comments implements Comparable<Comments>{
 	String id, sender, sender_id, sender_thumbnail, message;
-	NearlingsTime time;
+	long time;
 	public Comments(){
 		setId("ID");
 		setSender("Sender");
@@ -43,10 +41,11 @@ public class Comments implements Comparable<Comments>{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public NearlingsTime getTime() {
+
+	public long getTime() {
 		return time;
 	}
-	public void setTime(NearlingsTime time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 	@Override

@@ -80,8 +80,8 @@ public class EventsMapViewFragment extends BaseMapFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = SendRequestStrategyManager
-				.getHelper(EventsDetailsRequest.class);// new
+		helpers.add(SendRequestStrategyManager
+				.getHelper(EventsDetailsRequest.class));// new
 												// NeedsDetailsRequest(this.getActivity(),
 												// JsonExploreResponse.class);
 	}

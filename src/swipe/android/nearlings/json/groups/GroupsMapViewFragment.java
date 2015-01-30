@@ -78,8 +78,8 @@ public class GroupsMapViewFragment extends BaseMapFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = SendRequestStrategyManager
-				.getHelper(GroupsRequest.class);
+		helpers.add(SendRequestStrategyManager
+				.getHelper(GroupsRequest.class));
 	}
 
 	// obsolete since we're using a cursor callback

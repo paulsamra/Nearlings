@@ -12,20 +12,21 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <Button
+        <com.edbert.library.greyButton.GreyedOutButton
             android:id="@+id/needs_change_state"
+            style="@style/ButtonBottom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Accept Task"
+            android:enabled="true"
             android:onClick="acceptNeedPurchase"
-            style="@style/ButtonBottom" />
+            android:text="Accept Task" />
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/scroll_frame"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/buttons">
+        android:layout_above="@+id/buttons" >
 
         <LinearLayout
             android:layout_width="fill_parent"

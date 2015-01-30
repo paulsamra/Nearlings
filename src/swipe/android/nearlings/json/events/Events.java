@@ -1,6 +1,5 @@
 package swipe.android.nearlings.json.events;
 
-import swipe.android.nearlings.jsonResponses.explore.NearlingsTime;
 
 public class Events{
 	public String getId() {
@@ -106,20 +105,22 @@ public class Events{
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public NearlingsTime getStartdate() {
+
+	public long getStartdate() {
 		return startdate;
 	}
-	public void setStartdate(NearlingsTime startdate) {
+	public void setStartdate(long startdate) {
 		this.startdate = startdate;
 	}
-	public NearlingsTime getCreated_at() {
+	public long getCreated_at() {
 		return created_at;
 	}
-	public void setCreated_at(NearlingsTime created_at) {
+	public void setCreated_at(long created_at) {
 		this.created_at = created_at;
 	}
+
 	String id, created_by, group_id, title, description, starttime, status, visibility, category, address1, address2, city, state;
 	double latitude, longitude, fee;
 	int rsvpcount;
-	NearlingsTime startdate,created_at;
+	long startdate,created_at;
 }

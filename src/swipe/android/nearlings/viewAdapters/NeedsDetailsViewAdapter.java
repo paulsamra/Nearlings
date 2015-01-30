@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.ActivityCallbackFromAdapter;
 import swipe.android.nearlings.DummyWebTask;
+import swipe.android.nearlings.FieldsParsingUtils;
 import swipe.android.nearlings.JsonChangeStateResponse;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
+import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.json.needs.comments.Comments;
 import android.app.Activity;
@@ -17,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.edbert.library.database.DatabaseCommandManager;
+import com.edbert.library.greyButton.GreyedOutButton;
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -67,10 +71,13 @@ public class NeedsDetailsViewAdapter implements
 	private String idOfDetail;
 	private Cursor cursor;
 	private Cursor commentCursor;
-	public Button changeState, getDirections;
-public ActivityCallbackFromAdapter callback;
+	public GreyedOutButton doActionButton;
+	public Button getDirections;
+	public ActivityCallbackFromAdapter callback;
+
 	public NeedsDetailsViewAdapter(View userDataView, Context context,
-			String idOfDetail, Cursor cursor, Bundle savedInstanceState, ActivityCallbackFromAdapter callback) {
+			String idOfDetail, Cursor cursor, Bundle savedInstanceState,
+			ActivityCallbackFromAdapter callback) {
 		this.context = context;
 		this.idOfDetail = idOfDetail;
 		this.cursor = cursor;
@@ -85,7 +92,8 @@ public ActivityCallbackFromAdapter callback;
 
 	public View initializeView(View view, Bundle savedInstanceState) {
 		fullScrollView = (ScrollView) view.findViewById(R.id.scroll_frame);
-		changeState = (Button) view.findViewById(R.id.needs_change_state);
+		doActionButton = (GreyedOutButton) view
+				.findViewById(R.id.needs_change_state);
 		title = (TextView) view.findViewById(R.id.needs_details_title);
 		price = (TextView) view.findViewById(R.id.needs_details_price);
 		date = (TextView) view.findViewById(R.id.needs_details_date);
@@ -171,7 +179,7 @@ public ActivityCallbackFromAdapter callback;
 		listofCommentsArrayList = new ArrayList<Comments>();
 
 		commentAdapter = new LazyDetailCommentsAdapter(this.context,
-				listofCommentsArrayList, idOfDetail, 2);
+				listofCommentsArrayList, idOfDetail, Integer.MAX_VALUE);
 		listOfComments.setAdapter(commentAdapter);
 
 		// view.setTag(holder);*/
@@ -191,7 +199,7 @@ public ActivityCallbackFromAdapter callback;
 		int price_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_PRICE);
 		int date_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DATE);
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE);
 		int author_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR);
 
@@ -214,7 +222,7 @@ public ActivityCallbackFromAdapter callback;
 		title.setText(titleString);
 		price.setText("$" + String.valueOf(cursor.getDouble(price_index)));
 
-		date.setText(cursor.getString(date_index));
+		date.setText(FieldsParsingUtils.getTime(cursor.getLong(date_index)));
 
 		personRequesting.setText(cursor.getString(author_index));
 		description.setText(cursor.getString(description_index));
@@ -227,15 +235,14 @@ public ActivityCallbackFromAdapter callback;
 
 		if (mapFragment != null) {
 			mMap = mapFragment.getMap();
-			if(mMap != null){
-				
-				
-			mMap.getUiSettings().setMyLocationButtonEnabled(false);
+			if (mMap != null) {
 
-			mMap.setMyLocationEnabled(true);
+				mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-			mMap.getUiSettings().setZoomControlsEnabled(true);
-			addUpMapMarker(latitude, longitude, titleString);
+				mMap.setMyLocationEnabled(true);
+
+				mMap.getUiSettings().setZoomControlsEnabled(true);
+				addUpMapMarker(latitude, longitude, titleString);
 			}
 
 		}
@@ -260,38 +267,114 @@ public ActivityCallbackFromAdapter callback;
 						personRequestingImage,
 						NearlingsApplication.getDefaultOptions());
 		state = cursor.getString(status_index);
-		if (state.equals(Needs.NOT_ACCEPTED_YET)) {
-			changeState.setText(this.context.getString(
-					R.string.mark_as_accepted,
-					String.valueOf(cursor.getDouble(price_index))));
-		} else if (state.equals(Needs.PENDING)) {
-			changeState.setText(this.context
-					.getString(R.string.mark_as_finished_task));
-		} else if (state.equals(Needs.DONE_WAITING_FOR_REVIEW)) {
-			changeState.setText(this.context
-					.getString(R.string.mark_as_reviewed));
+
+		setUpFlowButton();
+
+		setUpRoles();
+		// ContentValues retVal = new ContentValues();
+		valuesOfNeed = new ContentValues();
+		DatabaseUtils.cursorRowToContentValues(cursor, valuesOfNeed);
+		//reloadCommentData();
+
+	}
+
+	String state;
+	ContentValues valuesOfNeed;
+
+	public void disableFlowButton(String s) {
+		disableFlowButton(s,Color.GRAY);
+	}
+	public void disableFlowButton(String s, int bgColor){
+		doActionButton.setText(s);
+		doActionButton.setEnabled(false);
+		doActionButton.setBackgroundColor(bgColor);
+		doActionButton.setTextColor(Color.WHITE);
+	}
+public void assignedClickToMarkDone(){
+	doActionButton.setText("Click to mark need completed.");
+	doActionButton.setBackgroundColor(Color.GREEN);
+	doActionButton.setTextColor(Color.WHITE);
+	doActionButton.setEnabled(true);
+}
+public void reviewAssignment(){
+	doActionButton.setText("Need is done. Click to review.");
+	doActionButton.setBackgroundColor(Color.GREEN);
+	doActionButton.setTextColor(Color.WHITE);
+	doActionButton.setEnabled(true);
+}
+	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false;
+
+	public void setUpRoles() {
+		int author_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR);
+		String authorID = cursor.getString(author_index);
+		String userID = SessionManager.getInstance(this.context).getUserID();
+		if(authorID.equals(userID)){
+			isCreator = true;
+		}else{
+			isCreator = false;
+		}
+		int offercount_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_OFFER_COUNT);
+		int offerCount = cursor.getInt(offercount_index);
+		if(offerCount > 0){
+			offerIsAvailable=true;
+		}else{
+			offerIsAvailable=false;
+		}
+	///now query offers database
+		
+		
+		//offer is available?
+	}
+
+	public void setUpFlowButton() {
+		int status_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS);
+		state = cursor.getString(status_index);
+
+		if (state.equals(Needs.AVAILABLE)) {
+			// if we are the needer
+			if (isCreator && offerIsAvailable) {
+				disableFlowButton("An offer is available! Check the offers tab.");
+			} else if (isCreator && !offerIsAvailable) {
+				disableFlowButton("Waiting for offers");
+			} else if (madeAnOffer) {
+				disableFlowButton("You've already made an offer.");
+			} else {
+
+				// make button avialble
+			}
+			// if we are the doer
+		} else if (state.equals(Needs.ASSIGNED_TO)) {
+			if (isCreator) {
+				// grey button
+				disableFlowButton("Need has been assigned to someone.");
+			} else {
+				// click when done
+				assignedClickToMarkDone();
+			}
+		} else if (state.equals(Needs.REVIEW)) {
+			if (isCreator) {
+				// grey button
+			} else {
+				// click when done
+			}
+		} else {
+			// set as closed
 		}
 
-	changeState.setOnClickListener(new OnClickListener() {
+		doActionButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// launch the request
-		//		acceptNeedPurchase();
+				// acceptNeedPurchase();
 			}
 
 		});
-
-		// ContentValues retVal = new ContentValues();
-		valuesOfNeed = new ContentValues();
-		DatabaseUtils.cursorRowToContentValues(cursor, valuesOfNeed);
-
-		reloadCommentData();
 	}
-
-	String state;
-	ContentValues valuesOfNeed;
 
 	public void reloadCommentData() {
 		/*
@@ -299,7 +382,7 @@ public ActivityCallbackFromAdapter callback;
 		 * JsonNeedsCommentsResponse.class).execute(SessionManager
 		 * .getInstance(this).(), MapUtils .mapToString(headers));
 		 */
-		// commentCursor.requery();
+		
 		/*
 		 * commentAdapter = new NeedsCommentsAdapter(this.context,
 		 * listofCommentsArrayList); listOfComments.setAdapter(commentAdapter);
@@ -308,6 +391,12 @@ public ActivityCallbackFromAdapter callback;
 		 * commentAdapter.notifyDataSetChanged();
 		 * listOfComments.setAdapter(commentAdapter);
 		 */
+		
+	/*	
+		commentAdapter = new LazyDetailCommentsAdapter(this.context,
+				listofCommentsArrayList, idOfDetail, Integer.MAX_VALUE);
+		listOfComments.setAdapter(commentAdapter);
+		*/
 	}
 
 	private void setUpMapIfNeeded(View inflatedView) {
@@ -378,21 +467,25 @@ public ActivityCallbackFromAdapter callback;
 		// TODO Auto-generated method stub
 
 	}
-	
-public void acceptNeedPurchase(){
-		
-		double price = cursor.getDouble(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_PRICE));
-		String item = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
-		  PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(price, item, PayPalPayment.PAYMENT_INTENT_SALE);
 
+	public void acceptNeedPurchase() {
 
-	        Intent intent = new Intent(context, PaymentActivity.class);
+		double price = cursor.getDouble(cursor
+				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_PRICE));
+		String item = cursor.getString(cursor
+				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
+		PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(
+				price, item, PayPalPayment.PAYMENT_INTENT_SALE);
 
-	        // send the same configuration for restart resiliency
-	        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, NearlingsApplication.config);
+		Intent intent = new Intent(context, PaymentActivity.class);
 
-	        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+		// send the same configuration for restart resiliency
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
+				NearlingsApplication.config);
 
-	        callback.startActivityForResultBridge(intent, NearlingsApplication.REQUEST_CODE_PAYMENT);
+		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+		callback.startActivityForResultBridge(intent,
+				NearlingsApplication.REQUEST_CODE_PAYMENT);
 	}
 }

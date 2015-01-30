@@ -1,6 +1,7 @@
 package swipe.android.nearlings.viewAdapters;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.FieldsParsingUtils;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import android.content.Context;
@@ -79,7 +80,7 @@ public class DiscoverListOfNeedsAdapter extends CursorAdapter {
 		int sender_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR);
 		int time_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DATE);
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE);
 		int task_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
 		int location_index = cursor
@@ -95,7 +96,7 @@ public class DiscoverListOfNeedsAdapter extends CursorAdapter {
 
 		// problem is processing. this should only happen once.
 
-		holder.dateDue.setText(cursor.getString(time_index));
+		holder.dateDue.setText(FieldsParsingUtils.getTime(cursor.getLong(time_index)));
 
 		holder.task.setText(cursor.getString(task_index));
 

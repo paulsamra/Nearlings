@@ -1,11 +1,12 @@
 package swipe.android.nearlings.MessagesSync;
 
 public class Needs{
-	public static final String NOT_ACCEPTED_YET = "NOT_ACCEPTED_YET";
-	public static final String PENDING = "PENDING";
+	public static final String AVAILABLE = "available";
+	public static final String ASSIGNED_TO = "assigned_to";
+	public static final String REVIEW = "review";
 	
-	public static final String DONE_WAITING_FOR_REVIEW = "DONE_WAITING_FOR_REVIEW";
-
-	public static final String FINISHED = "FINISHED";
+	public static final String UNDERWAY = "underway";
+	public static final String ACCEPTED = "accepted";
+	public static final String CLOSED = "closed";
 	
 }

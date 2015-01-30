@@ -1,11 +1,9 @@
 package swipe.android.nearlings.groups;
 
-import swipe.android.nearlings.jsonResponses.explore.NearlingsTime;
-
 public class Groups{
 	String id, name, description, visibility, category, created_by,  address1, address2, city, state, zip;
 	int membercount, eventcount, needcount;
-	NearlingsTime created_at;
+	long created_at;
 	public String getId() {
 		return id;
 	}
@@ -91,10 +89,10 @@ public class Groups{
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	public NearlingsTime getCreated_at() {
+	public long getCreated_at() {
 		return created_at;
 	}
-	public void setCreated_at(NearlingsTime created_at) {
+	public void setCreated_at(long created_at) {
 		this.created_at = created_at;
 	}
 	public double getLatitude() {

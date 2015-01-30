@@ -11,7 +11,7 @@ import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import android.app.AlertDialog;
@@ -313,33 +313,33 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				.getApplication()).getLastLocation();
 
 		if (sm.getSearchLocation() != null && !sm.getSearchLocation().equals("")) {
-			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION,
+			b.putString(NeedsExploreRequest.BUNDLE_LOCATION,
 					sm.getSearchLocation());
-			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION_TYPE,
-					NeedsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(NeedsDetailsRequest.BUNDLE_RADIUS, SessionManager.DEFAULT_SEARCH_RADIUS);
+			b.putString(NeedsExploreRequest.BUNDLE_LOCATION_TYPE,
+					NeedsExploreRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
+			b.putFloat(NeedsExploreRequest.BUNDLE_RADIUS, SessionManager.DEFAULT_SEARCH_RADIUS);
 		}
 
 		if (sm.getSearchRewardMinimum() != sm.DEFAULT_VALUE && sm.getSearchRewardMinimum() != 0) {
-			b.putFloat(NeedsDetailsRequest.BUNDLE_REWARD,
+			b.putFloat(NeedsExploreRequest.BUNDLE_REWARD,
 					sm.getSearchRewardMinimum());
 		}
 
 		if (sm.getExploreCategory() != null
 				&& !sm.getExploreCategory().equals(
 						SessionManager.DEFAULT_STRING)) {
-			b.putString(NeedsDetailsRequest.BUNDLE_CATEGORY,
+			b.putString(NeedsExploreRequest.BUNDLE_CATEGORY,
 					sm.getExploreCategory());
 		}
 		if (sm.getSearchString() != null
 				&& !sm.getSearchString().equals(
 						SessionManager.DEFAULT_STRING)) {
-			b.putString(NeedsDetailsRequest.BUNDLE_KEYWORDS,
+			b.putString(NeedsExploreRequest.BUNDLE_KEYWORDS,
 					sm.getSearchString());
 		}
 
 		if(sm.getSearchVisibility() != null && !sm.getSearchVisibility().equals("")){
-			b.putString(NeedsDetailsRequest.BUNDLE_VISIBILITY, sm.getSearchVisibility());
+			b.putString(NeedsExploreRequest.BUNDLE_VISIBILITY, sm.getSearchVisibility());
 		}
 	
 /*		if(sm.getTimeEnd() != sm.DEFAULT_VALUE){
@@ -381,8 +381,8 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 	@Override
 	public void setSourceRequestHelper() {
 
-		super.helper = SendRequestStrategyManager
-				.getHelper(NeedsDetailsRequest.class);
+		helpers.add( SendRequestStrategyManager
+				.getHelper(NeedsExploreRequest.class));
 
 	}
 }

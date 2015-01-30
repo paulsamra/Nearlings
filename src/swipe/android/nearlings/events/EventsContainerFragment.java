@@ -13,7 +13,7 @@ import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.needs.DiscoverContainerFragment;
@@ -340,7 +340,7 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION,
 					sm.getSearchLocation());
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
-					NeedsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
+					NeedsExploreRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
 			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS, 20.0f);
 		}
 	     if(sm.getSearchString() != null && !sm.getSearchString().equals( sm.DEFAULT_STRING)){
@@ -406,8 +406,8 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 
 	@Override
 	public void setSourceRequestHelper() {
-			super.helper = SendRequestStrategyManager
-					.getHelper(EventsDetailsRequest.class);
+			helpers.add(SendRequestStrategyManager
+					.getHelper(EventsDetailsRequest.class));
 		
 	}
 }

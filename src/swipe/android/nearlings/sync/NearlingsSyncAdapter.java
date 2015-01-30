@@ -1,8 +1,10 @@
 package swipe.android.nearlings.sync;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
@@ -15,6 +17,7 @@ import com.edbert.library.network.sync.AbstractSyncAdapter;
 import com.edbert.library.sendRequest.SendRequestInterface;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 
+import com.edbert.library.utils.ListUtils;
 public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 	private static final String SYNC_ADAPTER_TAG = "NearlingssyncAdapter";
 	public static final String HELPER_FLAG_ID = "NEARLINGS_HELPER";
@@ -31,6 +34,30 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 	private SendRequestInterface requestInterface;
 
 	@Override
+	protected void beginSync(ContentProviderClient provider, Bundle extras)
+			throws Exception {
+		preSync();
+		// fuck it we'll do it sequentially
+		String helpers = extras.getString(HELPER_FLAG_ID);
+		ArrayList<String> TAG = ListUtils.stringToList(helpers);
+		extras.remove(HELPER_FLAG_ID);
+
+		Log.d("Starting sync", "starting sync");
+		for (String tags : TAG) {
+			Log.d("TAG", tags);
+			extras.putString(HELPER_FLAG_ID, tags);
+			Object o = getData(extras);
+			updateDatabase(o);
+			extras.remove(HELPER_FLAG_ID);
+		}
+
+		Log.d("Finish sync", "finish sync");
+		extras.putStringArrayList(HELPER_FLAG_ID, TAG);
+
+		postSync(null);
+	}
+
+	@Override
 	protected Object getData(Bundle extras) throws InterruptedException,
 			ExecutionException, ParseException, RemoteException,
 			OperationApplicationException {
@@ -41,7 +68,7 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 					"No requestInterface was provided! Will not execute!");
 			return null;
 		}
-	
+
 		Object o = SendRequestStrategyManager.executeRequest(requestInterface,
 				extras);
 		return o;

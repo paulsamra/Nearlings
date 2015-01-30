@@ -6,7 +6,7 @@ import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NeedsDetailsActivity;
 import swipe.android.nearlings.R;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
@@ -83,8 +83,8 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = SendRequestStrategyManager
-				.getHelper(NeedsDetailsRequest.class);// new
+		helpers.add(SendRequestStrategyManager
+				.getHelper(NeedsExploreRequest.class));// new
 														// NeedsDetailsRequest(this.getActivity(),
 														// JsonExploreResponse.class);
 	}
@@ -100,7 +100,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 				NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
 				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch,
-				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
+				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE + " DESC");
 
 		return cursorLoader;
 	}

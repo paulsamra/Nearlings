@@ -1,9 +1,23 @@
 package swipe.android.nearlings.jsonResponses.explore;
 
-public class Tasks{
+public class Needs{
+	
+	long created_at, due_date;
+	public long getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(long created_at) {
+		this.created_at = created_at;
+	}
+	public long getDue_date() {
+		return due_date;
+	}
+	public void setDue_date(long due_date) {
+		this.due_date = due_date;
+	}
 	String user, user_thumbnail, title, description, status, reward; 
 	String id;
-	NearlingsTime created_at, due_date;
+	/*NearlingsTime created_at, due_date;
 	public NearlingsTime getCreated_at() {
 		return created_at;
 	}
@@ -15,7 +29,7 @@ public class Tasks{
 	}
 	public void setDue_date(NearlingsTime due_date) {
 		this.due_date = due_date;
-	}
+	}*/
 	public String getId() {
 		return id;
 	}

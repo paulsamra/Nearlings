@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.edbert.library.network.sync.JsonResponseInterface;
 
 public class JsonExploreResponse implements JsonResponseInterface {
-	public ArrayList<Tasks> tasks;
+	public ArrayList<Needs> tasks;
 
 	@Override
 	public boolean isValid() {
@@ -18,11 +18,11 @@ public class JsonExploreResponse implements JsonResponseInterface {
 		return error;
 	}
 
-	public ArrayList<Tasks> getTasks() {
+	public ArrayList<Needs> getTasks() {
 		return tasks;
 	}
 
-	public void setTasks(ArrayList<Tasks> tasks) {
+	public void setTasks(ArrayList<Needs> tasks) {
 		this.tasks = tasks;
 	}
 

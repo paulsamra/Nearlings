@@ -1,6 +1,5 @@
 package swipe.android.nearlings;
 
-
 import org.json.JSONException;
 
 import com.paypal.android.sdk.payments.PayPalAuthorization;
@@ -11,6 +10,9 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
+import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
+import swipe.android.nearlings.events.EventsContainerFragment;
 import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
 
 import android.app.Activity;
@@ -27,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Toast;
+
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		implements Refreshable, ActivityCallbackFromAdapter {
@@ -64,10 +67,8 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		try {
 			view = inflater.inflate(R.layout.needs_details, container, false);
 
-			// view = inflater.inflate(R.layout.needs_details, container,
-			// false);
 		} catch (InflateException e) {
-
+			e.printStackTrace();
 		}
 
 		this.savedInstanceState = savedInstanceState;
@@ -85,11 +86,13 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		// resync data?
 		super.onRefresh();
 		// reloadAdapter();
+
 	}
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest(this.getActivity(), id);
+		helpers.add(new NeedsDetailsRequest(this.getActivity(), id));
+		helpers.add(new NeedsOffersRequest(this.getActivity(), id));
 	}
 
 	@Override
@@ -103,7 +106,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 				NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
 				NeedsDetailsDatabaseHelper.COLUMNS, selectionClause,
-				mSelectionArgs, NeedsDetailsDatabaseHelper.COLUMN_DATE
+				mSelectionArgs, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE
 						+ " DESC");
 		return cursorLoader;
 
@@ -124,7 +127,6 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	public void reloadData() {
 		// TODO Auto-generated method stub
 
-		Log.e("ReloadAdapter", "adapter");
 		// getLoaderManager().initLoader(0, null, this);
 		reloadAdapter();
 
@@ -176,7 +178,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 						Log.i(TAG, confirm.toJSONObject().toString(4));
 						Log.i(TAG2, confirm.getPayment().toJSONObject()
 								.toString(4));
-						
+
 						/**
 						 * TODO: send 'confirm' (and possibly
 						 * confirm.getPayment() to your server for verification

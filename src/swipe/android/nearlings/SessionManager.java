@@ -162,8 +162,12 @@ public class SessionManager {
 
 	public String commentsURL(String id) {
 		return URL_BASE + "/need/" + id + "/comments";
+	}public String needsDetailsURL(String id) {
+		return URL_BASE + "/need/" + id ;
+	}public String needsOffersURL(String id) {
+		return URL_BASE + "/need/" + id + "/offers" ;
 	}
-
+	
 	public String alertsURL() {
 		return URL_BASE + "/user/" + this.getUserID() + "/alerts";
 	}

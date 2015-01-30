@@ -7,11 +7,13 @@ import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -98,10 +100,14 @@ public class NearlingsApplication extends Application implements
 				.getDBHelperInstance(this).getWritableDatabase());
 
 		SendRequestStrategyManager.register(new MessagesRequest(this));
-		SendRequestStrategyManager.register(new NeedsDetailsRequest(this,
+		SendRequestStrategyManager.register(new NeedsExploreRequest(this,
 				JsonExploreResponse.class));
 		SendRequestStrategyManager.register(new EventsDetailsRequest(this));
 		SendRequestStrategyManager.register(new GroupsRequest(this));
+		
+		SendRequestStrategyManager.register(new NeedsDetailsRequest(this));
+		
+		
 		super.registerActivityLifecycleCallbacks(this);
 		
 		   Intent intent = new Intent(this, PayPalService.class);
@@ -128,6 +134,9 @@ public class NearlingsApplication extends Application implements
 		DatabaseCommandManager.register(new NeedsCommentsDatabaseHelper());
 		DatabaseCommandManager.register(new EventsDatabaseHelper());
 		DatabaseCommandManager.register(new GroupsDatabaseHelper());
+		DatabaseCommandManager.register(new NeedsOfferDatabaseHelper());
+		
+		
 	}
 
 	public static void initImageLoader(Context context) {

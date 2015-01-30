@@ -4,7 +4,7 @@ import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
 import swipe.android.nearlings.NeedsDetailsActivity;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
 import android.content.Intent;
 import android.database.Cursor;
@@ -44,8 +44,8 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = SendRequestStrategyManager
-				.getHelper(NeedsDetailsRequest.class);// new
+		helpers.add(SendRequestStrategyManager
+				.getHelper(NeedsExploreRequest.class));// new
 														// NeedsDetailsRequest(this.getActivity(),
 														// JsonExploreResponse.class);
 	}
@@ -60,7 +60,7 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 				NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
 				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch,
-				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DATE + " DESC");
+				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE + " DESC");
 
 		return cursorLoader;
 

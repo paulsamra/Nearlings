@@ -1,7 +1,7 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.viewAdapters.EventsDetailAdapter;
 import android.app.ActionBar;
 import android.database.Cursor;
@@ -48,8 +48,6 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		ab.setDisplayHomeAsUpEnabled(true);
 		ab.setHomeButtonEnabled(true);
 
-
-	
 		if (view != null) {
 			ViewGroup parent = (ViewGroup) view.getParent();
 			if (parent != null)
@@ -81,7 +79,7 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest(this.getActivity(), id);
+		helpers.add(new NeedsExploreRequest(this.getActivity(), id));
 	}
 
 	@Override
@@ -93,9 +91,8 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 				this.getActivity(),
 				NearlingsContentProvider
 						.contentURIbyTableName(EventsDatabaseHelper.TABLE_NAME),
-						EventsDatabaseHelper.COLUMNS, selectionClause,
-				mSelectionArgs, EventsDatabaseHelper.COLUMN_DATE_OF_EVENT
-						+ " DESC");
+				EventsDatabaseHelper.COLUMNS, selectionClause, mSelectionArgs,
+				EventsDatabaseHelper.COLUMN_DATE_OF_EVENT + " DESC");
 		return cursorLoader;
 
 	}
@@ -111,7 +108,7 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void reloadData() {
-	
+
 		reloadAdapter();
 
 	}
@@ -131,15 +128,16 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		getLoaderManager().initLoader(0, null, this);
 		c = generateCursor();
 		if (adapter == null)
-			adapter = new EventsDetailAdapter(view, this.getActivity(), id,
-					c, savedInstanceState);
+			adapter = new EventsDetailAdapter(view, this.getActivity(), id, c,
+					savedInstanceState);
 
 		adapter.reloadData();
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-			this.getActivity().onBackPressed();
+
+		this.getActivity().onBackPressed();
 		return super.onOptionsItemSelected(item);
 	}
 }

@@ -43,8 +43,8 @@ public class GroupsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = SendRequestStrategyManager
-				.getHelper(GroupsRequest.class); 
+		helpers.add(SendRequestStrategyManager
+				.getHelper(GroupsRequest.class)); 
 	}
 
 	@Override

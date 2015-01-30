@@ -11,7 +11,7 @@ import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import swipe.android.nearlings.json.groups.GroupsMapViewFragment;
@@ -257,23 +257,23 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				.getApplication()).getLastLocation();
 
 		if (!sm.getSearchLocation().equals("")) {
-			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION,
+			b.putString(NeedsExploreRequest.BUNDLE_LOCATION,
 					sm.getSearchLocation());
-			b.putString(NeedsDetailsRequest.BUNDLE_LOCATION_TYPE,
-					NeedsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(NeedsDetailsRequest.BUNDLE_RADIUS, 20.0f);
+			b.putString(NeedsExploreRequest.BUNDLE_LOCATION_TYPE,
+					NeedsExploreRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
+			b.putFloat(NeedsExploreRequest.BUNDLE_RADIUS, 20.0f);
 		}
 
 		if (sm.getSearchRewardMinimum() != -1) {
 
-			b.putFloat(NeedsDetailsRequest.BUNDLE_REWARD,
+			b.putFloat(NeedsExploreRequest.BUNDLE_REWARD,
 					sm.getSearchRewardMinimum());
 		}
 
 		if (!sm.getSearchString().equals("")
 				&& !sm.getSearchString().equals(
 						SessionManager.DEFAULT_STRING)) {
-			b.putString(NeedsDetailsRequest.BUNDLE_KEYWORDS,
+			b.putString(NeedsExploreRequest.BUNDLE_KEYWORDS,
 					sm.getSearchString());
 		}
 
@@ -307,9 +307,8 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-
-		super.helper = SendRequestStrategyManager
-				.getHelper(GroupsRequest.class);
+		helpers.add(SendRequestStrategyManager
+				.getHelper(GroupsRequest.class));
 
 	}
 }

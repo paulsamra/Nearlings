@@ -35,7 +35,7 @@ public class GroupsDatabaseHelper implements DatabaseHelperInterface {
 			 + COLUMN_LOCATION_LATITUDE
 			+ " DOUBLE, " + COLUMN_LOCATION_LONGITUDE + " DOUBLE, "+
 			COLUMN_VISIBILITY + " TEXT NOT NULL, " 
-			+COLUMN_DATE+ " TEXT NOT NULL, " 
+			+COLUMN_DATE+ " BIGINT, " 
 			+ COLUMN_MEMBER_COUNT + " INTEGER, " 
 			+ COLUMN_EVENT_COUNT + " INTEGER, " 
 			+ COLUMN_NEED_COUNT + " INTEGER, " 

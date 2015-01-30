@@ -24,7 +24,6 @@ import com.edbert.library.network.SocketOperator;
 public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 	public EventsDetailsRequest(Context c) {
 		super(c);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static final String SEARCH_PARAMS_TAG = "SEARCH_PARAMS_TAG";
@@ -110,7 +109,7 @@ cv.put(EventsDatabaseHelper.COLUMN_ID, tempEvent.getId());
 		cv.put(EventsDatabaseHelper.COLUMN_LOCATION_LONGITUDE,tempEvent.getLongitude());
 		
 		
-		String myString = tempEvent.getStartdate().getDate();
+		/*String myString = tempEvent.getStartdate().getDate();
 		DateFormat format = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss.SSSSSS");
 		Date date;
@@ -123,8 +122,8 @@ cv.put(EventsDatabaseHelper.COLUMN_ID, tempEvent.getId());
 			cv.put(EventsDatabaseHelper.COLUMN_DATE_OF_EVENT, formattedDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
-		}
-		
+		}*/
+		cv.put(EventsDatabaseHelper.COLUMN_DATE_OF_EVENT, tempEvent.getStartdate());
 		cv.put(EventsDatabaseHelper.COLUMN_TIME_OF_EVENT, tempEvent.getStarttime());
 
 		cv.put(EventsDatabaseHelper.COLUMN_RSVP_COUNT, Integer.valueOf(tempEvent.getRsvpcount()));

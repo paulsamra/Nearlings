@@ -122,7 +122,7 @@ public class LoginActivity extends Activity implements
 			SessionManager.getInstance(this).setUserID(
 					String.valueOf(result.getUserID()));
 			SessionManager.getInstance(this).setAuthToken(result.getToken());
-			
+			/*
 			
 			SessionManager.getInstance(this).setFirstName(result.getFirstname());
 			SessionManager.getInstance(this).setLastName(result.getLastname());
@@ -131,7 +131,7 @@ public class LoginActivity extends Activity implements
 			SessionManager.getInstance(this).setGravitar(result.getGravitar());
 			SessionManager.getInstance(this).setAlertCount(result.getAlertcount());
 			SessionManager.getInstance(this).setMemberships(result.getMemberships());
-			
+			*/
 			
 			goToNextActivity();
 		}

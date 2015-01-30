@@ -1,7 +1,7 @@
 package swipe.android.nearlings;
 
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.viewAdapters.GroupsViewAdapter;
 import android.app.ActionBar;
 import android.database.Cursor;
@@ -79,7 +79,7 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
-		super.helper = new NeedsDetailsRequest(this.getActivity(), id);
+		helpers.add(new NeedsExploreRequest(this.getActivity(), id));
 	}
 
 	@Override
