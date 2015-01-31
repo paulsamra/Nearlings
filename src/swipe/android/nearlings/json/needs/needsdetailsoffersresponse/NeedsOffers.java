@@ -4,7 +4,8 @@ public class NeedsOffers{
 	String id, message;
 	int created_by, changed_by;
 	String status;
-	int offerprice, created_at;
+	double offerprice; 
+	long created_at;
 	String username, thumbnail;
 	public String getId() {
 		return id;
@@ -36,16 +37,16 @@ public class NeedsOffers{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public int getOfferprice() {
+	public double getOfferprice() {
 		return offerprice;
 	}
-	public void setOfferprice(int offerprice) {
+	public void setOfferprice(float offerprice) {
 		this.offerprice = offerprice;
 	}
-	public int getCreated_at() {
+	public long getCreated_at() {
 		return created_at;
 	}
-	public void setCreated_at(int created_at) {
+	public void setCreated_at(long created_at) {
 		this.created_at = created_at;
 	}
 	public String getUsername() {

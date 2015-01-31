@@ -26,7 +26,6 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker;
 
 public class NeedsExploreRequest extends NearlingsRequest<JsonExploreResponse> {
 
-	Class classType;
 	public static final String BUNDLE_KEYWORDS = "KEYWORDS";
 	public static final String BUNDLE_REWARD = "REWARD";
 	public static final String BUNDLE_STATUS = "STATUS";
@@ -42,17 +41,11 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 	public static final String BUNDLE_LOCATION_TYPE_ADDRESS = "address";
 	public static final String BUNDLE_LOCATION_TYPE_LATITUDE = "latlng";
 
-	public NeedsExploreRequest(Context c, Class classType) {
+	public NeedsExploreRequest(Context c) {
 		super(c);
-		this.classType = classType;
 	}
 
-	String id;
-
-	public NeedsExploreRequest(Context c, String id) {
-		super(c);
-		this.id = id;
-	}
+	
 
 	@Override
 	public JsonExploreResponse makeRequest(Bundle b) {
@@ -115,7 +108,7 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 	ProviderLocationTracker tracker;
 
 	@Override
-	public boolean writeToDatabase(Context context, JsonExploreResponse o) {
+	public boolean writeToDatabase(Bundle b,Context context, JsonExploreResponse o) {
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)
@@ -152,7 +145,7 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 			}
 */
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE,tempNearlingTask.getDue_date());
-			cv.put(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR,
+			cv.put(NeedsDetailsDatabaseHelper.COLUMN_USER,
 					tempNearlingTask.getUser());
 
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_PRICE,

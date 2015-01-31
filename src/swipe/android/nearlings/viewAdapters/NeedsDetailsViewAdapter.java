@@ -73,15 +73,13 @@ public class NeedsDetailsViewAdapter implements
 	private Cursor commentCursor;
 	public GreyedOutButton doActionButton;
 	public Button getDirections;
-	public ActivityCallbackFromAdapter callback;
 
 	public NeedsDetailsViewAdapter(View userDataView, Context context,
-			String idOfDetail, Cursor cursor, Bundle savedInstanceState,
-			ActivityCallbackFromAdapter callback) {
+			String idOfDetail, Cursor cursor, Bundle savedInstanceState
+			) {
 		this.context = context;
 		this.idOfDetail = idOfDetail;
 		this.cursor = cursor;
-		this.callback = callback;
 		MapsInitializer.initialize(context);
 		initializeView(userDataView, savedInstanceState);
 
@@ -201,7 +199,7 @@ public class NeedsDetailsViewAdapter implements
 		int date_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE);
 		int author_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR);
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_USER);
 
 		int description_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DESCRIPTION);
@@ -268,9 +266,8 @@ public class NeedsDetailsViewAdapter implements
 						NearlingsApplication.getDefaultOptions());
 		state = cursor.getString(status_index);
 
-		setUpFlowButton();
 
-		setUpRoles();
+	
 		// ContentValues retVal = new ContentValues();
 		valuesOfNeed = new ContentValues();
 		DatabaseUtils.cursorRowToContentValues(cursor, valuesOfNeed);
@@ -281,100 +278,6 @@ public class NeedsDetailsViewAdapter implements
 	String state;
 	ContentValues valuesOfNeed;
 
-	public void disableFlowButton(String s) {
-		disableFlowButton(s,Color.GRAY);
-	}
-	public void disableFlowButton(String s, int bgColor){
-		doActionButton.setText(s);
-		doActionButton.setEnabled(false);
-		doActionButton.setBackgroundColor(bgColor);
-		doActionButton.setTextColor(Color.WHITE);
-	}
-public void assignedClickToMarkDone(){
-	doActionButton.setText("Click to mark need completed.");
-	doActionButton.setBackgroundColor(Color.GREEN);
-	doActionButton.setTextColor(Color.WHITE);
-	doActionButton.setEnabled(true);
-}
-public void reviewAssignment(){
-	doActionButton.setText("Need is done. Click to review.");
-	doActionButton.setBackgroundColor(Color.GREEN);
-	doActionButton.setTextColor(Color.WHITE);
-	doActionButton.setEnabled(true);
-}
-	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false;
-
-	public void setUpRoles() {
-		int author_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR);
-		String authorID = cursor.getString(author_index);
-		String userID = SessionManager.getInstance(this.context).getUserID();
-		if(authorID.equals(userID)){
-			isCreator = true;
-		}else{
-			isCreator = false;
-		}
-		int offercount_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_OFFER_COUNT);
-		int offerCount = cursor.getInt(offercount_index);
-		if(offerCount > 0){
-			offerIsAvailable=true;
-		}else{
-			offerIsAvailable=false;
-		}
-	///now query offers database
-		
-		
-		//offer is available?
-	}
-
-	public void setUpFlowButton() {
-		int status_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS);
-		state = cursor.getString(status_index);
-
-		if (state.equals(Needs.AVAILABLE)) {
-			// if we are the needer
-			if (isCreator && offerIsAvailable) {
-				disableFlowButton("An offer is available! Check the offers tab.");
-			} else if (isCreator && !offerIsAvailable) {
-				disableFlowButton("Waiting for offers");
-			} else if (madeAnOffer) {
-				disableFlowButton("You've already made an offer.");
-			} else {
-
-				// make button avialble
-			}
-			// if we are the doer
-		} else if (state.equals(Needs.ASSIGNED_TO)) {
-			if (isCreator) {
-				// grey button
-				disableFlowButton("Need has been assigned to someone.");
-			} else {
-				// click when done
-				assignedClickToMarkDone();
-			}
-		} else if (state.equals(Needs.REVIEW)) {
-			if (isCreator) {
-				// grey button
-			} else {
-				// click when done
-			}
-		} else {
-			// set as closed
-		}
-
-		doActionButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				// launch the request
-				// acceptNeedPurchase();
-			}
-
-		});
-	}
 
 	public void reloadCommentData() {
 		/*
@@ -468,24 +371,4 @@ public void reviewAssignment(){
 
 	}
 
-	public void acceptNeedPurchase() {
-
-		double price = cursor.getDouble(cursor
-				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_PRICE));
-		String item = cursor.getString(cursor
-				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
-		PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(
-				price, item, PayPalPayment.PAYMENT_INTENT_SALE);
-
-		Intent intent = new Intent(context, PaymentActivity.class);
-
-		// send the same configuration for restart resiliency
-		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
-				NearlingsApplication.config);
-
-		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
-
-		callback.startActivityForResultBridge(intent,
-				NearlingsApplication.REQUEST_CODE_PAYMENT);
-	}
 }

@@ -78,7 +78,7 @@ public class DiscoverListOfNeedsAdapter extends CursorAdapter {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 
 		int sender_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR);
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_USER);
 		int time_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE);
 		int task_index = cursor

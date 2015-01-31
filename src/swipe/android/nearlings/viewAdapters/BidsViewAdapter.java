@@ -2,23 +2,32 @@ package swipe.android.nearlings.viewAdapters;
 
 import java.util.ArrayList;
 
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+
+import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.FieldsParsingUtils;
+import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
+import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.NeedsOffers;
 import swipe.android.nearlings.jsonResponses.register.Bids;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class BidsViewAdapter extends ArrayAdapter<Bids> {
+public class BidsViewAdapter extends ArrayAdapter<NeedsOffers> {
 	View row;
-	ArrayList<Bids> myTeams;
+	ArrayList<NeedsOffers> myTeams;
 	int resLayout;
 	Context context;
 
 	public BidsViewAdapter(Context context, int textViewResourceId,
-			ArrayList<Bids> myTeams) {
+			ArrayList<NeedsOffers> myTeams) {
 		super(context, textViewResourceId, myTeams);
 		this.myTeams = myTeams;
 		resLayout = textViewResourceId;
@@ -34,15 +43,15 @@ public class BidsViewAdapter extends ArrayAdapter<Bids> {
 			row = ll.inflate(resLayout, parent, false);
 		}
 
-		Bids item = myTeams.get(position);
+		NeedsOffers item = myTeams.get(position);
 		TextView bidNumber = (TextView) row.findViewById(R.id.bid);
 		TextView dateBid = (TextView) row.findViewById(R.id.time);
-
 		TextView user = (TextView) row.findViewById(R.id.name);
 
-		bidNumber.setText(String.valueOf(item.getBid()));
-		dateBid.setText(item.getDate());
-		user.setText(item.getBidder().getName());
+		
+		bidNumber.setText(String.valueOf(item.getOfferprice()));
+		dateBid.setText(FieldsParsingUtils.getTime(item.getCreated_at()));
+		user.setText(item.getUsername());
 
 		return row;
 	}

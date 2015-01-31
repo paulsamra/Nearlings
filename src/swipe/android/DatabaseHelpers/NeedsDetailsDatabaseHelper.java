@@ -12,7 +12,7 @@ public class NeedsDetailsDatabaseHelper implements DatabaseHelperInterface {
 	public static final String COLUMN_TITLE = "title";
 	public static final String COLUMN_DUE_DATE = "due_date";
 
-	public static final String COLUMN_AUTHOR = "author";
+	public static final String COLUMN_USER = "user";
 
 	public static final String COLUMN_PRICE = "price";
 
@@ -47,7 +47,7 @@ public class NeedsDetailsDatabaseHelper implements DatabaseHelperInterface {
 			COLUMN_GROUP_ID, COLUMN_CREATED_BY, COLUMN_ASSIGNED_TO,
 			COLUMN_COMMENT_COUNT, COLUMN_ADDRESS_1, COLUMN_ADDRESS_2,
 			COLUMN_CITY, COLUMN_STATE, COLUMN_ZIP, COLUMN_ID, COLUMN_TITLE,
-			COLUMN_DUE_DATE, COLUMN_AUTHOR, COLUMN_PRICE, COLUMN_LOCATION_NAME,
+			COLUMN_DUE_DATE, COLUMN_USER, COLUMN_PRICE, COLUMN_LOCATION_NAME,
 			COLUMN_LOCATION_GEOPOINT_LATITUDE,
 			COLUMN_LOCATION_GEOPOINT_LONGITUDE, COLUMN_DESCRIPTION,
 			COLUMN_AUTHOR_IMAGE_PREVIEW_URL, COLUMN_STATUS, COLUMN_OFFER_COUNT,
@@ -56,7 +56,7 @@ public class NeedsDetailsDatabaseHelper implements DatabaseHelperInterface {
 	public static final String TABLE_CREATE_ROUTES = "CREATE TABLE "
 			+ TABLE_NAME + "(" + COLUMN_ID + " TEXT NOT NULL primary key, "
 			+ COLUMN_TITLE + " TEXT, " + COLUMN_DUE_DATE + " LONG, "
-			+ COLUMN_AUTHOR + " TEXT, " + COLUMN_PRICE + " FLOAT, "
+			+ COLUMN_USER + " TEXT, " + COLUMN_PRICE + " FLOAT, "
 			+ COLUMN_AUTHOR_IMAGE_PREVIEW_URL + " TEXT, " + COLUMN_STATUS
 			+ " TEXT, " + COLUMN_CATEGORY + " TEXT, " + COLUMN_REWARD
 			+ " INTEGER, " + COLUMN_RATE_TYPE + " TEXT, " + COLUMN_STARTING

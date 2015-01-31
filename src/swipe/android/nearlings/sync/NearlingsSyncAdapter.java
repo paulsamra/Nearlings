@@ -47,7 +47,7 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 			Log.d("TAG", tags);
 			extras.putString(HELPER_FLAG_ID, tags);
 			Object o = getData(extras);
-			updateDatabase(o);
+			updateDatabase(extras, o);
 			extras.remove(HELPER_FLAG_ID);
 		}
 
@@ -68,7 +68,6 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 					"No requestInterface was provided! Will not execute!");
 			return null;
 		}
-
 		Object o = SendRequestStrategyManager.executeRequest(requestInterface,
 				extras);
 		return o;
@@ -76,11 +75,11 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 	}
 
 	@Override
-	public void updateDatabase(Object o) throws RemoteException,
+	public void updateDatabase(Bundle extras, Object o) throws RemoteException,
 			OperationApplicationException, ParseException {
 
 		SendRequestStrategyManager.executeWriteToDatabase(requestInterface,
-				getContext(), o);
+				getContext(), o, extras);
 
 		requestInterface = null;
 	}

@@ -94,7 +94,7 @@ public class CreateItemNearlings extends AsyncTask<String, Void, String> {
 				createRequest.put("longitude", locations[1]);
 				Log.d("BODY", createRequest.toString());
 				Log.d("URL", params[0]);
-				 s = SocketOperator.httpPostRequest(params[0], MapUtils.stringToMap(params[1]), createRequest.toString());
+				 s = SocketOperator.getInstance(String.class).httpPostRequest(params[0], MapUtils.stringToMap(params[1]), createRequest.toString());
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

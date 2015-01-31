@@ -73,7 +73,7 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 	}
 
 	@Override
-	public boolean writeToDatabase(Context c, JsonGroupsResponse o) {
+	public boolean writeToDatabase(Bundle b,Context c, JsonGroupsResponse o) {
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)
@@ -146,4 +146,6 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 
 	// for testing purposes
 	public static int counter = 0;
+
+
 }

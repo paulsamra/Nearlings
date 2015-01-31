@@ -48,7 +48,7 @@ Log.d("URL", url);
 	}
 
 	@Override
-	public boolean writeToDatabase(Context c, JsonMessagesResponse o) {
+	public boolean writeToDatabase(Bundle b,Context c, JsonMessagesResponse o) {
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)

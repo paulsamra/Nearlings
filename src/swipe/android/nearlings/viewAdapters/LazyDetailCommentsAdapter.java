@@ -80,7 +80,8 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 		}
 		return true;
 	}
-
+	
+	
 	@Override
 	protected void appendCachedData() {
 

@@ -87,7 +87,7 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 	}
 
 	@Override
-	public boolean writeToDatabase(Context c, JsonEventsResponse o) {
+	public boolean writeToDatabase(Bundle extras, Context c, JsonEventsResponse o) {
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)

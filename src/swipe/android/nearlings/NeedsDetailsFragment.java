@@ -2,6 +2,7 @@ package swipe.android.nearlings;
 
 import org.json.JSONException;
 
+import com.edbert.library.greyButton.GreyedOutButton;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
 import com.paypal.android.sdk.payments.PayPalProfileSharingActivity;
@@ -9,16 +10,21 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
 import swipe.android.nearlings.events.EventsContainerFragment;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
 import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
@@ -27,16 +33,17 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 
 import android.widget.Toast;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
-		implements Refreshable, ActivityCallbackFromAdapter {
+		implements Refreshable {
 	String id;
 	View view;
 	NeedsDetailsViewAdapter adapter;
-
+	GreyedOutButton doActionButton;
 	public static final String MESSAGES_START_FLAG = NeedsDetailsFragment.class
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
 	public static final String MESSAGES_FINISH_FLAG = NeedsDetailsFragment.class
@@ -70,7 +77,9 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		} catch (InflateException e) {
 			e.printStackTrace();
 		}
-
+		doActionButton = (GreyedOutButton) view
+				.findViewById(R.id.needs_change_state);
+		doActionButton.setEnabled(false);
 		this.savedInstanceState = savedInstanceState;
 		Bundle b = getActivity().getIntent().getExtras();
 		id = b.getString("id");
@@ -91,8 +100,8 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
-		helpers.add(new NeedsDetailsRequest(this.getActivity(), id));
-		helpers.add(new NeedsOffersRequest(this.getActivity(), id));
+		helpers.add(new NeedsDetailsRequest(this.getActivity()));
+	//	helpers.add(new NeedsOffersRequest(this.getActivity()));
 	}
 
 	@Override
@@ -119,6 +128,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		super.onResume();
 		// adapter = new NeedsDetailViewAdapter(view, this.getActivity(), id, c,
 		// savedInstanceState);
+		super.onRefresh();
 		reloadAdapter();
 
 	}
@@ -129,18 +139,6 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 		// getLoaderManager().initLoader(0, null, this);
 		reloadAdapter();
-
-		// dapter = new NeedsDetailViewAdapter(view, this.getActivity(), id,
-		// savedInstanceState);
-
-		/*
-		 * mAdapter = new NeedsDetailViewAdapter(this.getActivity(), id, c,
-		 * savedInstanceState);
-		 * 
-		 * // this.mAdapter = new NeedsDetailViewAdapter(this.getActivity(), c);
-		 * 
-		 * mAdapter.();
-		 */
 	}
 
 	@Override
@@ -159,63 +157,165 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		c = generateCursor();
 		if (adapter == null)
 			adapter = new NeedsDetailsViewAdapter(view, this.getActivity(), id,
-					c, savedInstanceState, this);
+					c, savedInstanceState);
 
 		adapter.reloadData();
+	}
+
+	@Override
+	protected void updateRefresh(boolean isSyncing) {
+		super.updateRefresh(isSyncing);
+		if (isSyncing) {
+			setButtonSyncing();
+		} else {
+			refreshStateButton();
+		}
+
 	}
 
 	String TAG = "Details Fragment";
 	String TAG2 = "Details Fragment Next";
 
+	
+
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == NearlingsApplication.REQUEST_CODE_PAYMENT) {
-			if (resultCode == Activity.RESULT_OK) {
-				PaymentConfirmation confirm = data
-						.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-				if (confirm != null) {
-					try {
-						Log.i(TAG, confirm.toJSONObject().toString(4));
-						Log.i(TAG2, confirm.getPayment().toJSONObject()
-								.toString(4));
+	public void requestSync(Bundle b) {
+		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
+		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+		super.requestSync(b);
+	}
 
-						/**
-						 * TODO: send 'confirm' (and possibly
-						 * confirm.getPayment() to your server for verification
-						 * or consent completion. See
-						 * https://developer.paypal.com
-						 * /webapps/developer/docs/integration
-						 * /mobile/verify-mobile-payment/ for more details.
-						 * 
-						 * For sample mobile backend interactions, see
-						 * https://github
-						 * .com/paypal/rest-api-sdk-python/tree/master
-						 * /samples/mobile_backend
-						 */
-						Toast.makeText(
-								this.getActivity().getApplicationContext(),
-								"PaymentConfirmation info received from PayPal",
-								Toast.LENGTH_LONG).show();
+	
+	// /BUTTON STUFF
+	// State button control
+	public void disableFlowButton(String s) {
+		disableFlowButton(s, Color.GRAY);
+	}
 
-					} catch (JSONException e) {
-						Log.e(TAG, "an extremely unlikely failure occurred: ",
-								e);
-					}
-				}
-			} else if (resultCode == Activity.RESULT_CANCELED) {
-				Log.i(TAG, "The user canceled.");
-			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-				Log.i(TAG,
-						"An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+	public void setButtonSyncing() {
+		disableFlowButton("Retrieving info...");
+	}
+
+	public void refreshStateButton() {
+		// disableFlowButton("Retrieving info...");
+		this.setUpRoles();
+		setUpFlowButton();
+	}
+
+	public void disableFlowButton(String s, int bgColor) {
+		doActionButton.setText(s);
+		doActionButton.setEnabled(false);
+		doActionButton.setBackgroundColor(bgColor);
+		doActionButton.setTextColor(Color.WHITE);
+	}
+
+	public void assignedClickToMarkDone() {
+		doActionButton.setText("Click to mark need completed.");
+		doActionButton.setBackgroundColor(Color.GREEN);
+		doActionButton.setTextColor(Color.WHITE);
+		doActionButton.setEnabled(true);
+	}
+
+	public void flowButtonMakeOffer() {
+		doActionButton.setText("Click to make an offer.");
+		doActionButton.setBackgroundColor(this.getActivity().getResources()
+				.getColor(R.color.nearlings_theme));
+		doActionButton.setTextColor(Color.WHITE);
+		doActionButton.setEnabled(true);
+	}
+
+	public void reviewAssignment() {
+		doActionButton.setText("Need is done. Click to review.");
+		doActionButton.setBackgroundColor(Color.GREEN);
+		doActionButton.setTextColor(Color.WHITE);
+		doActionButton.setEnabled(true);
+	}
+
+	
+	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false;
+
+	public void setUpRoles() {
+		c.moveToFirst();
+		DatabaseUtils.dumpCursor(c);
+		int author_index = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY);
+		String authorID = c.getString(author_index);
+		String userID = SessionManager.getInstance(this.getActivity())
+				.getUserID();
+		if (authorID.equals(userID)) {
+			isCreator = true;
+		} else {
+			isCreator = false;
+		}
+		int offercount_index = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_OFFER_COUNT);
+		int offerCount = c.getInt(offercount_index);
+		if (offerCount > 0) {
+			offerIsAvailable = true;
+		} else {
+			offerIsAvailable = false;
+		}
+		// /now query offers database
+
+		// offer is available?
+	}
+
+	public void setUpFlowButton() {
+		Cursor cursor = generateCursor();
+		cursor.moveToFirst();
+		int status_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS);
+
+		String state = cursor.getString(status_index);
+		Log.d("state", state);
+		if (state.equals(Needs.AVAILABLE)) {
+			// if we are the needer
+			if (isCreator && offerIsAvailable) {
+				/*Log.d("FLOW BUTTON",
+						"An offer is available! Check the offers tab.");*/
+				disableFlowButton("An offer is available! Check the offers tab.");
+			} else if (isCreator && !offerIsAvailable) {
+				disableFlowButton("Waiting for offers");
+
+			} else if (madeAnOffer) {
+				disableFlowButton("You've already made an offer.");
+			} else if(isCreator) {
+				disableFlowButton("Waiting for offers");
+			}else{
+				// make button avialble
+				flowButtonMakeOffer();
+			}
+			// if we are the doer
+		} else if (state.equals(Needs.ASSIGNED_TO)) {
+			if (isCreator) {
+				// grey button
+				disableFlowButton("Need has been assigned to someone.");
+			} else {
+				// click when done
+				assignedClickToMarkDone();
+			}
+		} else if (state.equals(Needs.REVIEW)) {
+			if (isCreator) {
+				// grey button
+			} else {
+				// click when done
+			}
+		} else if (state.equals(Needs.CLOSED)) {
+			// set as closed
+			disableFlowButton("Need is closed.");
+		}else{
+			disableFlowButton("Oops! Couldn't load data. Try again.");
+		}
+
+		doActionButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				// launch the request
+				// acceptNeedPurchase();
 			}
 
-		}
+		});
 	}
-
-	@Override
-	public void startActivityForResultBridge(Intent i, int request_code) {
-
-		startActivityForResult(i, NearlingsApplication.REQUEST_CODE_PAYMENT);
-	}
-
 }

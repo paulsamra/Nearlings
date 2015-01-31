@@ -36,22 +36,18 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker;
 
 public class NeedsOffersRequest extends
 		NearlingsRequest<JsonNeedsOffersResponse> {
-
+public static final String BUNDLE_ID = "id";
 	public NeedsOffersRequest(Context c) {
 		super(c);
 	}
 
-	String id;
-
-	public NeedsOffersRequest(Context c, String id) {
-		super(c);
-		this.id = id;
-	}
+	
 
 	@Override
 	public JsonNeedsOffersResponse makeRequest(Bundle b) {
 		Map<String, String> headers = SessionManager.getInstance(c)
 				.defaultSessionHeaders();
+		String id = b.getString(BUNDLE_ID);
 		String url = SessionManager.getInstance(c).needsOffersURL(id);
 
 		Log.e("URL", url);
@@ -65,13 +61,13 @@ public class NeedsOffersRequest extends
 
 	@Override
 	public Class getJSONclass() {
-		return JsonNeedsDetailResponse.class;
+		return JsonNeedsOffersResponse.class;
 	}
 
 	ProviderLocationTracker tracker;
 
 	@Override
-	public boolean writeToDatabase(Context context, JsonNeedsOffersResponse o) {
+	public boolean writeToDatabase(Bundle b,Context context, JsonNeedsOffersResponse o) {
 		// for now we will write random dummy stuff to the database
 		if (o == null)
 			return false;

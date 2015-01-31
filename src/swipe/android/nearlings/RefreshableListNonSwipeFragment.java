@@ -69,3 +69,31 @@ public abstract class RefreshableListNonSwipeFragment<T> extends Fragment
 	public abstract void onTaskComplete(T result);
 
 }
+/**
+package swipe.android.nearlings;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.edbert.library.network.AsyncTaskCompleteListener;
+
+//TODO: Probably want to abstract this
+public abstract class RefreshableListNonSwipeFragment<T> extends NearlingsSwipeToRefreshFragment {
+
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = super.onCreateView(inflater, container, savedInstanceState);
+		super.swipeView.setEnabled(false);
+		return view;
+	}
+
+
+}**/

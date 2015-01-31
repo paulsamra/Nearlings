@@ -28,7 +28,7 @@ public class FollowersRequest extends NearlingsRequest {
 	}
 
 	@Override
-	public boolean writeToDatabase(Context c, Object o) {
+	public boolean writeToDatabase(Bundle extras, Context c, Object o) {
 		// for now we will write random dummy stuff to the database
 	
 		ContentValues cv = new ContentValues();

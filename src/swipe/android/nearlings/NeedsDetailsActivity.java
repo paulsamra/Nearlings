@@ -53,7 +53,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 		case R.id.refresh_details:
 			// for dev purpose add comment
 			NeedsCommentsRequest rq = new NeedsCommentsRequest(this);
-			rq.writeToDatabase(this, null);
+			rq.writeToDatabase(null, this, null);
 			int pos = this.getSupportActionBar().getSelectedTab().getPosition();
 			String tag = createTag(super.mapFragList.getValue(pos));
 
@@ -74,7 +74,6 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 		mapFragList.put("Details", new NeedsDetailsFragment());
 		mapFragList.put("Followers", new NeedsFollowersFragment());
 		mapFragList.put("Offers", new NeedsBidsFragment());
-
 	}
 
 	@Override

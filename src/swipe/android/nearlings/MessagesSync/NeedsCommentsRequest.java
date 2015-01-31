@@ -38,7 +38,7 @@ public class NeedsCommentsRequest extends NearlingsRequest {
 	ProviderLocationTracker tracker;
 
 	@Override
-	public boolean writeToDatabase(Context context, Object o) {
+	public boolean writeToDatabase(Bundle b,Context context, Object o) {
 		// for now we will write random dummy stuff to the database
 
 		ContentValues cv = new ContentValues();

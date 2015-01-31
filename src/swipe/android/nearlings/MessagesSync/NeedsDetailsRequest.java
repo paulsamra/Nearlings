@@ -32,6 +32,7 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker;
 public class NeedsDetailsRequest extends
 		NearlingsRequest<JsonNeedsDetailResponse> {
 
+	public static final String BUNDLE_ID = "ID";
 	public static final String BUNDLE_KEYWORDS = "KEYWORDS";
 	public static final String BUNDLE_REWARD = "REWARD";
 	public static final String BUNDLE_STATUS = "STATUS";
@@ -51,22 +52,16 @@ public class NeedsDetailsRequest extends
 		super(c);
 	}
 
-	String id;
-
-	public NeedsDetailsRequest(Context c, String id) {
-		super(c);
-		this.id = id;
-	}
-
 	@Override
 	public JsonNeedsDetailResponse makeRequest(Bundle b) {
 		Map<String, String> headers = SessionManager.getInstance(c)
 				.defaultSessionHeaders();
+		String id = b.getString(BUNDLE_ID);
 		String url = SessionManager.getInstance(c).needsDetailsURL(id);
 
 		Log.e("URL", url);
-		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c, url,
-				headers);
+		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
+				url, headers);
 		if (o == null)
 			return null;
 
@@ -81,21 +76,27 @@ public class NeedsDetailsRequest extends
 	ProviderLocationTracker tracker;
 
 	@Override
-	public boolean writeToDatabase(Context context, JsonNeedsDetailResponse o) {
+	public boolean writeToDatabase(Bundle b, Context context,
+			JsonNeedsDetailResponse o) {
 		// for now we will write random dummy stuff to the database
 		if (o == null)
 			return false;
+		String id = b.getString(BUNDLE_ID);
 		NeedsDetails needsDetails = o.getDetails();
 		// get from the database
 		String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
 		String[] selectionArgs = { "" };
 		selectionArgs[0] = id;
-		Cursor cursor = c.getContentResolver()
-		.query(NearlingsContentProvider
-						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME), NeedsDetailsDatabaseHelper.COLUMNS, selectionClause, selectionArgs, null);
+		Cursor cursor = c
+				.getContentResolver()
+				.query(NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+						NeedsDetailsDatabaseHelper.COLUMNS, selectionClause,
+						selectionArgs, null);
 		ContentValues cv = new ContentValues();
-		  DatabaseUtils.cursorRowToContentValues(cursor, cv);  
-		  
+		cursor.moveToFirst();
+		DatabaseUtils.cursorRowToContentValues(cursor, cv);
+
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_TITLE, needsDetails.getTitle());
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_DESCRIPTION,
 				needsDetails.getDescription());

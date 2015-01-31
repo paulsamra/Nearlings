@@ -1,6 +1,7 @@
 package swipe.android.nearlings;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.edbert.library.network.sync.JsonResponseInterface;
 import com.edbert.library.sendRequest.SendRequestInterface;
@@ -14,7 +15,7 @@ public abstract class NearlingsRequest<T extends JsonResponseInterface> implemen
 	}
 	
 	@Override
-	public void executePostRetrieval(Context c, T o) {
+	public void executePostRetrieval(Bundle extras, Context c, T o) {
 		// TODO Auto-generated method stub
 		
 	}

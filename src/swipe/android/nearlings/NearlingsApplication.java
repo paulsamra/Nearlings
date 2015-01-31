@@ -100,8 +100,7 @@ public class NearlingsApplication extends Application implements
 				.getDBHelperInstance(this).getWritableDatabase());
 
 		SendRequestStrategyManager.register(new MessagesRequest(this));
-		SendRequestStrategyManager.register(new NeedsExploreRequest(this,
-				JsonExploreResponse.class));
+		SendRequestStrategyManager.register(new NeedsExploreRequest(this));
 		SendRequestStrategyManager.register(new EventsDetailsRequest(this));
 		SendRequestStrategyManager.register(new GroupsRequest(this));
 		

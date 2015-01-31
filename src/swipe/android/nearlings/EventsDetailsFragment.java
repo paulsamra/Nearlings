@@ -79,7 +79,7 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
-		helpers.add(new NeedsExploreRequest(this.getActivity(), id));
+		helpers.add(new NeedsExploreRequest(this.getActivity()));
 	}
 
 	@Override
