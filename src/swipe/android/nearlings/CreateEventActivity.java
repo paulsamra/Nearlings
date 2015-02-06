@@ -44,7 +44,6 @@ import android.widget.Toast;
 import com.edbert.library.dialog.DialogManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.edbert.library.network.PostDataWebTask;
-import com.edbert.library.network.SocketOperator;
 import com.edbert.library.utils.MapUtils;
 import com.example.deletableedittext.DeleteableEditText;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
@@ -52,8 +51,6 @@ import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.sleepbot.datetimepicker.time.RadialPickerLayout;
-import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 public class CreateEventActivity extends FragmentActivity implements
 		AsyncTaskCompleteListener {

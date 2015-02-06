@@ -4,23 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <com.edbert.library.greyButton.GreyedOutButton
-            android:id="@+id/needs_change_state"
-            style="@style/ButtonBottom"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:enabled="true"
-            android:onClick="acceptNeedPurchase"
-            android:text="Accept Task" />
-    </LinearLayout>
+    <include layout="@layout/bottom_screen_buttom" />
 
     <ScrollView
         android:id="@+id/scroll_frame"

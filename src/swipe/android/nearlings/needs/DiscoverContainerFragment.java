@@ -4,6 +4,8 @@
  */
 package swipe.android.nearlings.needs;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -24,6 +26,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +85,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 					SessionManager.getInstance(
 							DiscoverContainerFragment.this.getActivity())
 							.setExploreCategory(SessionManager.DEFAULT_STRING);
-				}else{
+				} else {
 					SessionManager.getInstance(
 							DiscoverContainerFragment.this.getActivity())
 							.setExploreCategory(term);
@@ -211,7 +214,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 					double parsed = Double.parseDouble(cleanString);
 					SessionManager.getInstance(
 							DiscoverContainerFragment.this.getActivity())
-							.setSearchRewardMinimum(((float) parsed) /100);
+							.setSearchRewardMinimum(((float) parsed) / 100);
 					String formatted = NumberFormat.getCurrencyInstance()
 							.format((parsed / 100));
 
@@ -312,15 +315,39 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getLastLocation();
 
-		if (sm.getSearchLocation() != null && !sm.getSearchLocation().equals("")) {
-			b.putString(NeedsExploreRequest.BUNDLE_LOCATION,
-					sm.getSearchLocation());
+		if (sm.getSearchLocation() != null
+				&& !sm.getSearchLocation().equals("")) {
+			String location_string = sm.getSearchLocation();
+			String url_encode_location = location_string;
+			try {
+				url_encode_location = URLEncoder.encode(location_string,
+						"UTF-8");
+
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} finally {
+				b.putString(NeedsExploreRequest.BUNDLE_LOCATION,
+						url_encode_location);
+			}
+
 			b.putString(NeedsExploreRequest.BUNDLE_LOCATION_TYPE,
 					NeedsExploreRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(NeedsExploreRequest.BUNDLE_RADIUS, SessionManager.DEFAULT_SEARCH_RADIUS);
+			b.putFloat(NeedsExploreRequest.BUNDLE_RADIUS,
+					SessionManager.DEFAULT_SEARCH_RADIUS);
+		} else if (currentLocation != null) {
+			b.putString(NeedsExploreRequest.BUNDLE_LOCATION_TYPE,
+					NeedsExploreRequest.BUNDLE_LOCATION_TYPE_COORDINATES);
+			b.putString(NeedsExploreRequest.BUNDLE_LOCATION_LATITUDE,
+					String.valueOf(currentLocation.getLatitude()));
+			b.putString(NeedsExploreRequest.BUNDLE_LOCATION_LONGITUDE,
+					String.valueOf(currentLocation.getLongitude()));
+
+			b.putFloat(NeedsExploreRequest.BUNDLE_RADIUS,
+					SessionManager.DEFAULT_SEARCH_RADIUS);
 		}
 
-		if (sm.getSearchRewardMinimum() != sm.DEFAULT_VALUE && sm.getSearchRewardMinimum() != 0) {
+		if (sm.getSearchRewardMinimum() != sm.DEFAULT_VALUE
+				&& sm.getSearchRewardMinimum() != 0) {
 			b.putFloat(NeedsExploreRequest.BUNDLE_REWARD,
 					sm.getSearchRewardMinimum());
 		}
@@ -332,23 +359,24 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 					sm.getExploreCategory());
 		}
 		if (sm.getSearchString() != null
-				&& !sm.getSearchString().equals(
-						SessionManager.DEFAULT_STRING)) {
+				&& !sm.getSearchString().equals(SessionManager.DEFAULT_STRING)) {
 			b.putString(NeedsExploreRequest.BUNDLE_KEYWORDS,
 					sm.getSearchString());
 		}
 
-		if(sm.getSearchVisibility() != null && !sm.getSearchVisibility().equals("")){
-			b.putString(NeedsExploreRequest.BUNDLE_VISIBILITY, sm.getSearchVisibility());
+		if (sm.getSearchVisibility() != null
+				&& !sm.getSearchVisibility().equals("")) {
+			b.putString(NeedsExploreRequest.BUNDLE_VISIBILITY,
+					sm.getSearchVisibility());
 		}
-	
-/*		if(sm.getTimeEnd() != sm.DEFAULT_VALUE){
-			b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeEnd());
-		}
-		
-	if(sm.getTimeStart() != sm.DEFAULT_VALUE){
-		b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeStart());
-		}*/
+
+		/*
+		 * if(sm.getTimeEnd() != sm.DEFAULT_VALUE){
+		 * b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeEnd()); }
+		 * 
+		 * if(sm.getTimeStart() != sm.DEFAULT_VALUE){
+		 * b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeStart()); }
+		 */
 		super.onRefresh(b);
 	}
 
@@ -381,7 +409,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 	@Override
 	public void setSourceRequestHelper() {
 
-		helpers.add( SendRequestStrategyManager
+		helpers.add(SendRequestStrategyManager
 				.getHelper(NeedsExploreRequest.class));
 
 	}

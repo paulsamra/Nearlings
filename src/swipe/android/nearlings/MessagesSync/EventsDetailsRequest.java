@@ -20,7 +20,6 @@ import android.os.Bundle;
 
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.network.SocketOperator;
-
 public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 	public EventsDetailsRequest(Context c) {
 		super(c);

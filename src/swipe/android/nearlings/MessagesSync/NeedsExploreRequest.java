@@ -39,7 +39,10 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 	public static final String BUNDLE_LOCATION = "LOCATION";
 
 	public static final String BUNDLE_LOCATION_TYPE_ADDRESS = "address";
-	public static final String BUNDLE_LOCATION_TYPE_LATITUDE = "latlng";
+	public static final String BUNDLE_LOCATION_TYPE_COORDINATES = "latlng";
+
+	public static final String BUNDLE_LOCATION_LATITUDE = "lat";
+	public static final String BUNDLE_LOCATION_LONGITUDE = "lng";
 
 	public NeedsExploreRequest(Context c) {
 		super(c);
@@ -82,11 +85,18 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 		}
 
 		if (b.containsKey(BUNDLE_LOCATION_TYPE)) {
-			url += ("&location_type=" + b.getString(BUNDLE_LOCATION_TYPE));
+			String locationtype = b.getString(BUNDLE_LOCATION_TYPE);
+			url += ("&location_type=" + locationtype);
+			
+			if(locationtype.equals(this.BUNDLE_LOCATION_TYPE_COORDINATES)){
+				String latitude = b.getString(this.BUNDLE_LOCATION_LATITUDE);
+				String longitude = b.getString(this.BUNDLE_LOCATION_LONGITUDE);
+				url += ("&location=" +latitude + "," + longitude);
+			}else{
+				url += ("&location=" + b.getString(this.BUNDLE_LOCATION));
+			}
 		}
-		if (b.containsKey(BUNDLE_LOCATION)) {
-			url += ("&location=" + b.getString(BUNDLE_LOCATION));
-		}
+		
 		
 		if (b.containsKey(BUNDLE_VISIBILITY)) {
 			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));

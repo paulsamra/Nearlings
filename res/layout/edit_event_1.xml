@@ -72,7 +72,8 @@
                 android:inputType="number" />
         </LinearLayout>
     </LinearLayout>
- <include layout="@layout/price_layout" />
+
+    <include layout="@layout/price_layout" />
     <!-- Category -->
 
     <include layout="@layout/category_layout" />

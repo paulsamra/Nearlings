@@ -94,24 +94,25 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		String TAG = NearlingsSyncAdapter.HELPER_FLAG_ID;
 		Bundle b = new Bundle();
 
-		ArrayList<String> arr= SendRequestStrategyManager.generateTag(helpers);
-	//	b = NearlingsSyncAdapter.addArrayListOfStrings(b, arr);
-	String helpers = ListUtils.listToString(arr);	
-	b.putString(TAG, helpers);
+		ArrayList<String> arr = SendRequestStrategyManager.generateTag(helpers);
+		// b = NearlingsSyncAdapter.addArrayListOfStrings(b, arr);
+		String helpers = ListUtils.listToString(arr);
+		b.putString(TAG, helpers);
 		requestSync(b);
 	}
 
 	public void onRefresh(Bundle b) {
 		String TAG = NearlingsSyncAdapter.HELPER_FLAG_ID;
-	//	b.putStringArray(TAG, value)
-		//b.putStringArrayList(TAG, SendRequestStrategyManager.generateTag(helpers));
-		
-		ArrayList<String> arr= SendRequestStrategyManager.generateTag(helpers);
+		// b.putStringArray(TAG, value)
+		// b.putStringArrayList(TAG,
+		// SendRequestStrategyManager.generateTag(helpers));
 
-	//	b = NearlingsSyncAdapter.addArrayListOfStrings(b, arr);
-	String helpers = ListUtils.listToString(arr);	
-	b.putString(TAG, helpers);
-		
+		ArrayList<String> arr = SendRequestStrategyManager.generateTag(helpers);
+
+		// b = NearlingsSyncAdapter.addArrayListOfStrings(b, arr);
+		String helpers = ListUtils.listToString(arr);
+		b.putString(TAG, helpers);
+
 		requestSync(b);
 	}
 
@@ -150,4 +151,5 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 			mEmptyViewContainer.setRefreshing(true);
 		}
 	}
+
 }

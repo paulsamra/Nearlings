@@ -28,7 +28,7 @@
             android:layout_marginTop="4dip"
             android:capitalize="sentences"
             android:focusable="true"
-            android:hint="Event Description"
+            android:hint="Description"
             android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
             android:maxLength="2000"
             android:maxLines="4"

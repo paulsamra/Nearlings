@@ -86,7 +86,10 @@
             android:name="swipe.android.nearlings.EventsDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
-
+ <activity
+            android:name="swipe.android.nearlings.CreateNeedActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         <service
             android:name=".sync.NearlingsSyncService"
             android:exported="true" >

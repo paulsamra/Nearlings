@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.GetDataWebTask;
 
 //TODO: Probably want to abstract this
 public abstract class RefreshableListNonSwipeFragment<T> extends Fragment
@@ -50,13 +51,11 @@ public abstract class RefreshableListNonSwipeFragment<T> extends Fragment
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (task != null)
-			task.cancel(true);
-
+		
 		swipeView.setRefreshing(false);
 	}
 
-	AsyncTask<String, Void, T> task;
+	GetDataWebTask< T> task;
 
 	@Override
 	public void onRefresh() {

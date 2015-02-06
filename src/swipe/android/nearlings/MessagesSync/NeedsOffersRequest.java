@@ -41,7 +41,6 @@ public static final String BUNDLE_ID = "id";
 		super(c);
 	}
 
-	
 
 	@Override
 	public JsonNeedsOffersResponse makeRequest(Bundle b) {
@@ -86,9 +85,12 @@ public static final String BUNDLE_ID = "id";
 		cv.put(NeedsOfferDatabaseHelper.COLUMN_CREATED_AT, tempOffer.getCreated_at());
 		cv.put(NeedsOfferDatabaseHelper.COLUMN_USERNAME, tempOffer.getUsername());
 		cv.put(NeedsOfferDatabaseHelper.COLUMN_THUMBNAIL, tempOffer.getThumbnail());
-		
+	
 		cv.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
+		mValueList.add(cv);
+
 		}
+		
 		ContentValues[] bulkToInsert;
 		bulkToInsert = new ContentValues[mValueList.size()];
 		mValueList.toArray(bulkToInsert);
@@ -96,7 +98,8 @@ public static final String BUNDLE_ID = "id";
 				.bulkInsert(NearlingsContentProvider
 						.contentURIbyTableName(NeedsOfferDatabaseHelper.TABLE_NAME),
 						bulkToInsert);
-
+		
+		
 		return true;
 
 	}

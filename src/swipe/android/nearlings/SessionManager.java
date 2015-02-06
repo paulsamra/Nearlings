@@ -167,6 +167,9 @@ public class SessionManager {
 	}public String needsOffersURL(String id) {
 		return URL_BASE + "/need/" + id + "/offers" ;
 	}
+	public String makeOfferURL(String id) {
+		return URL_BASE + "/need/" + id + "/makeoffer" ;
+	}
 	
 	public String alertsURL() {
 		return URL_BASE + "/user/" + this.getUserID() + "/alerts";
@@ -233,6 +236,7 @@ public class SessionManager {
 
 	public void setSearchLocation(String location) {
 		editor.putString(LOCATION, location);
+		editor.commit();
 	}
 
 	public String getSearchString() {
@@ -241,6 +245,7 @@ public class SessionManager {
 
 	public void setSearchString(String searchString) {
 		editor.putString(SEARCH_STRING, searchString);
+		editor.commit();
 	}
 
 	public float getSearchRadius() {

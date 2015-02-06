@@ -25,9 +25,9 @@ public class NeedsOfferDatabaseHelper implements DatabaseHelperInterface {
 	public static final String TABLE_CREATE_ROUTES = "CREATE TABLE "
 			+ TABLE_NAME + "(" + COLUMN_ID + " TEXT NOT NULL primary key, "
 			+ COLUMN_MESSAGE + " TEXT, " + COLUMN_CREATED_BY + " INTEGER, "
-			+ COLUMN_STATUS + " TEXT, " + COLUMN_CHANGED_BY + " INTEGER"
-			+ COLUMN_OFFER_PRICE + " INTEGER" + COLUMN_CREATED_AT + " BIGINT"
-			+ COLUMN_USERNAME + " TEXT" + COLUMN_THUMBNAIL + " TEXT);";
+			+ COLUMN_STATUS + " TEXT, " + COLUMN_CHANGED_BY + " INTEGER, "
+			+ COLUMN_OFFER_PRICE + " INTEGER, " + COLUMN_CREATED_AT + " BIGINT, "
+			+ COLUMN_USERNAME + " TEXT, " + COLUMN_THUMBNAIL + " TEXT);";
 
 	@Override
 	public String getTableName() {

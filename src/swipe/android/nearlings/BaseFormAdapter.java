@@ -64,7 +64,7 @@ TimePickerDialog.OnTimeSetListener  {
 
 
 	boolean startTimeLastCalled = true;
-	FragmentActivity ctx;
+	protected FragmentActivity ctx;
 	
 
 	public static final String DATEPICKER_START_TAG = "datepicker_start";

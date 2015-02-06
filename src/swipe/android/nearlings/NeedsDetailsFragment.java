@@ -10,6 +10,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
@@ -101,7 +102,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	@Override
 	public void setSourceRequestHelper() {
 		helpers.add(new NeedsDetailsRequest(this.getActivity()));
-	//	helpers.add(new NeedsOffersRequest(this.getActivity()));
+		helpers.add(new NeedsOffersRequest(this.getActivity()));
 	}
 
 	@Override
@@ -176,8 +177,6 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	String TAG = "Details Fragment";
 	String TAG2 = "Details Fragment Next";
 
-	
-
 	@Override
 	public void requestSync(Bundle b) {
 		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
@@ -185,8 +184,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		super.requestSync(b);
 	}
 
-	
-	// /BUTTON STUFF
+	// BUTTON STUFF. Can move this section around
 	// State button control
 	public void disableFlowButton(String s) {
 		disableFlowButton(s, Color.GRAY);
@@ -198,6 +196,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	public void refreshStateButton() {
 		// disableFlowButton("Retrieving info...");
+		c.requery();
 		this.setUpRoles();
 		setUpFlowButton();
 	}
@@ -222,6 +221,24 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 				.getColor(R.color.nearlings_theme));
 		doActionButton.setTextColor(Color.WHITE);
 		doActionButton.setEnabled(true);
+		doActionButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				Intent intent = new Intent(NeedsDetailsFragment.this
+						.getActivity(), MakeOfferActivity.class);
+				Bundle extras = intent.getExtras();
+				int title_index = c
+						.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
+				String title = c.getString(title_index);
+				extras.putString("title", title); 
+				intent.putExtras(extras);
+				startActivity(intent);
+				//dont finish off
+			}
+
+		});
 	}
 
 	public void reviewAssignment() {
@@ -231,12 +248,10 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		doActionButton.setEnabled(true);
 	}
 
-	
 	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false;
 
 	public void setUpRoles() {
 		c.moveToFirst();
-		DatabaseUtils.dumpCursor(c);
 		int author_index = c
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY);
 		String authorID = c.getString(author_index);
@@ -256,7 +271,12 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 			offerIsAvailable = false;
 		}
 		// /now query offers database
-
+		Cursor offers = generateOffersCursor();
+		if (offers.getCount() > 0) {
+			madeAnOffer = true;
+		} else {
+			madeAnOffer = false;
+		}
 		// offer is available?
 	}
 
@@ -271,17 +291,19 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		if (state.equals(Needs.AVAILABLE)) {
 			// if we are the needer
 			if (isCreator && offerIsAvailable) {
-				/*Log.d("FLOW BUTTON",
-						"An offer is available! Check the offers tab.");*/
+				/*
+				 * Log.d("FLOW BUTTON",
+				 * "An offer is available! Check the offers tab.");
+				 */
 				disableFlowButton("An offer is available! Check the offers tab.");
 			} else if (isCreator && !offerIsAvailable) {
 				disableFlowButton("Waiting for offers");
 
 			} else if (madeAnOffer) {
 				disableFlowButton("You've already made an offer.");
-			} else if(isCreator) {
+			} else if (isCreator) {
 				disableFlowButton("Waiting for offers");
-			}else{
+			} else {
 				// make button avialble
 				flowButtonMakeOffer();
 			}
@@ -303,7 +325,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		} else if (state.equals(Needs.CLOSED)) {
 			// set as closed
 			disableFlowButton("Need is closed.");
-		}else{
+		} else {
 			disableFlowButton("Oops! Couldn't load data. Try again.");
 		}
 
@@ -317,5 +339,27 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 			}
 
 		});
+	}
+
+	public Cursor generateOffersCursor() {
+
+		String selectionClause = NeedsOfferDatabaseHelper.COLUMN_CREATED_BY
+				+ " = ?";
+		String[] mSelectionArgs = { "" };
+		mSelectionArgs[0] = SessionManager.getInstance(this.getActivity())
+				.getUserID();
+
+		Cursor c = this
+				.getActivity()
+				.getContentResolver()
+				.query(
+
+				NearlingsContentProvider
+						.contentURIbyTableName(NeedsOfferDatabaseHelper.TABLE_NAME),
+						NeedsOfferDatabaseHelper.COLUMNS, selectionClause,
+						mSelectionArgs,
+						NeedsOfferDatabaseHelper.COLUMN_ID + " DESC");
+		return c;
+
 	}
 }

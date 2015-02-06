@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,8 +110,8 @@ public class HomeActivity extends ActionBarActivity {
 				c = MainActivity.class;
 				break;
 			case 2:
-				//c = CreateNeedActivity.class;
-				return;
+				c = CreateNeedActivity.class;
+				break;
 			case 3:
 				c = CreateEventActivity.class;
 				break;
@@ -118,7 +119,6 @@ public class HomeActivity extends ActionBarActivity {
 				c = CreateGroupActivity.class;
 				break;
 			case 5:
-
 				HomeActivity.this.logout();
 				break;
 

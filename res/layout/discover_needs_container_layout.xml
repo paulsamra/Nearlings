@@ -4,28 +4,26 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-
-        <Button
-            style="@style/ButtonBottom"
-              android:layout_alignParentBottom="true"
+    <Button
+        android:id="@+id/needs_change_view"
+        style="@style/ButtonBottom"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
-            android:id="@+id/needs_change_view"
-            android:layout_width="fill_parent"
-            android:text="Change View" />
- 
+        android:text="Change View" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-         android:layout_above="@+id/needs_change_view"  >
+        android:layout_above="@+id/needs_change_view"
+        android:orientation="vertical" >
 
         <include layout="@layout/search_bar_layout" />
 
         <FrameLayout
             android:id="@+id/needs_discover_fragment_view"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-           />
+            android:layout_height="fill_parent" />
     </LinearLayout>
 
 </RelativeLayout>

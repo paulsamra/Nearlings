@@ -14,7 +14,7 @@ import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
-import swipe.android.nearlings.jsonResponses.explore.JsonExploreResponse;
+import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,12 +29,15 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.edbert.library.containers.VolleyCoreApplication;
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -47,7 +50,7 @@ import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 
-public class NearlingsApplication extends Application implements
+public class NearlingsApplication extends VolleyCoreApplication implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
 		Application.ActivityLifecycleCallbacks,
@@ -60,23 +63,28 @@ public class NearlingsApplication extends Application implements
 	private LocationRequest mLocationRequest;
 
 	NearlingsSyncHelper helper;
-	//paypal stuff
-	 private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
+	// paypal stuff
+	private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
 
-	    // note that these credentials will differ between live & sandbox environments.
-	    private static final String CONFIG_CLIENT_ID = "credential from developer.paypal.com";
+	// note that these credentials will differ between live & sandbox
+	// environments.
+	private static final String CONFIG_CLIENT_ID = "credential from developer.paypal.com";
 
-	    public static final int REQUEST_CODE_PAYMENT = 1;
-	    public static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
-	    public static final int REQUEST_CODE_PROFILE_SHARING = 3;
+	public static final int REQUEST_CODE_PAYMENT = 1;
+	public static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
+	public static final int REQUEST_CODE_PROFILE_SHARING = 3;
 
-	    public static PayPalConfiguration config = new PayPalConfiguration()
-	            .environment(CONFIG_ENVIRONMENT)
-	            .clientId(CONFIG_CLIENT_ID)
-	            // The following are only used in PayPalFuturePaymentActivity.
-	            .merchantName("Nearlings Store Title")
-	            .merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
-	            .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
+	public static PayPalConfiguration config = new PayPalConfiguration()
+			.environment(CONFIG_ENVIRONMENT)
+			.clientId(CONFIG_CLIENT_ID)
+			// The following are only used in PayPalFuturePaymentActivity.
+			.merchantName("Nearlings Store Title")
+			.merchantPrivacyPolicyUri(
+					Uri.parse("https://www.example.com/privacy"))
+			.merchantUserAgreementUri(
+					Uri.parse("https://www.example.com/legal"));
+
+	private FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
 
 	protected synchronized void buildGoogleApiClient() {
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -86,12 +94,11 @@ public class NearlingsApplication extends Application implements
 
 	}
 
-
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
+		mInstance = this;
 		buildGoogleApiClient();
 		helper = new NearlingsSyncHelper(this);
 		initImageLoader(getApplicationContext());
@@ -103,20 +110,26 @@ public class NearlingsApplication extends Application implements
 		SendRequestStrategyManager.register(new NeedsExploreRequest(this));
 		SendRequestStrategyManager.register(new EventsDetailsRequest(this));
 		SendRequestStrategyManager.register(new GroupsRequest(this));
-		
+		SendRequestStrategyManager.register(new NeedsOffersRequest(this));
+
 		SendRequestStrategyManager.register(new NeedsDetailsRequest(this));
-		
-		
+
 		super.registerActivityLifecycleCallbacks(this);
+
+		Intent intent = new Intent(this, PayPalService.class);
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+		startService(intent);
 		
-		   Intent intent = new Intent(this, PayPalService.class);
-	        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-	        startService(intent);
+		
+	        
 	}
-	  public static PayPalPayment generatePayObject(double price, String item, String paymentIntent) {
-	        return new PayPalPayment(new BigDecimal(price), "USD", item,
-	                paymentIntent);
-	    }
+
+	public static PayPalPayment generatePayObject(double price, String item,
+			String paymentIntent) {
+		return new PayPalPayment(new BigDecimal(price), "USD", item,
+				paymentIntent);
+	}
+
 	@Override
 	public void onTerminate() {
 		super.unregisterActivityLifecycleCallbacks(this);
@@ -134,11 +147,11 @@ public class NearlingsApplication extends Application implements
 		DatabaseCommandManager.register(new EventsDatabaseHelper());
 		DatabaseCommandManager.register(new GroupsDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsOfferDatabaseHelper());
-		
-		
+
 	}
 
 	public static void initImageLoader(Context context) {
+
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				context).threadPriority(Thread.NORM_PRIORITY - 2)
 				.denyCacheImageMultipleSizesInMemory()
@@ -176,6 +189,7 @@ public class NearlingsApplication extends Application implements
 
 		LocationServices.FusedLocationApi.requestLocationUpdates(
 				mGoogleApiClient, mLocationRequest, this);
+		
 	}
 
 	@Override
@@ -233,7 +247,7 @@ public class NearlingsApplication extends Application implements
 	@Override
 	public void onLocationChanged(Location arg0) {
 		// TODO Auto-generated method stub
-		// Log.e("Location","Location received: " + arg0.toString());
+
 		location = arg0;
 	}
 
@@ -246,30 +260,39 @@ public class NearlingsApplication extends Application implements
 	public Location getLastLocation() {
 		return location;
 	}
-	public static void displayNetworkNotAvailableDialog(Context ctx){
+
+	public static void displayNetworkNotAvailableDialog(Context ctx) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-		String networkMessage = ctx.getString(R.string.not_connected_to_internet_msg);
-		String networkTitle = ctx.getString(R.string.not_connected_to_internet_title);
-		
-		builder.setMessage(networkMessage)
-				.setTitle(networkTitle)
+		String networkMessage = ctx
+				.getString(R.string.not_connected_to_internet_msg);
+		String networkTitle = ctx
+				.getString(R.string.not_connected_to_internet_title);
+
+		builder.setMessage(networkMessage).setTitle(networkTitle)
 				.setCancelable(true)
-				.setPositiveButton("OK",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.dismiss();
-							}
-						});
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				});
 
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
+
 	public boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+		ConnectivityManager connectivityManager = (ConnectivityManager) this
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 
+	// Volley
+	private static NearlingsApplication mInstance;
+
+	public static synchronized NearlingsApplication getInstance() {
+		return mInstance;
+	}
 
 }

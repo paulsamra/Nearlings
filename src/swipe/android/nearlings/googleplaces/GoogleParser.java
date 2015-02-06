@@ -132,7 +132,7 @@ public PlacesTask(String s){
 			try {
 				// Fetching the data from we service
 				data = downloadUrl(url);
-				Log.e("HI", data);
+			//	Log.e("HI", data);
 			} catch (Exception e) {
 				Log.d("Background Task", e.toString());
 			}

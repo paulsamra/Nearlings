@@ -49,28 +49,26 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 
 //TODO: Probably want to abstract this
-public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
-		implements ActivityCallbackFromAdapter, Refreshable{
+public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
+		implements  Refreshable{
 
 	ListView lView;
-	String MESSAGES_START_FLAG = NeedsBidsFragment.class.getCanonicalName()
+	String MESSAGES_START_FLAG = NeedsReviewsFragment.class.getCanonicalName()
 			+ "_MESSAGES_START_FLAG";
-	String MESSAGES_FINISH_FLAG = NeedsBidsFragment.class.getCanonicalName()
+	String MESSAGES_FINISH_FLAG = NeedsReviewsFragment.class.getCanonicalName()
 			+ "_MESSAGES_FINISH_FLAG";
 	String id;
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-		//String selectionClause = NeedsOfferDatabaseHelper.COLUMN_ID + " = ?";
-	//	String[] mSelectionArgs = { "" };
-	//	mSelectionArgs[0] = id;
-		CursorLoader cursorLoader = new CursorLoader(
+	/*	CursorLoader cursorLoader = new CursorLoader(
 				this.getActivity(),
 				NearlingsContentProvider
-						.contentURIbyTableName(NeedsOfferDatabaseHelper.TABLE_NAME),
-				NeedsOfferDatabaseHelper.COLUMNS, null,
-				null, NeedsOfferDatabaseHelper.COLUMN_ID + " DESC");
-		return cursorLoader;
+						.contentURIbyTableName(UserReviewDatabaseHelper.TABLE_NAME),
+						UserReviewDatabaseHelper.COLUMNS, null,
+				null, UserReviewDatabaseHelper.COLUMN_ID + " DESC");
+		return cursorLoader;*/
+		return null;
 
 	}
 
@@ -126,13 +124,13 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 	@Override
 	public void requestSync(Bundle b) {
 
-		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+//		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
 		super.requestSync(b);
 	}
 
 	@Override
 	public void setSourceRequestHelper() {
-		helpers.add(new NeedsOffersRequest(this.getActivity()));
+		//helpers.add(new NeedsReviewRequest(this.getActivity()));
 	}
 
 	@Override
@@ -148,88 +146,13 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 
 		Cursor c = generateCursor();
 
-		this.mAdapter = new NeedsOffersListAdapter(this.getActivity(), c);
+//		this.mAdapter = new NeedsReviewsAdapter(this.getActivity(), c);
 
 		mAdapter.notifyDataSetChanged();
 		lView.setAdapter(mAdapter);
 	}
 
-	
-	public void acceptNeedPurchase(int position) {
-		Context context = this.getActivity();
-		Cursor cursor = this.generateCursorLoader().loadInBackground();
-
-		double price = cursor.getDouble(cursor
-				.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE));
-		String item = cursor.getString(cursor
-				.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_USERNAME));
-
-		PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(
-				price, item, PayPalPayment.PAYMENT_INTENT_SALE);
-
-		Intent intent = new Intent(context, PaymentActivity.class);
-
-		// send the same configuration for restart resiliency
-		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
-				NearlingsApplication.config);
-
-		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
-
-		startActivityForResultBridge(intent,
-				NearlingsApplication.REQUEST_CODE_PAYMENT);
-	}
-
-	@Override
-	public void startActivityForResultBridge(Intent i, int request_code) {
-
-		startActivityForResult(i, NearlingsApplication.REQUEST_CODE_PAYMENT);
-	}
-
 	String TAG = "NeedBidFragment";
 	String TAG2 = "NeedBidFragment";
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == NearlingsApplication.REQUEST_CODE_PAYMENT) {
-			if (resultCode == Activity.RESULT_OK) {
-				PaymentConfirmation confirm = data
-						.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-				if (confirm != null) {
-					try {
-						Log.i(TAG, confirm.toJSONObject().toString(4));
-						Log.i(TAG2, confirm.getPayment().toJSONObject()
-								.toString(4));
-
-						/**
-						 * TODO: send 'confirm' (and possibly
-						 * confirm.getPayment() to your server for verification
-						 * or consent completion. See
-						 * https://developer.paypal.com
-						 * /webapps/developer/docs/integration
-						 * /mobile/verify-mobile-payment/ for more details.
-						 * 
-						 * For sample mobile backend interactions, see
-						 * https://github
-						 * .com/paypal/rest-api-sdk-python/tree/master
-						 * /samples/mobile_backend
-						 */
-						Toast.makeText(
-								this.getActivity().getApplicationContext(),
-								"PaymentConfirmation info received from PayPal",
-								Toast.LENGTH_LONG).show();
-
-					} catch (JSONException e) {
-						Log.e(TAG, "an extremely unlikely failure occurred: ",
-								e);
-					}
-				}
-			} else if (resultCode == Activity.RESULT_CANCELED) {
-				Log.i(TAG, "The user canceled.");
-			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-				Log.i(TAG,
-						"An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
-			}
-
-		}
-	}
 }

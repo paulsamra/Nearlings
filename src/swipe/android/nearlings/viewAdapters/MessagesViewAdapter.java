@@ -29,7 +29,6 @@ public class MessagesViewAdapter extends CursorAdapter {
 		this.inflater = LayoutInflater.from(context);
 		this.cr = c;
 	}
-	private static final long NOW = new Date().getTime();
 	
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -48,11 +47,13 @@ public class MessagesViewAdapter extends CursorAdapter {
 		return view;
 	}
 
+//	private static final long NOW = new Date().getTime();
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
 
+		 long NOW = new Date().getTime();
 		int time_index = cursor
 				.getColumnIndexOrThrow(MessagesDatabaseHelper.COLUMN_DATE);
 		int message_index = cursor

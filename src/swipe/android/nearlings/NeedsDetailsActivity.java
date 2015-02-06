@@ -31,7 +31,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.fragment_frame_with_button);
 		ActionBar ab = this.getSupportActionBar();
 		ab.setDisplayShowTitleEnabled(true);
 		ab.setDisplayHomeAsUpEnabled(true);
@@ -72,8 +72,8 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 	@Override
 	protected void addDefaultFragments() {
 		mapFragList.put("Details", new NeedsDetailsFragment());
-		mapFragList.put("Followers", new NeedsFollowersFragment());
 		mapFragList.put("Offers", new NeedsBidsFragment());
+		mapFragList.put("Reviews", new NeedsReviewsFragment());
 	}
 
 	@Override

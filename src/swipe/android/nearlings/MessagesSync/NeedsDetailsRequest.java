@@ -23,6 +23,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
+import android.support.v4.content.CursorLoader;
 import android.util.Log;
 
 import com.edbert.library.database.DatabaseCommandManager;
@@ -134,12 +135,11 @@ public class NeedsDetailsRequest extends
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_GEOPOINT_LONGITUDE,
 				needsDetails.getLongitude());
 		cv.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
-
-		c.getContentResolver()
+		c.getApplicationContext().getContentResolver()
 				.insert(NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
 						cv);
-
+		
 		return true;
 
 	}
