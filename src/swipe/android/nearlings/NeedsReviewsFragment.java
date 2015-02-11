@@ -144,12 +144,12 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 	public void reloadAdapter() {
 		getLoaderManager().initLoader(0, null, this);
 
-		Cursor c = generateCursor();
+	//	Cursor c = generateCursor();
 
 //		this.mAdapter = new NeedsReviewsAdapter(this.getActivity(), c);
 
-		mAdapter.notifyDataSetChanged();
-		lView.setAdapter(mAdapter);
+		//mAdapter.notifyDataSetChanged();
+	//	lView.setAdapter(mAdapter);
 	}
 
 	String TAG = "NeedBidFragment";

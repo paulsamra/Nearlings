@@ -29,25 +29,25 @@ public class MakeOfferFormAdapter extends BaseFormAdapter {
 	private List<ValidatingView> validatingViews;
 
 	public MakeOfferFormAdapter(FragmentActivity ctx, View rootView,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState, String id, String title_string) {
 		super(ctx, rootView, savedInstanceState);
 
 		this.ctx = ctx;
-		initializeViews(savedInstanceState);
+		initializeViews(savedInstanceState, id, title_string);
 
 	}
 
 	Button submit;
 	EditText message, price;
 	TextView title;
-	private void initializeViews(Bundle savedInstanceState) {
+	private void initializeViews(Bundle savedInstanceState, String id, String title_string) {
 		
 		price = (EditText) rootView.findViewById(R.id.price);
 		setUpPriceListener(price);
 
 		message = (EditText) rootView.findViewById(R.id.message);
 		title = (TextView)rootView.findViewById(R.id.title);
-		String title_string = savedInstanceState.getString("title");
+	
 	
 		title.setText(title_string);
 	}

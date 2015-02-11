@@ -2,6 +2,7 @@ package swipe.android.nearlings.viewAdapters;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -63,7 +64,19 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 	JsonCommentsResponse jcp;
 
 	public void requestUpdate() {
-		cacheInBackground();
+		Date now = new Date();
+		long currentTime = new Long(now.getTime());
+		if (currentTime > nextTime)
+			cacheInBackground();
+	}
+
+	long nextTime = 0;
+
+	public static long getWaitTimeExp(int retryCount) {
+
+		long waitTime = ((long) Math.pow(2, retryCount) * 100L);
+
+		return waitTime;
 	}
 
 	@Override
@@ -72,7 +85,7 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 		String url = SessionManager.getInstance(mContext).commentsURL(idOfNeed);
 		Map<String, String> headers = SessionManager.getInstance(mContext)
 				.defaultSessionHeaders();
-		if (!alreadyCalled){
+		if (!alreadyCalled) {
 			Log.d("URL", url);
 			new GetDataWebTask<JsonCommentsResponse>(this, mContext,
 					JsonCommentsResponse.class, false).execute(url,
@@ -80,8 +93,7 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 		}
 		return true;
 	}
-	
-	
+
 	@Override
 	protected void appendCachedData() {
 
@@ -102,14 +114,20 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 	private Context mContext;
 	int lastSize = -1;
 	boolean alreadyCalled = false;
-
+int retryCount = 0;
 	@Override
 	public void onTaskComplete(JsonCommentsResponse result) {
 		if (result == null) {
+			retryCount++;
+			return;
+		}
+		if(!result.isValid() || result.getComments().size() == items.size()){
+			retryCount++;
+			nextTime = getWaitTimeExp(retryCount);
 			return;
 		}
 		if (result.isValid()) {
-
+			retryCount = 0;
 			// add elements to al, including duplicates
 			if (lastSize == result.getComments().size()) {
 				alreadyCalled = true;

@@ -90,7 +90,7 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		
+		super.onItemClick(parent, view, position, id);
 		Intent intent = new Intent(this.getActivity(),
 				NeedsDetailsActivity.class);
 		Bundle extras = new Bundle();

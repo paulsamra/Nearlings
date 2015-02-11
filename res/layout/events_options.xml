@@ -1,83 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
 
-    <LinearLayout
-        android:id="@+id/back"
-        style="@style/ListBackContent"
+    <TextView
+        android:id="@+id/event_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/event_description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:tag="back" >
+        android:layout_below="@id/event_title"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Just gona stand there and ..."
+        android:textColor="#343434"
+        android:textSize="10dip" />
 
-        <Button
-            android:id="@+id/event_yes"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/yes_RSVP" />
-
-        <Button
-            android:id="@+id/event_no"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/no_RSVP" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/front"
-        style="@style/ListFrontContent"
+    <TextView
+        android:id="@+id/event_time"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal"
-        
-  android:clickable="true"
-        android:tag="front" >
+        android:layout_height="wrap_content"
+        android:layout_below="@id/event_description"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Just gona stand there and ..."
+        android:textColor="#343434"
+        android:textSize="10dip" />
 
-        <TextView
-            android:id="@+id/event_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbnail"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:text="Rihanna Love the way lie"
-            android:textColor="#040404"
-            android:textSize="15dip"
-            android:textStyle="bold"
-            android:typeface="sans" />
+    <TextView
+        android:id="@+id/event_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/event_title"
+        android:layout_marginRight="5dip"
+        android:gravity="right"
+        android:textColor="@color/green"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/event_description"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_title"
-            android:layout_marginTop="1dip"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:text="Just gona stand there and ..."
-            android:textColor="#343434"
-            android:textSize="10dip" />
-
-        <TextView
-            android:id="@+id/event_time"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_description"
-            android:layout_marginTop="1dip"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:text="Just gona stand there and ..."
-            android:textColor="#343434"
-            android:textSize="10dip" />
-
-        <TextView
-            android:id="@+id/event_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/event_title"
-            android:layout_marginRight="5dip"
-            android:gravity="right"
-            android:textColor="@color/green"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

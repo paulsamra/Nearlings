@@ -60,7 +60,7 @@ public class NeedsDetailsRequest extends
 		String id = b.getString(BUNDLE_ID);
 		String url = SessionManager.getInstance(c).needsDetailsURL(id);
 
-		Log.e("URL", url);
+	//	Log.e("URL", url);
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
 				url, headers);
 		if (o == null)
@@ -135,7 +135,8 @@ public class NeedsDetailsRequest extends
 		cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_GEOPOINT_LONGITUDE,
 				needsDetails.getLongitude());
 		cv.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
-		c.getApplicationContext().getContentResolver()
+
+c.getApplicationContext().getContentResolver()
 				.insert(NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
 						cv);

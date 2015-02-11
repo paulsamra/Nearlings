@@ -135,7 +135,10 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 				TextView needs_price = ((TextView) myContentView
 						.findViewById(R.id.needs_price));
 				String snip = marker.getSnippet();
-				needs_price.setText(snip.substring(0, snip.lastIndexOf(",")));
+				
+		
+				
+				needs_price.setText("$" + snip.substring(1, snip.lastIndexOf(",")));
 				return myContentView;
 			}
 		});
@@ -155,9 +158,10 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 				Bundle extras = new Bundle();
 				Cursor c = generateCursor();
 				String snip = marker.getSnippet();
-
+				
+				
 				int position = Integer.valueOf(snip.substring(
-						snip.indexOf(",") + 1, snip.length()));
+						snip.lastIndexOf(",") + 1, snip.length()));
 				c.moveToPosition(position);
 				String need_id = c.getString(c
 						.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ID));

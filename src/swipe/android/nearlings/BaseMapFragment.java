@@ -239,7 +239,6 @@ public abstract class BaseMapFragment extends NearlingsSwipeToRefreshFragment
 	}
 
 	protected void addLocation(double latitude, double longitude) {
-
 		markerLocation.add(latitude + "," + longitude);
 	}
 

@@ -224,7 +224,7 @@ public class SessionManager {
 		headers.put("Cache-Control", "none");
 
 		if (getAuthToken() != null && getAuthToken() != "") {
-			Log.e("Token", getAuthToken());
+		//	Log.e("Token", getAuthToken());
 			headers.put("token", getAuthToken());
 		}
 		return headers;

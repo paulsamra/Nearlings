@@ -72,7 +72,6 @@ public class LoginFragment extends Fragment implements
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.e("Click", "click");
 				login();
 			}
 		});

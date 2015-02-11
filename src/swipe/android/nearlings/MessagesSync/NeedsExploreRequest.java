@@ -101,7 +101,7 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 		if (b.containsKey(BUNDLE_VISIBILITY)) {
 			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
 		}
-		Log.e("URL", url);
+	//	Log.e("URL", url);
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c, url,
 				headers);
 		if (o == null)

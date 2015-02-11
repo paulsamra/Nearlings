@@ -4,32 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal" >
+    <include layout="@layout/bottom_screen_buttom" />
 
-        <Button
-            android:id="@+id/attend_event_btn"
-            style="@style/ButtonBottom"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Accept Task" />
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scroll_frame"
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/buttons" >
-    <FrameLayout
-         android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-        
-    </ScrollView>
+        android:layout_above="@+id/buttons" />
 
 </RelativeLayout>

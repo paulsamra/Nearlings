@@ -34,19 +34,20 @@ public class NeedsOffersListAdapter extends CursorAdapter {
 		this.inflater = LayoutInflater.from(context);
 		this.cr = c;
 	}
+
 	private static final long NOW = new Date().getTime();
-	
+
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
 		ViewHolder holder = new ViewHolder();
 		View view = inflater.inflate(R.layout.bid_item, parent, false);
-		
+
 		holder.bidNumber = (TextView) view.findViewById(R.id.bid);
-		holder.dateBid = (TextView) view.findViewById(R.id.time);
+		holder.dateBid = (RelativeTimeTextView) view.findViewById(R.id.time);
 		holder.user = (TextView) view.findViewById(R.id.name);
 		holder.message = (TextView) view.findViewById(R.id.message);
-		
+
 		view.setTag(holder);
 		return view;
 	}
@@ -55,8 +56,7 @@ public class NeedsOffersListAdapter extends CursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
-	
-		
+
 		int bid_index = cursor
 				.getColumnIndexOrThrow(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE);
 		int user_index = cursor
@@ -67,20 +67,22 @@ public class NeedsOffersListAdapter extends CursorAdapter {
 		int date_index = cursor
 				.getColumnIndexOrThrow(NeedsOfferDatabaseHelper.COLUMN_CREATED_AT);
 
-	
 		// problem is processing. this should only happen once.
 		long s = cursor.getLong(date_index);
 
-		holder.dateBid.setText(FieldsParsingUtils.getTime(s));
-holder.user.setText(cursor.getString(user_index));
-		holder.message.setText(cursor.getString(message_index));
-		holder.bidNumber.setText(cursor.getString(bid_index));
+		 long NOW = new Date().getTime();
 
-	
+		holder.dateBid.setReferenceTime(NOW - s);
+		//holder.dateBid.setText(FieldsParsingUtils.getTime(s));
+		holder.user.setText(cursor.getString(user_index));
+		holder.message.setText(cursor.getString(message_index));
+		holder.bidNumber.setText("$" + cursor.getString(bid_index));
+		
 	}
 
 	public static class ViewHolder {
-		TextView message, dateBid, user,bidNumber;
+		RelativeTimeTextView dateBid;
+		TextView message, user, bidNumber;
 		public ImageView userIcon;
 
 	}

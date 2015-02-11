@@ -38,8 +38,8 @@ this.lView = lView;
 				.findViewById(R.id.event_description);
 		holder.timeOfEvent = (TextView) view.findViewById(R.id.event_time);
 		holder.price = (TextView) view.findViewById(R.id.event_price);
-		holder.bAction1 = (Button) view.findViewById(R.id.event_yes);
-		holder.bAction2 = (Button) view.findViewById(R.id.event_no);
+	//	holder.bAction1 = (Button) view.findViewById(R.id.event_yes);
+	//	holder.bAction2 = (Button) view.findViewById(R.id.event_no);
 holder.front_layout = (RelativeLayout) view.findViewById(R.id.front);
 
 		view.setTag(holder);
@@ -151,14 +151,14 @@ holder.front_layout = (RelativeLayout) view.findViewById(R.id.front);
 
 	public static class ViewHolder {
 		public TextView title, description, timeOfEvent, price;
-		public Button bAction1, bAction2;
+	//	public Button bAction1, bAction2;
 		
 		public RelativeLayout front_layout;
 	}
-	private void resetAllButtons(ViewHolder h){
+/*	private void resetAllButtons(ViewHolder h){
 		h.bAction1.setBackgroundResource(android.R.drawable.btn_default);
 
 		h.bAction2.setBackgroundResource(android.R.drawable.btn_default);
 
-	}
+	}*/
 }

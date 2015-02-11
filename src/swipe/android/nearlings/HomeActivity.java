@@ -56,9 +56,9 @@ public class HomeActivity extends ActionBarActivity {
 	private void setupActionBar() {
 	//    ActionBar actionBar = this.getActionBar();
 	  
-	    getActionBar().setHomeButtonEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setDisplayShowHomeEnabled(true);
+	    getActionBar().setHomeButtonEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(false);
+		getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		
 		LayoutInflater mInflater = LayoutInflater.from(this);

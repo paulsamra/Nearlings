@@ -732,7 +732,9 @@ Description: This is spoken to the user. [CHAR LIMIT="NONE"]
      <string name="member_count">Member Count:</string>
        <string name="visibility">Group Privacy:</string>
   
-  
+  <string name="rsvp_count">RSVP Count:</string>
+   <string name="date_label">Date:</string>
+   <string name="category_label">Category:</string>
   
   
 </resources>

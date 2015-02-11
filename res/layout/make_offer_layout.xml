@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/TextAppearance.EditEvent_LabelSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-8dip"
-        android:text="@string/when_label" />
+    <include layout="@layout/bottom_screen_buttom" />
 
-    <include layout="@layout/time_layout" />
+    <ScrollView
+        android:id="@+id/scroll_frame"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/buttons" >
 
-    <include layout="@layout/price_layout" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <include layout="@layout/description_layout" />
+            <TextView
+                android:id="@+id/title"
+                style="@style/TextAppearance.EditEvent_LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="-8dip"
+                android:text="@string/when_label"
+                android:textSize="40dp" />
 
-    <!--  Submit -->
-    <View style="@style/EditEventSeparator" />
+            <include layout="@layout/time_layout" />
 
-</LinearLayout>
+            <include layout="@layout/price_layout" />
+
+            <include layout="@layout/description_layout" />
+
+            <!-- Submit -->
+
+            <View style="@style/EditEventSeparator" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

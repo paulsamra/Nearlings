@@ -95,7 +95,6 @@ public class MessagesFragment extends NearlingsSwipeToRefreshFragment {
 	@Override
 	public void reloadAdapter() {
 		getLoaderManager().initLoader(0, null, this);
-
 		Cursor c = generateCursor();
 
 		this.mAdapter = new MessagesViewAdapter(this.getActivity(), c);
