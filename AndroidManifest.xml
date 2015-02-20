@@ -90,10 +90,11 @@
             android:name="swipe.android.nearlings.CreateNeedActivity"
             android:screenOrientation="portrait" >
         </activity>
-  <activity
+        <activity
             android:name="swipe.android.nearlings.MakeOfferActivity"
             android:screenOrientation="portrait" >
         </activity>
+
         <service
             android:name=".sync.NearlingsSyncService"
             android:exported="true" >
@@ -137,6 +138,10 @@
         <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />
         <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
+      <activity
+            android:name="io.card.payment.CardIOActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="io.card.payment.DataEntryActivity" />
     </application>
 
 </manifest>

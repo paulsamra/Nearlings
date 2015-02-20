@@ -70,6 +70,11 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 			cacheInBackground();
 	}
 
+	public void requestUrgentUpdate() {
+
+		cacheInBackground();
+	}
+
 	long nextTime = 0;
 
 	public static long getWaitTimeExp(int retryCount) {
@@ -86,7 +91,6 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 		Map<String, String> headers = SessionManager.getInstance(mContext)
 				.defaultSessionHeaders();
 		if (!alreadyCalled) {
-			Log.d("URL", url);
 			new GetDataWebTask<JsonCommentsResponse>(this, mContext,
 					JsonCommentsResponse.class, false).execute(url,
 					MapUtils.mapToString(headers));
@@ -114,14 +118,15 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 	private Context mContext;
 	int lastSize = -1;
 	boolean alreadyCalled = false;
-int retryCount = 0;
+	int retryCount = 0;
+
 	@Override
 	public void onTaskComplete(JsonCommentsResponse result) {
 		if (result == null) {
 			retryCount++;
 			return;
 		}
-		if(!result.isValid() || result.getComments().size() == items.size()){
+		if (!result.isValid() || result.getComments().size() == items.size()) {
 			retryCount++;
 			nextTime = getWaitTimeExp(retryCount);
 			return;

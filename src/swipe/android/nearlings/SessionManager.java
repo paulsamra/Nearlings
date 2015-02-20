@@ -162,15 +162,20 @@ public class SessionManager {
 
 	public String commentsURL(String id) {
 		return URL_BASE + "/need/" + id + "/comments";
-	}public String needsDetailsURL(String id) {
-		return URL_BASE + "/need/" + id ;
-	}public String needsOffersURL(String id) {
-		return URL_BASE + "/need/" + id + "/offers" ;
 	}
+
+	public String needsDetailsURL(String id) {
+		return URL_BASE + "/need/" + id;
+	}
+
+	public String needsOffersURL(String id) {
+		return URL_BASE + "/need/" + id + "/offers";
+	}
+
 	public String makeOfferURL(String id) {
-		return URL_BASE + "/need/" + id + "/makeoffer" ;
+		return URL_BASE + "/need/" + id + "/makeoffer";
 	}
-	
+
 	public String alertsURL() {
 		return URL_BASE + "/user/" + this.getUserID() + "/alerts";
 	}
@@ -224,7 +229,7 @@ public class SessionManager {
 		headers.put("Cache-Control", "none");
 
 		if (getAuthToken() != null && getAuthToken() != "") {
-		//	Log.e("Token", getAuthToken());
+			// Log.e("Token", getAuthToken());
 			headers.put("token", getAuthToken());
 		}
 		return headers;
@@ -333,5 +338,23 @@ public class SessionManager {
 		SharedPreferences settings = _context.getSharedPreferences(
 				SessionManager.PREF_NAME, Context.MODE_PRIVATE);
 		settings.edit().clear().commit();
+	}
+
+	public String cancelOfferURL(String id) {
+		return URL_BASE + "/need/" + id + "/canceloffer";
+	}
+
+	public String makeCommentURL(String id) {
+		return URL_BASE + "/need/" + id + "/comments";
+
+	}
+
+	public String submitReviewURL(String id) {
+		return URL_BASE + "/need/" + id + "/reviews";
+
+	}
+	
+	public String changeStateURL(String id){
+		return URL_BASE + "/need/" + id ;
 	}
 }

@@ -17,6 +17,7 @@ import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
+import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
 import swipe.android.nearlings.events.EventsContainerFragment;
 import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.JsonNeedsOffersResponse;
@@ -44,22 +45,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 
 //TODO: Probably want to abstract this
 public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
-		implements Refreshable{
+		implements Refreshable {
 
 	ListView lView;
-	/*String MESSAGES_START_FLAG = NeedsBidsFragment.class.getCanonicalName()
-			+ "_MESSAGES_START_FLAG";
-	String MESSAGES_FINISH_FLAG = NeedsBidsFragment.class.getCanonicalName()
-			+ "_MESSAGES_FINISH_FLAG";*/
+	/*
+	 * String MESSAGES_START_FLAG = NeedsBidsFragment.class.getCanonicalName() +
+	 * "_MESSAGES_START_FLAG"; String MESSAGES_FINISH_FLAG =
+	 * NeedsBidsFragment.class.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
+	 */
 	public static final String MESSAGES_START_FLAG = NeedsDetailsActivity.MESSAGES_START_FLAG;
 	public static final String MESSAGES_FINISH_FLAG = NeedsDetailsActivity.MESSAGES_FINISH_FLAG;
-	
+
 	String id;
 
 	@Override
@@ -69,8 +72,8 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 				this.getActivity(),
 				NearlingsContentProvider
 						.contentURIbyTableName(NeedsOfferDatabaseHelper.TABLE_NAME),
-				NeedsOfferDatabaseHelper.COLUMNS, null,
-				null, NeedsOfferDatabaseHelper.COLUMN_ID + " DESC");
+				NeedsOfferDatabaseHelper.COLUMNS, null, null,
+				NeedsOfferDatabaseHelper.COLUMN_ID + " DESC");
 		return cursorLoader;
 	}
 
@@ -102,7 +105,7 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 		swipeView.setOnRefreshListener(this);
 		lView.setOnItemClickListener(this);
 
-		//reloadData();
+		// reloadData();
 		reloadAdapter();
 		return rootView;
 	}
@@ -152,12 +155,58 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 
 		mAdapter.notifyDataSetChanged();
 		lView.setAdapter(mAdapter);
-		
+
 	}
-	
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
+		String[] selectionArgs = { "" };
+		selectionArgs[0] = this.id;
+		Cursor cursor = this.getActivity()
+				.getContentResolver()
+				.query(NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+						NeedsDetailsDatabaseHelper.COLUMNS, selectionClause,
+						selectionArgs, null);
+		cursor.moveToFirst();
+		int status_index = cursor
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS);
+
+		String state = cursor.getString(status_index);
+
+		if(!state.equals(Needs.AVAILABLE) ){
+			return;
+		}
+		Cursor cursorOfBids = generateCursor();
+		cursorOfBids.moveToFirst();
 		
+		double price = Double.valueOf(cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE)));
+		String id_of_doer = cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_CREATED_BY));
+		
+		
+		
+		String item = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
+
+		PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(
+				price, item, PayPalPayment.PAYMENT_INTENT_SALE);
+
+		Intent intent = new Intent(this.getActivity(), PaymentActivity.class);
+
+		// send the same configuration for restart resiliency
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
+				NearlingsApplication.paypalConfig);
+
+		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+		intent.putExtra(NearlingsApplication.DOER_ID, "TESTING");
+
+		//Log.d("HI",this.getActivity().getClass().getSimpleName());
+		((NeedsDetailsActivity) this.getActivity()).setDoerID(id_of_doer);
+		this.getActivity().startActivityForResult(intent,
+				NearlingsApplication.REQUEST_CODE_PAYMENT);
+
 	}
+	
 }

@@ -16,6 +16,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
+import swipe.android.DatabaseHelpers.UserReviewDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
 import swipe.android.nearlings.events.EventsContainerFragment;
@@ -29,6 +30,7 @@ import swipe.android.nearlings.viewAdapters.BidsViewAdapter;
 import swipe.android.nearlings.viewAdapters.EventsListAdapter;
 import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
 import swipe.android.nearlings.viewAdapters.NeedsOffersListAdapter;
+import swipe.android.nearlings.viewAdapters.NeedsReviewsAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +52,7 @@ import android.widget.ArrayAdapter;
 
 //TODO: Probably want to abstract this
 public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
-		implements  Refreshable{
+		implements Refreshable {
 
 	ListView lView;
 	String MESSAGES_START_FLAG = NeedsReviewsFragment.class.getCanonicalName()
@@ -61,14 +63,13 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-	/*	CursorLoader cursorLoader = new CursorLoader(
+		CursorLoader cursorLoader = new CursorLoader(
 				this.getActivity(),
 				NearlingsContentProvider
 						.contentURIbyTableName(UserReviewDatabaseHelper.TABLE_NAME),
-						UserReviewDatabaseHelper.COLUMNS, null,
-				null, UserReviewDatabaseHelper.COLUMN_ID + " DESC");
-		return cursorLoader;*/
-		return null;
+				UserReviewDatabaseHelper.COLUMNS, null, null,
+				UserReviewDatabaseHelper.COLUMN_ID + " DESC");
+		return cursorLoader;
 
 	}
 
@@ -100,7 +101,7 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 		swipeView.setOnRefreshListener(this);
 		lView.setOnItemClickListener(this);
 
-		//reloadData();
+		// reloadData();
 		reloadAdapter();
 		return rootView;
 	}
@@ -124,13 +125,13 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 	@Override
 	public void requestSync(Bundle b) {
 
-//		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+		// b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
 		super.requestSync(b);
 	}
 
 	@Override
 	public void setSourceRequestHelper() {
-		//helpers.add(new NeedsReviewRequest(this.getActivity()));
+		// helpers.add(new NeedsReviewRequest(this.getActivity()));
 	}
 
 	@Override
@@ -144,12 +145,12 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 	public void reloadAdapter() {
 		getLoaderManager().initLoader(0, null, this);
 
-	//	Cursor c = generateCursor();
+		Cursor c = generateCursor();
 
-//		this.mAdapter = new NeedsReviewsAdapter(this.getActivity(), c);
+		this.mAdapter = new NeedsReviewsAdapter(this.getActivity(), c);
 
-		//mAdapter.notifyDataSetChanged();
-	//	lView.setAdapter(mAdapter);
+		mAdapter.notifyDataSetChanged();
+		lView.setAdapter(mAdapter);
 	}
 
 	String TAG = "NeedBidFragment";

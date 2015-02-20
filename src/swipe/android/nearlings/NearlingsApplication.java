@@ -74,7 +74,7 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 	public static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
 	public static final int REQUEST_CODE_PROFILE_SHARING = 3;
 
-	public static PayPalConfiguration config = new PayPalConfiguration()
+	public static PayPalConfiguration paypalConfig = new PayPalConfiguration()
 			.environment(CONFIG_ENVIRONMENT)
 			.clientId(CONFIG_CLIENT_ID)
 			// The following are only used in PayPalFuturePaymentActivity.
@@ -86,6 +86,8 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 
 	private FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
 
+	
+	public static final String DOER_ID = "DOER_ID";
 	protected synchronized void buildGoogleApiClient() {
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
 				.addConnectionCallbacks(this)
@@ -117,11 +119,9 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		super.registerActivityLifecycleCallbacks(this);
 
 		Intent intent = new Intent(this, PayPalService.class);
-		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
 		startService(intent);
 		
-		
-	        
 	}
 
 	public static PayPalPayment generatePayObject(double price, String item,

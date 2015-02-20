@@ -1,6 +1,5 @@
 package swipe.android.nearlings.viewAdapters;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +20,15 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import de.metagear.android.view.ValidatingView;
 
 // reviewed
-public class MakeOfferFormAdapter extends BaseFormAdapter {
+public class SubmitReviewFormAdapter extends BaseFormAdapter {
 	private List<ValidatingView> validatingViews;
 
-	public MakeOfferFormAdapter(FragmentActivity ctx, View rootView,
+	public SubmitReviewFormAdapter(FragmentActivity ctx, View rootView,
 			Bundle savedInstanceState, String id, String title_string) {
 		super(ctx, rootView, savedInstanceState);
 
@@ -38,20 +38,20 @@ public class MakeOfferFormAdapter extends BaseFormAdapter {
 	}
 
 	Button submit;
-	EditText message, price;
+	EditText message;
 	TextView title;
-	private void initializeViews(Bundle savedInstanceState, String id, String title_string) {
-		
-		price = (EditText) rootView.findViewById(R.id.price);
-		setUpPriceListener(price);
+	RatingBar quality, effort, timeliness;
+
+	private void initializeViews(Bundle savedInstanceState, String id,
+			String title_string) {
 
 		message = (EditText) rootView.findViewById(R.id.descriptionBox);
-		title = (TextView)rootView.findViewById(R.id.title);
-	
-	
+		title = (TextView) rootView.findViewById(R.id.title);
+		//quality = (RatingBar) rootView.findViewById(R.id.quality);
+		//effort = (RatingBar) rootView.findViewById(R.id.effort);
+		//timeliness = (RatingBar) rootView.findViewById(R.id.timeliness);
 		title.setText(title_string);
 	}
-
 
 	@Override
 	protected void initializeValidators(View parentView) {
@@ -59,24 +59,16 @@ public class MakeOfferFormAdapter extends BaseFormAdapter {
 		Context context = parentView.getContext();
 
 		synchronized (validatingViews) {
-/*
-			assignValidatorToValidatingView(parentView, R.id.title,
-					R.string.title, new MinLengthValidator(context, 1));
-			assignValidatorToValidatingView(parentView, R.id.age_value,
-					R.string.age, new NumberValidator(context));
-
-			assignValidatorToValidatingView(parentView, R.id.descriptionBox,
-					R.string.description, new MinLengthValidator(context, 0));
-			assignValidatorToValidatingView(parentView, R.id.location,
-					R.string.location, new MinLengthValidator(context, 1));*/
 		}
 	}
 
 	public JSONObject getJSONObject() throws Exception {
 		JSONObject jsonObject = new JSONObject();
+
 		jsonObject.put("message", message.getText().toString());
-	//	jsonObject.put("user_id", SessionManager.getInstance(this.ctx).getUserID());
-		jsonObject.put("amount", FieldsParsingUtils.parsePrice(price.getText().toString()));
+		jsonObject.put("quality", quality.getRating());
+		jsonObject.put("effort", effort.getRating());
+		jsonObject.put("timeliness", timeliness.getRating());
 		return jsonObject;
 	}
 

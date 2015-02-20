@@ -1,8 +1,13 @@
 package swipe.android.nearlings;
 
+import java.util.Map;
+
 import org.json.JSONException;
 
 import com.edbert.library.greyButton.GreyedOutButton;
+import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.utils.MapUtils;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
 import com.paypal.android.sdk.payments.PayPalProfileSharingActivity;
@@ -16,11 +21,14 @@ import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
 import swipe.android.nearlings.events.EventsContainerFragment;
+import swipe.android.nearlings.json.addCommentsResponse.JsonAddCommentsResponse;
 import swipe.android.nearlings.sync.NearlingsSyncAdapter;
 import swipe.android.nearlings.viewAdapters.NeedsDetailsViewAdapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.database.Cursor;
@@ -40,15 +48,12 @@ import android.widget.Toast;
 
 //need to check whether parent clas has sync. In fact, we just need to know how toa ccess it.
 public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
-		implements Refreshable {
+		implements Refreshable{
 	String id;
 	View view;
 	NeedsDetailsViewAdapter adapter;
-//	GreyedOutButton doActionButton;
-/*	public static final String MESSAGES_START_FLAG = NeedsDetailsFragment.class
-			.getCanonicalName() + "_MESSAGES_START_FLAG";
-	public static final String MESSAGES_FINISH_FLAG = NeedsDetailsFragment.class
-			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";*/
+	// GreyedOutButton doActionButton;
+
 	public static final String MESSAGES_START_FLAG = NeedsDetailsActivity.MESSAGES_START_FLAG;
 	public static final String MESSAGES_FINISH_FLAG = NeedsDetailsActivity.MESSAGES_FINISH_FLAG;
 	FragmentManager fm;
@@ -80,9 +85,11 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		} catch (InflateException e) {
 			e.printStackTrace();
 		}
-	/*	doActionButton = (GreyedOutButton) view
-				.findViewById(R.id.needs_change_state);
-		doActionButton.setEnabled(false);*/
+		/*
+		 * doActionButton = (GreyedOutButton) view
+		 * .findViewById(R.id.needs_change_state);
+		 * doActionButton.setEnabled(false);
+		 */
 		this.savedInstanceState = savedInstanceState;
 		Bundle b = getActivity().getIntent().getExtras();
 		id = b.getString("id");
@@ -109,7 +116,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public CursorLoader generateCursorLoader() {
-		Log.i("CURSOR_ID_GEN", id);
+
 		String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
 		String[] mSelectionArgs = { "" };
 		mSelectionArgs[0] = id;
@@ -169,9 +176,9 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	protected void updateRefresh(boolean isSyncing) {
 		super.updateRefresh(isSyncing);
 		if (isSyncing) {
-		//	setButtonSyncing();
+			// setButtonSyncing();
 		} else {
-		//	refreshStateButton();
+			// refreshStateButton();
 		}
 
 	}
@@ -187,4 +194,5 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	}
 
 	
+
 }

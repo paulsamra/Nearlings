@@ -1,8 +1,8 @@
-package swipe.android.nearlings.json.jsonoffersresponse;
+package swipe.android.nearlings.json.jsonSubmitReviewResponse;
 
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonMakeOffersResponse implements JsonResponseInterface {
+public class JsonSubmitReviewResponse implements JsonResponseInterface {
 	public String getError() {
 		return error;
 	}

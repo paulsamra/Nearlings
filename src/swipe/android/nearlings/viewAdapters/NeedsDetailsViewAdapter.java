@@ -1,44 +1,49 @@
 package swipe.android.nearlings.viewAdapters;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
-import swipe.android.nearlings.ActivityCallbackFromAdapter;
-import swipe.android.nearlings.DummyWebTask;
 import swipe.android.nearlings.FieldsParsingUtils;
-import swipe.android.nearlings.JsonChangeStateResponse;
 import swipe.android.nearlings.NearlingsApplication;
-import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
-import swipe.android.nearlings.MessagesSync.Needs;
+import swipe.android.nearlings.json.addCommentsResponse.JsonAddCommentsResponse;
 import swipe.android.nearlings.json.needs.comments.Comments;
+import swipe.android.nearlings.json.needs.comments.JsonCommentsResponse;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.InputType;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.greyButton.GreyedOutButton;
 import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.utils.MapUtils;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,12 +54,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalService;
-import com.paypal.android.sdk.payments.PaymentActivity;
 
 public class NeedsDetailsViewAdapter implements
-		AsyncTaskCompleteListener<JsonChangeStateResponse>,
+		AsyncTaskCompleteListener<JsonAddCommentsResponse>,
 		LoaderCallbacks<Cursor> {
 
 	private Context context;
@@ -72,11 +74,10 @@ public class NeedsDetailsViewAdapter implements
 	private Cursor cursor;
 	private Cursor commentCursor;
 	public GreyedOutButton doActionButton;
-	public Button getDirections;
+	public Button getDirections, add_comments;
 
 	public NeedsDetailsViewAdapter(View userDataView, Context context,
-			String idOfDetail, Cursor cursor, Bundle savedInstanceState
-			) {
+			String idOfDetail, Cursor cursor, Bundle savedInstanceState) {
 		this.context = context;
 		this.idOfDetail = idOfDetail;
 		this.cursor = cursor;
@@ -102,6 +103,16 @@ public class NeedsDetailsViewAdapter implements
 		location = (TextView) view.findViewById(R.id.needs_details_location);
 
 		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
+		add_comments = (Button) view
+				.findViewById(R.id.needs_view_more_comments);
+		add_comments.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// addComment();
+				createCommentDialog();
+			}
+		});
 
 		MapsInitializer.initialize(((Activity) context));
 
@@ -266,18 +277,15 @@ public class NeedsDetailsViewAdapter implements
 						NearlingsApplication.getDefaultOptions());
 		state = cursor.getString(status_index);
 
-
-	
 		// ContentValues retVal = new ContentValues();
 		valuesOfNeed = new ContentValues();
 		DatabaseUtils.cursorRowToContentValues(cursor, valuesOfNeed);
-		//reloadCommentData();
+		// reloadCommentData();
 
 	}
 
 	String state;
 	ContentValues valuesOfNeed;
-
 
 	public void reloadCommentData() {
 		/*
@@ -285,7 +293,7 @@ public class NeedsDetailsViewAdapter implements
 		 * JsonNeedsCommentsResponse.class).execute(SessionManager
 		 * .getInstance(this).(), MapUtils .mapToString(headers));
 		 */
-		
+
 		/*
 		 * commentAdapter = new NeedsCommentsAdapter(this.context,
 		 * listofCommentsArrayList); listOfComments.setAdapter(commentAdapter);
@@ -294,12 +302,12 @@ public class NeedsDetailsViewAdapter implements
 		 * commentAdapter.notifyDataSetChanged();
 		 * listOfComments.setAdapter(commentAdapter);
 		 */
-		
-	/*	
-		commentAdapter = new LazyDetailCommentsAdapter(this.context,
-				listofCommentsArrayList, idOfDetail, Integer.MAX_VALUE);
-		listOfComments.setAdapter(commentAdapter);
-		*/
+		commentAdapter.requestUpdate();
+		/*
+		 * commentAdapter = new LazyDetailCommentsAdapter(this.context,
+		 * listofCommentsArrayList, idOfDetail, Integer.MAX_VALUE);
+		 * listOfComments.setAdapter(commentAdapter);
+		 */
 	}
 
 	private void setUpMapIfNeeded(View inflatedView) {
@@ -334,26 +342,6 @@ public class NeedsDetailsViewAdapter implements
 	}
 
 	@Override
-	public void onTaskComplete(JsonChangeStateResponse result) {
-
-		// write out
-		if (valuesOfNeed != null && valuesOfNeed.size() != 0) {
-
-			valuesOfNeed.put(NeedsDetailsDatabaseHelper.COLUMN_STATUS,
-					JsonChangeStateResponse.getStatus(state));
-			valuesOfNeed
-					.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
-			context.getContentResolver()
-					.insert(NearlingsContentProvider
-							.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-							valuesOfNeed);
-			((Activity) context).finish();
-
-		}
-
-	}
-
-	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		// TODO Auto-generated method stub
 		return null;
@@ -371,4 +359,80 @@ public class NeedsDetailsViewAdapter implements
 
 	}
 
+	public void executeAddComment() {
+		String message = addCommentText.getText().toString();
+		String id = SessionManager.getInstance(context).getUserID();
+		try {
+			JSONObject jsonObject = new JSONObject();
+
+			jsonObject.put("commenter_id", id);
+
+			jsonObject.put("message", message);
+			Map<String, String> headers = SessionManager.getInstance(
+					this.context).defaultSessionHeaders();
+
+			
+			new PostDataWebTask<JsonAddCommentsResponse>(
+				 this.context,	NeedsDetailsViewAdapter.this,
+					JsonAddCommentsResponse.class, true).execute(SessionManager
+					.getInstance(this.context).makeCommentURL(this.idOfDetail),
+					MapUtils.mapToString(headers), jsonObject.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onTaskComplete(JsonAddCommentsResponse result) {
+
+		if (result.isValid()) {
+
+			reloadCommentData();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+						}
+					});
+			builder.setTitle("Error");
+			builder.setMessage(result.getError());
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
+	}
+
+	EditText addCommentText;
+
+	public void createCommentDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle("Add Comment");
+
+		// Set up the input
+		addCommentText = new EditText(context);
+		// Specify the type of input expected; this, for example, sets the input
+		// as a password, and will mask the text
+		addCommentText.setInputType(InputType.TYPE_CLASS_TEXT);
+		builder.setView(addCommentText);
+
+		// Set up the buttons
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				executeAddComment();
+
+			}
+		});
+		builder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+
+		builder.show();
+	}
 }

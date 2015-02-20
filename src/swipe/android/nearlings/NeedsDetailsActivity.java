@@ -1,15 +1,31 @@
 package swipe.android.nearlings;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
+import swipe.android.nearlings.json.cancelOffer.CancelOfferResponse;
+import swipe.android.nearlings.json.changeStateResponse.MarkAsAssignedResponse;
+import swipe.android.nearlings.json.changeStateResponse.MarkAsUnderwayResponse;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -17,15 +33,24 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewConfiguration;
+import android.widget.Toast;
 
 import com.edbert.library.containers.TabsActivityContainer;
 import com.edbert.library.greyButton.GreyedOutButton;
+import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.network.PutDataWebTask;
+import com.edbert.library.sendRequest.SendRequestInterface;
+import com.edbert.library.sendRequest.SendRequestStrategyManager;
+import com.edbert.library.utils.ListUtils;
+import com.edbert.library.utils.MapUtils;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
-public class NeedsDetailsActivity extends TabsActivityContainer {
+public class NeedsDetailsActivity extends TabsActivityContainer implements
+		AsyncTaskCompleteListener {
 	String id = "0";
 
 	Menu menu;
@@ -48,6 +73,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 		doActionButton.setEnabled(false);
 		Bundle b = getIntent().getExtras();
 		id = b.getString("id");
+		setSourceRequestHelper();
 	}
 
 	@Override
@@ -92,9 +118,63 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 		this.finish();
 	}
 
+	String TAG = "PAYPAL";
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == NearlingsApplication.REQUEST_CODE_PAYMENT) {
+
+			if (resultCode == Activity.RESULT_OK) {
+
+				PaymentConfirmation confirm = data
+						.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+				if (confirm != null) {
+					try {
+						String s = confirm.toJSONObject().toString(4);
+						JSONObject jo = new JSONObject(s);
+						if (!jo.getJSONObject("response").getString("state")
+								.equals("approved")) {
+							generateAlertPaymentInvalid();
+						} else {
+							String payPalId = jo.getJSONObject("response")
+									.getString("id");
+
+							// String doer_id =
+							// getIntent().getExtras().getString(NearlingsApplication.DOER_ID);
+							// Log.d("CONFIRM", s);
+							// data.getStringExtra(name)
+							markAsAssigned(doerID);
+						}
+
+					} catch (JSONException e) {
+						Log.e(TAG, "an extremely unlikely failure occurred: ",
+								e);
+					}
+				}
+			} else if (resultCode == Activity.RESULT_CANCELED) {
+				generateAlertPaymentCanceled();
+				// Log.i(TAG, "The user canceled.");
+			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+				generateAlertPaymentInvalid();
+				/*
+				 * Log.i( TAG,
+				 * "An invalid Payment or PayPalConfiguration was submitted. Please see the docs."
+				 * );
+				 */
+			}
+		}
+
+	}
+
+	public void generateAlertPaymentCanceled() {
+		Toast.makeText(getApplicationContext(), "Payment canceled.",
+				Toast.LENGTH_LONG).show();
+	}
+
+	public void generateAlertPaymentInvalid() {
+		Toast.makeText(getApplicationContext(),
+				"Invalid payment. Please try again.", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -224,16 +304,26 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 
 		doActionButton.setText("Cancel your offer.");
 		doActionButton.setBackgroundColor(this.getResources().getColor(
-				R.color.nearlings_theme));
-		doActionButton.setTextColor(Color.RED);
+				android.R.color.holo_red_light));
+		doActionButton.setTextColor(Color.WHITE);
 		doActionButton.setEnabled(true);
 		doActionButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// launch the cancel
 
-				// dont finish off
+				int id_index = c
+						.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID);
+				String id = c.getString(id_index);
+				Map<String, String> headers = SessionManager.getInstance(
+						NeedsDetailsActivity.this).defaultSessionHeaders();
+
+				new PostDataWebTask<CancelOfferResponse>(
+						NeedsDetailsActivity.this, CancelOfferResponse.class,
+						false).execute(
+						SessionManager.getInstance(NeedsDetailsActivity.this)
+								.cancelOfferURL(id), MapUtils
+								.mapToString(headers));
 			}
 
 		});
@@ -292,12 +382,12 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 				disableFlowButton("An offer is available! Check the offers tab.");
 			} else if (isCreator && !offerIsAvailable) {
 				disableFlowButton("Waiting for offers");
-			} else if (madeAnOffer) {
+			} else if (!isCreator && madeAnOffer) {
 				// disableFlowButton("You've already made an offer.");
 				clickToCancelOffer();
-			} else if (isCreator) {
-				disableFlowButton("Waiting for offers");
-			} else {
+			} /*
+			 * else if (isCreator) { disableFlowButton("Waiting for offers"); }
+			 */else {
 				// make button avialble
 				flowButtonMakeOffer();
 			}
@@ -361,4 +451,209 @@ public class NeedsDetailsActivity extends TabsActivityContainer {
 
 	}
 
+	public void cancelResponse(CancelOfferResponse result) {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		if (result.isValid()) {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+							// reload
+							NeedsDetailsActivity.this.onRefresh();
+						}
+					});
+			builder.setTitle("Success!");
+			builder.setMessage("Offer successfully canceled.");
+		} else {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+						}
+					});
+			builder.setTitle("Error");
+			builder.setMessage(result.getError());
+		}
+
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
+	@Override
+	public void onTaskComplete(Object result) {
+
+		if (result != null && result instanceof CancelOfferResponse) {
+			cancelResponse((CancelOfferResponse) result);
+		} else if (result != null && result instanceof MarkAsAssignedResponse) {
+			assignedResponse((MarkAsAssignedResponse) result);
+		} else if (result != null && result instanceof MarkAsUnderwayResponse) {
+			underwayResponse((MarkAsUnderwayResponse) result);
+		} else {
+			// unknown error
+		}
+	}
+
+	// refresh section
+	protected ArrayList<SendRequestInterface> helpers = new ArrayList<SendRequestInterface>();
+
+	public void setSourceRequestHelper() {
+		helpers.add(new NeedsDetailsRequest(this));
+		helpers.add(new NeedsOffersRequest(this));
+	}
+
+	public void onRefresh() {
+		String TAG = NearlingsSyncAdapter.HELPER_FLAG_ID;
+		Bundle b = new Bundle();
+
+		ArrayList<String> arr = SendRequestStrategyManager.generateTag(helpers);
+		// b = NearlingsSyncAdapter.addArrayListOfStrings(b, arr);
+		if (arr.size() != 0) {
+			String helpers = ListUtils.listToString(arr);
+			b.putString(TAG, helpers);
+			requestSync(b);
+		}
+	}
+
+	public void requestSync(Bundle b) {
+		// need to add the flags
+		b.putString(NearlingsSyncAdapter.SYNC_STARTED_FLAG_ID,
+				syncStartedFlag());
+		b.putString(NearlingsSyncAdapter.SYNC_FINISHED_FLAG_ID,
+				syncFinishedFlag());
+		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
+		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+		((NearlingsApplication) this.getApplication()).getSyncHelper()
+				.performSync(b);
+	}
+
+	public String syncStartedFlag() {
+		return MESSAGES_START_FLAG;
+	}
+
+	public String syncFinishedFlag() {
+		return MESSAGES_FINISH_FLAG;
+	}
+
+	public void markAsAssigned(String doerID) {
+		try {
+			JSONObject body = new JSONObject();
+			body.put("doer_id", doerID);
+			body.put("status", "assigned");
+			Map<String, String> headers = SessionManager.getInstance(
+					NeedsDetailsActivity.this).defaultSessionHeaders();
+
+			new PutDataWebTask<MarkAsAssignedResponse>(
+					NeedsDetailsActivity.this, MarkAsAssignedResponse.class,
+					true).execute(
+					SessionManager.getInstance(NeedsDetailsActivity.this)
+							.changeStateURL(id), MapUtils.mapToString(headers),
+					body.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void markAsUnderway() {
+		try {
+			JSONObject body = new JSONObject();
+			body.put("status", "underway");
+			Map<String, String> headers = SessionManager.getInstance(
+					NeedsDetailsActivity.this).defaultSessionHeaders();
+
+			new PutDataWebTask<MarkAsUnderwayResponse>(
+					NeedsDetailsActivity.this, MarkAsUnderwayResponse.class,
+					true).execute(
+					SessionManager.getInstance(NeedsDetailsActivity.this)
+							.changeStateURL(id), MapUtils.mapToString(headers),
+					body.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void markAsForReview() {
+		/*
+		 * try { JSONObject body = new JSONObject(); body.put("status",
+		 * "review"); Map<String, String> headers = SessionManager.getInstance(
+		 * NeedsDetailsActivity.this).defaultSessionHeaders();
+		 * 
+		 * new
+		 * PutDataWebTask<MarkAsForReviewResponse>(NeedsDetailsActivity.this,
+		 * MarkAsForReviewResponse.class, true).execute(SessionManager
+		 * .getInstance(NeedsDetailsActivity.this).changeStateURL(id),
+		 * MapUtils.mapToString(headers), body.toString()); } catch
+		 * (JSONException e) { e.printStackTrace(); }
+		 */
+
+	}
+
+	public void assignedResponse(MarkAsAssignedResponse result) {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		if (result.isValid()) {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+							// reload
+							NeedsDetailsActivity.this.onRefresh();
+						}
+					});
+			builder.setTitle("Success!");
+			builder.setMessage("Successfully assigned need.");
+		} else {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+						}
+					});
+			builder.setTitle("Error");
+			builder.setMessage(result.getError());
+		}
+
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
+	public void underwayResponse(MarkAsUnderwayResponse result) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		if (result.isValid()) {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+							// reload
+							NeedsDetailsActivity.this.onRefresh();
+						}
+					});
+			builder.setTitle("Success!");
+			builder.setMessage("You're now starting this task.");
+		} else {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+						}
+					});
+			builder.setTitle("Error");
+			builder.setMessage(result.getError());
+		}
+
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
+	private static String doerID = "0";
+
+	public static void setDoerID(String id) {
+		doerID = id;
+	}
 }
