@@ -45,14 +45,15 @@ public class NeedsReviewsAdapter extends CursorAdapter {
 		ViewHolder holder = new ViewHolder();
 		View view = inflater.inflate(R.layout.review_item, parent, false);
 
-		holder.time_ago = (RelativeTimeTextView) view
-				.findViewById(R.id.time_ago);
-		holder.rating = (RatingBar) view.findViewById(R.id.ratingBar);
-		holder.rating_author = (TextView) view.findViewById(R.id.rating_author);
-		holder.review = (TextView) view.findViewById(R.id.review);
+		holder.quality_rating = (RatingBar) view.findViewById(R.id.quality_ratingBar);
+
+		holder.effort_rating = (RatingBar) view.findViewById(R.id.effort_ratingBar);
+		holder.timeliness_rating = (RatingBar) view.findViewById(R.id.timeliness_ratingBar);
+		
+		holder.message = (TextView) view.findViewById(R.id.message);
 
 		view.setTag(holder);
-		return null;
+		return view;
 	}
 
 	@Override
@@ -60,33 +61,29 @@ public class NeedsReviewsAdapter extends CursorAdapter {
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
 
-		int date_index = cursor
-				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_TIME);
-		int author_index = cursor
-				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_AUTHOR);
-		int rating_index = cursor
-				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_RATING);
+		int effort_index = cursor
+				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_EFFORT_RATING);
+		int message_index = cursor
+				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_MESSAGE);
+		int quality_rating_index = cursor
+				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_QUALITY_RATING);
+		int timeliness_rating_index = cursor
+				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_TIMELINESS_RATING);
 
-		int review_index = cursor
-				.getColumnIndexOrThrow(UserReviewDatabaseHelper.COLUMN_REVIEW);
 
-		// problem is processing. this should only happen once.
-		long s = cursor.getLong(date_index);
-
-		holder.time_ago.setReferenceTime(NOW - s);
 
 		// holder.time_ago.setText(FieldsParsingUtils.getTime(s));
-		holder.rating_author.setText(cursor.getString(author_index));
-		holder.review.setText(cursor.getString(review_index));
-		
-		holder.rating.setRating(cursor.getFloat(rating_index));
+		holder.timeliness_rating.setRating(cursor.getInt(timeliness_rating_index));
+		holder.quality_rating.setRating(cursor.getInt(quality_rating_index));
+		holder.message.setText(cursor.getString(message_index));
+		holder.effort_rating.setRating(cursor.getInt(effort_index));
 
 	}
 
 	public static class ViewHolder {
-		RelativeTimeTextView time_ago;
-		TextView rating_author, review;
-		RatingBar rating;
+		///RelativeTimeTextView time_ago;
+		TextView message;
+		RatingBar quality_rating, timeliness_rating, effort_rating;
 	}
 
 }

@@ -11,16 +11,16 @@ public class JsonSubmitReviewResponse implements JsonResponseInterface {
 		this.error = error;
 	}
 
-	public int[] getResult() {
+	public int getResult() {
 		return result;
 	}
 
-	public void setResult(int[] result) {
+	public void setResult(int result) {
 		this.result = result;
 	}
 
 	String error;
-	int[] result;
+	int result;
 
 	@Override
 	public boolean isValid() {

@@ -20,6 +20,7 @@ import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
+import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
 import swipe.android.nearlings.events.EventsContainerFragment;
 import swipe.android.nearlings.json.addCommentsResponse.JsonAddCommentsResponse;
 import swipe.android.nearlings.sync.NearlingsSyncAdapter;
@@ -112,6 +113,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	public void setSourceRequestHelper() {
 		helpers.add(new NeedsDetailsRequest(this.getActivity()));
 		helpers.add(new NeedsOffersRequest(this.getActivity()));
+		helpers.add(new UserReviewsRequest(this.getActivity()));
 	}
 
 	@Override
@@ -190,6 +192,11 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	public void requestSync(Bundle b) {
 		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
 		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+		c = generateCursor();
+		c.moveToFirst();
+		String user_id = c.getString(c.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY));
+		b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
+		b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
 		super.requestSync(b);
 	}
 

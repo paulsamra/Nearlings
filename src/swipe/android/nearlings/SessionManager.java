@@ -350,11 +350,25 @@ public class SessionManager {
 	}
 
 	public String submitReviewURL(String id) {
-		return URL_BASE + "/need/" + id + "/reviews";
+		return URL_BASE + "/user/" + id + "/reviews";
+
+	}
+	
+	public String createNeedURL(){
+		return URL_BASE + "/need/";
 
 	}
 	
 	public String changeStateURL(String id){
 		return URL_BASE + "/need/" + id ;
+	}
+
+	public String userDetailsURL(String id) {
+
+		return URL_BASE + "/user/" + id ;
+	}
+
+	public String userReviewsURL(String id) {
+		return URL_BASE + "/user/" + id +"/reviews";
 	}
 }

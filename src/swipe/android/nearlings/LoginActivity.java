@@ -3,6 +3,8 @@ package swipe.android.nearlings;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import swipe.android.nearlings.json.jsonUserDetailsResponse.JsonUserDetailsResponse;
+import swipe.android.nearlings.json.needs.comments.JsonCommentsResponse;
 import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,11 +19,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.GetDataWebTask;
 import com.edbert.library.network.PostDataWebTask;
 import com.edbert.library.utils.MapUtils;
 
 public class LoginActivity extends Activity implements
-		AsyncTaskCompleteListener<JsonLoginResponse> {
+		AsyncTaskCompleteListener {
 
 	Button signup, login, forgotPassword;
 	EditText usernameET, passwordET;
@@ -95,46 +98,82 @@ public class LoginActivity extends Activity implements
 
 	}
 
-	public void onTaskComplete(JsonLoginResponse result) {
+	public void onTaskComplete(Object result) {
 		if (result == null) {
 			NearlingsApplication.displayNetworkNotAvailableDialog(this);
-		} else if (!result.isValid()) {
-			String loginTitle = this.getString(R.string.login_error_title);
+		} else if (result instanceof JsonLoginResponse) {
+			JsonLoginResponse loginResult = (JsonLoginResponse) result;
+			if (!loginResult.isValid()) {
+				String loginTitle = this.getString(R.string.login_error_title);
 
-			String try_again = this.getString(R.string.try_again);
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(result.getError())
-					.setTitle(loginTitle)
-					.setCancelable(false)
-					.setPositiveButton(try_again,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									dialog.dismiss();
-								}
-							});
+				String try_again = this.getString(R.string.try_again);
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage(loginResult.getError())
+						.setTitle(loginTitle)
+						.setCancelable(false)
+						.setPositiveButton(try_again,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										dialog.dismiss();
+									}
+								});
 
-			AlertDialog alert = builder.create();
-			alert.show();
-		} else {
-			SessionManager.getInstance(this).setIsLoggedIn(true);
-			Log.d("USER ID", String.valueOf(result.getUserID()));
-			SessionManager.getInstance(this).setUserID(
-					String.valueOf(result.getUserID()));
-			SessionManager.getInstance(this).setAuthToken(result.getToken());
-			/*
+				AlertDialog alert = builder.create();
+				alert.show();
+			} else {
+				SessionManager.getInstance(this).setIsLoggedIn(true);
+				SessionManager.getInstance(this).setUserID(
+						String.valueOf(loginResult.getUserID()));
+				SessionManager.getInstance(this).setAuthToken(
+						loginResult.getToken());
+
+				String url = SessionManager.getInstance(this).userDetailsURL(
+						String.valueOf(loginResult.getUserID()));
+				Map<String, String> headers = SessionManager.getInstance(this)
+						.defaultSessionHeaders();
+
+				new GetDataWebTask<JsonUserDetailsResponse>(this,
+						JsonUserDetailsResponse.class, false).execute(url,
+						MapUtils.mapToString(headers));
+			}
+		} else if (result instanceof JsonUserDetailsResponse) {
+			JsonUserDetailsResponse detailsResponse = (JsonUserDetailsResponse) result;
+			if (!detailsResponse.isValid()) {
+				NearlingsApplication.displayNetworkNotAvailableDialog(this);
+			} else {
+
+				SessionManager.getInstance(this).setFirstName(
+						detailsResponse.getDetails().getFirstname());
+				SessionManager.getInstance(this).setLastName(
+						detailsResponse.getDetails().getLastname());
+				SessionManager.getInstance(this).setMobile(
+						detailsResponse.getDetails().getMobile());
+				SessionManager.getInstance(this).setEmail(
+						detailsResponse.getDetails().getEmail());
+				SessionManager.getInstance(this).setGravitar(
+						detailsResponse.getDetails().getGravitar());
+				SessionManager.getInstance(this).setAlertCount(
+						detailsResponse.getDetails().getAlertcount());
+				SessionManager.getInstance(this).setMemberships(
+						detailsResponse.getDetails().getMemberships());
+				goToNextActivity();
 			
-			SessionManager.getInstance(this).setFirstName(result.getFirstname());
-			SessionManager.getInstance(this).setLastName(result.getLastname());
-			SessionManager.getInstance(this).setMobile(result.getMobile());
-			SessionManager.getInstance(this).setEmail(result.getEmail());
-			SessionManager.getInstance(this).setGravitar(result.getGravitar());
-			SessionManager.getInstance(this).setAlertCount(result.getAlertcount());
-			SessionManager.getInstance(this).setMemberships(result.getMemberships());
-			*/
-			
-			goToNextActivity();
+			}
 		}
+
+		/*
+		 * 
+		 * SessionManager.getInstance(this).setFirstName(result.getFirstname());
+		 * SessionManager.getInstance(this).setLastName(result.getLastname());
+		 * SessionManager.getInstance(this).setMobile(result.getMobile());
+		 * SessionManager.getInstance(this).setEmail(result.getEmail());
+		 * SessionManager.getInstance(this).setGravitar(result.getGravitar());
+		 * SessionManager
+		 * .getInstance(this).setAlertCount(result.getAlertcount());
+		 */
+		// SessionManager.getInstance(this).setMemberships(result.getMemberships());
+
 	}
 
 	public void goToNextActivity() {

@@ -6,10 +6,13 @@ import org.json.JSONObject;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.json.cancelOffer.CancelOfferResponse;
+import swipe.android.nearlings.json.changeStateResponse.MarkAsAssignedResponse;
+import swipe.android.nearlings.json.changeStateResponse.MarkAsForReviewResponse;
 import swipe.android.nearlings.json.jsonSubmitReviewResponse.JsonSubmitReviewResponse;
 import swipe.android.nearlings.json.jsonoffersresponse.JsonMakeOffersResponse;
 import swipe.android.nearlings.viewAdapters.MakeOfferFormAdapter;
 import swipe.android.nearlings.viewAdapters.SubmitReviewFormAdapter;
+import swipe.android.nearlings.viewAdapters.SubmitToBeDoneFormAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -24,12 +27,13 @@ import android.widget.Toast;
 import com.edbert.library.greyButton.GreyedOutButton;
 import com.edbert.library.network.AsyncTaskCompleteListener;
 import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.network.PutDataWebTask;
 import com.edbert.library.utils.MapUtils;
 
-public class SubmitReviewOfUserActivity extends FragmentActivity implements
-		AsyncTaskCompleteListener<JsonSubmitReviewResponse> {
+public class SubmitForCompletionActivity extends FragmentActivity implements
+		AsyncTaskCompleteListener<MarkAsForReviewResponse> {
 
-	SubmitReviewFormAdapter makeFormAdapter;
+	SubmitToBeDoneFormAdapter makeFormAdapter;
 	TextView finishLabel;
 	GreyedOutButton makeOffer;
 
@@ -42,63 +46,50 @@ public class SubmitReviewOfUserActivity extends FragmentActivity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(true);
-		getActionBar().setTitle("Review User");
+		getActionBar().setTitle("Finish Task");
 
-		setContentView(R.layout.submit_for_review_layout);
+		setContentView(R.layout.submit_for_completion_layout);
 		makeOffer = (GreyedOutButton) findViewById(R.id.needs_change_state);
-		makeOffer.setText("Submit Review");
+		makeOffer.setText("Request Review");
 		makeOffer.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				submitForReview();
+				submitForCompletion();
 			}
 
 		});
-		id = getIntent().getExtras().getString("need_id");
-		doer_id = getIntent().getExtras().getString("assigned_to");
+		id = getIntent().getExtras().getString("id");
+
 		String title = getIntent().getExtras().getString("title");
-		makeFormAdapter = new SubmitReviewFormAdapter(this, getWindow()
+		makeFormAdapter = new SubmitToBeDoneFormAdapter(this, getWindow()
 				.getDecorView().findViewById(android.R.id.content),
 				savedInstanceState, id, title);
 	}
 
-	String id = "", doer_id = "";
+	String id = "";
 
 	// construct the body
-	public void submitForReview() {
+	public void submitForCompletion() {
 		Map<String, String> headers = SessionManager.getInstance(this)
 				.defaultSessionHeaders();
-		String url = SessionManager.getInstance(this).submitReviewURL(doer_id);
-		String body = "";
+		String url = SessionManager.getInstance(this).changeStateURL(id);
+		String body ="";
 		try {
 			JSONObject jsonRep = makeFormAdapter.getJSONObject();
-			// need to get the other guy
-			String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID
-					+ " = ?";
-			String[] selectionArgs = { "" };
-			selectionArgs[0] = this.id;
-			Cursor cursor = this
-					.getContentResolver()
-					.query(NearlingsContentProvider
-							.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
-							NeedsDetailsDatabaseHelper.COLUMNS,
-							selectionClause, selectionArgs, null);
-			cursor.moveToFirst();
-			String doer = cursor
-					.getString(cursor
-							.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ASSIGNED_TO));
-			jsonRep.put("doer_id", SessionManager.getInstance(this).getUserID());
-			jsonRep.put("need_id", id);
+			//need to get the other guy
+			jsonRep.put("status", "review");
 			body = jsonRep.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		new PostDataWebTask<JsonSubmitReviewResponse>(this,
-				JsonSubmitReviewResponse.class).execute(url,
-				MapUtils.mapToString(headers), body);
-
+		new PutDataWebTask<MarkAsForReviewResponse>(
+				this, MarkAsForReviewResponse.class,
+				true).execute(
+				SessionManager.getInstance(this)
+						.changeStateURL(id), MapUtils.mapToString(headers),
+				body.toString());
+		
 	}
 
 	@Override
@@ -109,28 +100,26 @@ public class SubmitReviewOfUserActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void onTaskComplete(JsonSubmitReviewResponse result) {
+	public void onTaskComplete(MarkAsForReviewResponse result) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		if (result.isValid()) {
 
-			builder.setPositiveButton("OK",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int item) {
-							dialog.cancel();
-							SubmitReviewOfUserActivity.this.finish();
-						}
-					});
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					dialog.cancel();
+					SubmitForCompletionActivity.this.finish();
+				}
+			});
 			builder.setTitle("Success!");
-			builder.setMessage("You have sucessfully submitted the review.");
-		} else {
+			builder.setMessage("You have sucessfully marked your task as complete.");
+		}else{
 
-			builder.setPositiveButton("OK",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int item) {
-							dialog.cancel();
-							// MakeOfferActivity.this.finish();
-						}
-					});
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					dialog.cancel();
+					//MakeOfferActivity.this.finish();
+				}
+			});
 			builder.setTitle("Error");
 			builder.setMessage(result.getError());
 		}

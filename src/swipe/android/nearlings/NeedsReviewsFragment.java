@@ -19,6 +19,7 @@ import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.DatabaseHelpers.UserReviewDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
+import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
 import swipe.android.nearlings.events.EventsContainerFragment;
 import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.JsonNeedsOffersResponse;
 import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.NeedsOffers;
@@ -124,14 +125,24 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void requestSync(Bundle b) {
-
-		// b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+		String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
+		String[] mSelectionArgs = { "" };
+		mSelectionArgs[0] = id;
+		Cursor cursor = this.getActivity()
+				.getContentResolver()
+				.query(NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+						NeedsDetailsDatabaseHelper.COLUMNS, selectionClause,
+						mSelectionArgs, null);
+		cursor.moveToFirst();
+		String user_id = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY));
+		 b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
 		super.requestSync(b);
 	}
 
 	@Override
 	public void setSourceRequestHelper() {
-		// helpers.add(new NeedsReviewRequest(this.getActivity()));
+		 helpers.add(new UserReviewsRequest(this.getActivity()));
 	}
 
 	@Override

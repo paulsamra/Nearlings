@@ -14,6 +14,7 @@ import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsCommentsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
+import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
 import swipe.android.nearlings.json.cancelOffer.CancelOfferResponse;
 import swipe.android.nearlings.json.changeStateResponse.MarkAsAssignedResponse;
 import swipe.android.nearlings.json.changeStateResponse.MarkAsUnderwayResponse;
@@ -262,9 +263,29 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 
 	public void assignedClickToMarkDone() {
 		doActionButton.setText("Click to mark need completed.");
+		doActionButton.setBackgroundColor(Color.BLUE);
+		doActionButton.setTextColor(Color.WHITE);
+		doActionButton.setEnabled(true);
+		doActionButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				markToBeDone();
+			}
+		});
+	}
+	public void assignedClickToMarkBegin() {
+		doActionButton.setText("Click to mark need as begun.");
 		doActionButton.setBackgroundColor(Color.GREEN);
 		doActionButton.setTextColor(Color.WHITE);
 		doActionButton.setEnabled(true);
+		doActionButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				markAsUnderway();
+			}
+		});
 	}
 
 	public void flowButtonMakeOffer() {
@@ -336,7 +357,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 		doActionButton.setEnabled(true);
 	}
 
-	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false;
+	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false, isAssignedTo = false;;
 
 	public void setUpRoles() {
 		c.moveToFirst();
@@ -356,6 +377,15 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 			offerIsAvailable = true;
 		} else {
 			offerIsAvailable = false;
+		}
+		int assignedToIndex = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ASSIGNED_TO);
+		int assignedToID = c.getInt(assignedToIndex);
+		if(String.valueOf(assignedToID).equals(SessionManager.getInstance(this).getUserID())){
+
+			isAssignedTo = true;
+		}else{
+			isAssignedTo = false;
 		}
 		// /now query offers database
 		Cursor offers = generateOffersCursor();
@@ -393,18 +423,26 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 			}
 			// if we are the doer
 		} else if (state.equals(Needs.ASSIGNED_TO)) {
-			if (isCreator) {
+			if (!isCreator && isAssignedTo) {
 				// grey button
-				disableFlowButton("Need has been assigned to someone.");
-			} else {
 				// click when done
+				assignedClickToMarkBegin();
+			} else {
+
+				disableFlowButton("Need has been assigned to someone.");
+			}
+		} else if (state.equals(Needs.UNDERWAY)) {
+			if (!isCreator && isAssignedTo) {
 				assignedClickToMarkDone();
+			} else {
+
+				disableFlowButton("Need has been assigned to someone.");
 			}
 		} else if (state.equals(Needs.REVIEW)) {
 			if (isCreator) {
-				// grey button
+				this.setButtonReviewTask();
 			} else {
-				// click when done
+				disableFlowButton("Need is under review.");
 			}
 		} else if (state.equals(Needs.CLOSED)) {
 			// set as closed
@@ -502,6 +540,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 	public void setSourceRequestHelper() {
 		helpers.add(new NeedsDetailsRequest(this));
 		helpers.add(new NeedsOffersRequest(this));
+		 helpers.add(new UserReviewsRequest(this));
 	}
 
 	public void onRefresh() {
@@ -525,6 +564,9 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 				syncFinishedFlag());
 		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
 		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+		
+		String user_id = c.getString(c.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY));
+		b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
 		((NearlingsApplication) this.getApplication()).getSyncHelper()
 				.performSync(b);
 	}
@@ -574,19 +616,22 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 		}
 	}
 
-	public void markAsForReview() {
-		/*
-		 * try { JSONObject body = new JSONObject(); body.put("status",
-		 * "review"); Map<String, String> headers = SessionManager.getInstance(
-		 * NeedsDetailsActivity.this).defaultSessionHeaders();
-		 * 
-		 * new
-		 * PutDataWebTask<MarkAsForReviewResponse>(NeedsDetailsActivity.this,
-		 * MarkAsForReviewResponse.class, true).execute(SessionManager
-		 * .getInstance(NeedsDetailsActivity.this).changeStateURL(id),
-		 * MapUtils.mapToString(headers), body.toString()); } catch
-		 * (JSONException e) { e.printStackTrace(); }
-		 */
+	public void markToBeDone() {
+	
+		Intent intent = new Intent(NeedsDetailsActivity.this,
+					SubmitForCompletionActivity.class);
+			Bundle extras = new Bundle();
+			int title_index = c
+					.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
+			String title = c.getString(title_index);
+			extras.putString("title", title);
+			int id_index = c
+					.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID);
+			String id = c.getString(id_index);
+			extras.putString("id", id);
+
+			intent.putExtras(extras);
+			startActivity(intent);
 
 	}
 
@@ -599,7 +644,6 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int item) {
 							dialog.cancel();
-							// reload
 							NeedsDetailsActivity.this.onRefresh();
 						}
 					});
@@ -655,5 +699,42 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 
 	public static void setDoerID(String id) {
 		doerID = id;
+	}
+	
+	public void setButtonReviewTask(){
+		doActionButton.setText("Click to review user");
+		doActionButton.setBackgroundColor(Color.CYAN);
+		doActionButton.setTextColor(Color.WHITE);
+		doActionButton.setEnabled(true);
+		doActionButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				reviewTask();
+			}
+		});
+	
+	
+	}
+	public void reviewTask(){
+		Intent intent = new Intent(NeedsDetailsActivity.this,
+				SubmitReviewOfUserActivity.class);
+		Bundle extras = new Bundle();
+		int assigned_to_index = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ASSIGNED_TO);
+		String assigned_to = c.getString(assigned_to_index);
+		extras.putString("assigned_to", assigned_to);
+		int id_index = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID);
+		String id = c.getString(id_index);
+		extras.putString("need_id", id);
+
+		
+		int title_index = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
+		String title = c.getString(title_index);
+		extras.putString("title", title);
+		intent.putExtras(extras);
+		startActivity(intent);
 	}
 }

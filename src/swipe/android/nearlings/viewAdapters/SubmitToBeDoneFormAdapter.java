@@ -25,10 +25,16 @@ import android.widget.TextView;
 import de.metagear.android.view.ValidatingView;
 
 // reviewed
-public class SubmitReviewFormAdapter extends BaseFormAdapter {
+public class SubmitToBeDoneFormAdapter extends BaseFormAdapter {
+	public SubmitToBeDoneFormAdapter(FragmentActivity ctx, View rootView,
+			Bundle savedInstanceState) {
+		super(ctx, rootView, savedInstanceState);
+		// TODO Auto-generated constructor stub
+	}
+
 	private List<ValidatingView> validatingViews;
 
-	public SubmitReviewFormAdapter(FragmentActivity ctx, View rootView,
+	public SubmitToBeDoneFormAdapter(FragmentActivity ctx, View rootView,
 			Bundle savedInstanceState, String id, String title_string) {
 		super(ctx, rootView, savedInstanceState);
 
@@ -47,9 +53,9 @@ public class SubmitReviewFormAdapter extends BaseFormAdapter {
 
 		message = (EditText) rootView.findViewById(R.id.descriptionBox);
 		title = (TextView) rootView.findViewById(R.id.title);
-		quality = (RatingBar) rootView.findViewById(R.id.quality);
-		effort = (RatingBar) rootView.findViewById(R.id.effort);
-		timeliness = (RatingBar) rootView.findViewById(R.id.timeliness);
+		//quality = (RatingBar) rootView.findViewById(R.id.quality);
+		//effort = (RatingBar) rootView.findViewById(R.id.effort);
+		//timeliness = (RatingBar) rootView.findViewById(R.id.timeliness);
 		title.setText(title_string);
 	}
 
@@ -66,9 +72,7 @@ public class SubmitReviewFormAdapter extends BaseFormAdapter {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("message", message.getText().toString());
-		jsonObject.put("quality", quality.getRating());
-		jsonObject.put("effort", effort.getRating());
-		jsonObject.put("timeliness", timeliness.getRating());
+		
 		return jsonObject;
 	}
 

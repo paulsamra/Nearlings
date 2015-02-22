@@ -91,6 +91,15 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="swipe.android.nearlings.SubmitReviewOfUserActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+           <activity
+            android:name="swipe.android.nearlings.SubmitForCompletionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="swipe.android.nearlings.MakeOfferActivity"
             android:screenOrientation="portrait" >
         </activity>

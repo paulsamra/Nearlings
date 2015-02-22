@@ -84,14 +84,14 @@ public class CreateNeedActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.create_event_menu, menu);
+		getMenuInflater().inflate(R.menu.create_need_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.save_event:
+		case R.id.save_need:
 			// submitEvent();
 			if (needFormViewAdapter.areAllViewsValid()) {
 				submitEvent();
@@ -114,9 +114,10 @@ public class CreateNeedActivity extends FragmentActivity implements
 
 		try {
 			JSONObject jsonObject = this.needFormViewAdapter.getJSONObject();
-
+		/*	jsonObject.put("group_id", SessionManager.getInstance(this)
+					.getMemberships()[0]);*/
 			new CreateItemNearlings(this).execute(
-					SessionManager.getInstance(this).createEventURL(),
+					SessionManager.getInstance(this).createNeedURL(),
 					MapUtils.mapToString(headers), jsonObject.toString());
 
 		} catch (Exception e) {
@@ -135,11 +136,9 @@ public class CreateNeedActivity extends FragmentActivity implements
 
 				JSONObject result1 = new JSONObject(s);
 
-				if (result1.get("error") != null) {
-					DialogManager.showOkDialog(this, "OK", "Error",
-							(String) (result1.get("error")));
-					return;
-				} else {
+				if(result1.get("error") == null || result1.get("error").equals("null")){
+					
+				
 					// we're good
 					Intent intent = new Intent(this, HomeActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -147,6 +146,11 @@ public class CreateNeedActivity extends FragmentActivity implements
 							"Ok", "Need Created",
 							"Need was successfully created!", intent, true);
 
+				}else{
+						DialogManager.showOkDialog(this, "OK", "Error",
+								 (result1.get("error").toString()));
+						return;
+					
 				}
 
 			}

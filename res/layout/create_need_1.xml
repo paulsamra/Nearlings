@@ -24,6 +24,7 @@
 
     <include layout="@layout/time_layout" />
 
+    <include layout="@layout/online_inperson_switch" />
     <include layout="@layout/price_layout" />
 
     <include layout="@layout/category_layout" />

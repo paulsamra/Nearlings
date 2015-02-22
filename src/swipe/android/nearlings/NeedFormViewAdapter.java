@@ -65,7 +65,7 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 
 	}
 
-	Button category ;
+	Button category;
 	EditText title, descriptionBox;
 	EditText price;
 	Switch switch_online_inperson, private_public_switch;
@@ -75,9 +75,7 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 		setUpPriceListener(price);
 
 		category = (Button) rootView.findViewById(R.id.category_button);
-		setUpCategory(category, R.array.event_types);
-
-		
+		setUpCategory(category, R.array.needs_types);
 
 		title = (EditText) rootView.findViewById(R.id.title);
 		descriptionBox = (EditText) rootView.findViewById(R.id.descriptionBox);
@@ -88,7 +86,6 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 				.findViewById(R.id.private_public_switch);
 	}
 
-
 	@Override
 	protected void initializeValidators(View parentView) {
 		validatingViews = new ArrayList<ValidatingView>();
@@ -98,9 +95,10 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 
 			assignValidatorToValidatingView(parentView, R.id.title,
 					R.string.title, new MinLengthValidator(context, 1));
-			/*(assignValidatorToValidatingView(parentView, R.id.age_value,
-					R.string.age, new NumberValidator(context));
-*/
+			/*
+			 * (assignValidatorToValidatingView(parentView, R.id.age_value,
+			 * R.string.age, new NumberValidator(context));
+			 */
 			assignValidatorToValidatingView(parentView, R.id.descriptionBox,
 					R.string.description, new MinLengthValidator(context, 0));
 			assignValidatorToValidatingView(parentView, R.id.location,
@@ -112,19 +110,21 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("title", title.getText());
 		jsonObject.put("description", descriptionBox.getText());
-		jsonObject.put("time_start", FieldsParsingUtils.getTime(start_date
+		jsonObject.put("time_due", FieldsParsingUtils.getTime(start_date
 				.getText().toString(), start_time.getText().toString()));
-		jsonObject.put("fee",
+		jsonObject.put("reward",
 				FieldsParsingUtils.parsePrice(price.getText().toString()));
-		jsonObject.put("mode", FieldsParsingUtils
-				.parseSwitchOnlineOffline(this.switch_online_inperson
-						.isChecked()));
-		jsonObject.put("visibility", FieldsParsingUtils
-				.parseSwitchPrivatePublic(this.private_public_switch
-						.isChecked()));
-		jsonObject.put("location", edt_input_place.getText().toString());
 		
-			jsonObject.put("category", this.category.getText().toString()
+		  jsonObject.put("mode", FieldsParsingUtils
+		  .parseSwitchOnlineOffline(this.switch_online_inperson .isChecked()));
+/*
+		 * jsonObject.put("visibility", FieldsParsingUtils
+		 * .parseSwitchPrivatePublic(this.private_public_switch .isChecked()));
+		 */
+
+		jsonObject.put("location", edt_input_place.getText().toString());
+
+		jsonObject.put("category", this.category.getText().toString()
 				.toLowerCase());
 		return jsonObject;
 	}

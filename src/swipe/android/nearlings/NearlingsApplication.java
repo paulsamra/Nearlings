@@ -8,6 +8,7 @@ import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
+import swipe.android.DatabaseHelpers.UserReviewDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
@@ -15,6 +16,7 @@ import swipe.android.nearlings.MessagesSync.NearlingsSyncHelper;
 import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
+import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -57,7 +59,7 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-	public static final boolean DEVELOPER_MODE = true;
+	public static final boolean DEVELOPER_MODE = false;
 	private GoogleApiClient mGoogleApiClient;
 
 	private LocationRequest mLocationRequest;
@@ -113,6 +115,8 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		SendRequestStrategyManager.register(new EventsDetailsRequest(this));
 		SendRequestStrategyManager.register(new GroupsRequest(this));
 		SendRequestStrategyManager.register(new NeedsOffersRequest(this));
+		SendRequestStrategyManager.register(new UserReviewsRequest(this));
+
 
 		SendRequestStrategyManager.register(new NeedsDetailsRequest(this));
 
@@ -147,7 +151,8 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		DatabaseCommandManager.register(new EventsDatabaseHelper());
 		DatabaseCommandManager.register(new GroupsDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsOfferDatabaseHelper());
-
+		DatabaseCommandManager.register(new UserReviewDatabaseHelper());
+		
 	}
 
 	public static void initImageLoader(Context context) {
