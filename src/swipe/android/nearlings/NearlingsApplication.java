@@ -66,11 +66,11 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 
 	NearlingsSyncHelper helper;
 	// paypal stuff
-	private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
+	private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
 
 	// note that these credentials will differ between live & sandbox
 	// environments.
-	private static final String CONFIG_CLIENT_ID = "credential from developer.paypal.com";
+	private static final String CONFIG_CLIENT_ID = "ARd1qxBEIiA16h2AGXwUYIotADloQCu4Z98yc2XDJTCw6165CEl8L6i6QpSe";
 
 	public static final int REQUEST_CODE_PAYMENT = 1;
 	public static final int REQUEST_CODE_FUTURE_PAYMENT = 2;

@@ -66,7 +66,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 			String title = arg1.getString(arg1
 					.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
 			drawMarker(location, title, String.valueOf(arg1.getDouble(arg1
-					.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_PRICE))),
+					.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_REWARD))),
 					String.valueOf(i));
 			bc.include(location);
 			arg1.moveToNext();

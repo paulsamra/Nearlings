@@ -90,9 +90,8 @@ public class CreateEventActivity extends FragmentActivity implements
 			if (eventFormViewAdapter.areAllViewsValid()) {
 				submitEvent();
 			} else {
-				DialogManager
-				.showOkDialog(this, "OK",
-						"Network Error", getString(R.string.network_error));
+				DialogManager.showOkDialog(this, "OK", "Network Error",
+						getString(R.string.network_error));
 			}
 			break;
 		default:
@@ -130,10 +129,10 @@ public class CreateEventActivity extends FragmentActivity implements
 
 				JSONObject result1 = new JSONObject(s);
 
-				if (result1.get("error") != null) {
-					DialogManager.showOkDialog(this,
-							"OK", "Error", (String) (result1.get("error")));
-return;
+				if (result1.get("error") != null && !result1.equals("null")) {
+					DialogManager.showOkDialog(this, "OK", "Error",
+							(String) (result1.get("error")));
+					return;
 				} else {
 					// we're good
 					Intent intent = new Intent(this, HomeActivity.class);
@@ -141,17 +140,15 @@ return;
 					DialogManager.createSingleButtonDialogWithIntent(this,
 							"Ok", "Event Created",
 							"Event was successfully created!", intent, true);
-	}
+				}
 
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		DialogManager
-				.showOkDialog(this, "OK",
-						"Network Error", getString(R.string.network_error));
+		DialogManager.showOkDialog(this, "OK", "Network Error",
+				getString(R.string.network_error));
 
 	}
-	
-	
+
 }

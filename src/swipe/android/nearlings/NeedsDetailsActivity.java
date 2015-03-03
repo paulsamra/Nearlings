@@ -18,6 +18,7 @@ import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
 import swipe.android.nearlings.json.cancelOffer.CancelOfferResponse;
 import swipe.android.nearlings.json.changeStateResponse.MarkAsAssignedResponse;
 import swipe.android.nearlings.json.changeStateResponse.MarkAsUnderwayResponse;
+import swipe.android.nearlings.json.changeStateResponse.PaymentMadeResponse;
 import swipe.android.nearlings.sync.NearlingsSyncAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,8 +28,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -47,6 +50,8 @@ import com.edbert.library.sendRequest.SendRequestInterface;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.edbert.library.utils.ListUtils;
 import com.edbert.library.utils.MapUtils;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
@@ -140,12 +145,12 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 						} else {
 							String payPalId = jo.getJSONObject("response")
 									.getString("id");
-
 							// String doer_id =
 							// getIntent().getExtras().getString(NearlingsApplication.DOER_ID);
 							// Log.d("CONFIRM", s);
 							// data.getStringExtra(name)
-							markAsAssigned(doerID);
+							sendPaymentConfirm(payPalId);
+							// markAsAssigned(doerID);
 						}
 
 					} catch (JSONException e) {
@@ -158,11 +163,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 				// Log.i(TAG, "The user canceled.");
 			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
 				generateAlertPaymentInvalid();
-				/*
-				 * Log.i( TAG,
-				 * "An invalid Payment or PayPalConfiguration was submitted. Please see the docs."
-				 * );
-				 */
+
 			}
 		}
 
@@ -274,6 +275,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 			}
 		});
 	}
+
 	public void assignedClickToMarkBegin() {
 		doActionButton.setText("Click to mark need as begun.");
 		doActionButton.setBackgroundColor(Color.GREEN);
@@ -357,7 +359,8 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 		doActionButton.setEnabled(true);
 	}
 
-	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false, isAssignedTo = false;;
+	boolean isCreator = false, offerIsAvailable = false, madeAnOffer = false,
+			isAssignedTo = false;;
 
 	public void setUpRoles() {
 		c.moveToFirst();
@@ -381,10 +384,11 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 		int assignedToIndex = c
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ASSIGNED_TO);
 		int assignedToID = c.getInt(assignedToIndex);
-		if(String.valueOf(assignedToID).equals(SessionManager.getInstance(this).getUserID())){
+		if (String.valueOf(assignedToID).equals(
+				SessionManager.getInstance(this).getUserID())) {
 
 			isAssignedTo = true;
-		}else{
+		} else {
 			isAssignedTo = false;
 		}
 		// /now query offers database
@@ -447,12 +451,95 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 		} else if (state.equals(Needs.CLOSED)) {
 			// set as closed
 			disableFlowButton("Need is closed.");
+		} else if (state.equals(Needs.PENDING_PAYMENT)) {
+			disableFlowButton("The payment is currently pending.");
+
+		} else if (state.equals(Needs.NEEDS_LOCKED_IN)) {
+			if (isCreator) {
+				payNowWithPaypal();
+			} else {
+				disableFlowButton("Owner has accepted your offer. Waiting for payment.");
+			}
 		} else {
 			disableFlowButton("Oops! Couldn't load data. Try again.");
 		}
 
 	}
 
+	public void payNowWithPaypal() {
+
+		doActionButton.setText("Pay now with Paypal");
+		doActionButton.setBackgroundColor(Color.parseColor("#003087"));
+		doActionButton.setTextColor(Color.WHITE);
+		doActionButton.setEnabled(true);
+		doActionButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Cursor cursor = generateCursor();
+				cursor.moveToFirst();
+				int status_index = cursor
+						.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS);
+				String assigned_to_id  = cursor
+						.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_ASSIGNED_TO));
+
+				String state = cursor.getString(status_index);
+
+				String selectionClause = NeedsOfferDatabaseHelper.COLUMN_CREATED_BY + " = ?";
+				String[] selectionArgs = { "" };
+				selectionArgs[0] = assigned_to_id;
+				Cursor cursorOfBids = NeedsDetailsActivity.this
+						.getContentResolver()
+						.query(NearlingsContentProvider
+								.contentURIbyTableName(NeedsOfferDatabaseHelper.TABLE_NAME),
+								NeedsOfferDatabaseHelper.COLUMNS, selectionClause,
+								selectionArgs, null);
+				
+				cursorOfBids.moveToFirst();
+				DatabaseUtils.dumpCursor(cursorOfBids);
+				double price = Double.valueOf(cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE)));
+				//String id_of_doer = cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_CREATED_BY));
+				
+				double service =  Math.round( Math.min( Math.max( 0.15*price, 0.50 ), 10.00));
+				
+				final double  finalPrice = price + service;
+				final String  item_for_payapal = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
+
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(NeedsDetailsActivity.this);
+
+					builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+							goToPaypal(finalPrice, item_for_payapal);
+						//	MakeOfferActivity.this.finish();
+						}
+					});
+					builder.setTitle("Confirm");
+					builder.setMessage("You will pay $" + price + " along with a $" + service + " fee. \n Total: $"+ finalPrice);
+				
+				AlertDialog alert = builder.create();
+				alert.show();
+				
+		
+			}
+		});
+	}
+public void goToPaypal(double price, String item){
+	PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(
+			price, item, PayPalPayment.PAYMENT_INTENT_SALE);
+
+	Intent intent = new Intent(NeedsDetailsActivity.this, PaymentActivity.class);
+
+	// send the same configuration for restart resiliency
+	intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
+			NearlingsApplication.paypalConfig);
+
+	intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+	NeedsDetailsActivity.this.startActivityForResult(intent,
+			NearlingsApplication.REQUEST_CODE_PAYMENT);
+}
 	public Cursor generateOffersCursor() {
 
 		String selectionClause = NeedsOfferDatabaseHelper.COLUMN_CREATED_BY
@@ -529,6 +616,8 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 			assignedResponse((MarkAsAssignedResponse) result);
 		} else if (result != null && result instanceof MarkAsUnderwayResponse) {
 			underwayResponse((MarkAsUnderwayResponse) result);
+		} else if (result != null && result instanceof PaymentMadeResponse) {
+			paymentResponse((PaymentMadeResponse) result);
 		} else {
 			// unknown error
 		}
@@ -540,7 +629,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 	public void setSourceRequestHelper() {
 		helpers.add(new NeedsDetailsRequest(this));
 		helpers.add(new NeedsOffersRequest(this));
-		 helpers.add(new UserReviewsRequest(this));
+		helpers.add(new UserReviewsRequest(this));
 	}
 
 	public void onRefresh() {
@@ -564,8 +653,8 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 				syncFinishedFlag());
 		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
 		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
-		
-		String user_id = c.getString(c.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY));
+		String user_id = c.getString(c
+				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY));
 		b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
 		((NearlingsApplication) this.getApplication()).getSyncHelper()
 				.performSync(b);
@@ -577,6 +666,26 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 
 	public String syncFinishedFlag() {
 		return MESSAGES_FINISH_FLAG;
+	}
+
+	public void sendPaymentConfirm(String paypalId) {
+		try {
+			JSONObject body = new JSONObject();
+
+			body.put("status", "paid");
+			body.put("paypal_id", paypalId);
+			
+			Log.d("Paypal_id", paypalId);
+			Map<String, String> headers = SessionManager.getInstance(
+					NeedsDetailsActivity.this).defaultSessionHeaders();
+
+			new PutDataWebTask<PaymentMadeResponse>(NeedsDetailsActivity.this,
+					PaymentMadeResponse.class, true).execute(SessionManager
+					.getInstance(NeedsDetailsActivity.this).changeStateURL(id),
+					MapUtils.mapToString(headers), body.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void markAsAssigned(String doerID) {
@@ -617,22 +726,52 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 	}
 
 	public void markToBeDone() {
-	
+
 		Intent intent = new Intent(NeedsDetailsActivity.this,
-					SubmitForCompletionActivity.class);
-			Bundle extras = new Bundle();
-			int title_index = c
-					.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
-			String title = c.getString(title_index);
-			extras.putString("title", title);
-			int id_index = c
-					.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID);
-			String id = c.getString(id_index);
-			extras.putString("id", id);
+				SubmitForCompletionActivity.class);
+		Bundle extras = new Bundle();
+		int title_index = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
+		String title = c.getString(title_index);
+		extras.putString("title", title);
+		int id_index = c
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_ID);
+		String id = c.getString(id_index);
+		extras.putString("id", id);
 
-			intent.putExtras(extras);
-			startActivity(intent);
+		intent.putExtras(extras);
+		startActivity(intent);
 
+	}
+
+	public void paymentResponse(PaymentMadeResponse result) {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		if (result.isValid()) {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+							NeedsDetailsActivity.this.onRefresh();
+						}
+					});
+			builder.setTitle("Success!");
+			builder.setMessage("Payment is pending.");
+		} else {
+
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+						}
+					});
+			builder.setTitle("Error");
+			builder.setMessage(result.getError());
+		}
+
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 	public void assignedResponse(MarkAsAssignedResponse result) {
@@ -700,8 +839,8 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 	public static void setDoerID(String id) {
 		doerID = id;
 	}
-	
-	public void setButtonReviewTask(){
+
+	public void setButtonReviewTask() {
 		doActionButton.setText("Click to review user");
 		doActionButton.setBackgroundColor(Color.CYAN);
 		doActionButton.setTextColor(Color.WHITE);
@@ -713,10 +852,10 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 				reviewTask();
 			}
 		});
-	
-	
+
 	}
-	public void reviewTask(){
+
+	public void reviewTask() {
 		Intent intent = new Intent(NeedsDetailsActivity.this,
 				SubmitReviewOfUserActivity.class);
 		Bundle extras = new Bundle();
@@ -729,7 +868,6 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 		String id = c.getString(id_index);
 		extras.putString("need_id", id);
 
-		
 		int title_index = c
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
 		String title = c.getString(title_index);

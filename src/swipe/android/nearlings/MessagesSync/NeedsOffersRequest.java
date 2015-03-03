@@ -36,7 +36,7 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker;
 
 public class NeedsOffersRequest extends
 		NearlingsRequest<JsonNeedsOffersResponse> {
-	public static final String BUNDLE_ID = "id";
+	public static final String BUNDLE_ID = "offer_id";
 
 	public NeedsOffersRequest(Context c) {
 		super(c);

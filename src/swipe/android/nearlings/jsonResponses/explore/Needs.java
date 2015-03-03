@@ -15,7 +15,8 @@ public class Needs{
 	public void setDue_date(long due_date) {
 		this.due_date = due_date;
 	}
-	String user, user_thumbnail, title, description, status, reward; 
+	String user, user_thumbnail, title, description, status;
+	float reward; 
 	String id;
 	/*NearlingsTime created_at, due_date;
 	public NearlingsTime getCreated_at() {
@@ -66,10 +67,10 @@ public class Needs{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getReward() {
+	public float getReward() {
 		return reward;
 	}
-	public void setReward(String reward) {
+	public void setReward(float reward) {
 		this.reward = reward;
 	}
 	public double getLatitude() {

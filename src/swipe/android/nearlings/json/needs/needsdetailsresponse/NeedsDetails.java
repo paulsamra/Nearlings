@@ -3,7 +3,7 @@ package swipe.android.nearlings.json.needs.needsdetailsresponse;
 public class NeedsDetails{
 	int id;
 	String title, description, status, category;
-	int reward;
+	float reward;
 	String ratetype;
 	int offercount, starting, ending, group_id, created_by, assigned_to, commentcount;
 	String address1, address2,city, state;
@@ -40,10 +40,10 @@ public class NeedsDetails{
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public int getReward() {
+	public float getReward() {
 		return reward;
 	}
-	public void setReward(int reward) {
+	public void setReward(float reward) {
 		this.reward = reward;
 	}
 	public String getRatetype() {

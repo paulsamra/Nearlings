@@ -1,58 +1,37 @@
 package swipe.android.nearlings;
 
-import java.util.ArrayList;
 import java.util.Map;
 
-import org.json.JSONException;
+import org.json.JSONObject;
 
-import com.edbert.library.network.GetDataWebTask;
-import com.edbert.library.network.PostDataWebTask;
-import com.edbert.library.utils.MapUtils;
-import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalService;
-import com.paypal.android.sdk.payments.PaymentActivity;
-import com.paypal.android.sdk.payments.PaymentConfirmation;
-
-import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
-import swipe.android.nearlings.MessagesSync.MessagesRequest;
 import swipe.android.nearlings.MessagesSync.Needs;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
-import swipe.android.nearlings.events.EventsContainerFragment;
-import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.JsonNeedsOffersResponse;
-import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.NeedsOffers;
-import swipe.android.nearlings.jsonResponses.login.JsonBidsResponse;
-import swipe.android.nearlings.jsonResponses.login.JsonLoginResponse;
-import swipe.android.nearlings.jsonResponses.register.Bids;
-import swipe.android.nearlings.jsonResponses.register.Users;
-import swipe.android.nearlings.viewAdapters.BidsViewAdapter;
-import swipe.android.nearlings.viewAdapters.EventsListAdapter;
-import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
+import swipe.android.nearlings.json.changeStateResponse.LockPaymentResponse;
 import swipe.android.nearlings.viewAdapters.NeedsOffersListAdapter;
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+
+import com.edbert.library.network.AsyncTaskCompleteListener;
+import com.edbert.library.network.PostDataWebTask;
+import com.edbert.library.network.PutDataWebTask;
+import com.edbert.library.utils.MapUtils;
 
 //TODO: Probably want to abstract this
 public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
-		implements Refreshable {
+		implements Refreshable, AsyncTaskCompleteListener<LockPaymentResponse> {
 
 	ListView lView;
 	/*
@@ -128,9 +107,9 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void requestSync(Bundle b) {
-
-		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
-		super.requestSync(b);
+//Log.d("ID", id);
+b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+	super.requestSync(b);
 	}
 
 	@Override
@@ -185,27 +164,61 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 		double price = Double.valueOf(cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE)));
 		String id_of_doer = cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_CREATED_BY));
 		
-		
-		
 		String item = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
+// 
+		Map<String, String> headers = SessionManager.getInstance(this.getActivity())
+				.defaultSessionHeaders();
+		try {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("status", "paynow");
+			jsonObject.put("doer_id", id_of_doer);
+			String body = jsonObject.toString();
+			Log.d("ID", this.id);
+			
+		
+			new PutDataWebTask<LockPaymentResponse>( (AsyncTaskCompleteListener<LockPaymentResponse> )this,this.getActivity(),
+					LockPaymentResponse.class, true).execute(SessionManager
+					.getInstance(this.getActivity()).changeStateURL(this.id), MapUtils
+					.mapToString(headers), body);
 
-		PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(
-				price, item, PayPalPayment.PAYMENT_INTENT_SALE);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
 
-		Intent intent = new Intent(this.getActivity(), PaymentActivity.class);
+	@Override
+	public void onTaskComplete(LockPaymentResponse result) {
 
-		// send the same configuration for restart resiliency
-		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
-				NearlingsApplication.paypalConfig);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+		if (result.isValid()) {
 
-		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					dialog.cancel();
+					((NeedsDetailsActivity)NeedsBidsFragment.this.getActivity()).onRefresh();
+				//	MakeOfferActivity.this.finish();
+				}
+			});
+			builder.setTitle("Success!");
+			builder.setMessage("You have successfully chosen an offer. Please wait for the refresh to pay.");
+		}else{
 
-		intent.putExtra(NearlingsApplication.DOER_ID, "TESTING");
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					dialog.cancel();
+					//MakeOfferActivity.this.finish();
+				}
+			});
+			builder.setTitle("Error");
+			builder.setMessage(result.getError());
+		}
 
-		//Log.d("HI",this.getActivity().getClass().getSimpleName());
-		((NeedsDetailsActivity) this.getActivity()).setDoerID(id_of_doer);
-		this.getActivity().startActivityForResult(intent,
-				NearlingsApplication.REQUEST_CODE_PAYMENT);
+		
+
+
+		AlertDialog alert = builder.create();
+		alert.show();
 
 	}
 	

@@ -39,7 +39,7 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker;
 
 public class UserReviewsRequest extends
 		NearlingsRequest<JsonUserReviewsResponse> {
-	public static final String BUNDLE_ID = "id";
+	public static final String BUNDLE_ID = "reviews_id";
 
 	public UserReviewsRequest(Context c) {
 		super(c);

@@ -8,5 +8,8 @@ public class Needs{
 	public static final String UNDERWAY = "underway";
 	public static final String ACCEPTED = "accepted";
 	public static final String CLOSED = "closed";
+	public static final String NEEDS_LOCKED_IN = "paynow";
+
+	public static final String PENDING_PAYMENT = "paid";
 	
 }

@@ -158,8 +158,8 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_USER,
 					tempNearlingTask.getUser());
 
-			cv.put(NeedsDetailsDatabaseHelper.COLUMN_PRICE,
-					String.valueOf(tempNearlingTask.getReward()));
+			cv.put(NeedsDetailsDatabaseHelper.COLUMN_REWARD,
+					tempNearlingTask.getReward());
 
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_NAME,
 					"Location data");

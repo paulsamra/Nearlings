@@ -206,7 +206,7 @@ public class NeedsDetailsViewAdapter implements
 		int title_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
 		int price_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_PRICE);
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_REWARD);
 		int date_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE);
 		int author_index = cursor

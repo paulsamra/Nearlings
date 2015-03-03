@@ -113,7 +113,7 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	public void setSourceRequestHelper() {
 		helpers.add(new NeedsDetailsRequest(this.getActivity()));
 		helpers.add(new NeedsOffersRequest(this.getActivity()));
-		helpers.add(new UserReviewsRequest(this.getActivity()));
+	//	helpers.add(new UserReviewsRequest(this.getActivity()));
 	}
 
 	@Override
@@ -192,11 +192,12 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	public void requestSync(Bundle b) {
 		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
 		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+
 		c = generateCursor();
 		c.moveToFirst();
 		String user_id = c.getString(c.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY));
 		b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
-		b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
+		
 		super.requestSync(b);
 	}
 

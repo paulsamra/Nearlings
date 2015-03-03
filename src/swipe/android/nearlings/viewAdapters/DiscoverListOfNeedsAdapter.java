@@ -88,7 +88,7 @@ public class DiscoverListOfNeedsAdapter extends CursorAdapter {
 		int status_index = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS);
 		int price_index = cursor
-				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_PRICE);
+				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_REWARD);
 		int author_picture_url = cursor
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL);
 
@@ -101,7 +101,7 @@ public class DiscoverListOfNeedsAdapter extends CursorAdapter {
 		holder.task.setText(cursor.getString(task_index));
 
 		// holder.location.setText(cursor.getString(location_index));
-		holder.price.setText("$" + cursor.getString(price_index));
+		holder.price.setText("$" + cursor.getFloat(price_index));
 		// holder.status.setText(cursor.getString(status_index));
 
 		ImageLoader.getInstance().displayImage(

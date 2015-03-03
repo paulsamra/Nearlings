@@ -33,7 +33,7 @@ import com.gabesechan.android.reusable.location.ProviderLocationTracker;
 public class NeedsDetailsRequest extends
 		NearlingsRequest<JsonNeedsDetailResponse> {
 
-	public static final String BUNDLE_ID = "ID";
+	public static final String BUNDLE_ID = "Request_ID";
 	public static final String BUNDLE_KEYWORDS = "KEYWORDS";
 	public static final String BUNDLE_REWARD = "REWARD";
 	public static final String BUNDLE_STATUS = "STATUS";
