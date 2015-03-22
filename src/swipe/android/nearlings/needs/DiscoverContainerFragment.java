@@ -8,6 +8,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 
 import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsApplication;
@@ -19,6 +21,7 @@ import swipe.android.nearlings.discover.options.SearchOptionsFilter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.location.Location;
@@ -290,7 +293,21 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 										.commitPendingChanges();
 								DiscoverContainerFragment.this
 										.updateSearchString();
-
+								SessionManager
+										.getInstance(
+												DiscoverContainerFragment.this
+														.getActivity())
+										.setSearchString(
+												SessionManager
+														.getInstance(
+																DiscoverContainerFragment.this
+																		.getActivity())
+														.getExploreCategory());
+								DiscoverContainerFragment.this.searchTerm
+										.setText(SessionManager.getInstance(
+												DiscoverContainerFragment.this
+														.getActivity())
+												.getSearchString());
 								requestUpdate();
 							}
 						});
@@ -414,4 +431,5 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				.getHelper(NeedsExploreRequest.class));
 
 	}
+
 }

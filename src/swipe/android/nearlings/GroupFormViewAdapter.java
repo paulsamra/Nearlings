@@ -68,7 +68,7 @@ public class GroupFormViewAdapter extends BaseFormAdapter {
 	Button category;
 	EditText title, descriptionBox;
 	Switch switch_online_inperson, private_public_switch;
-
+EditText price;
 	private void initializeViews(Bundle savedInstanceState) {
 		category = (Button) rootView.findViewById(R.id.category_button);
 		setUpCategory(category, R.array.group_types);
@@ -80,6 +80,8 @@ public class GroupFormViewAdapter extends BaseFormAdapter {
 				.findViewById(R.id.switch_online_inperson);
 		private_public_switch = (Switch) rootView
 				.findViewById(R.id.private_public_switch);
+		price = (EditText) rootView.findViewById(R.id.price);
+		setUpPriceListener(price);
 	}
 
 	
@@ -112,8 +114,8 @@ public class GroupFormViewAdapter extends BaseFormAdapter {
 		//
 		jsonObject.put("category", this.category.getText().toString()
 				.toLowerCase());
-		/*jsonObject.put("dues",
-				FieldsParsingUtils.parsePrice(dues.getText().toString()));*/
+		jsonObject.put("dues",
+				FieldsParsingUtils.parsePrice(price.getText().toString()));
 		jsonObject.put("mode", FieldsParsingUtils
 				.parseSwitchOnlineOffline(this.switch_online_inperson
 						.isChecked()));

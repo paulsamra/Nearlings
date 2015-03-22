@@ -3,12 +3,12 @@ package swipe.android.nearlings.json.events;
 
 import java.util.ArrayList;
 
+import swipe.android.nearlings.json.NearlingsResponse;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonEventsResponse implements JsonResponseInterface {
+public class JsonEventsResponse extends NearlingsResponse {
 	ArrayList<Events> events;
-	String error;
-
 
 	public ArrayList<Events> getEvents() {
 		return events;
@@ -18,16 +18,4 @@ public class JsonEventsResponse implements JsonResponseInterface {
 		this.events = events;
 	}
 
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-
-	@Override
-	public boolean isValid() {
-		return error == null;
-	}
 }

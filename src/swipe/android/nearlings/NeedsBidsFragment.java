@@ -7,8 +7,11 @@ import org.json.JSONObject;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.Needs;
+import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
+import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
 import swipe.android.nearlings.json.changeStateResponse.LockPaymentResponse;
+import swipe.android.nearlings.json.changeStateResponse.MarkAsAssignedResponse;
 import swipe.android.nearlings.viewAdapters.NeedsOffersListAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -107,9 +110,27 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void requestSync(Bundle b) {
-//Log.d("ID", id);
-b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
-	super.requestSync(b);
+		b.putString(NeedsDetailsRequest.BUNDLE_ID, this.id);
+		b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
+
+	//	Cursor c = generateCursor();
+		
+				String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
+		String[] mSelectionArgs = { "" };
+		mSelectionArgs[0] = id;
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+				NeedsDetailsDatabaseHelper.COLUMNS, selectionClause,
+				mSelectionArgs, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE
+						+ " DESC");
+		Cursor c =cursorLoader.loadInBackground();
+		c.moveToFirst();
+		String user_id = c.getString(c.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_CREATED_BY));
+		b.putString(UserReviewsRequest.BUNDLE_ID, user_id);
+		
+		super.requestSync(b);
 	}
 
 	@Override
@@ -143,7 +164,8 @@ b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
 		String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
 		String[] selectionArgs = { "" };
 		selectionArgs[0] = this.id;
-		Cursor cursor = this.getActivity()
+		Cursor cursor = this
+				.getActivity()
 				.getContentResolver()
 				.query(NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
@@ -155,71 +177,80 @@ b.putString(NeedsOffersRequest.BUNDLE_ID, this.id);
 
 		String state = cursor.getString(status_index);
 
-		if(!state.equals(Needs.AVAILABLE) ){
+		if (!state.equals(Needs.AVAILABLE)) {
 			return;
 		}
 		Cursor cursorOfBids = generateCursor();
 		cursorOfBids.moveToFirst();
-		
-		double price = Double.valueOf(cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE)));
-		String id_of_doer = cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_CREATED_BY));
-		
-		String item = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
-// 
-		Map<String, String> headers = SessionManager.getInstance(this.getActivity())
-				.defaultSessionHeaders();
+
+		double price = Double.valueOf(cursorOfBids.getString(cursorOfBids
+				.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE)));
+		String id_of_doer = cursorOfBids.getString(cursorOfBids
+				.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_CREATED_BY));
+
+		String item = cursor.getString(cursor
+				.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
+		//
+		Map<String, String> headers = SessionManager.getInstance(
+				this.getActivity()).defaultSessionHeaders();
 		try {
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("status", "paynow");
 			jsonObject.put("doer_id", id_of_doer);
 			String body = jsonObject.toString();
 			Log.d("ID", this.id);
-			
-		
-			new PutDataWebTask<LockPaymentResponse>( (AsyncTaskCompleteListener<LockPaymentResponse> )this,this.getActivity(),
-					LockPaymentResponse.class, true).execute(SessionManager
-					.getInstance(this.getActivity()).changeStateURL(this.id), MapUtils
-					.mapToString(headers), body);
+			Log.d("BODY", body);
+
+			new PutDataWebTask<LockPaymentResponse>(
+					(AsyncTaskCompleteListener<LockPaymentResponse>) this,
+					this.getActivity(), LockPaymentResponse.class, true)
+					.execute(SessionManager.getInstance(this.getActivity())
+							.changeStateURL(this.id), MapUtils
+							.mapToString(headers), body);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
 	@Override
 	public void onTaskComplete(LockPaymentResponse result) {
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+		if (result == null) {
+			NearlingsApplication.displayNetworkNotAvailableDialog(this.getActivity());
+			return;
+		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				this.getActivity());
 		if (result.isValid()) {
 
-			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					dialog.cancel();
-					((NeedsDetailsActivity)NeedsBidsFragment.this.getActivity()).onRefresh();
-				//	MakeOfferActivity.this.finish();
-				}
-			});
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+							((NeedsDetailsActivity) NeedsBidsFragment.this
+									.getActivity()).onRefresh();
+							// MakeOfferActivity.this.finish();
+						}
+					});
 			builder.setTitle("Success!");
 			builder.setMessage("You have successfully chosen an offer. Please wait for the refresh to pay.");
-		}else{
+		} else {
 
-			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					dialog.cancel();
-					//MakeOfferActivity.this.finish();
-				}
-			});
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int item) {
+							dialog.cancel();
+							// MakeOfferActivity.this.finish();
+						}
+					});
 			builder.setTitle("Error");
 			builder.setMessage(result.getError());
 		}
-
-		
-
 
 		AlertDialog alert = builder.create();
 		alert.show();
 
 	}
-	
+
 }

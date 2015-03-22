@@ -21,6 +21,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,8 +89,8 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 
 	private FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
 
-	
 	public static final String DOER_ID = "DOER_ID";
+
 	protected synchronized void buildGoogleApiClient() {
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
 				.addConnectionCallbacks(this)
@@ -117,7 +118,6 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		SendRequestStrategyManager.register(new NeedsOffersRequest(this));
 		SendRequestStrategyManager.register(new UserReviewsRequest(this));
 
-
 		SendRequestStrategyManager.register(new NeedsDetailsRequest(this));
 
 		super.registerActivityLifecycleCallbacks(this);
@@ -125,7 +125,7 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		Intent intent = new Intent(this, PayPalService.class);
 		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
 		startService(intent);
-		
+
 	}
 
 	public static PayPalPayment generatePayObject(double price, String item,
@@ -152,7 +152,7 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		DatabaseCommandManager.register(new GroupsDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsOfferDatabaseHelper());
 		DatabaseCommandManager.register(new UserReviewDatabaseHelper());
-		
+
 	}
 
 	public static void initImageLoader(Context context) {
@@ -194,7 +194,7 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 
 		LocationServices.FusedLocationApi.requestLocationUpdates(
 				mGoogleApiClient, mLocationRequest, this);
-		
+
 	}
 
 	@Override
@@ -219,8 +219,10 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 	public void onActivityResumed(Activity activity) {
 		// mLocationClient.connect();
 		mGoogleApiClient.connect();
-
+		lastAct = activity;
 	}
+
+	Activity lastAct;
 
 	@Override
 	public void onActivityPaused(Activity activity) {
@@ -298,6 +300,54 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 
 	public static synchronized NearlingsApplication getInstance() {
 		return mInstance;
+	}
+
+	public void logoutDialog() {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(lastAct);
+
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				((NearlingsApplication) NearlingsApplication.this).logout();
+			}
+		});
+		builder.setTitle("Error");
+		builder.setMessage("Token expired or invalid. Please log in again.");
+
+		AlertDialog alert = builder.create();
+		alert.setCancelable(false);
+		alert.setCanceledOnTouchOutside(false);
+		alert.show();
+	}
+
+	public void logout() {
+		NearlingsApplication nap = (NearlingsApplication) this
+				.getApplicationContext();
+		NearlingsSyncHelper nsh = nap.getSyncHelper();
+
+		ContentResolver.cancelSync(nsh.getAccount(), nsh.getAuthority());
+
+		// clear all data tables
+		NearlingsContentProvider a = new NearlingsContentProvider();
+		a.clearAllTables();
+
+		// reset to neutral
+		SessionManager.getInstance(this).resetTables();
+
+		// need to clear all userpref
+		SessionManager.getInstance(this).clearUserPref();
+
+		// notfiy user of logged out?
+		// ((MainActivity)).reloadNavigationDrawer();
+		Intent i = new Intent(lastAct, LoginActivity.class);
+		// Closing all the Activities
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+		// Add new Flag to start new Activity
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+		// Staring Login Activity
+		this.startActivity(i);
 	}
 
 }

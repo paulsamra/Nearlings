@@ -1,15 +1,11 @@
 package swipe.android.nearlings.json.jsonSubmitReviewResponse;
 
+import swipe.android.nearlings.json.NearlingsResponse;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonSubmitReviewResponse implements JsonResponseInterface {
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
+public class JsonSubmitReviewResponse extends NearlingsResponse {
+	
 
 	public int getResult() {
 		return result;
@@ -19,12 +15,8 @@ public class JsonSubmitReviewResponse implements JsonResponseInterface {
 		this.result = result;
 	}
 
-	String error;
+	
 	int result;
 
-	@Override
-	public boolean isValid() {
-		return (error == null);
-	}
 
 }

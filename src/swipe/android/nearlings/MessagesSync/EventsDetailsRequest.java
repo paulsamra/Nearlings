@@ -1,5 +1,7 @@
 package swipe.android.nearlings.MessagesSync;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,10 +51,15 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 
 		if (b.containsKey(BUNDLE_RADIUS)) {
 			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
-		}
-		if (b.containsKey(BUNDLE_VISIBILITY)) {
+		}/*else{
+			url+=("radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
+		}*/
+		/*if (b.containsKey(BUNDLE_VISIBILITY)) {
 			url += ("&visibility=" + b.getFloat(BUNDLE_VISIBILITY));
-		}
+		}*/
+	
+		url += ("&limit=" + SessionManager.SEARCH_LIMIT);
+		
 		if (b.containsKey(BUNDLE_CATEGORY)) {
 			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
 		}
@@ -67,7 +74,11 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 			url += ("&location_type=" + b.getString(BUNDLE_LOCATION_TYPE));
 		}
 		if (b.containsKey(BUNDLE_LOCATION)) {
-			url += ("&location=" + b.getString(BUNDLE_LOCATION));
+			try {
+				url += ("&location=" + URLEncoder.encode(b.getString(BUNDLE_LOCATION), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 		if (b.containsKey(BUNDLE_TIME_START)) {
 			url += ("&time_start=" + b.getString(BUNDLE_TIME_START));

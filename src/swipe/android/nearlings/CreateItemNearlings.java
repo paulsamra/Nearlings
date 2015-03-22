@@ -90,8 +90,8 @@ public class CreateItemNearlings extends AsyncTask<String, Void, String> {
 			
 			createRequest.remove("location");
 			
-				createRequest.put("latitude", locations[0]);
-				createRequest.put("longitude", locations[1]);
+				createRequest.put("latitude", locations[1]);
+				createRequest.put("longitude", locations[0]);
 				Log.d("BODY", createRequest.toString());
 				Log.d("URL", params[0]);
 				 s = SocketOperator.getInstance(String.class).httpPostRequest(params[0], MapUtils.stringToMap(params[1]), createRequest.toString());

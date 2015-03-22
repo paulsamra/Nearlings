@@ -2,9 +2,12 @@ package swipe.android.nearlings.json.alerts;
 
 import java.util.ArrayList;
 
+import swipe.android.nearlings.json.NearlingsResponse;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonMessagesResponse implements JsonResponseInterface {
+public class JsonMessagesResponse  extends NearlingsResponse{
+
 	ArrayList<Alerts> alerts;
 
 	@Override

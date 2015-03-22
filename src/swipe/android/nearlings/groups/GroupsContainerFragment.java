@@ -232,7 +232,21 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 										.commitPendingChanges();
 								GroupsContainerFragment.this
 										.updateSearchString();
-
+								SessionManager
+								.getInstance(
+										GroupsContainerFragment.this
+												.getActivity())
+								.setSearchString(
+										SessionManager
+												.getInstance(
+														GroupsContainerFragment.this
+																.getActivity())
+												.getExploreCategory());
+								GroupsContainerFragment.this.searchTerm
+								.setText(SessionManager.getInstance(
+										GroupsContainerFragment.this
+												.getActivity())
+										.getSearchString());
 								requestUpdate();
 							}
 						});

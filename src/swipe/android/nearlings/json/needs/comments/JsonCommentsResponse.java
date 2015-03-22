@@ -2,11 +2,12 @@ package swipe.android.nearlings.json.needs.comments;
 
 import java.util.ArrayList;
 
+import swipe.android.nearlings.json.NearlingsResponse;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonCommentsResponse implements JsonResponseInterface {
+public class JsonCommentsResponse extends NearlingsResponse{
 	ArrayList<Comments> comments;
-	String error;
 
 	public ArrayList<Comments> getComments() {
 		return comments;
@@ -16,16 +17,4 @@ public class JsonCommentsResponse implements JsonResponseInterface {
 		this.comments = comments;
 	}
 
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-
-	@Override
-	public boolean isValid() {
-		return error == null;
-	}
 }

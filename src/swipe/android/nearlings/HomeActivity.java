@@ -27,31 +27,7 @@ public class HomeActivity extends ActionBarActivity {
 	public void logout() {
 		NearlingsApplication nap = (NearlingsApplication) this
 				.getApplicationContext();
-		NearlingsSyncHelper nsh = nap.getSyncHelper();
-
-		ContentResolver.cancelSync(nsh.getAccount(), nsh.getAuthority());
-
-		// clear all data tables
-		NearlingsContentProvider a = new NearlingsContentProvider();
-		a.clearAllTables();
-
-		// reset to neutral
-		SessionManager.getInstance(this).resetTables();
-
-		// need to clear all userpref
-		SessionManager.getInstance(this).clearUserPref();
-
-		// notfiy user of logged out?
-		// ((MainActivity)).reloadNavigationDrawer();
-		Intent i = new Intent(this, LoginActivity.class);
-		// Closing all the Activities
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-		// Add new Flag to start new Activity
-		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-		// Staring Login Activity
-		this.startActivity(i);
+		nap.logout();
 	}
 	private void setupActionBar() {
 	//    ActionBar actionBar = this.getActionBar();

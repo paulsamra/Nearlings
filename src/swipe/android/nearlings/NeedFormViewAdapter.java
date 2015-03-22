@@ -84,6 +84,8 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 				.findViewById(R.id.switch_online_inperson);
 		private_public_switch = (Switch) rootView
 				.findViewById(R.id.private_public_switch);
+ValidatingEditText title = (ValidatingEditText) rootView.findViewById(R.id.title);
+title.setHint("Need Name");
 	}
 
 	@Override

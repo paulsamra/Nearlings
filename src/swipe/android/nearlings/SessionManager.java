@@ -3,6 +3,7 @@ package swipe.android.nearlings;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.content.Context;
@@ -62,13 +63,16 @@ public class SessionManager {
 	private static final String EVENTS_SEARCH_CATEGORY = "EVENTS_SEARCH_CATEGORY";
 	private static final String EVENTS_TIME_START = "EVENTS_TIME_START";
 	// Default values
-	public static final float DEFAULT_SEARCH_RADIUS = 20.0f;
+	public static final float DEFAULT_SEARCH_RADIUS = 40.0f;
 	public static final String DEFAULT_STRING = "";
+	public static final String DEFAULT_STRING_DISPLAY = "All";
 	public static final int DEFAULT_VALUE = -1;
 	private static final String USER_ID = "USER_ID";
 
 	public static final float SEARCH_DEFAULT_NUMERIC = -1;
 	private static final String URL_BASE = "https://nearlings.com/api/2014-10-13";
+
+	public static final int SEARCH_LIMIT = 30;
 
 	public String loginURL() {
 		return URL_BASE + "/login";
@@ -149,7 +153,7 @@ public class SessionManager {
 	}
 
 	public String exploreNeedsURL() {
-		return URL_BASE + "/explore";
+		return URL_BASE + "/needs";
 	}
 
 	public String exploreEventsURL() {
@@ -158,6 +162,9 @@ public class SessionManager {
 
 	public String createEventURL() {
 		return URL_BASE + "/event";
+	}
+	public String createGroupURL() {
+		return URL_BASE + "/group";
 	}
 
 	public String commentsURL(String id) {
@@ -227,10 +234,10 @@ public class SessionManager {
 		headers.put("Accept", "application/json");
 		headers.put("Content-Type", "application/json");
 		headers.put("Cache-Control", "none");
-
 		if (getAuthToken() != null && getAuthToken() != "") {
-			// Log.e("Token", getAuthToken());
+			
 			headers.put("token", getAuthToken());
+			
 		}
 		return headers;
 	}

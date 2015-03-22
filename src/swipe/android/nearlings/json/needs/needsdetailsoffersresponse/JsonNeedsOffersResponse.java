@@ -2,9 +2,11 @@ package swipe.android.nearlings.json.needs.needsdetailsoffersresponse;
 
 import java.util.ArrayList;
 
+import swipe.android.nearlings.json.NearlingsResponse;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonNeedsOffersResponse implements JsonResponseInterface {
+public class JsonNeedsOffersResponse extends NearlingsResponse{
 
 	public ArrayList<NeedsOffers> getOffers() {
 		return offers;
@@ -14,19 +16,6 @@ public class JsonNeedsOffersResponse implements JsonResponseInterface {
 		this.offers = offers;
 	}
 
-	String error;
 	ArrayList<NeedsOffers> offers;
 
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-
-	@Override
-	public boolean isValid() {
-		return error == null;
-	}
 }

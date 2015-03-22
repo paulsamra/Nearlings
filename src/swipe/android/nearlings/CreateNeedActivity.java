@@ -93,12 +93,8 @@ public class CreateNeedActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.save_need:
 			// submitEvent();
-			if (needFormViewAdapter.areAllViewsValid()) {
 				submitEvent();
-			} else {
-				DialogManager.showOkDialog(this, "OK", "Network Error",
-						getString(R.string.network_error));
-			}
+			
 			break;
 		default:
 			onBackPressed();
@@ -114,8 +110,7 @@ public class CreateNeedActivity extends FragmentActivity implements
 
 		try {
 			JSONObject jsonObject = this.needFormViewAdapter.getJSONObject();
-		/*	jsonObject.put("group_id", SessionManager.getInstance(this)
-					.getMemberships()[0]);*/
+
 			new CreateItemNearlings(this).execute(
 					SessionManager.getInstance(this).createNeedURL(),
 					MapUtils.mapToString(headers), jsonObject.toString());
@@ -129,16 +124,17 @@ public class CreateNeedActivity extends FragmentActivity implements
 
 	@Override
 	public void onTaskComplete(Object result) {
-		try {
-			if (result != null) {
+		if (result != null) {
+			try {
 
 				String s = (String) result;
 
 				JSONObject result1 = new JSONObject(s);
 
-				if(result1.get("error") == null || result1.get("error").equals("null")){
-					
-				
+				if (result1.get("error") == null
+						|| result1.get("error").equals("null")
+						|| result1.get("error").equals(null)) {
+
 					// we're good
 					Intent intent = new Intent(this, HomeActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -146,20 +142,21 @@ public class CreateNeedActivity extends FragmentActivity implements
 							"Ok", "Need Created",
 							"Need was successfully created!", intent, true);
 
-				}else{
-						DialogManager.showOkDialog(this, "OK", "Error",
-								 (result1.get("error").toString()));
-						return;
-					
+				} else {
+					DialogManager.showOkDialog(this, "OK", "Error",
+							(result1.get("error").toString()));
+					return;
+
 				}
 
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		DialogManager.showOkDialog(this, "OK", "Network Error",
-				getString(R.string.network_error));
+		} else {
+			DialogManager.showOkDialog(this, "OK", "Network Error",
+					getString(R.string.network_error));
 
+		}
 	}
 
 }

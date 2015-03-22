@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 
-public abstract class FragmentFrameHolderActivity extends FragmentActivity{
+public abstract class FragmentFrameHolderActivity extends NearlingsActivity{
 	
         @Override
         protected void onCreate(Bundle savedInstanceState) {

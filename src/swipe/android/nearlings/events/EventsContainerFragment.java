@@ -16,6 +16,7 @@ import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
+import swipe.android.nearlings.groups.GroupsContainerFragment;
 import swipe.android.nearlings.needs.DiscoverContainerFragment;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -310,7 +311,21 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 										.commitPendingChanges();
 								EventsContainerFragment.this
 										.updateSearchString();
-
+								SessionManager
+								.getInstance(
+										EventsContainerFragment.this
+												.getActivity())
+								.setSearchString(
+										SessionManager
+												.getInstance(
+														EventsContainerFragment.this
+																.getActivity())
+												.getExploreCategory());
+								EventsContainerFragment.this.searchTerm
+								.setText(SessionManager.getInstance(
+										EventsContainerFragment.this
+												.getActivity())
+										.getSearchString());
 								requestUpdate();
 							}
 						});

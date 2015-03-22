@@ -2,15 +2,13 @@ package swipe.android.nearlings.json.changeStateResponse;
 
 import java.util.ArrayList;
 
+import swipe.android.nearlings.json.NearlingsResponse;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class MarkAsUnderwayResponse implements JsonResponseInterface {
-	String result, error;
+public class MarkAsUnderwayResponse  extends NearlingsResponse{
+	String result;
 
-	@Override
-	public boolean isValid() {
-		return (error == null);
-	}
 
 	public String getResult() {
 		return result;
@@ -19,14 +17,5 @@ public class MarkAsUnderwayResponse implements JsonResponseInterface {
 	public void setResult(String result) {
 		this.result = result;
 	}
-
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-
 
 }

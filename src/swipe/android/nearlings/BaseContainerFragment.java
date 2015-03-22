@@ -248,7 +248,7 @@ public abstract class BaseContainerFragment extends
 		String searchString = SessionManager.getInstance(this.getActivity())
 				.getSearchString();
 
-		if (searchString != null && searchString != SessionManager.DEFAULT_STRING) {
+		if (!searchString.equals(null) && !searchString.equals(SessionManager.DEFAULT_STRING)) {
 			searchTerm.setText(searchString);
 		} else {
 			searchTerm.setText("All");

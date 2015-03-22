@@ -343,7 +343,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 
 				new PostDataWebTask<CancelOfferResponse>(
 						NeedsDetailsActivity.this, CancelOfferResponse.class,
-						false).execute(
+						true).execute(
 						SessionManager.getInstance(NeedsDetailsActivity.this)
 								.cancelOfferURL(id), MapUtils
 								.mapToString(headers));
@@ -500,9 +500,10 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 				double price = Double.valueOf(cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_OFFER_PRICE)));
 				//String id_of_doer = cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_CREATED_BY));
 				
-				double service =  Math.round( Math.min( Math.max( 0.15*price, 0.50 ), 10.00));
-				
-				final double  finalPrice = price + service;
+				double service =Math.min( Math.max( 0.15*price, 0.50 ), 10.00);
+				double roundOffService = (double) Math.round(service* 100) / 100;
+				roundOffService = round(200.3456, 2);
+				final double  finalPrice = price + roundOffService;
 				final String  item_for_payapal = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
 
 				
@@ -519,11 +520,21 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 					builder.setMessage("You will pay $" + price + " along with a $" + service + " fee. \n Total: $"+ finalPrice);
 				
 				AlertDialog alert = builder.create();
+				alert.setCancelable(false);
+				alert.setCanceledOnTouchOutside(false);
 				alert.show();
 				
 		
 			}
 		});
+	}
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
 	}
 public void goToPaypal(double price, String item){
 	PayPalPayment thingToBuy = NearlingsApplication.generatePayObject(
@@ -604,6 +615,8 @@ public void goToPaypal(double price, String item){
 		}
 
 		AlertDialog alert = builder.create();
+		alert.setCancelable(false);
+		alert.setCanceledOnTouchOutside(false);
 		alert.show();
 	}
 
@@ -771,6 +784,8 @@ public void goToPaypal(double price, String item){
 		}
 
 		AlertDialog alert = builder.create();
+		alert.setCancelable(false);
+		alert.setCanceledOnTouchOutside(false);
 		alert.show();
 	}
 
@@ -801,6 +816,8 @@ public void goToPaypal(double price, String item){
 		}
 
 		AlertDialog alert = builder.create();
+		alert.setCancelable(false);
+		alert.setCanceledOnTouchOutside(false);
 		alert.show();
 	}
 
@@ -831,6 +848,8 @@ public void goToPaypal(double price, String item){
 		}
 
 		AlertDialog alert = builder.create();
+		alert.setCancelable(false);
+		alert.setCanceledOnTouchOutside(false);
 		alert.show();
 	}
 
@@ -872,6 +891,7 @@ public void goToPaypal(double price, String item){
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_TITLE);
 		String title = c.getString(title_index);
 		extras.putString("title", title);
+		extras.putBoolean("close", true);
 		intent.putExtras(extras);
 		startActivity(intent);
 	}

@@ -1,5 +1,7 @@
 package swipe.android.nearlings.MessagesSync;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +46,8 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 
 		if (b.containsKey(BUNDLE_RADIUS)) {
 			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
+		}else{
+			url+=("radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
 		}
 
 		if (b.containsKey(BUNDLE_CATEGORY)) {
@@ -57,9 +61,15 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 			url += ("&location_type=" + b.getString(BUNDLE_LOCATION_TYPE));
 		}
 		if (b.containsKey(BUNDLE_LOCATION)) {
-			url += ("&location=" + b.getString(BUNDLE_LOCATION));
+			try {
+				url += ("&location=" + URLEncoder.encode(b.getString(BUNDLE_LOCATION), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
-
+		url += ("&visibility=" + "public");
+		url += ("&limit=" + SessionManager.SEARCH_LIMIT);
+		
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
 				url, headers);
 		if (o == null)

@@ -70,12 +70,9 @@ public class CreateGroupActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.save_event:
 			// submitEvent();
-			if (groupFormViewAdapter.areAllViewsValid()) {
+		
 				submitEvent();
-			} else {
-				DialogManager.showOkDialog(this, "OK", "Network Error",
-						getString(R.string.network_error));
-			}
+			
 			break;
 		default:
 			onBackPressed();
@@ -91,9 +88,8 @@ public class CreateGroupActivity extends FragmentActivity implements
 
 		try {
 			JSONObject jsonObject = this.groupFormViewAdapter.getJSONObject();
-
 			new CreateItemNearlings(this).execute(
-					SessionManager.getInstance(this).createEventURL(),
+					SessionManager.getInstance(this).createGroupURL(),
 					MapUtils.mapToString(headers), jsonObject.toString());
 
 		} catch (Exception e) {
@@ -105,32 +101,39 @@ public class CreateGroupActivity extends FragmentActivity implements
 
 	@Override
 	public void onTaskComplete(Object result) {
-		try {
-			if (result != null) {
+		if (result != null) {
+			try {
 
 				String s = (String) result;
 
 				JSONObject result1 = new JSONObject(s);
 
-				if (result1.get("error") != null) {
-					DialogManager.showOkDialog(this, "OK", "Error",
-							(String) (result1.get("error")));
-					return;
-				} else {
+				if (result1.get("error") == null
+						|| result1.get("error").equals("null")
+						|| result1.get("error").equals(null)) {
+
+					// we're good
 					Intent intent = new Intent(this, HomeActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					DialogManager.createSingleButtonDialogWithIntent(this, "Ok", "Group Created", "Group was successfully created!", intent, true);
-				
+					DialogManager.createSingleButtonDialogWithIntent(this,
+							"Ok", "Group Created",
+							"Group was successfully created!", intent, true);
+
+				} else {
+					DialogManager.showOkDialog(this, "OK", "Error",
+							(result1.get("error").toString()));
+					return;
+
 				}
 
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+		} else {
+			DialogManager.showOkDialog(this, "OK", "Network Error",
+					getString(R.string.network_error));
+
 		}
-		DialogManager.showOkDialog(this, "OK", "Network Error",
-				getString(R.string.network_error));
-
 	}
-
 
 }

@@ -50,8 +50,7 @@ public class SearchFilterCategoryOptionsListAdapter extends
 				.getUnselectedIcon());
 		if(item.isSelected() && icon == -1){
 			//if we selected and we dont have an icon, we hilight
-			Log.d("NO ICON", "SETTING FILTER");
-
+			
 			int tint = Color.parseColor("#ff0000");
 			ColorFilter cf = new PorterDuffColorFilter(tint,Mode.OVERLAY);
 

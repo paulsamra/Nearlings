@@ -1,22 +1,15 @@
 package swipe.android.nearlings.jsonResponses.login;
 
+import swipe.android.nearlings.json.NearlingsResponse;
+
 import com.edbert.library.network.sync.JsonResponseInterface;
 
-public class JsonLoginResponse implements JsonResponseInterface{
+public class JsonLoginResponse extends NearlingsResponse{
 
-	@Override
-	public boolean isValid() {
-		return error == null;
-	}
-	 String error, token;
+	 String token;
 	private int userID;
 	
-	public String getError() {
-		return error;
-	}
-	public void setError(String error) {
-		this.error = error;
-	}
+	
 	public String getToken() {
 		return token;
 	}

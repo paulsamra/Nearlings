@@ -24,6 +24,7 @@
 
     <include layout="@layout/private_public_switch" />
 
+    <include layout="@layout/price_layout" />
     <include layout="@layout/location_layout" />
 
     <include layout="@layout/category_layout" />

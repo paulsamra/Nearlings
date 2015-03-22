@@ -1,8 +1,12 @@
 package swipe.android.nearlings;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 
 import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,8 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.edbert.library.sendRequest.SendRequestInterface;
@@ -162,5 +166,18 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		}
 		return;
 	}
+	@Override
+	protected void onReceiveFinish(Context context, Intent intent){
+		updateRefresh(false);
+		boolean b= intent.getExtras().getBoolean(NearlingsSyncAdapter.SESSION_IS_BAD, false);
+		if(b){
+			((NearlingsApplication) this
+					.getActivity().getApplication()).logoutDialog();
+
+			return;
+		}
+		reloadData();
+	}
+	
 
 }

@@ -65,11 +65,11 @@ public class SearchActivity extends Activity implements
 
 			@Override
 			public void onClick(View v) {
-			String s = edt_input_place.getText().toString();
-				if (s == "") {
+				String s = edt_input_place.getText().toString();
+				if (s == "" || s.equals(SessionManager.DEFAULT_STRING_DISPLAY)) {
 					s = SessionManager.DEFAULT_STRING;
 				}
-			
+
 				SessionManager
 						.getInstance(SearchActivity.this)
 						.setSearchLocation(edt_input_place.getText().toString());
@@ -80,7 +80,7 @@ public class SearchActivity extends Activity implements
 			}
 
 		});
-	//	 EditText searchTo = (EditText)findViewById(R.id.medittext);
+		// EditText searchTo = (EditText)findViewById(R.id.medittext);
 		edt_input_place = (EditText) place.findViewById(R.id.edt_input);
 		edt_input_search_item = (EditText) search_item
 				.findViewById(R.id.edt_input);
@@ -126,7 +126,7 @@ public class SearchActivity extends Activity implements
 					}
 				});
 
-	listOfPlaces.setOnItemClickListener(new OnItemClickListener() {
+		listOfPlaces.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -137,10 +137,20 @@ public class SearchActivity extends Activity implements
 				place.setText(s);
 			}
 		});
+
+		
+		edt_input_place.setText(SessionManager.getInstance(SearchActivity.this)
+				.getSearchLocation());
+		String currentItem = SessionManager.getInstance(
+				SearchActivity.this).getSearchString();
+		if(currentItem.equals(null) || currentItem.equals("")){
+			currentItem = SessionManager.DEFAULT_STRING_DISPLAY;
+		}
+		edt_input_search_item.setText(currentItem);
 	}
 
 	@Override
-	public void onTaskComplete(List<HashMap<String, String>>  resultOfGooglePlace) {
+	public void onTaskComplete(List<HashMap<String, String>> resultOfGooglePlace) {
 		// TODO Auto-generated method stub
 
 		// Creating a SimpleAdapter for the AutoCompleteTextView

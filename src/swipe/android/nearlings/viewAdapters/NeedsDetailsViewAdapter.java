@@ -229,7 +229,7 @@ public class NeedsDetailsViewAdapter implements
 				.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_AUTHOR_IMAGE_PREVIEW_URL);
 		String titleString = cursor.getString(title_index);
 		title.setText(titleString);
-		price.setText("$" + String.valueOf(cursor.getDouble(price_index)));
+		price.setText("$" + String.valueOf(cursor.getFloat(price_index)));
 
 		date.setText(FieldsParsingUtils.getTime(cursor.getLong(date_index)));
 

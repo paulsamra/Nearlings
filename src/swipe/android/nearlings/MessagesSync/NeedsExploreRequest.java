@@ -71,6 +71,8 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 		
 		if (b.containsKey(BUNDLE_RADIUS)) {
 			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
+		}else{
+			url+=("radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
 		}
 		if (b.containsKey(BUNDLE_REWARD)) {
 			url += ("&reward=" + b.getFloat(BUNDLE_REWARD));
@@ -96,12 +98,11 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 				url += ("&location=" + b.getString(this.BUNDLE_LOCATION));
 			}
 		}
-		
-		
-		if (b.containsKey(BUNDLE_VISIBILITY)) {
+		url += ("&visibility=" + "public");
+		url += ("&limit=" + SessionManager.SEARCH_LIMIT);
+		/*if (b.containsKey(BUNDLE_VISIBILITY)) {
 			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
-		}
-	//	Log.e("URL", url);
+		}*/
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c, url,
 				headers);
 		if (o == null)
@@ -160,6 +161,7 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_REWARD,
 					tempNearlingTask.getReward());
+			Log.d("Task", Float.toString(	tempNearlingTask.getReward()));
 
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_NAME,
 					"Location data");

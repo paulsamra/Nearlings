@@ -101,9 +101,9 @@ public class EventFormViewAdapter extends BaseFormAdapter {
 
 			assignValidatorToValidatingView(parentView, R.id.title,
 					R.string.title, new MinLengthValidator(context, 1));
-			assignValidatorToValidatingView(parentView, R.id.age_value,
+		/*	assignValidatorToValidatingView(parentView, R.id.age_value,
 					R.string.age, new NumberValidator(context));
-
+*/
 			assignValidatorToValidatingView(parentView, R.id.descriptionBox,
 					R.string.description, new MinLengthValidator(context, 0));
 			assignValidatorToValidatingView(parentView, R.id.location,
