@@ -22,6 +22,7 @@ import android.os.Bundle;
 
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.network.SocketOperator;
+
 public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 	public EventsDetailsRequest(Context c) {
 		super(c);
@@ -39,27 +40,22 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 	public static final String BUNDLE_LOCATION = "LOCATION";
 
 	public static final String BUNDLE_LOCATION_TYPE_ADDRESS = "address";
-	public static final String BUNDLE_LOCATION_TYPE_LATITUDE = "latlng";
+	public static final String BUNDLE_LOCATION_TYPE_COORDINATES = "latlng";
+
+	public static final String BUNDLE_LOCATION_LATITUDE = "lat";
+	public static final String BUNDLE_LOCATION_LONGITUDE = "lng";
+
 	// we will have a base URL as wel
 	@Override
 	public JsonEventsResponse makeRequest(Bundle b) {
 		// this is a request to a url via the socket operator.
-		
+
 		Map<String, String> headers = SessionManager.getInstance(c)
 				.defaultSessionHeaders();
 		String url = SessionManager.getInstance(c).exploreEventsURL() + "?";
 
-		if (b.containsKey(BUNDLE_RADIUS)) {
-			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
-		}/*else{
-			url+=("radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
-		}*/
-		/*if (b.containsKey(BUNDLE_VISIBILITY)) {
-			url += ("&visibility=" + b.getFloat(BUNDLE_VISIBILITY));
-		}*/
-	
 		url += ("&limit=" + SessionManager.SEARCH_LIMIT);
-		
+
 		if (b.containsKey(BUNDLE_CATEGORY)) {
 			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
 		}
@@ -70,21 +66,35 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 			url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
 		}
 
-		if (b.containsKey(BUNDLE_LOCATION_TYPE)) {
-			url += ("&location_type=" + b.getString(BUNDLE_LOCATION_TYPE));
-		}
-		if (b.containsKey(BUNDLE_LOCATION)) {
-			try {
-				url += ("&location=" + URLEncoder.encode(b.getString(BUNDLE_LOCATION), "UTF-8"));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-		}
 		if (b.containsKey(BUNDLE_TIME_START)) {
 			url += ("&time_start=" + b.getString(BUNDLE_TIME_START));
 		}
-		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c, url,
-				headers);
+
+		// location. We must have all these together.
+		if (b.containsKey(BUNDLE_LOCATION_TYPE)
+				&& b.containsKey(BUNDLE_RADIUS)
+				&& (b.containsKey(BUNDLE_LOCATION) || (b
+						.containsKey(this.BUNDLE_LOCATION_LATITUDE) && b
+						.containsKey(this.BUNDLE_LOCATION_LONGITUDE)))) {
+			String locationtype = b.getString(BUNDLE_LOCATION_TYPE);
+			url += ("&location_type=" + locationtype);
+			// address lat or lng
+			if (locationtype.equals(this.BUNDLE_LOCATION_TYPE_COORDINATES)) {
+				String latitude = b.getString(this.BUNDLE_LOCATION_LATITUDE);
+				String longitude = b.getString(this.BUNDLE_LOCATION_LONGITUDE);
+				url += ("&location=" + latitude + "," + longitude);
+			} else {
+				url += ("&location=" + b.getString(this.BUNDLE_LOCATION));
+			}
+			// radius
+			if (b.containsKey(BUNDLE_RADIUS)) {
+				url += ("&radius=" + b.getFloat(BUNDLE_RADIUS));
+			} else {
+				url += ("&radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
+			}
+		}
+		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
+				url, headers);
 		if (o == null)
 			return null;
 		return (JsonEventsResponse) o;
@@ -97,71 +107,79 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 	}
 
 	@Override
-	public boolean writeToDatabase(Bundle extras, Context c, JsonEventsResponse o) {
+	public boolean writeToDatabase(Bundle extras, Context c,
+			JsonEventsResponse o) {
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)
 			return false;
 
-		NearlingsContentProvider
-				.clearSingleTable(new EventsDatabaseHelper());
-		
+		NearlingsContentProvider.clearSingleTable(new EventsDatabaseHelper());
+
 		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getEvents().size(); i++) {
-			
+
 			Events tempEvent = o.getEvents().get(i);
 			ContentValues cv = new ContentValues();
-cv.put(EventsDatabaseHelper.COLUMN_ID, tempEvent.getId());
-	//	cv.put(EventsDatabaseHelper.COLUMN_AUTHOR, tempEvent.get);
-		//cv.put(EventsDatabaseHelper.COLUMN_LOCATION_NAME, tempEvent.get);
-		
-		cv.put(EventsDatabaseHelper.COLUMN_LOCATION_LATITUDE, tempEvent.getLatitude());
-		cv.put(EventsDatabaseHelper.COLUMN_LOCATION_LONGITUDE,tempEvent.getLongitude());
-		
-		
-		/*String myString = tempEvent.getStartdate().getDate();
-		DateFormat format = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss.SSSSSS");
-		Date date;
-		try {
-			date = format.parse(myString);
+			cv.put(EventsDatabaseHelper.COLUMN_ID, tempEvent.getId());
+			// cv.put(EventsDatabaseHelper.COLUMN_AUTHOR, tempEvent.get);
+			// cv.put(EventsDatabaseHelper.COLUMN_LOCATION_NAME, tempEvent.get);
 
-			DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
-			String formattedDate = df2.format(date);
+			cv.put(EventsDatabaseHelper.COLUMN_LOCATION_LATITUDE,
+					tempEvent.getLatitude());
+			cv.put(EventsDatabaseHelper.COLUMN_LOCATION_LONGITUDE,
+					tempEvent.getLongitude());
 
-			cv.put(EventsDatabaseHelper.COLUMN_DATE_OF_EVENT, formattedDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}*/
-		cv.put(EventsDatabaseHelper.COLUMN_DATE_OF_EVENT, tempEvent.getStartdate());
-		cv.put(EventsDatabaseHelper.COLUMN_TIME_OF_EVENT, tempEvent.getStarttime());
+			/*
+			 * String myString = tempEvent.getStartdate().getDate(); DateFormat
+			 * format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSSSSS");
+			 * Date date; try { date = format.parse(myString);
+			 * 
+			 * DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+			 * String formattedDate = df2.format(date);
+			 * 
+			 * cv.put(EventsDatabaseHelper.COLUMN_DATE_OF_EVENT, formattedDate);
+			 * } catch (ParseException e) { e.printStackTrace(); }
+			 */
+			cv.put(EventsDatabaseHelper.COLUMN_DATE_OF_EVENT,
+					tempEvent.getStartdate());
+			cv.put(EventsDatabaseHelper.COLUMN_TIME_OF_EVENT,
+					tempEvent.getStarttime());
 
-		cv.put(EventsDatabaseHelper.COLUMN_RSVP_COUNT, Integer.valueOf(tempEvent.getRsvpcount()));
-		cv.put(EventsDatabaseHelper.COLUMN_CATEGORY, tempEvent.getCategory());
+			cv.put(EventsDatabaseHelper.COLUMN_RSVP_COUNT,
+					Integer.valueOf(tempEvent.getRsvpcount()));
+			cv.put(EventsDatabaseHelper.COLUMN_CATEGORY,
+					tempEvent.getCategory());
 
-		cv.put(EventsDatabaseHelper.COLUMN_FEE, Double.valueOf(tempEvent.getFee()));
-		cv.put(EventsDatabaseHelper.COLUMN_DESCRIPTION, tempEvent.getDescription());
-		cv.put(EventsDatabaseHelper.COLUMN_VISIBILITY, tempEvent.getVisibility());
+			cv.put(EventsDatabaseHelper.COLUMN_FEE,
+					Double.valueOf(tempEvent.getFee()));
+			cv.put(EventsDatabaseHelper.COLUMN_DESCRIPTION,
+					tempEvent.getDescription());
+			cv.put(EventsDatabaseHelper.COLUMN_VISIBILITY,
+					tempEvent.getVisibility());
 
-		/*cv.put(EventsDatabaseHelper.COLUMN_TIME_SENT,
-				System.currentTimeMillis());*/
-	/*	cv.put(EventsDatabaseHelper.COLUMN_RSVP_STATUS,
-				NearlingEvent.RSVP_DONT_KNOW);*/
-		cv.put(EventsDatabaseHelper.COLUMN_EVENT_NAME,
-				tempEvent.getTitle());
-		
-		cv.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
-		c.getContentResolver()
-				.insert(NearlingsContentProvider
-						.contentURIbyTableName(EventsDatabaseHelper.TABLE_NAME),
-						cv);
-		mValueList.add(cv);
+			/*
+			 * cv.put(EventsDatabaseHelper.COLUMN_TIME_SENT,
+			 * System.currentTimeMillis());
+			 */
+			/*
+			 * cv.put(EventsDatabaseHelper.COLUMN_RSVP_STATUS,
+			 * NearlingEvent.RSVP_DONT_KNOW);
+			 */
+			cv.put(EventsDatabaseHelper.COLUMN_EVENT_NAME, tempEvent.getTitle());
 
-	}
+			cv.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
+			c.getContentResolver()
+					.insert(NearlingsContentProvider
+							.contentURIbyTableName(EventsDatabaseHelper.TABLE_NAME),
+							cv);
+			mValueList.add(cv);
+
+		}
 		ContentValues[] bulkToInsert;
 		bulkToInsert = new ContentValues[mValueList.size()];
 		mValueList.toArray(bulkToInsert);
-		
+
 		c.getContentResolver()
 				.bulkInsert(
 						NearlingsContentProvider

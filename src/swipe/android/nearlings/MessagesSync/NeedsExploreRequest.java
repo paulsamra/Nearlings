@@ -32,8 +32,8 @@ public class NeedsExploreRequest extends NearlingsRequest<JsonExploreResponse> {
 	public static final String BUNDLE_CATEGORY = "CATEGORY";
 	public static final String BUNDLE_TIME_AGO = "TIME_AGO";
 	public static final String BUNDLE_TIME_END = "TIME_END";
-public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
-	
+	public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
+
 	public static final String BUNDLE_RADIUS = "RADIUS";
 	public static final String BUNDLE_LOCATION_TYPE = "LOCATION_TYPE";
 	public static final String BUNDLE_LOCATION = "LOCATION";
@@ -48,63 +48,67 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 		super(c);
 	}
 
-	
-
 	@Override
 	public JsonExploreResponse makeRequest(Bundle b) {
 		Map<String, String> headers = SessionManager.getInstance(c)
 				.defaultSessionHeaders();
 		String url = SessionManager.getInstance(c).exploreNeedsURL() + "?";
 
-		
-		//default the statuses to whatever 
+		// default the statuses to whatever
 		if (b.containsKey(BUNDLE_STATUS)) {
 			url += ("&status=" + b.getString(BUNDLE_STATUS));
 		}
-		//TODO
 		if (b.containsKey(BUNDLE_TIME_END)) {
 			url += ("&time_end=" + b.getLong(BUNDLE_TIME_END));
 		}
 		if (b.containsKey(BUNDLE_TIME_AGO)) {
 			url += ("&time_ago=" + b.getLong(BUNDLE_TIME_AGO));
 		}
-		
-		if (b.containsKey(BUNDLE_RADIUS)) {
-			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
-		}else{
-			url+=("radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
-		}
+
 		if (b.containsKey(BUNDLE_REWARD)) {
 			url += ("&reward=" + b.getFloat(BUNDLE_REWARD));
 		}
-	
+
 		if (b.containsKey(BUNDLE_CATEGORY)) {
 			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
 		}
-		
+
 		if (b.containsKey(BUNDLE_KEYWORDS)) {
 			url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
 		}
 
-		if (b.containsKey(BUNDLE_LOCATION_TYPE)) {
+		// location. We must have all these together.
+		if (b.containsKey(BUNDLE_LOCATION_TYPE)
+				&& b.containsKey(BUNDLE_RADIUS)
+				&& (b.containsKey(BUNDLE_LOCATION) || (b
+						.containsKey(this.BUNDLE_LOCATION_LATITUDE) && b
+						.containsKey(this.BUNDLE_LOCATION_LONGITUDE)))) {
 			String locationtype = b.getString(BUNDLE_LOCATION_TYPE);
 			url += ("&location_type=" + locationtype);
-			
-			if(locationtype.equals(this.BUNDLE_LOCATION_TYPE_COORDINATES)){
+			// address lat or lng
+			if (locationtype.equals(this.BUNDLE_LOCATION_TYPE_COORDINATES)) {
 				String latitude = b.getString(this.BUNDLE_LOCATION_LATITUDE);
 				String longitude = b.getString(this.BUNDLE_LOCATION_LONGITUDE);
-				url += ("&location=" +latitude + "," + longitude);
-			}else{
+				url += ("&location=" + latitude + "," + longitude);
+			} else {
 				url += ("&location=" + b.getString(this.BUNDLE_LOCATION));
 			}
+			// radius
+			if (b.containsKey(BUNDLE_RADIUS)) {
+				url += ("&radius=" + b.getFloat(BUNDLE_RADIUS));
+			} else {
+				url += ("&radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
+			}
 		}
+
 		url += ("&visibility=" + "public");
 		url += ("&limit=" + SessionManager.SEARCH_LIMIT);
-		/*if (b.containsKey(BUNDLE_VISIBILITY)) {
-			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
-		}*/
-		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c, url,
-				headers);
+		/*
+		 * if (b.containsKey(BUNDLE_VISIBILITY)) { url += ("&visibility=" +
+		 * b.getString(BUNDLE_VISIBILITY)); }
+		 */
+		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
+				url, headers);
 		if (o == null)
 			return null;
 
@@ -119,7 +123,8 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 	ProviderLocationTracker tracker;
 
 	@Override
-	public boolean writeToDatabase(Bundle b,Context context, JsonExploreResponse o) {
+	public boolean writeToDatabase(Bundle b, Context context,
+			JsonExploreResponse o) {
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)
@@ -127,8 +132,7 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 
 		NearlingsContentProvider
 				.clearSingleTable(new NeedsDetailsDatabaseHelper());
-		
-	
+
 		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getTasks().size(); i++) {
 			Needs tempNearlingTask = o.getTasks().get(i);
@@ -138,30 +142,28 @@ public static final String BUNDLE_VISIBILITY = "BUNDLE_VISIBILITY";
 					tempNearlingTask.getId());
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_TITLE,
 					tempNearlingTask.getTitle());
-			
-			/*String myString = tempNearlingTask.getDue_date().getDate();
-			DateFormat format = new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss.SSSSSS");
-			Date date;
-			try {
-				date = format.parse(myString);
 
-				DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
-				String formattedDate = df2.format(date);
-
-				cv.put(MessagesDatabaseHelper.COLUMN_DATE, formattedDate);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-*/
-			cv.put(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE,tempNearlingTask.getDue_date());
+			/*
+			 * String myString = tempNearlingTask.getDue_date().getDate();
+			 * DateFormat format = new SimpleDateFormat(
+			 * "yyyy-MM-dd HH:mm:ss.SSSSSS"); Date date; try { date =
+			 * format.parse(myString);
+			 * 
+			 * DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+			 * String formattedDate = df2.format(date);
+			 * 
+			 * cv.put(MessagesDatabaseHelper.COLUMN_DATE, formattedDate); }
+			 * catch (ParseException e) { // TODO Auto-generated catch block
+			 * e.printStackTrace(); }
+			 */
+			cv.put(NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE,
+					tempNearlingTask.getDue_date());
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_USER,
 					tempNearlingTask.getUser());
 
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_REWARD,
 					tempNearlingTask.getReward());
-			Log.d("Task", Float.toString(	tempNearlingTask.getReward()));
+			Log.d("Task", Float.toString(tempNearlingTask.getReward()));
 
 			cv.put(NeedsDetailsDatabaseHelper.COLUMN_LOCATION_NAME,
 					"Location data");

@@ -35,6 +35,12 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 	public static final String BUNDLE_LOCATION_TYPE = "LOCATION_TYPE";
 	public static final String BUNDLE_LOCATION = "LOCATION";
 
+	public static final String BUNDLE_LOCATION_TYPE_ADDRESS = "address";
+	public static final String BUNDLE_LOCATION_TYPE_COORDINATES = "latlng";
+
+	public static final String BUNDLE_LOCATION_LATITUDE = "lat";
+	public static final String BUNDLE_LOCATION_LONGITUDE = "lng";
+
 	// we will have a base URL as wel
 	@Override
 	public JsonGroupsResponse makeRequest(Bundle b) {
@@ -44,12 +50,6 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 				.defaultSessionHeaders();
 		String url = SessionManager.getInstance(c).exploreGroupsURL() + "?";
 
-		if (b.containsKey(BUNDLE_RADIUS)) {
-			url += ("radius=" + b.getFloat(BUNDLE_RADIUS));
-		}else{
-			url+=("radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
-		}
-
 		if (b.containsKey(BUNDLE_CATEGORY)) {
 			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
 		}
@@ -57,19 +57,33 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 			url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
 		}
 
-		if (b.containsKey(BUNDLE_LOCATION_TYPE)) {
-			url += ("&location_type=" + b.getString(BUNDLE_LOCATION_TYPE));
-		}
-		if (b.containsKey(BUNDLE_LOCATION)) {
-			try {
-				url += ("&location=" + URLEncoder.encode(b.getString(BUNDLE_LOCATION), "UTF-8"));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+		// location. We must have all these together.
+		if (b.containsKey(BUNDLE_LOCATION_TYPE)
+				&& b.containsKey(BUNDLE_RADIUS)
+				&& (b.containsKey(BUNDLE_LOCATION) || (b
+						.containsKey(this.BUNDLE_LOCATION_LATITUDE) && b
+						.containsKey(this.BUNDLE_LOCATION_LONGITUDE)))) {
+			String locationtype = b.getString(BUNDLE_LOCATION_TYPE);
+			url += ("&location_type=" + locationtype);
+			// address lat or lng
+			if (locationtype.equals(this.BUNDLE_LOCATION_TYPE_COORDINATES)) {
+				String latitude = b.getString(this.BUNDLE_LOCATION_LATITUDE);
+				String longitude = b.getString(this.BUNDLE_LOCATION_LONGITUDE);
+				url += ("&location=" + latitude + "," + longitude);
+			} else {
+				url += ("&location=" + b.getString(this.BUNDLE_LOCATION));
+			}
+			// radius
+			if (b.containsKey(BUNDLE_RADIUS)) {
+				url += ("&radius=" + b.getFloat(BUNDLE_RADIUS));
+			} else {
+				url += ("&radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
 			}
 		}
+
 		url += ("&visibility=" + "public");
 		url += ("&limit=" + SessionManager.SEARCH_LIMIT);
-		
+
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
 				url, headers);
 		if (o == null)
@@ -83,7 +97,7 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 	}
 
 	@Override
-	public boolean writeToDatabase(Bundle b,Context c, JsonGroupsResponse o) {
+	public boolean writeToDatabase(Bundle b, Context c, JsonGroupsResponse o) {
 		// for now we will write random dummy stuff to the database
 
 		if (o == null)
@@ -105,20 +119,18 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 			cv.put(GroupsDatabaseHelper.COLUMN_LOCATION_LONGITUDE,
 					tempGroups.getLongitude());
 
-		/*	String myString = tempGroups.getCreated_at().getDate();
-			DateFormat format = new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss.SSSSSS");
-			Date date;
-			try {
-				date = format.parse(myString);
-
-				DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
-				String formattedDate = df2.format(date);
-
-				cv.put(GroupsDatabaseHelper.COLUMN_DATE, formattedDate);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}*/
+			/*
+			 * String myString = tempGroups.getCreated_at().getDate();
+			 * DateFormat format = new SimpleDateFormat(
+			 * "yyyy-MM-dd HH:mm:ss.SSSSSS"); Date date; try { date =
+			 * format.parse(myString);
+			 * 
+			 * DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+			 * String formattedDate = df2.format(date);
+			 * 
+			 * cv.put(GroupsDatabaseHelper.COLUMN_DATE, formattedDate); } catch
+			 * (ParseException e) { e.printStackTrace(); }
+			 */
 			cv.put(GroupsDatabaseHelper.COLUMN_DATE, tempGroups.getCreated_at());
 
 			cv.put(GroupsDatabaseHelper.COLUMN_VISIBILITY,
@@ -156,6 +168,5 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 
 	// for testing purposes
 	public static int counter = 0;
-
 
 }

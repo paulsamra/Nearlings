@@ -65,17 +65,22 @@ public class SearchActivity extends Activity implements
 
 			@Override
 			public void onClick(View v) {
-				String s = edt_input_place.getText().toString();
-				if (s == "" || s.equals(SessionManager.DEFAULT_STRING_DISPLAY)) {
+				String s = edt_input_search_item.getText().toString();
+				if (s.equals("") || s.equals(SessionManager.DEFAULT_STRING_DISPLAY)) {
 					s = SessionManager.DEFAULT_STRING;
 				}
 
+				String location = edt_input_place.getText().toString();
+				if (location.equals("") || location.equals(SessionManager.DEFAULT_STRING_DISPLAY)) {
+					location = SessionManager.DEFAULT_STRING;
+				}
 				SessionManager
 						.getInstance(SearchActivity.this)
-						.setSearchLocation(edt_input_place.getText().toString());
+						.setSearchLocation(location);
 				SessionManager.getInstance(SearchActivity.this)
 						.setSearchString(
-								edt_input_search_item.getText().toString());
+								s);
+				SessionManager.getInstance(SearchActivity.this).commitPendingChanges();
 				finish();
 			}
 

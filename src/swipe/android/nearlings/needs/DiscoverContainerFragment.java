@@ -377,8 +377,17 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		}
 		if (sm.getSearchString() != null
 				&& !sm.getSearchString().equals(SessionManager.DEFAULT_STRING)) {
-			b.putString(NeedsExploreRequest.BUNDLE_KEYWORDS,
-					sm.getSearchString());
+			String s = sm.getSearchString();
+
+			try {
+				s = URLEncoder.encode(s, "UTF-8");
+
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} finally {
+				b.putString(NeedsExploreRequest.BUNDLE_KEYWORDS, s);
+			}
+
 		}
 
 		if (sm.getSearchVisibility() != null

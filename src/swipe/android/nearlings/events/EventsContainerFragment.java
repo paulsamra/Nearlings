@@ -4,6 +4,8 @@
  */
 package swipe.android.nearlings.events;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,6 +15,7 @@ import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
+import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
@@ -48,10 +51,10 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
 	public static final String MESSAGES_FINISH_FLAG = EventsContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
-	
+
 	// categories
 	private void setUpFilters(View rootView) {
-		
+
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.search_options_listview_categories);
 		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
@@ -140,7 +143,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 				listOfFilter.get(position).setSelected(!current);
 				String term = listOfFilter.get(position).getSearchTerm();
-				
+
 				if (current) {
 					term = String.valueOf(SessionManager.DEFAULT_VALUE);
 				}
@@ -165,7 +168,8 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 	// privacy
 	private void setUpStatus(View rootView) {
-		final Button b = (Button) rootView.findViewById(R.id.private_public_btn);
+		final Button b = (Button) rootView
+				.findViewById(R.id.private_public_btn);
 		b.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -242,17 +246,19 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			}
 		});
 
-			DatePickerDialog dpd = (DatePickerDialog) this.getActivity().getSupportFragmentManager()
-					.findFragmentByTag(DATEPICKER_START_TAG);
-			if (dpd != null) {
-				dpd.setOnDateSetListener(this);
-			}
-			TimePickerDialog tpd = (TimePickerDialog)  this.getActivity().getSupportFragmentManager()
-					.findFragmentByTag(TIMEPICKER_START_TAG);
-			if (tpd != null) {
-				tpd.setOnTimeSetListener(this);
-			}
-			
+		DatePickerDialog dpd = (DatePickerDialog) this.getActivity()
+				.getSupportFragmentManager()
+				.findFragmentByTag(DATEPICKER_START_TAG);
+		if (dpd != null) {
+			dpd.setOnDateSetListener(this);
+		}
+		TimePickerDialog tpd = (TimePickerDialog) this.getActivity()
+				.getSupportFragmentManager()
+				.findFragmentByTag(TIMEPICKER_START_TAG);
+		if (tpd != null) {
+			tpd.setOnTimeSetListener(this);
+		}
+
 		Calendar now = Calendar.getInstance();
 		int year = now.get(Calendar.YEAR);
 		int month = now.get(Calendar.MONTH); // Note: zero based!
@@ -276,10 +282,9 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 	public void generatePopup() {
 		// custom dialog
-	
+
 		// setup
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				super.context); 
+		AlertDialog.Builder builder = new AlertDialog.Builder(super.context);
 		TextView title = new TextView(super.context);
 
 		title.setPadding(10, 10, 10, 10);
@@ -312,24 +317,25 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 								EventsContainerFragment.this
 										.updateSearchString();
 								SessionManager
-								.getInstance(
-										EventsContainerFragment.this
-												.getActivity())
-								.setSearchString(
-										SessionManager
-												.getInstance(
-														EventsContainerFragment.this
-																.getActivity())
-												.getExploreCategory());
+										.getInstance(
+												EventsContainerFragment.this
+														.getActivity())
+										.setSearchString(
+												SessionManager
+														.getInstance(
+																EventsContainerFragment.this
+																		.getActivity())
+														.getExploreCategory());
 								EventsContainerFragment.this.searchTerm
-								.setText(SessionManager.getInstance(
-										EventsContainerFragment.this
-												.getActivity())
-										.getSearchString());
+										.setText(SessionManager.getInstance(
+												EventsContainerFragment.this
+														.getActivity())
+												.getSearchString());
 								requestUpdate();
 							}
 						});
-LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View dialoglayout = inflater.inflate(R.layout.events_filters_popup,
 				null);
 
@@ -351,25 +357,64 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 		SessionManager sm = SessionManager.getInstance(this.getActivity());
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getLastLocation();
-		if (!sm.getSearchLocation().equals("")) {
-			b.putString(EventsDetailsRequest.BUNDLE_LOCATION,
-					sm.getSearchLocation());
+
+		if (sm.getSearchLocation() != null
+				&& !sm.getSearchLocation().equals("")) {
+			String location_string = sm.getSearchLocation();
+			String url_encode_location = location_string;
+			try {
+				url_encode_location = URLEncoder.encode(location_string,
+						"UTF-8");
+
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} finally {
+				b.putString(EventsDetailsRequest.BUNDLE_LOCATION,
+						url_encode_location);
+			}
+
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
-					NeedsExploreRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS, 20.0f);
+					EventsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
+			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS,
+					SessionManager.DEFAULT_SEARCH_RADIUS);
+		} else if (currentLocation != null) {
+			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
+					EventsDetailsRequest.BUNDLE_LOCATION_TYPE_COORDINATES);
+			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_LATITUDE,
+					String.valueOf(currentLocation.getLatitude()));
+			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_LONGITUDE,
+					String.valueOf(currentLocation.getLongitude()));
+
+			b.putFloat(GroupsRequest.BUNDLE_RADIUS,
+					SessionManager.DEFAULT_SEARCH_RADIUS);
 		}
-	     if(sm.getSearchString() != null && !sm.getSearchString().equals( sm.DEFAULT_STRING)){
-				b.putString(EventsDetailsRequest.BUNDLE_KEYWORDS, sm.getSearchString());
+
+		if (sm.getSearchString() != null
+				&& !sm.getSearchString().equals(SessionManager.DEFAULT_STRING)) {
+			String s = sm.getSearchString();
+
+			try {
+				s = URLEncoder.encode(s, "UTF-8");
+
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} finally {
+				b.putString(GroupsRequest.BUNDLE_KEYWORDS, s);
 			}
-	     
-	     if(sm.getEventCategory() != null && !sm.getEventCategory().equals(sm.DEFAULT_STRING)){
-				b.putString(EventsDetailsRequest.BUNDLE_CATEGORY, sm.getEventCategory());
-			}
-	     
-	   /*  if(sm.getTimeStart() != null && sm.getTimeStart() != sm.DEFAULT_VALUE){
-				b.putString(EventsDetailsRequest.BUNDLE_TIME_START, sm.getTimeStart());
-			}
-		   */
+
+		}
+		if (sm.getEventCategory() != null
+				&& !sm.getEventCategory().equals(sm.DEFAULT_STRING)) {
+			b.putString(EventsDetailsRequest.BUNDLE_CATEGORY,
+					sm.getEventCategory());
+		}
+
+		/*
+		 * if(sm.getTimeStart() != null && sm.getTimeStart() !=
+		 * sm.DEFAULT_VALUE){
+		 * b.putString(EventsDetailsRequest.BUNDLE_TIME_START,
+		 * sm.getTimeStart()); }
+		 */
 
 		super.onRefresh(b);
 	}
@@ -401,11 +446,11 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 
 		if (startTimeLastCalled) {
 			start_time.setText(total);
-		} 
+		}
 	}
-	
+
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
 	}
 
@@ -421,8 +466,8 @@ LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYO
 
 	@Override
 	public void setSourceRequestHelper() {
-			helpers.add(SendRequestStrategyManager
-					.getHelper(EventsDetailsRequest.class));
-		
+		helpers.add(SendRequestStrategyManager
+				.getHelper(EventsDetailsRequest.class));
+
 	}
 }

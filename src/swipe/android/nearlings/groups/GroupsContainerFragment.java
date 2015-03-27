@@ -4,6 +4,8 @@
  */
 package swipe.android.nearlings.groups;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import swipe.android.nearlings.BaseContainerFragment;
@@ -50,7 +52,8 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				.findViewById(R.id.search_options_listview_categories);
 		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
 		Resources res = getResources();
-		TypedArray icons = res.obtainTypedArray(R.array.group_category_types_unchecked);
+		TypedArray icons = res
+				.obtainTypedArray(R.array.group_category_types_unchecked);
 		String[] terms = res.getStringArray(R.array.group_category_types);
 		// Drawable drawable = icons.getDrawable(0);
 
@@ -81,7 +84,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 					SessionManager.getInstance(
 							GroupsContainerFragment.this.getActivity())
 							.setGroupCategory(SessionManager.DEFAULT_STRING);
-				}else{
+				} else {
 					SessionManager.getInstance(
 							GroupsContainerFragment.this.getActivity())
 							.setGroupCategory(term);
@@ -162,39 +165,40 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 	}
 
 	// privacy
-		private void setUpStatus(View rootView) {
-			final Button b = (Button) rootView.findViewById(R.id.private_public_btn);
-			b.setOnClickListener(new OnClickListener() {
+	private void setUpStatus(View rootView) {
+		final Button b = (Button) rootView
+				.findViewById(R.id.private_public_btn);
+		b.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
+			@Override
+			public void onClick(View v) {
 
-					final String[] items = getResources().getStringArray(
-							R.array.event_privacy);
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							GroupsContainerFragment.this.getActivity());
+				final String[] items = getResources().getStringArray(
+						R.array.event_privacy);
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						GroupsContainerFragment.this.getActivity());
 
-					builder.setItems(items, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int item) {
-							// change this
-							SessionManager.getInstance(
-									GroupsContainerFragment.this.getActivity())
-									.setSearchString(items[item]);
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) {
+						// change this
+						SessionManager.getInstance(
+								GroupsContainerFragment.this.getActivity())
+								.setSearchString(items[item]);
 
-							b.setText(items[item]);
-							dialog.cancel();
-						}
-					});
-					AlertDialog alert = builder.create();
-					alert.show();
-				}
+						b.setText(items[item]);
+						dialog.cancel();
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
 
-			});
-			String searchStatus = SessionManager.getInstance(
-					GroupsContainerFragment.this.getActivity()).getSearchString();
-			if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
-				b.setText(searchStatus);
-		}
+		});
+		String searchStatus = SessionManager.getInstance(
+				GroupsContainerFragment.this.getActivity()).getSearchString();
+		if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
+			b.setText(searchStatus);
+	}
 
 	public void generatePopup() {
 		// custom dialog
@@ -233,27 +237,28 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 								GroupsContainerFragment.this
 										.updateSearchString();
 								SessionManager
-								.getInstance(
-										GroupsContainerFragment.this
-												.getActivity())
-								.setSearchString(
-										SessionManager
-												.getInstance(
-														GroupsContainerFragment.this
-																.getActivity())
-												.getExploreCategory());
+										.getInstance(
+												GroupsContainerFragment.this
+														.getActivity())
+										.setSearchString(
+												SessionManager
+														.getInstance(
+																GroupsContainerFragment.this
+																		.getActivity())
+														.getExploreCategory());
 								GroupsContainerFragment.this.searchTerm
-								.setText(SessionManager.getInstance(
-										GroupsContainerFragment.this
-												.getActivity())
-										.getSearchString());
+										.setText(SessionManager.getInstance(
+												GroupsContainerFragment.this
+														.getActivity())
+												.getSearchString());
 								requestUpdate();
 							}
 						});
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View dialoglayout = inflater.inflate(R.layout.group_filters_popup, null);
+		View dialoglayout = inflater
+				.inflate(R.layout.group_filters_popup, null);
 
 		// filters are the categories
 		setUpFilters(dialoglayout);
@@ -265,30 +270,67 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 	}
 
 	public void requestUpdate() {
+		/*
+		 * Bundle b = new Bundle(); SessionManager sm =
+		 * SessionManager.getInstance(this.getActivity()); Location
+		 * currentLocation = ((NearlingsApplication) this.getActivity()
+		 * .getApplication()).getLastLocation();
+		 * 
+		 * if (!sm.getSearchLocation().equals("")) {
+		 * b.putString(NeedsExploreRequest.BUNDLE_LOCATION,
+		 * sm.getSearchLocation());
+		 * b.putString(NeedsExploreRequest.BUNDLE_LOCATION_TYPE,
+		 * NeedsExploreRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
+		 * b.putFloat(NeedsExploreRequest.BUNDLE_RADIUS, 20.0f); }
+		 */
 		Bundle b = new Bundle();
 		SessionManager sm = SessionManager.getInstance(this.getActivity());
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getLastLocation();
 
-		if (!sm.getSearchLocation().equals("")) {
-			b.putString(NeedsExploreRequest.BUNDLE_LOCATION,
-					sm.getSearchLocation());
-			b.putString(NeedsExploreRequest.BUNDLE_LOCATION_TYPE,
-					NeedsExploreRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(NeedsExploreRequest.BUNDLE_RADIUS, 20.0f);
+		if (sm.getSearchLocation() != null
+				&& !sm.getSearchLocation().equals("")) {
+			String location_string = sm.getSearchLocation();
+			String url_encode_location = location_string;
+			try {
+				url_encode_location = URLEncoder.encode(location_string,
+						"UTF-8");
+
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} finally {
+				b.putString(GroupsRequest.BUNDLE_LOCATION, url_encode_location);
+			}
+
+			b.putString(GroupsRequest.BUNDLE_LOCATION_TYPE,
+					GroupsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
+			b.putFloat(GroupsRequest.BUNDLE_RADIUS,
+					SessionManager.DEFAULT_SEARCH_RADIUS);
+		} else if (currentLocation != null) {
+			b.putString(GroupsRequest.BUNDLE_LOCATION_TYPE,
+					GroupsRequest.BUNDLE_LOCATION_TYPE_COORDINATES);
+			b.putString(GroupsRequest.BUNDLE_LOCATION_LATITUDE,
+					String.valueOf(currentLocation.getLatitude()));
+			b.putString(GroupsRequest.BUNDLE_LOCATION_LONGITUDE,
+					String.valueOf(currentLocation.getLongitude()));
+
+			b.putFloat(GroupsRequest.BUNDLE_RADIUS,
+					SessionManager.DEFAULT_SEARCH_RADIUS);
 		}
 
-		if (sm.getSearchRewardMinimum() != -1) {
+		if (sm.getSearchString() != null
+				&& !sm.getSearchString().equals(SessionManager.DEFAULT_STRING)) {
+			String s = sm.getSearchString();
 
-			b.putFloat(NeedsExploreRequest.BUNDLE_REWARD,
-					sm.getSearchRewardMinimum());
-		}
+			try {
+				s = URLEncoder.encode(s, "UTF-8");
 
-		if (!sm.getSearchString().equals("")
-				&& !sm.getSearchString().equals(
-						SessionManager.DEFAULT_STRING)) {
-			b.putString(NeedsExploreRequest.BUNDLE_KEYWORDS,
-					sm.getSearchString());
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} finally {
+				b.putString(GroupsRequest.BUNDLE_KEYWORDS, s);
+			}
+
 		}
 
 		super.onRefresh(b);
@@ -321,8 +363,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 	@Override
 	public void setSourceRequestHelper() {
-		helpers.add(SendRequestStrategyManager
-				.getHelper(GroupsRequest.class));
+		helpers.add(SendRequestStrategyManager.getHelper(GroupsRequest.class));
 
 	}
 }
