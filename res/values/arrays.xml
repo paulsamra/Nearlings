@@ -377,7 +377,6 @@ that were present in some languages.
         <item>5.0</item>
     </string-array>
 <string-array name="event_privacy">
-        <item>All</item>
         <item>Public</item>
         <item>Private</item>
     </string-array>

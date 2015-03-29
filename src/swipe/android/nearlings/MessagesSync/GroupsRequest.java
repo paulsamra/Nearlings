@@ -35,6 +35,7 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 	public static final String BUNDLE_LOCATION_TYPE = "LOCATION_TYPE";
 	public static final String BUNDLE_LOCATION = "LOCATION";
 
+	public static final String BUNDLE_VISIBILITY = "VISIBILITY";
 	public static final String BUNDLE_LOCATION_TYPE_ADDRESS = "address";
 	public static final String BUNDLE_LOCATION_TYPE_COORDINATES = "latlng";
 
@@ -80,8 +81,11 @@ public class GroupsRequest extends NearlingsRequest<JsonGroupsResponse> {
 				url += ("&radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
 			}
 		}
-
-		url += ("&visibility=" + "public");
+		if (b.containsKey(BUNDLE_VISIBILITY)) {
+			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
+		} else {
+			url += ("&visibility=" + "public");
+		}
 		url += ("&limit=" + SessionManager.SEARCH_LIMIT);
 
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,

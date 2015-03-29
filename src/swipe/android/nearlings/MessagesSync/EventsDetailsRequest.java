@@ -69,7 +69,11 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 		if (b.containsKey(BUNDLE_TIME_START)) {
 			url += ("&time_start=" + b.getString(BUNDLE_TIME_START));
 		}
-
+		if(b.containsKey(BUNDLE_VISIBILITY)){
+			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
+		}else{
+				url += ("&visibility=" + "public");
+		}
 		// location. We must have all these together.
 		if (b.containsKey(BUNDLE_LOCATION_TYPE)
 				&& b.containsKey(BUNDLE_RADIUS)

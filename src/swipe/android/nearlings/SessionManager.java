@@ -266,6 +266,7 @@ public class SessionManager {
 
 	public void setSearchRadius(float searchRadius) {
 		editor.putFloat(SEARCH_RADIUS, searchRadius);
+		editor.commit();
 	}
 
 	public String getExploreCategory() {
@@ -291,6 +292,7 @@ public class SessionManager {
 
 	public void setEventCategory(String event_category) {
 		editor.putString(EVENTS_SEARCH_CATEGORY, event_category);
+		editor.commit();
 	}
 
 	public String getGroupCategory() {
@@ -326,6 +328,7 @@ public class SessionManager {
 
 	public void setSearchVisibility(String visibility) {
 		editor.putString(SEARCH_VISIBILITY, visibility);
+		editor.commit();
 	}
 
 	public String getSearchVisibility() {

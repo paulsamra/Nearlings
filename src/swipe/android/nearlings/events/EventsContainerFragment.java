@@ -29,6 +29,7 @@ import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,26 +53,29 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 	public static final String MESSAGES_FINISH_FLAG = EventsContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 
+	int selected_category = -1;
 	// categories
+	final ArrayList<SearchOptionsFilter> listOfCategoryFilter = new ArrayList();
+
 	private void setUpFilters(View rootView) {
 
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.search_options_listview_categories);
-		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
+
 		Resources res = getResources();
 		TypedArray icons = res.obtainTypedArray(R.array.event_types_unchecked);
-		String[] terms = res.getStringArray(R.array.event_types);
+		String[] categoryTerms = res.getStringArray(R.array.event_types);
 		// Drawable drawable = icons.getDrawable(0);
-
+		listOfCategoryFilter.clear();
 		for (int i = 0; i < icons.length(); i++) {
 			int resource = icons.getResourceId(i, 0);
-			listOfFilter
-					.add(new SearchOptionsFilter(false, resource, terms[i]));
+			listOfCategoryFilter.add(new SearchOptionsFilter(false, resource,
+					categoryTerms[i]));
 		}
 
 		final SearchFilterCategoryOptionsListAdapter adapter = new SearchFilterCategoryOptionsListAdapter(
 				this.getActivity(), R.layout.search_options_view_item,
-				listOfFilter);
+				listOfCategoryFilter);
 
 		listview.setAdapter(adapter);
 
@@ -79,57 +83,63 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view,
 					int position, long id) {
-				boolean current = listOfFilter.get(position).isSelected();
-				for (SearchOptionsFilter f : listOfFilter)
+				boolean current = listOfCategoryFilter.get(position)
+						.isSelected();
+				for (SearchOptionsFilter f : listOfCategoryFilter)
 					f.setSelected(false);
 
-				listOfFilter.get(position).setSelected(!current);
-				String term = listOfFilter.get(position).getSearchTerm();
-				if (current) {
-					term = SessionManager.DEFAULT_STRING;
-				}
-				// searchTerm.setText(term);
+				listOfCategoryFilter.get(position).setSelected(!current);
+				/*
+				 * String term = listOfFilter.get(position).getSearchTerm(); if
+				 * (current) { term = SessionManager.DEFAULT_STRING; } //
+				 * searchTerm.setText(term); adapter.notifyDataSetChanged(); //
+				 * requeue with search filters. We should pass in filters at //
+				 * some point
+				 * 
+				 * SessionManager.getInstance(
+				 * EventsContainerFragment.this.getActivity())
+				 * .setEventCategory(term);
+				 */
+				selected_category = position;
 				adapter.notifyDataSetChanged();
-				// requeue with search filters. We should pass in filters at
-				// some point
-				SessionManager.getInstance(
-						EventsContainerFragment.this.getActivity())
-						.setEventCategory(term);
 			}
 		});
 
-		for (SearchOptionsFilter f : listOfFilter) {
+		for (SearchOptionsFilter f : listOfCategoryFilter) {
 			if (f.getSearchTerm().equals(
 					SessionManager.getInstance(this.getActivity())
-							.getSearchString())) {
+							.getEventCategory())) {
 				f.setSelected(true);
 			}
 		}
 	}
 
+	int radiusLocation = -1;
+	final ArrayList<SearchOptionsFilter> listOfRadiusFilter = new ArrayList();
+	
 	private void setUpRadius(View rootView) {
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.radius_selection);
-		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
 		Resources res = getResources();
 		TypedArray selectedIcons = res
 				.obtainTypedArray(R.array.radius_selected_icons);
 		TypedArray unselectedIcons = res
 				.obtainTypedArray(R.array.radius_unselected_icons);
-
+		listOfRadiusFilter.clear();
 		String[] radius = res.getStringArray(R.array.radius);
 		for (int i = 0; i < radius.length; i++) {
 
 			int selectedResource = selectedIcons.getResourceId(i, 0);
 			int unselectedResource = unselectedIcons.getResourceId(i, 0);
 
-			listOfFilter.add(new SearchOptionsFilter(false, unselectedResource,
-					selectedResource, radius[i]));
+			listOfRadiusFilter.add(new SearchOptionsFilter(false,
+					unselectedResource, selectedResource, radius[i]));
 		}
 
 		final SearchFilterCategoryOptionsListAdapter adapter = new SearchFilterCategoryOptionsListAdapter(
 				this.getActivity(),
-				R.layout.search_options_view_item_unsquared, listOfFilter);
+				R.layout.search_options_view_item_unsquared,
+				listOfRadiusFilter);
 
 		listview.setAdapter(adapter);
 
@@ -137,27 +147,23 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view,
 					int position, long id) {
-				boolean current = listOfFilter.get(position).isSelected();
-				for (SearchOptionsFilter f : listOfFilter)
+				boolean current = listOfRadiusFilter.get(position).isSelected();
+				for (SearchOptionsFilter f : listOfRadiusFilter)
 					f.setSelected(false);
 
-				listOfFilter.get(position).setSelected(!current);
-				String term = listOfFilter.get(position).getSearchTerm();
+				listOfRadiusFilter.get(position).setSelected(!current);
 
-				if (current) {
-					term = String.valueOf(SessionManager.DEFAULT_VALUE);
-				}
+				radiusLocation = position;
+
 				// searchTerm.setText(term);
 				adapter.notifyDataSetChanged();
 				// requeue with search filters. We should pass in filters at
 				// some point
-				SessionManager.getInstance(
-						EventsContainerFragment.this.getActivity())
-						.setSearchRadius(Float.valueOf(term));
+
 			}
 		});
 
-		for (SearchOptionsFilter f : listOfFilter) {
+		for (SearchOptionsFilter f : listOfRadiusFilter) {
 			if (f.getSearchTerm().equals(
 					String.valueOf(SessionManager.getInstance(
 							this.getActivity()).getSearchRadius()))) {
@@ -166,40 +172,49 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 		}
 	}
 
+	int privacyPosition = -1;
+	String[] privacyItems;
+
 	// privacy
 	private void setUpStatus(View rootView) {
 		final Button b = (Button) rootView
 				.findViewById(R.id.private_public_btn);
+		privacyItems = getResources().getStringArray(R.array.event_privacy);
 		b.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				final String[] items = getResources().getStringArray(
-						R.array.event_privacy);
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						EventsContainerFragment.this.getActivity());
 
-				builder.setItems(items, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int item) {
-						// change this
-						SessionManager.getInstance(
-								EventsContainerFragment.this.getActivity())
-								.setSearchString(items[item]);
-
-						b.setText(items[item]);
-						dialog.cancel();
-					}
-				});
+				builder.setItems(privacyItems,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int item) {
+								// change this
+								/*
+								 * SessionManager.getInstance(
+								 * EventsContainerFragment.this.getActivity())
+								 * .setSearchString(items[item]);
+								 */
+								privacyPosition = item;
+								b.setText(privacyItems[item]);
+								dialog.cancel();
+							}
+						});
 				AlertDialog alert = builder.create();
 				alert.show();
 			}
 
 		});
 		String searchStatus = SessionManager.getInstance(
-				EventsContainerFragment.this.getActivity()).getSearchString();
-		if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
+				EventsContainerFragment.this.getActivity())
+				.getSearchVisibility();
+		if (!searchStatus.equals(SessionManager.DEFAULT_STRING)
+				&& searchStatus != null)
 			b.setText(searchStatus);
+		else
+			b.setText(privacyItems[0]);
 	}
 
 	// setUP
@@ -310,27 +325,60 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
-								SessionManager.getInstance(
-										EventsContainerFragment.this
-												.getActivity())
-										.commitPendingChanges();
-								EventsContainerFragment.this
-										.updateSearchString();
-								SessionManager
-										.getInstance(
-												EventsContainerFragment.this
-														.getActivity())
-										.setSearchString(
-												SessionManager
-														.getInstance(
-																EventsContainerFragment.this
-																		.getActivity())
-														.getExploreCategory());
-								EventsContainerFragment.this.searchTerm
-										.setText(SessionManager.getInstance(
-												EventsContainerFragment.this
-														.getActivity())
-												.getSearchString());
+
+								// set items from all our field
+								// categories
+								if (selected_category != -1) {
+									boolean categoryIsSelected = listOfCategoryFilter
+											.get(selected_category)
+											.isSelected();
+									String categoryterm = SessionManager.DEFAULT_STRING;
+									if (categoryIsSelected) {
+										categoryterm = listOfCategoryFilter
+												.get(selected_category)
+												.getSearchTerm();
+
+									}
+								
+									SessionManager.getInstance(
+											EventsContainerFragment.this
+													.getActivity())
+											.setEventCategory(categoryterm);
+								}
+
+								// set private or public
+								if (privacyPosition != -1) {
+
+									SessionManager
+											.getInstance(
+													EventsContainerFragment.this
+															.getActivity())
+											.setSearchVisibility(
+													privacyItems[privacyPosition]);
+								}
+							//	Log.d("Privacy Position", String.valueOf(privacyPosition));
+								// start_date, start_time;
+								// start time
+								// raidus
+								if (radiusLocation != -1) {
+									boolean radiusSelected = listOfRadiusFilter
+											.get(radiusLocation).isSelected();
+									float radius = SessionManager.DEFAULT_SEARCH_RADIUS;
+									if (radiusSelected) {
+										radius = Float
+												.valueOf(listOfRadiusFilter
+														.get(radiusLocation)
+														.getSearchTerm());
+									}
+									SessionManager.getInstance(
+											EventsContainerFragment.this
+													.getActivity())
+											.setSearchRadius(radius);
+								}
+								
+								
+								// Log.d("Search Term", s);
+
 								requestUpdate();
 							}
 						});
@@ -375,8 +423,10 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
 					EventsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
+			
+			float f = SessionManager.getInstance(this.getActivity()).getSearchRadius();
 			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS,
-					SessionManager.DEFAULT_SEARCH_RADIUS);
+					f);
 		} else if (currentLocation != null) {
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
 					EventsDetailsRequest.BUNDLE_LOCATION_TYPE_COORDINATES);
@@ -385,8 +435,10 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_LONGITUDE,
 					String.valueOf(currentLocation.getLongitude()));
 
-			b.putFloat(GroupsRequest.BUNDLE_RADIUS,
-					SessionManager.DEFAULT_SEARCH_RADIUS);
+			
+			float f = SessionManager.getInstance(this.getActivity()).getSearchRadius();
+			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS,
+					f);
 		}
 
 		if (sm.getSearchString() != null
@@ -408,14 +460,18 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			b.putString(EventsDetailsRequest.BUNDLE_CATEGORY,
 					sm.getEventCategory());
 		}
+		if (sm.getSearchVisibility() != null
+				&& !sm.getSearchVisibility().equals("")) {
+			b.putString(EventsDetailsRequest.BUNDLE_VISIBILITY,
+					sm.getSearchVisibility());
+		} else {
+			b.putString(EventsDetailsRequest.BUNDLE_VISIBILITY, "public");
+		}
 
-		/*
-		 * if(sm.getTimeStart() != null && sm.getTimeStart() !=
-		 * sm.DEFAULT_VALUE){
-		 * b.putString(EventsDetailsRequest.BUNDLE_TIME_START,
-		 * sm.getTimeStart()); }
-		 */
-
+		/*if (sm.getTimeStart() != null && !sm.getTimeStart().equals("")) {
+			b.putString(EventsDetailsRequest.BUNDLE_TIME_START,
+					sm.getTimeStart());
+		}*/
 		super.onRefresh(b);
 	}
 

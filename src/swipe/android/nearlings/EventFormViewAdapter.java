@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -91,7 +92,6 @@ public class EventFormViewAdapter extends BaseFormAdapter {
 				.findViewById(R.id.private_public_switch);
 	}
 
-
 	@Override
 	protected void initializeValidators(View parentView) {
 		validatingViews = new ArrayList<ValidatingView>();
@@ -101,9 +101,10 @@ public class EventFormViewAdapter extends BaseFormAdapter {
 
 			assignValidatorToValidatingView(parentView, R.id.title,
 					R.string.title, new MinLengthValidator(context, 1));
-		/*	assignValidatorToValidatingView(parentView, R.id.age_value,
-					R.string.age, new NumberValidator(context));
-*/
+			/*
+			 * assignValidatorToValidatingView(parentView, R.id.age_value,
+			 * R.string.age, new NumberValidator(context));
+			 */
 			assignValidatorToValidatingView(parentView, R.id.descriptionBox,
 					R.string.description, new MinLengthValidator(context, 0));
 			assignValidatorToValidatingView(parentView, R.id.location,
@@ -125,7 +126,17 @@ public class EventFormViewAdapter extends BaseFormAdapter {
 		jsonObject.put("visibility", FieldsParsingUtils
 				.parseSwitchPrivatePublic(this.private_public_switch
 						.isChecked()));
-		jsonObject.put("location", edt_input_place.getText().toString());
+
+		String location = edt_input_place.getText().toString();
+		if (location == null || location.equals("")) {
+			Location l = NearlingsApplication.getInstance()
+					.getCurrentLocation();
+			jsonObject.put("latitude", l.getLatitude());
+			jsonObject.put("longitude", l.getLongitude());
+		} else {
+			jsonObject.put("location", location);
+		}
+
 		String inequality = age_inequality.getText().toString();
 		inequality = inequality.substring(0, inequality.indexOf(" "))
 				.toLowerCase();

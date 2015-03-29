@@ -394,9 +394,9 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 				&& !sm.getSearchVisibility().equals("")) {
 			b.putString(NeedsExploreRequest.BUNDLE_VISIBILITY,
 					sm.getSearchVisibility());
-		}
+		}else{
 		b.putString(NeedsExploreRequest.BUNDLE_VISIBILITY, "public");
-
+		}
 		/*
 		 * if(sm.getTimeEnd() != sm.DEFAULT_VALUE){
 		 * b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeEnd()); }

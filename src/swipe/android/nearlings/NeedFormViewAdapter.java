@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -84,8 +85,9 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 				.findViewById(R.id.switch_online_inperson);
 		private_public_switch = (Switch) rootView
 				.findViewById(R.id.private_public_switch);
-ValidatingEditText title = (ValidatingEditText) rootView.findViewById(R.id.title);
-title.setHint("Need Name");
+		ValidatingEditText title = (ValidatingEditText) rootView
+				.findViewById(R.id.title);
+		title.setHint("Need Name");
 	}
 
 	@Override
@@ -116,15 +118,24 @@ title.setHint("Need Name");
 				.getText().toString(), start_time.getText().toString()));
 		jsonObject.put("reward",
 				FieldsParsingUtils.parsePrice(price.getText().toString()));
-		
-		  jsonObject.put("mode", FieldsParsingUtils
-		  .parseSwitchOnlineOffline(this.switch_online_inperson .isChecked()));
-/*
+
+		jsonObject.put("mode", FieldsParsingUtils
+				.parseSwitchOnlineOffline(this.switch_online_inperson
+						.isChecked()));
+		/*
 		 * jsonObject.put("visibility", FieldsParsingUtils
 		 * .parseSwitchPrivatePublic(this.private_public_switch .isChecked()));
 		 */
 
-		jsonObject.put("location", edt_input_place.getText().toString());
+		String location = edt_input_place.getText().toString();
+		if (location == null || location.equals("")) {
+			Location l = NearlingsApplication.getInstance()
+					.getCurrentLocation();
+			jsonObject.put("latitude", l.getLatitude());
+			jsonObject.put("longitude", l.getLongitude());
+		} else {
+			jsonObject.put("location", location);
+		}
 
 		jsonObject.put("category", this.category.getText().toString()
 				.toLowerCase());
