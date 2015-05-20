@@ -293,7 +293,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 										.commitPendingChanges();
 								DiscoverContainerFragment.this
 										.updateSearchString();
-								SessionManager
+								/*SessionManager
 										.getInstance(
 												DiscoverContainerFragment.this
 														.getActivity())
@@ -302,12 +302,12 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 														.getInstance(
 																DiscoverContainerFragment.this
 																		.getActivity())
-														.getExploreCategory());
-								DiscoverContainerFragment.this.searchTerm
+														.getExploreCategory());*/
+							/*	DiscoverContainerFragment.this.searchTerm
 										.setText(SessionManager.getInstance(
 												DiscoverContainerFragment.this
 														.getActivity())
-												.getSearchString());
+												.getSearchString());*/
 								requestUpdate();
 							}
 						});

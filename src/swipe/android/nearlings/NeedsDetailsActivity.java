@@ -501,8 +501,8 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 				//String id_of_doer = cursorOfBids.getString(cursorOfBids.getColumnIndex(NeedsOfferDatabaseHelper.COLUMN_CREATED_BY));
 				
 				double service =Math.min( Math.max( 0.15*price, 0.50 ), 10.00);
-				double roundOffService = (double) Math.round(service* 100) / 100;
-				roundOffService = round(200.3456, 2);
+				double roundOffService = (double) (Math.round(service* 100)) / 100;
+				//roundOffService = round(200.3456, 2);
 				final double  finalPrice = price + roundOffService;
 				final String  item_for_payapal = cursor.getString(cursor.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
 
@@ -517,7 +517,7 @@ public class NeedsDetailsActivity extends TabsActivityContainer implements
 						}
 					});
 					builder.setTitle("Confirm");
-					builder.setMessage("You will pay $" + price + " along with a $" + service + " fee. \n Total: $"+ finalPrice);
+					builder.setMessage("You will pay $" + price + " along with a $" + roundOffService + " fee. \nTotal: $"+ finalPrice);
 				
 				AlertDialog alert = builder.create();
 				alert.setCancelable(false);

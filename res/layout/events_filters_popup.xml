@@ -20,7 +20,7 @@
             <com.meetme.android.horizontallistview.HorizontalListView
                 android:id="@+id/search_options_listview_categories"
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="80dip" />
 
             <TextView
                 style="@style/DialogLabel"

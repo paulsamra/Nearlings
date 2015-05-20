@@ -172,7 +172,7 @@ public abstract class NearlingsSwipeToRefreshFragment extends
 		boolean b= intent.getExtras().getBoolean(NearlingsSyncAdapter.SESSION_IS_BAD, false);
 		if(b){
 			((NearlingsApplication) this
-					.getActivity().getApplication()).logoutDialog();
+					.getActivity().getApplication()).logoutDialog(this.getActivity());
 
 			return;
 		}

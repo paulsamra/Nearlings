@@ -32,7 +32,6 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 	String MESSAGES_FINISH_FLAG = DiscoverMapViewFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
 
-
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
 		// should clear before loading
@@ -62,11 +61,14 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 			double[] latLng = coordinateForMarker(lat, lng);
 			this.addLocation(latLng[0], latLng[1]);
 			LatLng location = new LatLng(latLng[0], latLng[1]);
-			
+
 			String title = arg1.getString(arg1
 					.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_TITLE));
-			drawMarker(location, title, String.valueOf(arg1.getDouble(arg1
-					.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_REWARD))),
+			drawMarker(
+					location,
+					title,
+					String.valueOf(arg1.getDouble(arg1
+							.getColumnIndex(NeedsDetailsDatabaseHelper.COLUMN_REWARD))),
 					String.valueOf(i));
 			bc.include(location);
 			arg1.moveToNext();
@@ -75,11 +77,11 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 		// bc needs to include your current location as well as the default
 		Location l = ((NearlingsApplication) this.getActivity()
 				.getApplication()).getCurrentLocation();
-		bc.include(new LatLng(l.getLatitude(), l.getLongitude()));
+		if (l != null)
+			bc.include(new LatLng(l.getLatitude(), l.getLongitude()));
 
 		mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bc.build(), 50));
 	}
-
 
 	@Override
 	public void setSourceRequestHelper() {
@@ -100,7 +102,8 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 				NearlingsContentProvider
 						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
 				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch,
-				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE + " DESC");
+				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE
+						+ " DESC");
 
 		return cursorLoader;
 	}
@@ -117,7 +120,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 
 	@Override
 	protected void attachInfoWindowAdapter() {
-	
+
 		mMap.setInfoWindowAdapter(new InfoWindowAdapter() {
 			@Override
 			public View getInfoWindow(Marker arg0) {
@@ -126,8 +129,8 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 
 			@Override
 			public View getInfoContents(Marker marker) {
-				View myContentView = DiscoverMapViewFragment.this
-						.getActivity().getLayoutInflater()
+				View myContentView = DiscoverMapViewFragment.this.getActivity()
+						.getLayoutInflater()
 						.inflate(R.layout.needs_marker, null);
 				TextView needs_title = ((TextView) myContentView
 						.findViewById(R.id.needs_task));
@@ -135,20 +138,20 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 				TextView needs_price = ((TextView) myContentView
 						.findViewById(R.id.needs_price));
 				String snip = marker.getSnippet();
-				
-		
-				
-				needs_price.setText("$" + snip.substring(1, snip.lastIndexOf(",")));
+
+				String price = snip.substring(1, snip.lastIndexOf(","));
+				double roundOff = (double) Math.round(Double.valueOf(price) * 1000) / 1000;
+
+				needs_price.setText("$" + roundOff);
 				return myContentView;
 			}
 		});
 
-		
 	}
 
 	@Override
 	protected void attachInfoWindowClickListener() {
-	
+
 		mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 			@Override
@@ -158,8 +161,7 @@ public class DiscoverMapViewFragment extends BaseMapFragment {
 				Bundle extras = new Bundle();
 				Cursor c = generateCursor();
 				String snip = marker.getSnippet();
-				
-				
+
 				int position = Integer.valueOf(snip.substring(
 						snip.lastIndexOf(",") + 1, snip.length()));
 				c.moveToPosition(position);

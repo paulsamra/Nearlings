@@ -12,10 +12,12 @@ import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
+import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
+import swipe.android.nearlings.events.EventsContainerFragment;
 import swipe.android.nearlings.json.groups.GroupsMapViewFragment;
 import swipe.android.nearlings.needs.DiscoverContainerFragment;
 import android.app.AlertDialog;
@@ -47,25 +49,28 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 	// setup filters! Begin area where we customize. All these functions are for
 	// dynamically adding behavior to the
 	// filter popup.
+
+	final ArrayList<SearchOptionsFilter> listOfGroupCategoryFilter = new ArrayList();
+	int groupCategoryPosition = -1;
+
 	private void setUpFilters(View rootView) {
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.search_options_listview_categories);
-		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
 		Resources res = getResources();
 		TypedArray icons = res
 				.obtainTypedArray(R.array.group_category_types_unchecked);
 		String[] terms = res.getStringArray(R.array.group_category_types);
 		// Drawable drawable = icons.getDrawable(0);
-
+		listOfGroupCategoryFilter.clear();
 		for (int i = 0; i < icons.length(); i++) {
 			int resource = icons.getResourceId(i, 0);
-			listOfFilter
-					.add(new SearchOptionsFilter(false, resource, terms[i]));
+			listOfGroupCategoryFilter.add(new SearchOptionsFilter(false,
+					resource, terms[i]));
 		}
 
 		final SearchFilterCategoryOptionsListAdapter adapter = new SearchFilterCategoryOptionsListAdapter(
 				this.getActivity(), R.layout.search_options_view_item,
-				listOfFilter);
+				listOfGroupCategoryFilter);
 
 		listview.setAdapter(adapter);
 
@@ -73,23 +78,23 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view,
 					int position, long id) {
-				boolean current = listOfFilter.get(position).isSelected();
-				for (SearchOptionsFilter f : listOfFilter)
+				boolean current = listOfGroupCategoryFilter.get(position)
+						.isSelected();
+				for (SearchOptionsFilter f : listOfGroupCategoryFilter)
 					f.setSelected(false);
 
-				listOfFilter.get(position).setSelected(!current);
-				String term = listOfFilter.get(position).getSearchTerm();
-				if (current) {
-					term = "All";
-					SessionManager.getInstance(
-							GroupsContainerFragment.this.getActivity())
-							.setGroupCategory(SessionManager.DEFAULT_STRING);
-				} else {
-					SessionManager.getInstance(
-							GroupsContainerFragment.this.getActivity())
-							.setGroupCategory(term);
-				}
+				listOfGroupCategoryFilter.get(position).setSelected(!current);
+				/*
+				 * String term = listOfFilter.get(position).getSearchTerm(); if
+				 * (current) { term = "All"; SessionManager.getInstance(
+				 * GroupsContainerFragment.this.getActivity())
+				 * .setGroupCategory(SessionManager.DEFAULT_STRING); } else {
+				 * SessionManager.getInstance(
+				 * GroupsContainerFragment.this.getActivity())
+				 * .setGroupCategory(term); }
+				 */
 				// searchTerm.setText(term);
+				groupCategoryPosition = position;
 				adapter.notifyDataSetChanged();
 				// requeue with search filters. We should pass in filters at
 				// some point
@@ -97,38 +102,40 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 			}
 		});
 
-		for (SearchOptionsFilter f : listOfFilter) {
+		for (SearchOptionsFilter f : listOfGroupCategoryFilter) {
 			if (f.getSearchTerm().equals(
 					SessionManager.getInstance(this.getActivity())
-							.getSearchString())) {
+							.getGroupCategory())) {
 				f.setSelected(true);
 			}
 		}
 	}
 
+	final ArrayList<SearchOptionsFilter> listOfRadiusFilter = new ArrayList();
+	int radiusPosition = -1;
+
 	private void setUpRadius(View rootView) {
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.radius_selection);
-		final ArrayList<SearchOptionsFilter> listOfFilter = new ArrayList();
 		Resources res = getResources();
 		TypedArray selectedIcons = res
 				.obtainTypedArray(R.array.radius_selected_icons);
 		TypedArray unselectedIcons = res
 				.obtainTypedArray(R.array.radius_unselected_icons);
-
+		listOfRadiusFilter.clear();
 		String[] radius = res.getStringArray(R.array.radius);
 		for (int i = 0; i < radius.length; i++) {
 
 			int selectedResource = selectedIcons.getResourceId(i, 0);
 			int unselectedResource = unselectedIcons.getResourceId(i, 0);
 
-			listOfFilter.add(new SearchOptionsFilter(false, unselectedResource,
-					selectedResource, radius[i]));
+			listOfRadiusFilter.add(new SearchOptionsFilter(false,
+					unselectedResource, selectedResource, radius[i]));
 		}
 
 		final SearchFilterCategoryOptionsListAdapter adapter = new SearchFilterCategoryOptionsListAdapter(
 				this.getActivity(),
-				R.layout.search_options_view_item_unsquared, listOfFilter);
+				R.layout.search_options_view_item_unsquared, listOfRadiusFilter);
 
 		listview.setAdapter(adapter);
 
@@ -136,26 +143,28 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view,
 					int position, long id) {
-				boolean current = listOfFilter.get(position).isSelected();
-				for (SearchOptionsFilter f : listOfFilter)
+				boolean current = listOfRadiusFilter.get(position).isSelected();
+				for (SearchOptionsFilter f : listOfRadiusFilter)
 					f.setSelected(false);
 
-				listOfFilter.get(position).setSelected(!current);
-				String term = listOfFilter.get(position).getSearchTerm();
-				if (current) {
-					term = String.valueOf(SessionManager.DEFAULT_VALUE);
-				}
-				// searchTerm.setText(term);
+				listOfRadiusFilter.get(position).setSelected(!current);
+				radiusPosition = position;
+				/*
+				 * String term =
+				 * listOfRadiusFilter.get(position).getSearchTerm(); if
+				 * (current) { term =
+				 * String.valueOf(SessionManager.DEFAULT_VALUE); } //
+				 * searchTerm.setText(term); adapter.notifyDataSetChanged(); //
+				 * requeue with search filters. We should pass in filters at //
+				 * some point SessionManager.getInstance(
+				 * GroupsContainerFragment.this.getActivity())
+				 * .setSearchRadius(Float.valueOf(term));
+				 */
 				adapter.notifyDataSetChanged();
-				// requeue with search filters. We should pass in filters at
-				// some point
-				SessionManager.getInstance(
-						GroupsContainerFragment.this.getActivity())
-						.setSearchRadius(Float.valueOf(term));
 			}
 		});
 
-		for (SearchOptionsFilter f : listOfFilter) {
+		for (SearchOptionsFilter f : listOfRadiusFilter) {
 			if (f.getSearchTerm().equals(
 					String.valueOf(SessionManager.getInstance(
 							this.getActivity()).getSearchRadius()))) {
@@ -164,40 +173,55 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 		}
 	}
 
+	int privacyPosition = -1;
+	String[] privacyItems, privacyItemsView;
+
 	// privacy
 	private void setUpStatus(View rootView) {
 		final Button b = (Button) rootView
 				.findViewById(R.id.private_public_btn);
+		privacyItems = getResources().getStringArray(R.array.event_privacy);
+		privacyItemsView = getResources().getStringArray(
+				R.array.event_privacy_view);
+
 		b.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				final String[] items = getResources().getStringArray(
-						R.array.event_privacy);
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						GroupsContainerFragment.this.getActivity());
 
-				builder.setItems(items, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int item) {
-						// change this
-						SessionManager.getInstance(
-								GroupsContainerFragment.this.getActivity())
-								.setSearchString(items[item]);
-
-						b.setText(items[item]);
-						dialog.cancel();
-					}
-				});
+				builder.setItems(privacyItemsView,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int item) {
+								// change this
+								/*
+								 * SessionManager.getInstance(
+								 * GroupsContainerFragment.this.getActivity())
+								 * .setSearchString(privacyItems[item]);
+								 */
+								b.setText(privacyItemsView[item]);
+								dialog.cancel();
+							}
+						});
 				AlertDialog alert = builder.create();
 				alert.show();
 			}
 
 		});
 		String searchStatus = SessionManager.getInstance(
-				GroupsContainerFragment.this.getActivity()).getSearchString();
-		if (!searchStatus.equals(SessionManager.DEFAULT_STRING))
-			b.setText(searchStatus);
+				GroupsContainerFragment.this.getActivity())
+				.getSearchVisibility();
+		int i = 0;
+
+		b.setText(privacyItemsView[0]);
+		for (; i < privacyItems.length; i++) {
+			if (searchStatus != null && privacyItems[i].equals(searchStatus)) {
+				b.setText(privacyItemsView[i]);
+			}
+		}
+		
 	}
 
 	public void generatePopup() {
@@ -230,27 +254,77 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
-								SessionManager.getInstance(
-										GroupsContainerFragment.this
-												.getActivity())
-										.commitPendingChanges();
-								GroupsContainerFragment.this
-										.updateSearchString();
-								SessionManager
-										.getInstance(
-												GroupsContainerFragment.this
-														.getActivity())
-										.setSearchString(
-												SessionManager
-														.getInstance(
-																GroupsContainerFragment.this
-																		.getActivity())
-														.getExploreCategory());
-								GroupsContainerFragment.this.searchTerm
-										.setText(SessionManager.getInstance(
-												GroupsContainerFragment.this
-														.getActivity())
-												.getSearchString());
+								/*
+								 * SessionManager.getInstance(
+								 * GroupsContainerFragment.this .getActivity())
+								 * .commitPendingChanges();
+								 * GroupsContainerFragment.this
+								 * .updateSearchString(); SessionManager
+								 * .getInstance( GroupsContainerFragment.this
+								 * .getActivity()) .setSearchString(
+								 * SessionManager .getInstance(
+								 * GroupsContainerFragment.this .getActivity())
+								 * .getExploreCategory());
+								 * GroupsContainerFragment.this.searchTerm
+								 * .setText(SessionManager.getInstance(
+								 * GroupsContainerFragment.this .getActivity())
+								 * .getSearchString());
+								 */
+
+								// set items from all our field
+								// categories
+
+								if (groupCategoryPosition != -1) {
+									boolean categoryIsSelected = listOfGroupCategoryFilter
+											.get(groupCategoryPosition)
+											.isSelected();
+									String categoryterm = SessionManager.DEFAULT_STRING;
+									if (categoryIsSelected) {
+										categoryterm = listOfGroupCategoryFilter
+												.get(groupCategoryPosition)
+												.getSearchTerm();
+
+									}
+
+									SessionManager.getInstance(
+											GroupsContainerFragment.this
+													.getActivity())
+											.setGroupCategory(categoryterm);
+								}
+
+								// set private or public
+								if (privacyPosition != -1) {
+
+									SessionManager
+											.getInstance(
+													GroupsContainerFragment.this
+															.getActivity())
+											.setSearchVisibility(
+													privacyItems[privacyPosition]);
+								}
+								// Log.d("Privacy Position",
+								// String.valueOf(privacyPosition));
+								// start_date, start_time;
+								// start time
+								// raidus
+								if (radiusPosition != -1) {
+									boolean radiusSelected = listOfRadiusFilter
+											.get(radiusPosition).isSelected();
+									float radius = SessionManager.DEFAULT_SEARCH_RADIUS;
+									if (radiusSelected) {
+										radius = Float
+												.valueOf(listOfRadiusFilter
+														.get(radiusPosition)
+														.getSearchTerm());
+									}
+									SessionManager.getInstance(
+											GroupsContainerFragment.this
+													.getActivity())
+											.setSearchRadius(radius);
+								}
+
+								// Log.d("Search Term", s);
+
 								requestUpdate();
 							}
 						});
@@ -304,8 +378,10 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 			b.putString(GroupsRequest.BUNDLE_LOCATION_TYPE,
 					GroupsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			b.putFloat(GroupsRequest.BUNDLE_RADIUS,
-					SessionManager.DEFAULT_SEARCH_RADIUS);
+
+			float f = SessionManager.getInstance(this.getActivity())
+					.getSearchRadius();
+			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS, f);
 		} else if (currentLocation != null) {
 			b.putString(GroupsRequest.BUNDLE_LOCATION_TYPE,
 					GroupsRequest.BUNDLE_LOCATION_TYPE_COORDINATES);
@@ -314,12 +390,24 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 			b.putString(GroupsRequest.BUNDLE_LOCATION_LONGITUDE,
 					String.valueOf(currentLocation.getLongitude()));
 
-			b.putFloat(GroupsRequest.BUNDLE_RADIUS,
-					SessionManager.DEFAULT_SEARCH_RADIUS);
+			float f = SessionManager.getInstance(this.getActivity())
+					.getSearchRadius();
+			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS, f);
+		}
+		if (sm.getGroupCategory() != null
+				&& !sm.getGroupCategory().equals(SessionManager.DEFAULT_VALUE)) {
+			b.putString(GroupsRequest.BUNDLE_CATEGORY, sm.getGroupCategory());
+		}
+		if (sm.getSearchVisibility() != null
+				&& !sm.getSearchVisibility().equals(
+						SessionManager.DEFAULT_STRING)) {
+			b.putString(GroupsRequest.BUNDLE_VISIBILITY,
+					sm.getSearchVisibility());
 		}
 
 		if (sm.getSearchString() != null
-				&& !sm.getSearchString().equals(SessionManager.DEFAULT_STRING)) {
+
+		&& !sm.getSearchString().equals(SessionManager.DEFAULT_STRING)) {
 			String s = sm.getSearchString();
 
 			try {
@@ -330,7 +418,6 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 			} finally {
 				b.putString(GroupsRequest.BUNDLE_KEYWORDS, s);
 			}
-
 		}
 
 		super.onRefresh(b);

@@ -68,7 +68,8 @@ public class GroupFormViewAdapter extends BaseFormAdapter {
 
 	Button category;
 	EditText title, descriptionBox;
-	Switch switch_online_inperson, private_public_switch;
+	//Switch switch_online_inperson, private_public_switch;
+	Switch switch_online_inperson;
 	EditText price;
 
 	private void initializeViews(Bundle savedInstanceState) {
@@ -80,8 +81,8 @@ public class GroupFormViewAdapter extends BaseFormAdapter {
 
 		switch_online_inperson = (Switch) rootView
 				.findViewById(R.id.switch_online_inperson);
-		private_public_switch = (Switch) rootView
-				.findViewById(R.id.private_public_switch);
+		/*private_public_switch = (Switch) rootView
+				.findViewById(R.id.private_public_switch);*/
 		price = (EditText) rootView.findViewById(R.id.price);
 		setUpPriceListener(price);
 	}
@@ -119,10 +120,10 @@ public class GroupFormViewAdapter extends BaseFormAdapter {
 		jsonObject.put("mode", FieldsParsingUtils
 				.parseSwitchOnlineOffline(this.switch_online_inperson
 						.isChecked()));
-		jsonObject.put("visibility", FieldsParsingUtils
+		/*jsonObject.put("visibility", FieldsParsingUtils
 				.parseSwitchPrivatePublic(this.private_public_switch
-						.isChecked()));
-
+						.isChecked()));*/
+		jsonObject.put("visibility", "public");
 		String location = edt_input_place.getText().toString();
 		if (location == null || location.equals("")) {
 			Location l = NearlingsApplication.getInstance()

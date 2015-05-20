@@ -38,7 +38,6 @@ import com.edbert.library.containers.VolleyCoreApplication;
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.sendRequest.SendRequestStrategyManager;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationListener;
@@ -54,8 +53,6 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 
 public class NearlingsApplication extends VolleyCoreApplication implements
-		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener,
 		Application.ActivityLifecycleCallbacks,
 		GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -197,11 +194,6 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 
 	}
 
-	@Override
-	public void onDisconnected() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -302,13 +294,14 @@ public class NearlingsApplication extends VolleyCoreApplication implements
 		return mInstance;
 	}
 
-	public void logoutDialog() {
+	public void logoutDialog(final Activity act) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(lastAct);
 
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 				((NearlingsApplication) NearlingsApplication.this).logout();
+				act.finish();
 			}
 		});
 		builder.setTitle("Error");

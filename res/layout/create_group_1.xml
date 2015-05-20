@@ -22,7 +22,7 @@
 
     <include layout="@layout/online_inperson_switch" />
 
-    <include layout="@layout/private_public_switch" />
+    <!-- <include layout="@layout/private_public_switch" />-->
 
     <include layout="@layout/price_layout" />
     <include layout="@layout/location_layout" />

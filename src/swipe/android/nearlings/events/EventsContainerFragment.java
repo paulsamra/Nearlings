@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import swipe.android.nearlings.BaseContainerFragment;
+import swipe.android.nearlings.FieldsParsingUtils;
 import swipe.android.nearlings.NearlingsApplication;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
@@ -116,7 +117,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 	int radiusLocation = -1;
 	final ArrayList<SearchOptionsFilter> listOfRadiusFilter = new ArrayList();
-	
+
 	private void setUpRadius(View rootView) {
 		final HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.radius_selection);
@@ -138,8 +139,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 		final SearchFilterCategoryOptionsListAdapter adapter = new SearchFilterCategoryOptionsListAdapter(
 				this.getActivity(),
-				R.layout.search_options_view_item_unsquared,
-				listOfRadiusFilter);
+				R.layout.search_options_view_item_unsquared, listOfRadiusFilter);
 
 		listview.setAdapter(adapter);
 
@@ -173,13 +173,14 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 	}
 
 	int privacyPosition = -1;
-	String[] privacyItems;
+	String[] privacyItems,privacyItemsView;
 
 	// privacy
 	private void setUpStatus(View rootView) {
 		final Button b = (Button) rootView
 				.findViewById(R.id.private_public_btn);
 		privacyItems = getResources().getStringArray(R.array.event_privacy);
+		privacyItemsView = getResources().getStringArray(R.array.event_privacy_view);
 		b.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -188,7 +189,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						EventsContainerFragment.this.getActivity());
 
-				builder.setItems(privacyItems,
+				builder.setItems(privacyItemsView,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int item) {
 								// change this
@@ -198,7 +199,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 								 * .setSearchString(items[item]);
 								 */
 								privacyPosition = item;
-								b.setText(privacyItems[item]);
+								b.setText(privacyItemsView[item]);
 								dialog.cancel();
 							}
 						});
@@ -210,11 +211,22 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 		String searchStatus = SessionManager.getInstance(
 				EventsContainerFragment.this.getActivity())
 				.getSearchVisibility();
-		if (!searchStatus.equals(SessionManager.DEFAULT_STRING)
+		/*if (!searchStatus.equals(SessionManager.DEFAULT_STRING)
 				&& searchStatus != null)
 			b.setText(searchStatus);
 		else
-			b.setText(privacyItems[0]);
+		
+		
+			b.setText(privacyItemsView[0]);*/
+		
+		int i = 0;
+
+		b.setText(privacyItemsView[0]);
+		for (; i < privacyItems.length; i++) {
+			if (searchStatus != null && privacyItems[i].equals(searchStatus)) {
+				b.setText(privacyItemsView[i]);
+			}
+		}
 	}
 
 	// setUP
@@ -339,7 +351,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 												.getSearchTerm();
 
 									}
-								
+
 									SessionManager.getInstance(
 											EventsContainerFragment.this
 													.getActivity())
@@ -356,10 +368,18 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 											.setSearchVisibility(
 													privacyItems[privacyPosition]);
 								}
-							//	Log.d("Privacy Position", String.valueOf(privacyPosition));
+								// Log.d("Privacy Position",
+								// String.valueOf(privacyPosition));
 								// start_date, start_time;
 								// start time
 								// raidus
+								/*long epoch = FieldsParsingUtils.getTime(
+										start_date.getText().toString(),
+										start_time.getText().toString());
+								SessionManager.getInstance(
+										EventsContainerFragment.this
+												.getActivity())
+										.setEventStartTime(epoch);*/
 								if (radiusLocation != -1) {
 									boolean radiusSelected = listOfRadiusFilter
 											.get(radiusLocation).isSelected();
@@ -375,8 +395,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 													.getActivity())
 											.setSearchRadius(radius);
 								}
-								
-								
+
 								// Log.d("Search Term", s);
 
 								requestUpdate();
@@ -423,10 +442,10 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
 					EventsDetailsRequest.BUNDLE_LOCATION_TYPE_ADDRESS);
-			
-			float f = SessionManager.getInstance(this.getActivity()).getSearchRadius();
-			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS,
-					f);
+
+			float f = SessionManager.getInstance(this.getActivity())
+					.getSearchRadius();
+			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS, f);
 		} else if (currentLocation != null) {
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_TYPE,
 					EventsDetailsRequest.BUNDLE_LOCATION_TYPE_COORDINATES);
@@ -435,10 +454,9 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			b.putString(EventsDetailsRequest.BUNDLE_LOCATION_LONGITUDE,
 					String.valueOf(currentLocation.getLongitude()));
 
-			
-			float f = SessionManager.getInstance(this.getActivity()).getSearchRadius();
-			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS,
-					f);
+			float f = SessionManager.getInstance(this.getActivity())
+					.getSearchRadius();
+			b.putFloat(EventsDetailsRequest.BUNDLE_RADIUS, f);
 		}
 
 		if (sm.getSearchString() != null
@@ -468,10 +486,10 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			b.putString(EventsDetailsRequest.BUNDLE_VISIBILITY, "public");
 		}
 
-		/*if (sm.getTimeStart() != null && !sm.getTimeStart().equals("")) {
-			b.putString(EventsDetailsRequest.BUNDLE_TIME_START,
-					sm.getTimeStart());
-		}*/
+		if (sm.getEventTimeStart() != SessionManager.DEFAULT_VALUE) {
+			b.putLong(EventsDetailsRequest.BUNDLE_TIME_START,
+					sm.getEventTimeStart());
+		}
 		super.onRefresh(b);
 	}
 

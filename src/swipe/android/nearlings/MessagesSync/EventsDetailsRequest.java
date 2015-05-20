@@ -59,16 +59,14 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 		if (b.containsKey(BUNDLE_CATEGORY)) {
 			url += ("&category=" + b.getString(BUNDLE_CATEGORY));
 		}
-		if (b.containsKey(BUNDLE_START_TIME)) {
-			url += ("&time_start=" + b.getString(BUNDLE_START_TIME));
-		}
+	
 		if (b.containsKey(BUNDLE_KEYWORDS)) {
 			url += ("&keywords=" + b.getString(BUNDLE_KEYWORDS));
 		}
 
-		if (b.containsKey(BUNDLE_TIME_START)) {
-			url += ("&time_start=" + b.getString(BUNDLE_TIME_START));
-		}
+		/*if (b.containsKey(BUNDLE_TIME_START)) {
+			url += ("&time_start=" + b.getLong(BUNDLE_TIME_START));
+		}*/
 		if(b.containsKey(BUNDLE_VISIBILITY)){
 			url += ("&visibility=" + b.getString(BUNDLE_VISIBILITY));
 		}else{

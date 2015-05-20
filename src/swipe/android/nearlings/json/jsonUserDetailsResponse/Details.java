@@ -2,7 +2,8 @@ package swipe.android.nearlings.json.jsonUserDetailsResponse;
 
 public class Details{
 	private String  username, firstname, description, lastname, mobile, email, gravitar;
-	int balance, holdbalance, user_rating, rating_count, taskcount, alertcount, todocount;
+	float balance, holdbalance;
+	int  user_rating, rating_count, taskcount, alertcount, todocount;
 	String address1, address2, city, state;
 	int zip;
 	String timezone;
@@ -52,16 +53,16 @@ public class Details{
 	public void setGravitar(String gravitar) {
 		this.gravitar = gravitar;
 	}
-	public int getBalance() {
+	public float getBalance() {
 		return balance;
 	}
-	public void setBalance(int balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
-	public int getHoldbalance() {
+	public float getHoldbalance() {
 		return holdbalance;
 	}
-	public void setHoldbalance(int holdbalance) {
+	public void setHoldbalance(float holdbalance) {
 		this.holdbalance = holdbalance;
 	}
 	public int getUser_rating() {

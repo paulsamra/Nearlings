@@ -151,12 +151,19 @@ public class LoginActivity extends Activity implements
 						detailsResponse.getDetails().getMobile());
 				SessionManager.getInstance(this).setEmail(
 						detailsResponse.getDetails().getEmail());
+				SessionManager.getInstance(this).setUserName(
+						detailsResponse.getDetails().getUsername());
 				SessionManager.getInstance(this).setGravitar(
 						detailsResponse.getDetails().getGravitar());
 				SessionManager.getInstance(this).setAlertCount(
 						detailsResponse.getDetails().getAlertcount());
 				SessionManager.getInstance(this).setMemberships(
 						detailsResponse.getDetails().getMemberships());
+				SessionManager.getInstance(this).setPassword(
+						passwordET.getText().toString());
+
+				SessionManager.getInstance(this).setBalance(
+						detailsResponse.getDetails().getBalance());
 				goToNextActivity();
 			
 			}

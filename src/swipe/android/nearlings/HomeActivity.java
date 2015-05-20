@@ -95,6 +95,9 @@ public class HomeActivity extends ActionBarActivity {
 				c = CreateGroupActivity.class;
 				break;
 			case 5:
+				c = UserSettingsActivity.class;
+				break;
+			case 6:
 				HomeActivity.this.logout();
 				break;
 

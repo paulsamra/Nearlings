@@ -17,7 +17,7 @@ public class NearlingsActivity extends FragmentActivity implements
 		if (result != null
 				&& result.getError().equals("Token expired or invalid.")) {
 			((NearlingsApplication) NearlingsActivity.this
-					.getApplication()).logoutDialog();
+					.getApplication()).logoutDialog(NearlingsActivity.this);
 
 		}
 	}

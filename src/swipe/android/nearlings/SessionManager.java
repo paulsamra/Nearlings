@@ -43,6 +43,8 @@ public class SessionManager {
 	private static final String GRAVITAR = "GRAVITAR";
 	private static final String ALERT_COUNT = "ALERT_COUNT";
 	private static final String MEMBERSHIPS = "MEMBERSHIPS";
+	private static final String EVENT_START_TIME = "EVENT_START_TIME";
+	private static final String PASSWORD = "PASSWORD";
 
 	// same across all searches
 	private static final String SEARCH_STRING = "SEARCH_STRING";
@@ -83,6 +85,7 @@ public class SessionManager {
 		editor.commit();
 	}
 
+
 	public void setLastName(String name) {
 		editor.putString(LAST_NAME, name);
 		editor.commit();
@@ -90,6 +93,9 @@ public class SessionManager {
 
 	public void setMobile(String mobile) {
 		editor.putString(MOBILE, mobile);
+		editor.commit();
+	}public void setPassword(String password) {
+		editor.putString(PASSWORD, password);
 		editor.commit();
 	}
 
@@ -227,7 +233,9 @@ public class SessionManager {
 	public String getUserName() {
 		return pref.getString(USER_NAME, "");
 	}
-
+	public String getPassword() {
+		return pref.getString(PASSWORD, "");
+	}
 	public Map<String, String> defaultSessionHeaders() {
 		Map<String, String> headers = new LinkedHashMap<String, String>();
 
@@ -261,7 +269,7 @@ public class SessionManager {
 	}
 
 	public float getSearchRadius() {
-		return pref.getFloat(SEARCH_RADIUS, -1);
+		return pref.getFloat(SEARCH_RADIUS, DEFAULT_SEARCH_RADIUS);
 	}
 
 	public void setSearchRadius(float searchRadius) {
@@ -298,9 +306,23 @@ public class SessionManager {
 	public String getGroupCategory() {
 		return pref.getString(GROUP_SEARCH_CATEGORY, DEFAULT_STRING);
 	}
+	
+	public String getFirstName(){
+		return pref.getString(FIRST_NAME, "");
+	}
+	public String getLastName(){
+		return pref.getString(LAST_NAME, "");
+	}
+	public String getGravitar(){
+		return pref.getString(GRAVITAR, "");
+	}
+	public String getEmail(){
+		return pref.getString(EMAIL, "");
+	}
 
 	public void setGroupCategory(String group_category) {
 		editor.putString(GROUP_SEARCH_CATEGORY, group_category);
+		editor.commit();
 	}
 
 	public float getSearchRewardMinimum() {
@@ -324,6 +346,16 @@ public class SessionManager {
 
 	public String getUserID() {
 		return pref.getString(USER_ID, "");
+	}
+
+	private static final String PROFILE_URL = "PROFILE_URL";
+	public void setUserProfileImageURL(String url) {
+		editor.putString(PROFILE_URL, url);
+		editor.commit();
+
+	}
+	public String getUserProfileURL() {
+		return pref.getString(PROFILE_URL, "");
 	}
 
 	public void setSearchVisibility(String visibility) {
@@ -380,5 +412,32 @@ public class SessionManager {
 
 	public String userReviewsURL(String id) {
 		return URL_BASE + "/user/" + id +"/reviews";
+	}
+
+	public void setEventStartTime(long epoch) {
+		editor.putLong(EVENT_START_TIME, epoch);
+		editor.commit();
+		
+	}
+	public long getEventTimeStart(){
+		return pref.getLong(EVENT_START_TIME, -1);
+	}
+public static final String BALANCE = "BALANCE";
+	public void setBalance(float balance) {
+		editor.putFloat(BALANCE, balance);
+		editor.commit();
+	}
+	public float getBalance(){
+		return pref.getFloat(BALANCE, 0.0f);
+	}
+
+	public String userHistoryURL(String id) {
+		// TODO Auto-generated method stub
+		return URL_BASE + "/user/" + id + "/payments";
+	}
+
+	public String withdrawMoneyURL(String id) {
+		// TODO Auto-generated method stub
+		return URL_BASE + "/user/"+id +"/withdrawal";
 	}
 }

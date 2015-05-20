@@ -55,6 +55,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="swipe.android.nearlings.UserSettingsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="swipe.android.nearlings.MessagesActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -83,6 +87,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="swipe.android.nearlings.ProfilePageActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="swipe.android.nearlings.EventsDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -91,11 +99,19 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="swipe.android.nearlings.SubmitReviewOfUserActivity"
+            android:name="swipe.android.nearlings.AccountBalanceHistory"
             android:screenOrientation="portrait" >
         </activity>
         
-           <activity
+        <activity
+            android:name="swipe.android.nearlings.SubmitReviewOfUserActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+             <activity
+            android:name="swipe.android.nearlings.PaymentHistoryListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="swipe.android.nearlings.SubmitForCompletionActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -147,7 +163,7 @@
         <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />
         <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
-      <activity
+        <activity
             android:name="io.card.payment.CardIOActivity"
             android:configChanges="keyboardHidden|orientation" />
         <activity android:name="io.card.payment.DataEntryActivity" />

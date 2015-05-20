@@ -127,9 +127,8 @@ These must be kept in sync with the preferences_default_reminder_values array.
     </integer-array>
 
     <string-array name="visibility">
-        <item>Default</item>
-        <item>Private</item>
-        <item>Public</item>
+        <item>public</item>
+        <item>private</item>
     </string-array>
     <string-array name="ordinal_labels">
         <item>first</item>
@@ -332,6 +331,7 @@ that were present in some languages.
         <item>Create Need</item>
         <item>Create Event</item>
         <item>Create Group</item>
+        <item>Settings</item>
         <item>Logout</item>
     </string-array>
 
@@ -341,6 +341,7 @@ that were present in some languages.
         <item>@drawable/create_need_icon</item>
         <item>@drawable/create_event_icon</item>
         <item>@drawable/create_group_icon</item>
+        <item>@drawable/settings</item>
         <item>@drawable/logout_icon</item>
     </array>
 
@@ -377,10 +378,13 @@ that were present in some languages.
         <item>5.0</item>
     </string-array>
 <string-array name="event_privacy">
+        <item>public</item>
+        <item>private</item>
+    </string-array>
+    <string-array name="event_privacy_view">
         <item>Public</item>
         <item>Private</item>
     </string-array>
-    
     <array name="radius_unselected_icons">
         <item>@drawable/half_mile_unselected</item>
         <item>@drawable/one_mile_unselected</item>
