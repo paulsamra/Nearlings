@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="androidUtil_error">Error</string>
+	<string name="androidUtil_ok">OK</string>
+	<string name="androidUtil_cancel">Cancel</string>
+	<string name="androidUtil_yes">Yes</string>
+	<string name="androidUtil_no">No</string>
+
+	<string name="androidUtil_error_notOnline">The device is not connected to the internet.
+	</string>
+	
+	<string name="androidUtil_gpsDisabledDialogTitle">GPS is disabled</string>
+	<string name="androidUtil_gpsDisabledDialogText">GPS is required for this functionality.\n\nWould you like to enable it?</string>
+</resources>

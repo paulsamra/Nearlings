@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/bottom_screen_buttom" />
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/buttons" />
+
+</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/fragment_frame_with_button.xml -->

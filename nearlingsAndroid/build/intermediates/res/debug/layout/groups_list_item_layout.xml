@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/groups_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/groups_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/groups_title"
+        android:layout_marginTop="1dip"
+        android:text="Just gona stand there and ..."
+        android:textColor="#343434"
+        android:textSize="10dip" />
+
+</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/groups_list_item_layout.xml -->

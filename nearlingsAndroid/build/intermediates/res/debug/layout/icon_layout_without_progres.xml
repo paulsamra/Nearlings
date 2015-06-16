@@ -1,0 +1,12 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="32dip">
+
+	<ImageView
+		android:id="@+id/icon_image"
+		android:layout_width="32dip"
+		android:layout_height="32dip"
+		android:adjustViewBounds="true"
+		android:scaleType="centerCrop" />
+
+</FrameLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/icon_layout_without_progres.xml -->

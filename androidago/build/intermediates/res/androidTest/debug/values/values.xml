@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RelativeTimeTextView"><attr format="string" name="relative_time_prefix"/><attr format="string" name="relative_time_suffix"/><attr format="string" name="reference_time"/></declare-styleable>
+    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/androidago/build/intermediates/bundles/debug/res/values/values.xml -->
+    <eat-comment/>
+    <string name="app_name">relative-time-textview</string>
+    <string name="just_now">Just Now</string>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+</resources>

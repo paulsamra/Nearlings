@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/description_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="64dip"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/description_label"
+        style="@style/TextAppearance.EditEvent_LabelSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-6dip"
+        android:animateLayoutChanges="false"
+        android:orientation="horizontal" >
+
+        <de.metagear.android.view.ValidatingEditText
+            android:id="@+id/descriptionBox"
+            style="@style/TextAppearance.EditEvent_Value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dip"
+            android:capitalize="sentences"
+            android:focusable="true"
+            android:hint="Description"
+            android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
+            android:maxLength="2000"
+            android:maxLines="4"
+            android:minHeight="48dip"
+            android:scrollHorizontally="false" />
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/description_layout.xml -->

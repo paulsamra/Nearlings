@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/androidDashboard/androidDashboard.iml" filepath="$PROJECT_DIR$/androidDashboard/androidDashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidHorizontalListView/androidHorizontalListView.iml" filepath="$PROJECT_DIR$/androidHorizontalListView/androidHorizontalListView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidago/androidago.iml" filepath="$PROJECT_DIR$/androidago/androidago.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidsupportv4appcompat/androidsupportv4appcompat.iml" filepath="$PROJECT_DIR$/androidsupportv4appcompat/androidsupportv4appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidviewbadger/androidviewbadger.iml" filepath="$PROJECT_DIR$/androidviewbadger/androidviewbadger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/autofittextview/autofittextview.iml" filepath="$PROJECT_DIR$/autofittextview/autofittextview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/datetimepickerlibrary/datetimepickerlibrary.iml" filepath="$PROJECT_DIR$/datetimepickerlibrary/datetimepickerlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deletableEditText/deletableEditText.iml" filepath="$PROJECT_DIR$/deletableEditText/deletableEditText.iml" />
+      <module fileurl="file://$PROJECT_DIR$/droidparts/droidparts.iml" filepath="$PROJECT_DIR$/droidparts/droidparts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edbertLibrary/edbertLibrary.iml" filepath="$PROJECT_DIR$/edbertLibrary/edbertLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/endless/endless.iml" filepath="$PROJECT_DIR$/endless/endless.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/main/main.iml" filepath="$PROJECT_DIR$/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mglibraryandroid/mglibraryandroid.iml" filepath="$PROJECT_DIR$/mglibraryandroid/mglibraryandroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nearlings-android_2.iml" filepath="$PROJECT_DIR$/nearlings-android_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nearlingsAndroid/nearlingsAndroid.iml" filepath="$PROJECT_DIR$/nearlingsAndroid/nearlingsAndroid.iml" />
+    </modules>
+  </component>
+</project>

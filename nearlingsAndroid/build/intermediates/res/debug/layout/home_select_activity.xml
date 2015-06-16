@@ -1,0 +1,13 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+
+   <com.throrinstudio.android.library.widgets.dashboard.DashBoardLayout
+        android:id="@+id/grid"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/home_select_activity.xml -->

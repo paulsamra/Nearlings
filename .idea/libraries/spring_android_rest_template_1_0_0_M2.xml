@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="spring-android-rest-template-1.0.0.M2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mglibraryandroid/libs/spring-android-rest-template-1.0.0.M2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/mglibraryandroid/libs/spring-android-rest-template-1.0.0.M2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

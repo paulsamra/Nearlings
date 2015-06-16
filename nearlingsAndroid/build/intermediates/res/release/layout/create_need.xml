@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_event"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="0dip"
+    android:background="#FFFFFF"
+    android:gravity="center_horizontal" >
+  
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="false"
+        android:fillViewport="true"
+        android:visibility="visible" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+          
+            <LinearLayout
+                android:id="@+id/two_pane"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:orientation="vertical" >
+
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/create_need_1" />
+            </LinearLayout>
+
+        
+        </FrameLayout>
+    </ScrollView>
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/create_need.xml -->

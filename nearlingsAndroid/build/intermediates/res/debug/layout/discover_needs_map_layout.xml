@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/needs_map_view_map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:apiKey="AIzaSyA5rUkHtoPSD-gXCIvxDdlsWMDdQcVIB6s"
+        android:clickable="true" />
+
+    <!--
+          <Button
+        android:id="@+id/needs_map_view_refresh_button"
+        android:layout_width="fill_parent"
+        android:layout_height = "200dp"
+        android:text="@string/refresh_map_view"
+        />
+    -->
+
+</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/discover_needs_map_layout.xml -->

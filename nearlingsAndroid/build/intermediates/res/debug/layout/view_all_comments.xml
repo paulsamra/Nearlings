@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/comments_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fastScrollEnabled="true"
+        android:stackFromBottom="true"
+        android:transcriptMode="normal" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/comment_field"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Message"
+            android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="60sp"
+            android:text="Send" />
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/view_all_comments.xml -->

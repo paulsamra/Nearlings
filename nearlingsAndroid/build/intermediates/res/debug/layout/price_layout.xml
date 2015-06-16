@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/event_price_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/price_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <de.metagear.android.view.ValidatingEditText
+                android:id="@+id/price"
+                style="@style/TextAppearance.EditEvent_Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </LinearLayout>
+    </LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/price_layout.xml -->

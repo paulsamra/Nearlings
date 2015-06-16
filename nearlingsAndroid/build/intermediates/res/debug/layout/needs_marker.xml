@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="center_vertical|center_horizontal"
+android:background="#ADD8E6"
+android:gravity="center_vertical|center_horizontal"
+android:orientation="horizontal" >
+
+ 
+    <TextView
+        android:id="@+id/needs_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+ 
+    <TextView
+        android:id="@+id/needs_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/needs_task"
+        android:gravity="right"
+        android:layout_marginRight="5dip"
+        android:textSize="20dp"
+        android:textColor="@color/green"
+        android:textStyle="bold"/>
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/needs_marker.xml -->

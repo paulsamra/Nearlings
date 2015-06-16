@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "swipe.android.nearlings"
+        minSdkVersion 14
+        targetSdkVersion 17
+        multiDexEnabled = true
+    }
+    dexOptions {
+        incremental = true
+        preDexLibraries = false
+        jumboMode = false
+        javaMaxHeapSize "2048M"
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+repositories {
+
+    maven { url "http://dl.bintray.com/populov/maven" }
+    jcenter()
+    mavenCentral()
+
+}
+
+dependencies {
+    ///compile project(':datetimepickerlibrary')
+    compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
+    //compile project(':androidHorizontalListView')
+    compile (project(':androidHorizontalListView')) {
+        exclude module: 'support-v4'
+    }
+    compile project(':main')
+    compile project(':deletableEditText')
+    //compile project(':androidago')
+    compile 'com.github.curioustechizen.android-ago:library:1.3.0'
+    compile project(':androidDashboard')
+    compile project(':endless')
+    //compile project(':droidparts')
+    compile 'org.droidparts:droidparts:2.7.4'
+    compile project(':edbertLibrary')
+    compile project(':mglibraryandroid')
+    compile 'com.google.android.gms:play-services:+'
+    //compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:22.+'
+    //compile 'com.android.support:support-v4:13.0.0'
+    compile files('libs/PayPalAndroidSDK-2.8.4.jar')
+    compile files('libs/crashlytics.jar')
+}

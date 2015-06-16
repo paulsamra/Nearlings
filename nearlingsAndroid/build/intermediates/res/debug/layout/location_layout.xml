@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  
+        android:id="@+id/where_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dip"
+        android:focusable="true"
+        android:orientation="vertical" >
+
+     <!--    <AutoCompleteTextView -->
+     <swipe.android.nearlings.ValidatingAutoCompleteView
+            android:id="@+id/location"
+            style="@style/TextAppearance.EditEvent_Value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_where"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoCorrect|textCapSentences"
+            android:minHeight="48dip"
+            android:singleLine="false" />
+
+        <View style="@style/EditEventSeparator" />
+    </LinearLayout>
+<!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/location_layout.xml -->

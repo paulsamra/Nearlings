@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="true" android:drawable="@drawable/about_alt"/>
+    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/about_alt"/>
+    <item android:state_focused="true" android:drawable="@drawable/about_alt"/>
+    <item android:state_focused="false" android:state_pressed="false" android:drawable="@drawable/about_def"/>
+</selector>
+
+<!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/drawable/about_click.xml -->

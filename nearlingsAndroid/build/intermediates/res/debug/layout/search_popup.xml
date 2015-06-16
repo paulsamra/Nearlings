@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_popup"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                style="@style/DialogLabel"
+                android:text="Categories" >
+            </TextView>
+
+            <com.meetme.android.horizontallistview.HorizontalListView
+                android:id="@+id/search_options_listview_categories"
+                android:layout_width="match_parent"
+                android:layout_height="80dip" />
+
+            <TextView
+                style="@style/DialogLabel"
+                android:text="Reward Minimum" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/reward_minimum"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" >
+            </EditText>
+
+            <TextView
+                style="@style/DialogLabel"
+                android:text="Status" >
+            </TextView>
+
+            <Button
+                android:id="@+id/status_button"
+                style="@style/TextAppearance.EditEvent_SpinnerButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+
+            <TextView
+                style="@style/DialogLabel"
+                android:text="Radius" >
+            </TextView>
+
+            <com.meetme.android.horizontallistview.HorizontalListView
+                android:id="@+id/radius_selection"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/search_popup.xml -->

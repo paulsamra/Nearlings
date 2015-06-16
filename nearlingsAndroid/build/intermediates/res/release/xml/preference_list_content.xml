@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Settings" >
+        <PreferenceScreen
+            android:key="personal_settings"
+            android:title="Personal Settings" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="swipe.android.nearlings.ProfilePageActivity"
+                android:targetPackage="swipe.android.nearlings" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="notifications"
+            android:title="Notifications" >
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="new_items"
+                android:title="New Items" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="responses"
+                android:title="Responses" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="feedback"
+                android:title="Feedback" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="location_visible"
+                android:title="Location Visible" />
+
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="balance"
+            android:title="Balance" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="swipe.android.nearlings.AccountBalanceHistory"
+                android:targetPackage="swipe.android.nearlings" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/xml/preference_list_content.xml -->

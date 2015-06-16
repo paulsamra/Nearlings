@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- CALENDARS SELECTOR for new events -->
+
+    <de.metagear.android.view.ValidatingEditText
+        android:id="@+id/title"
+        style="@style/TextAppearance.EditEvent_Value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:capitalize="sentences"
+        android:focusable="true"
+        android:hint="Group Name"
+        android:inputType="textAutoCorrect|textCapSentences"
+        android:minHeight="48dip"
+        android:singleLine="true" />
+    <!-- WHERE -->
+
+    <include layout="@layout/location_layout" />
+
+    <include layout="@layout/time_layout" />
+
+    <include layout="@layout/online_inperson_switch" />
+    <include layout="@layout/price_layout" />
+
+    <include layout="@layout/category_layout" />
+
+    <include layout="@layout/description_layout" />
+
+    <View style="@style/EditEventSeparator" />
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/create_need_1.xml -->

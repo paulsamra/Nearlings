@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/private_public_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="-8dip"
+    android:minHeight="64dip"
+    android:orientation="vertical"
+    android:paddingTop="8dip" >
+
+    <TextView
+        android:id="@+id/private_public_label"
+        style="@style/TextAppearance.EditEvent_LabelSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Private or Public" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dip"
+        android:animateLayoutChanges="false"
+        android:orientation="horizontal" >
+
+        <Switch
+            android:id="@+id/private_public_switch"
+            style="@style/TextAppearance.Switch_LabelSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="0dp"
+            android:contentDescription="@string/accessibility_pick_start_date"
+            android:paddingRight="4dp"
+            android:textOff="Private"
+            android:textOn="Public" />
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/private_public_switch.xml -->

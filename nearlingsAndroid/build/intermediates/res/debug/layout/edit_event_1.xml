@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- CALENDARS SELECTOR for new events -->
+
+    <de.metagear.android.view.ValidatingEditText
+        android:id="@+id/title"
+        style="@style/TextAppearance.EditEvent_Value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:capitalize="sentences"
+        android:focusable="true"
+        android:hint="@string/hint_what"
+        android:inputType="textAutoCorrect|textCapSentences"
+        android:minHeight="48dip"
+        android:singleLine="true" />
+    <!-- WHERE -->
+
+    <include layout="@layout/online_inperson_switch" />
+
+    <!-- <include layout="@layout/private_public_switch" />-->
+
+    <include layout="@layout/location_layout" />
+
+    <!-- WHEN - Read-only textview version of FROM/TO (below) -->
+
+    <include layout="@layout/time_layout" />
+    <!-- Age Restriction - Read/write version which launches the date/time pickers -->
+
+    <LinearLayout
+        android:id="@+id/age_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/age_label"
+            style="@style/TextAppearance.EditEvent_LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Age Requirements" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dip"
+            android:animateLayoutChanges="false"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/age_inequality"
+                style="@style/TextAppearance.EditEvent_SpinnerButton"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:layout_weight="7"
+                android:paddingRight="4dp"
+                android:singleLine="true" />
+
+            <de.metagear.android.view.ValidatingEditText
+                android:id="@+id/age_value"
+                style="@style/TextAppearance.EditEvent_SpinnerButton"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dip"
+                android:layout_weight="4"
+                android:inputType="number" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/price_layout" />
+    <!-- Category -->
+
+    <include layout="@layout/category_layout" />
+
+    <include layout="@layout/description_layout" />
+
+    <View style="@style/EditEventSeparator" />
+
+</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/edit_event_1.xml -->

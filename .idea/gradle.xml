@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/androidDashboard" />
+            <option value="$PROJECT_DIR$/androidHorizontalListView" />
+            <option value="$PROJECT_DIR$/androidago" />
+            <option value="$PROJECT_DIR$/androidsupportv4appcompat" />
+            <option value="$PROJECT_DIR$/androidviewbadger" />
+            <option value="$PROJECT_DIR$/autofittextview" />
+            <option value="$PROJECT_DIR$/datetimepickerlibrary" />
+            <option value="$PROJECT_DIR$/deletableEditText" />
+            <option value="$PROJECT_DIR$/droidparts" />
+            <option value="$PROJECT_DIR$/edbertLibrary" />
+            <option value="$PROJECT_DIR$/endless" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/main" />
+            <option value="$PROJECT_DIR$/mglibraryandroid" />
+            <option value="$PROJECT_DIR$/nearlingsAndroid" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

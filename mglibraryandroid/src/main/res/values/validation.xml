@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="validation_email">\&#34;%1$s\&#34; must be a valid email address</string>
+    <string name="validation_phone">\&#34;%1$s\&#34; must consist of digits and spaces only</string>
+    <string name="validation_match">\&#34;%1$s\&#34; must equal \&#34;%2$s\&#34;</string>
+    <string name="validation_minLength">\&#34;%1$s\&#34; must have %2$s characters at least</string>
+    <string name="validation_regex">\&#34;%1$s\&#34; does not match the expression \&#34;%2$s\&#34;</string>
+    <string name="validation_zipCode">\&#34;%1$s\&#34; must consist of exactly 5 digits</string>
+</resources>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jackson-core-asl-1.7.2-sources">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mglibraryandroid/libs/jackson-core-asl-1.7.2-sources.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

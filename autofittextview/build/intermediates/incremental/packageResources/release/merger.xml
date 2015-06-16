@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/cygnus/Documents/nearlings-android_2/autofittextview/src/main/res"><file path="/Users/cygnus/Documents/nearlings-android_2/autofittextview/src/main/res/values/attrs.xml" qualifiers=""><declare-styleable name="AutofitTextView">
+        <attr format="dimension" name="minTextSize"/>
+        <attr format="float" name="precision"/>
+        <attr format="boolean" name="sizeToFit"/>
+    </declare-styleable></file></source><source path="/Users/cygnus/Documents/nearlings-android_2/autofittextview/build/generated/res/rs/release"/><source path="/Users/cygnus/Documents/nearlings-android_2/autofittextview/build/generated/res/generated/release"/></dataSet><dataSet config="release"><source path="/Users/cygnus/Documents/nearlings-android_2/autofittextview/src/release/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="AutofitTextView"><attr format="dimension" name="minTextSize"/><attr format="float" name="precision"/><attr format="boolean" name="sizeToFit"/></declare-styleable></configuration></mergedItems></merger>

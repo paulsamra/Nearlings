@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cwac-adapter">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/endless/libs/cwac-adapter.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

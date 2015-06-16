@@ -1,0 +1,46 @@
+-keep class swipe.android.nearlings.NearlingsApplication {
+    <init>();
+    void attachBaseContext(android.content.Context);
+}
+-keep class swipe.android.nearlings.LoginActivity { <init>(); }
+-keep class swipe.android.nearlings.NeedsDetailsActivity { <init>(); }
+-keep class swipe.android.nearlings.UserSettingsActivity { <init>(); }
+-keep class swipe.android.nearlings.MessagesActivity { <init>(); }
+-keep class swipe.android.nearlings.HomeActivity { <init>(); }
+-keep class swipe.android.nearlings.MainActivity { <init>(); }
+-keep class swipe.android.nearlings.SearchActivity { <init>(); }
+-keep class swipe.android.nearlings.CreateEventActivity { <init>(); }
+-keep class swipe.android.nearlings.GroupsDetailsActivity { <init>(); }
+-keep class swipe.android.nearlings.CreateGroupActivity { <init>(); }
+-keep class swipe.android.nearlings.ProfilePageActivity { <init>(); }
+-keep class swipe.android.nearlings.EventsDetailsActivity { <init>(); }
+-keep class swipe.android.nearlings.CreateNeedActivity { <init>(); }
+-keep class swipe.android.nearlings.AccountBalanceHistory { <init>(); }
+-keep class swipe.android.nearlings.SubmitReviewOfUserActivity { <init>(); }
+-keep class swipe.android.nearlings.PaymentHistoryListActivity { <init>(); }
+-keep class swipe.android.nearlings.SubmitForCompletionActivity { <init>(); }
+-keep class swipe.android.nearlings.MakeOfferActivity { <init>(); }
+-keep class swipe.android.nearlings.sync.NearlingsSyncService { <init>(); }
+-keep class swipe.android.nearlings.sync.NearlingsAuthenticatorService { <init>(); }
+-keep class swipe.android.nearlings.NearlingsContentProvider { <init>(); }
+-keep class com.paypal.android.sdk.payments.PayPalService { <init>(); }
+-keep class com.paypal.android.sdk.payments.PaymentActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.LoginActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.PaymentMethodActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.PaymentConfirmActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.PayPalFuturePaymentActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.FuturePaymentConsentActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.FuturePaymentInfoActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.PayPalProfileSharingActivity { <init>(); }
+-keep class com.paypal.android.sdk.payments.ProfileSharingConsentActivity { <init>(); }
+-keep class io.card.payment.CardIOActivity { <init>(); }
+-keep class io.card.payment.DataEntryActivity { <init>(); }
+-keep class com.google.android.gms.ads.AdActivity { <init>(); }
+-keep class com.google.android.gms.ads.purchase.InAppPurchaseActivity { <init>(); }
+-keep class com.google.android.gms.wallet.EnableWalletOptimizationReceiver { <init>(); }
+-keep public class * extends android.app.backup.BackupAgent {
+    <init>();
+}
+-keep public class * extends java.lang.annotation.Annotation {
+    *;
+}

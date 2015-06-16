@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="horizontal"
+   >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/image_bg"
+        android:layout_marginRight="5dip">
+ 
+        <include layout="@layout/icon_layout_without_progres" />
+ 
+    </LinearLayout>
+ 
+    <TextView
+        android:id="@+id/needs_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+ 
+    <TextView
+        android:id="@+id/needs_person"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/needs_task"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Just gona stand there and ..." />
+ 
+        <TextView
+        android:id="@+id/needs_date_sent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/needs_person"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Just gona stand there and ..." />
+    
+ 
+    <TextView
+        android:id="@+id/needs_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/needs_task"
+        android:gravity="right"
+        android:layout_marginRight="5dip"
+        android:textSize="20dp"
+        android:textColor="@color/green"
+        android:textStyle="bold"/>
+ 
+ 
+</RelativeLayout>
+<!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/list_of_needs_list_item_layout.xml -->
