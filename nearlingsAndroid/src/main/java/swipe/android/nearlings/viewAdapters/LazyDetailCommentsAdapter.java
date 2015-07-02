@@ -11,6 +11,7 @@ import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.json.needs.comments.Comments;
 import swipe.android.nearlings.json.needs.comments.JsonCommentsResponse;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class LazyDetailCommentsAdapter extends EndlessAdapter implements
 	JsonCommentsResponse jcp;
 
 	public void requestUpdate() {
+		Log.d("requesting update", "requestingUpdate");
 		Date now = new Date();
 		long currentTime = new Long(now.getTime());
 		if (currentTime > nextTime)

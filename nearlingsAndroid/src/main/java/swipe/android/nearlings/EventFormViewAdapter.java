@@ -37,7 +37,7 @@ public class EventFormViewAdapter extends BaseFormAdapter {
 
 	private void initializeViews(Bundle savedInstanceState) {
 		price = (EditText) rootView.findViewById(R.id.price);
-		setUpPriceListener(price);
+		//setUpPriceListener(price);
 
 		category = (Button) rootView.findViewById(R.id.category_button);
 		setUpCategory(category, R.array.event_types);

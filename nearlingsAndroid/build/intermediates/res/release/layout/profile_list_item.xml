@@ -32,4 +32,4 @@
         android:layout_marginLeft="25dp"
         android:src="@drawable/settings" />
 
-</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/edbertLibrary/src/main/res/layout/profile_list_item.xml --><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android_2/edbertLibrary/unspecified/res/layout/profile_list_item.xml -->
+</RelativeLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/edbertLibrary/src/main/res/layout/profile_list_item.xml --><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android/edbertLibrary/unspecified/res/layout/profile_list_item.xml -->

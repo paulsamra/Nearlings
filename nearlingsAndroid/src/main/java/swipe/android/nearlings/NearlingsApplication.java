@@ -2,6 +2,7 @@ package swipe.android.nearlings;
 
 import java.math.BigDecimal;
 
+import swipe.android.DatabaseHelpers.BalanceDatabaseHelper;
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
@@ -9,6 +10,7 @@ import swipe.android.DatabaseHelpers.NeedsCommentsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.DatabaseHelpers.UserReviewDatabaseHelper;
+import swipe.android.nearlings.MessagesSync.BalanceRequest;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
 import swipe.android.nearlings.MessagesSync.MessagesRequest;
@@ -113,6 +115,7 @@ public class NearlingsApplication extends MultiDexApplication implements
 		DatabaseCommandManager.createAllTables(NearlingsContentProvider
 				.getDBHelperInstance(this).getWritableDatabase());
 
+
 		SendRequestStrategyManager.register(new MessagesRequest(this));
 		SendRequestStrategyManager.register(new NeedsExploreRequest(this));
 		SendRequestStrategyManager.register(new EventsDetailsRequest(this));
@@ -121,6 +124,8 @@ public class NearlingsApplication extends MultiDexApplication implements
 		SendRequestStrategyManager.register(new UserReviewsRequest(this));
 
 		SendRequestStrategyManager.register(new NeedsDetailsRequest(this));
+
+		SendRequestStrategyManager.register(new BalanceRequest(this));
 
 		super.registerActivityLifecycleCallbacks(this);
 
@@ -154,6 +159,7 @@ public class NearlingsApplication extends MultiDexApplication implements
 		DatabaseCommandManager.register(new GroupsDatabaseHelper());
 		DatabaseCommandManager.register(new NeedsOfferDatabaseHelper());
 		DatabaseCommandManager.register(new UserReviewDatabaseHelper());
+		DatabaseCommandManager.register(new BalanceDatabaseHelper());
 
 	}
 

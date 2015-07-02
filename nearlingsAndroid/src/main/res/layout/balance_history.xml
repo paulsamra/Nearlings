@@ -2,93 +2,140 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:background="@color/nearlings_theme"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/account_value_theme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="6dip"
-                android:text="Account Value"
-                android:textColor="@color/white"
-                android:textSize="35dip" />
-
-            <TextView
-                android:id="@+id/account_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="6dip"
-                android:text="Loading account value..."
-                android:textColor="@color/white"
-                android:textSize="35dip" />
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="6dip" >
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/withdraw_button"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/account_value_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="6dip"
+                        android:text="Account Value"
+                        android:textColor="@color/white"
+                        android:textSize="20dip" />
+
+                    <TextView
+                        android:id="@+id/account_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="6dip"
+                        android:text="Loading..."
+                        android:textColor="@color/white"
+                        android:textSize="20dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/available_value_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="6dip"
+                        android:text="Available Balance"
+                        android:textColor="@color/white"
+                        android:textSize="20dip" />
+
+                    <TextView
+                        android:id="@+id/balance_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="6dip"
+                        android:text="Loading..."
+                        android:textColor="@color/white"
+                        android:textSize="20dip" />
+                </LinearLayout>
+</LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@color/white"
-                    android:padding="20dip"
-                    android:text="Withdraw"
-                    android:textColor="@color/nearlings_theme"
-                    android:textSize="25dip" />
+                    android:padding="6dip">
+
+                    <Button
+                        android:id="@+id/withdraw_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:padding="20dip"
+                        android:text="Withdraw"
+                        android:textColor="@color/nearlings_theme"
+                        android:textSize="25dip" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-
-        <TabHost
-            android:id="@+id/tabhost"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <LinearLayout
-                android:id="@+id/LinearLayout01"
+            <android.support.v4.app.FragmentTabHost
+                android:id="@+id/tabhost"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical" >
+                android:layout_height="fill_parent">
 
-                <TabWidget
-                    android:id="@android:id/tabs"
+                <LinearLayout
+                    android:id="@+id/LinearLayout01"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
-                </TabWidget>
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
-                </FrameLayout>
-            </LinearLayout>
-        </TabHost>
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"></TabWidget>
+
+                    <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"></FrameLayout>
+                </LinearLayout>
+            </android.support.v4.app.FragmentTabHost
+                >
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>

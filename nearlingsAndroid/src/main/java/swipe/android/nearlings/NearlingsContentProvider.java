@@ -7,6 +7,7 @@ package swipe.android.nearlings;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -27,7 +28,7 @@ public class NearlingsContentProvider extends ContentProvider {
 	// database
 	// private AlertDBHelper database;
 	public static  DBHelper dbHelper;
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 10;
 
 	// used for the UriMacher
 	private static final String DATABASE_NAME = "Nearlings.db";
@@ -159,6 +160,15 @@ public class NearlingsContentProvider extends ContentProvider {
 		getContext().getContentResolver().notifyChange(uri, null);
 		return rowsUpdated;
 	}
+	public static void printHashSet(HashSet hashSet) {
+		System.out.print( "HashSet: " );
+
+		// Use an Iterator to print each element of the TreeSet.
+		Iterator iterator = hashSet.iterator();
+		while (iterator.hasNext())
+			System.out.print( iterator.next() + ", " );
+		System.out.println();
+	}
 
 	private void checkColumns(String[] projection, Uri uri) {
 		String[] available = DatabaseCommandManager.getInstance(
@@ -169,6 +179,10 @@ public class NearlingsContentProvider extends ContentProvider {
 					Arrays.asList(projection));
 			HashSet<String> availableColumns = new HashSet<String>(
 					Arrays.asList(available));
+
+			//printHashSet(requestedColumns);
+
+			//printHashSet(availableColumns);
 			// check if all columns which are requested are available
 			if (!availableColumns.containsAll(requestedColumns)) {
 				throw new IllegalArgumentException(

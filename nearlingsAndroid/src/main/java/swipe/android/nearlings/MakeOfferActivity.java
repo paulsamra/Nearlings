@@ -55,6 +55,7 @@ public class MakeOfferActivity extends ActionBarActivity implements
 
 			@Override
 			public void onClick(View v) {
+				if(makeFormAdapter.areAllViewsValid())
 				submitOffer();
 			}
 			

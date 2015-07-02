@@ -4,4 +4,4 @@
       android:startColor="@color/navigation_drawer_pressed_color"
       android:endColor="@color/navigation_drawer_pressed_color"
       android:angle="90" />
-</shape><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/edbertLibrary/src/main/res/drawable/list_item_bg_pressed.xml --><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/edbertLibrary/build/intermediates/bundles/debug/res/drawable/list_item_bg_pressed.xml -->
+</shape><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/edbertLibrary/src/main/res/drawable/list_item_bg_pressed.xml --><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/edbertLibrary/build/intermediates/bundles/debug/res/drawable/list_item_bg_pressed.xml -->

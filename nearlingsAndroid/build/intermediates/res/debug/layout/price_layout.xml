@@ -25,6 +25,6 @@
                 style="@style/TextAppearance.EditEvent_Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="numberDecimal" />
         </LinearLayout>
-    </LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/price_layout.xml -->
+    </LinearLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/price_layout.xml -->

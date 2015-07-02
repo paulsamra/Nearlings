@@ -1,12 +1,18 @@
 package swipe.android.nearlings;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.content.CursorLoader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.readystatesoftware.viewbadger.BadgeView;
+
+import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 
 public class MainMenuGridAdapter extends BaseAdapter {
 	private Context mContext;
@@ -51,6 +57,19 @@ public class MainMenuGridAdapter extends BaseAdapter {
 					.findViewById(R.id.grid_image);
 			textView.setText(web[position]);
 			imageView.setImageResource(Imageid[position]);
+			if(position == 0) {
+				BadgeView badge = new BadgeView(mContext, imageView);
+				CursorLoader cursorLoader = new CursorLoader(
+						mContext,
+						NearlingsContentProvider
+								.contentURIbyTableName(MessagesDatabaseHelper.TABLE_NAME),
+						MessagesDatabaseHelper.COLUMNS, null, null,
+						MessagesDatabaseHelper.COLUMN_DATE + " DESC");
+				Cursor c = cursorLoader.loadInBackground();
+
+				badge.setText(String.valueOf(c.getCount()));
+				badge.show();
+			}
 		} else {
 			grid = (View) convertView;
 		}

@@ -11,6 +11,7 @@ import swipe.android.nearlings.MessagesSync.NeedsDetailsRequest;
 import swipe.android.nearlings.MessagesSync.NeedsOffersRequest;
 import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
 import swipe.android.nearlings.json.changeStateResponse.LockPaymentResponse;
+import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
 import swipe.android.nearlings.viewAdapters.NeedsOffersListAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -34,7 +35,6 @@ import com.edbert.library.utils.MapUtils;
 public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 		implements Refreshable, AsyncTaskCompleteListener<LockPaymentResponse> {
 
-	ListView lView;
 	/*
 	 * String MESSAGES_START_FLAG = NeedsBidsFragment.class.getCanonicalName() +
 	 * "_MESSAGES_START_FLAG"; String MESSAGES_FINISH_FLAG =
@@ -84,7 +84,8 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 
 		swipeView.setOnRefreshListener(this);
 		lView.setOnItemClickListener(this);
-
+		lView.setOnScrollListener(this);
+		setUpFooter(inflater);
 		// reloadData();
 		reloadAdapter();
 		return rootView;
@@ -133,6 +134,9 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 
 	@Override
 	public void setSourceRequestHelper() {
+	//	helpers.add(new NeedsOffersRequest(this.getActivity()));
+
+		helpers.add(new NeedsDetailsRequest(this.getActivity()));
 		helpers.add(new NeedsOffersRequest(this.getActivity()));
 	}
 
@@ -142,17 +146,56 @@ public class NeedsBidsFragment extends NearlingsSwipeToRefreshFragment
 
 		onRefresh();
 	}
+private Cursor generateStatusCursor(){
 
+	String selectionClause = NeedsDetailsDatabaseHelper.COLUMN_ID + " = ?";
+	String[] mSelectionArgs = { "" };
+	mSelectionArgs[0] = id;
+	CursorLoader cursorLoader_1 = new CursorLoader(
+			this.getActivity(),
+			NearlingsContentProvider
+					.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+			NeedsDetailsDatabaseHelper.COLUMNS, selectionClause,
+			mSelectionArgs, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE
+			+ " DESC");
+	return cursorLoader_1.loadInBackground();
+}
 	@Override
 	public void reloadAdapter() {
 		getLoaderManager().initLoader(0, null, this);
 
 		Cursor c = generateCursor();
 
-		this.mAdapter = new NeedsOffersListAdapter(this.getActivity(), c);
+			this.mAdapter = new NeedsOffersListAdapter(this.getActivity(), c);
+//get the status
 
-		mAdapter.notifyDataSetChanged();
-		lView.setAdapter(mAdapter);
+		Cursor status_cursor = generateStatusCursor();
+		if(status_cursor.getCount() == 0){
+			return;
+		}
+		status_cursor.moveToFirst();
+		if(status_cursor.getString(status_cursor.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS)).equals(Needs.CLOSED)){
+			lView.setAdapter(null);
+		}else {
+
+
+
+			mAdapter.notifyDataSetChanged();
+			lView.setAdapter(mAdapter);
+		}
+		Runnable run = new Runnable(){
+			public void run(){
+				//reload content
+                   /*arraylist.clear();
+                   arraylist.addAll(db.readAll());*/
+				mAdapter.notifyDataSetChanged();
+				lView.invalidateViews();
+				// lView.refreshDrawableState();
+			}
+		};
+		this.getActivity().runOnUiThread(run);
+		return;
+
 
 	}
 public void launchConfirm(){
@@ -209,6 +252,15 @@ public void launchConfirm(){
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 
+
+		Cursor status_cursor = generateStatusCursor();
+		if(status_cursor.getCount() == 0){
+			return;
+		}
+		status_cursor.moveToFirst();
+		if(status_cursor.getString(status_cursor.getColumnIndexOrThrow(NeedsDetailsDatabaseHelper.COLUMN_STATUS)).equals(Needs.CLOSED)) {
+			return;
+		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				this.getActivity());
 			builder.setPositiveButton("OK",
@@ -274,5 +326,8 @@ public void launchConfirm(){
 		alert.show();
 
 	}
-
+	@Override
+	protected int setNumElements() {
+		return mAdapter.getCount();
+	}
 }

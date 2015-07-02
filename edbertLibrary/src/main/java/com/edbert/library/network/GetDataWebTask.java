@@ -19,7 +19,6 @@ import android.support.v4.app.Fragment;
 
 public class GetDataWebTask<T> extends AsyncTask<String, Void, T> {
 
-	protected Context activity;
 	protected ProgressDialog dialog;
 	protected AsyncTaskCompleteListener<T> callback;
 	protected Class<T> classType;
@@ -27,26 +26,26 @@ public class GetDataWebTask<T> extends AsyncTask<String, Void, T> {
 	protected Context ctx;
 
 	public GetDataWebTask(Context act, Class<T> type) {
-		this.activity = act;
+		this.ctx = act;
 		this.callback = (AsyncTaskCompleteListener<T>) act;
 		this.classType = type;
 		showDialog = true;
 	}
 	public GetDataWebTask(Context act, AsyncTaskCompleteListener<T> asyncListener, Class<T> type) {
-		this.activity = act;
+		this.ctx = act;
 		this.callback =  asyncListener;
 		this.classType = type;
 		showDialog = true;
 	}
 	public GetDataWebTask(Context act, Class<T> type, boolean showDialog) {
-		this.activity = act;
+		this.ctx = act;
 		this.callback = (AsyncTaskCompleteListener<T>) act;
 		this.classType = type;
 		this.showDialog = showDialog;
 	}
 
 	public GetDataWebTask(Activity act, AsyncTaskCompleteListener f, Class<T> type, boolean showDialog) {
-		this.activity = act;
+		this.ctx = act;
 		this.callback = (AsyncTaskCompleteListener) f;
 		this.classType = type;
 		this.showDialog = showDialog;
@@ -66,7 +65,7 @@ public class GetDataWebTask<T> extends AsyncTask<String, Void, T> {
 		super.onPreExecute();
 		if (dialog == null && this.showDialog) {
 			passedIn = true;
-			dialog = new ProgressDialog(activity);
+			dialog = new ProgressDialog(ctx);
 			dialog.setMessage("Loading...");
 			dialog.show();
 		}
@@ -78,12 +77,12 @@ public class GetDataWebTask<T> extends AsyncTask<String, Void, T> {
 		if (uri.length > 1 && uri[1] != null) {
 			headers = MapUtils.stringToMap(uri[1]);
 		}
-		if(activity == null){
+		if(ctx == null){
 			return (T) SocketOperator.getInstance(classType).getResponse(
 					ctx, uri[0], headers);
 		}
 		return (T) SocketOperator.getInstance(classType).getResponse(
-				activity.getApplicationContext(), uri[0], headers);
+				ctx.getApplicationContext(), uri[0], headers);
 		// SocketOperator.httpGetRequest(uri[0], headers);
 	}
 

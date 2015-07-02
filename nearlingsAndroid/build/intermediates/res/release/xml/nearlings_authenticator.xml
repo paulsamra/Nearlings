@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <account-authenticator
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:accountType="@string/nearlings_accountType"/><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/xml/nearlings_authenticator.xml -->
+    android:accountType="@string/nearlings_accountType"/><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/xml/nearlings_authenticator.xml -->

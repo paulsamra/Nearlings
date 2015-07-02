@@ -10,4 +10,4 @@
         <include layout="@layout/date_picker_done_button" />
     </LinearLayout>
     <include layout="@layout/date_picker_view_animator" />
-</LinearLayout><!-- From: file:/C:/Users/f.laurent/dev/perso/github/datetimepicker/datetimepicker-library/res/layout-land/date_picker_dialog.xml --><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/layout-land/date_picker_dialog.xml -->
+</LinearLayout><!-- From: file:/C:/Users/f.laurent/dev/perso/github/datetimepicker/datetimepicker-library/res/layout-land/date_picker_dialog.xml --><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/layout-land/date_picker_dialog.xml -->

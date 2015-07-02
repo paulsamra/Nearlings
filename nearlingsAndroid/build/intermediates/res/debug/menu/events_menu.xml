@@ -15,4 +15,4 @@
         app:showAsAction="always"
         android:title="@string/add_event"/>
 
-</menu><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/menu/events_menu.xml -->
+</menu><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/menu/events_menu.xml -->

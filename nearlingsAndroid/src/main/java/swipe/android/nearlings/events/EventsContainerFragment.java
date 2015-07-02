@@ -10,8 +10,11 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
+import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
 import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsApplication;
+import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
@@ -26,6 +29,7 @@ import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +52,17 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			.getCanonicalName() + "_MESSAGES_START_FLAG";
 	public static final String MESSAGES_FINISH_FLAG = EventsContainerFragment.class
 			.getCanonicalName() + "_MESSAGES_FINISH_FLAG";
+	@Override
+	protected int setNumElements() {
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(EventsDatabaseHelper.TABLE_NAME),
+				EventsDatabaseHelper.COLUMNS, null, null,
+				EventsDatabaseHelper.COLUMN_TIME_OF_EVENT + " DESC");
+
+		return cursorLoader.loadInBackground().getCount();
+	}
 
 	int selected_category = -1;
 	// categories
@@ -393,7 +408,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 
 								// Log.d("Search Term", s);
 
-								requestUpdate();
+								requestUpdate(is_reload_and_blank);
 							}
 						});
 		LayoutInflater inflater = (LayoutInflater) context
@@ -414,7 +429,7 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 		builder.show();
 	}
 
-	public void requestUpdate() {
+	public void requestUpdate(int status) {
 		Bundle b = new Bundle();
 		SessionManager sm = SessionManager.getInstance(this.getActivity());
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
@@ -485,7 +500,16 @@ public class EventsContainerFragment extends BaseContainerFragment implements
 			b.putLong(EventsDetailsRequest.BUNDLE_TIME_START,
 					sm.getEventTimeStart());
 		}
-		super.onRefresh(b);
+		if(status == is_reload_and_blank){
+			b.putInt(super.STATUS, is_reload_and_blank);
+			super.onRefresh(b, true);
+		}else if(status == is_maintain) {
+			b.putInt(super.STATUS, is_maintain);
+			super.onRefresh(b, false);
+		}else{
+			b.putInt(super.STATUS, is_loadMore);
+			super.onRefresh(b, false);
+		}
 	}
 
 	@Override

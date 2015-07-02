@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
+import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
+import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.json.events.Events;
 import swipe.android.nearlings.json.events.JsonEventsResponse;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.edbert.library.database.DatabaseCommandManager;
 import com.edbert.library.network.SocketOperator;
@@ -89,6 +94,22 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 				url += ("&radius=" + SessionManager.DEFAULT_SEARCH_RADIUS);
 			}
 		}
+
+
+		int page_number = 1;
+		if(b.getInt(BaseContainerFragment.STATUS) == BaseContainerFragment.is_reload_and_blank){
+			url +=( "&limit=" + (SessionManager.SEARCH_LIMIT));
+		}else if(b.getInt(BaseContainerFragment.STATUS) == BaseContainerFragment.is_maintain){
+			page_number =  (b.getInt(NearlingsSyncAdapter.LIMIT) / (SessionManager.SEARCH_LIMIT));
+			url +=( "&page=" +page_number);
+			url += ("&limit="+ (SessionManager.SEARCH_LIMIT));
+		}else if(b.getInt(BaseContainerFragment.STATUS) == BaseContainerFragment.is_loadMore){
+			Log.d("IS_LOAD_MORE", String.valueOf(b.getInt(NearlingsSyncAdapter.LIMIT)));
+			page_number =  (b.getInt(NearlingsSyncAdapter.LIMIT) / (SessionManager.SEARCH_LIMIT))+1;
+			url +=( "&page=" +page_number);
+		}else{
+			url +=( "&limit=" + (SessionManager.SEARCH_LIMIT));
+		}
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
 				url, headers);
 		if (o == null)
@@ -109,8 +130,10 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 
 		if (o == null)
 			return false;
-
-		NearlingsContentProvider.clearSingleTable(new EventsDatabaseHelper());
+		if(extras.getBoolean(NearlingsSyncAdapter.CLEAR_DB)) {
+			NearlingsContentProvider
+					.clearSingleTable(new EventsDatabaseHelper());
+		}
 
 		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getEvents().size(); i++) {
@@ -121,6 +144,9 @@ public class EventsDetailsRequest extends NearlingsRequest<JsonEventsResponse> {
 			// cv.put(EventsDatabaseHelper.COLUMN_AUTHOR, tempEvent.get);
 			// cv.put(EventsDatabaseHelper.COLUMN_LOCATION_NAME, tempEvent.get);
 
+
+			cv.put(EventsDatabaseHelper.COLUMN_USERNAME,
+					tempEvent.getCreator_username());
 			cv.put(EventsDatabaseHelper.COLUMN_LOCATION_LATITUDE,
 					tempEvent.getLatitude());
 			cv.put(EventsDatabaseHelper.COLUMN_LOCATION_LONGITUDE,

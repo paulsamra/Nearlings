@@ -168,6 +168,9 @@ public class NeedsDetailsFragment extends NearlingsSwipeToRefreshFragment
 		super.requestSync(b);
 	}
 
-	
 
+	@Override
+	protected int setNumElements() {
+		return 0;
+	}
 }

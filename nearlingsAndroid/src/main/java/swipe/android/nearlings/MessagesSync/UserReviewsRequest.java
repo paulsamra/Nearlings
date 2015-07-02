@@ -4,12 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.DatabaseHelpers.UserReviewDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.json.jsonUserReviewsResponse.JsonUserReviewsResponse;
 import swipe.android.nearlings.json.jsonUserReviewsResponse.Review;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
@@ -32,7 +35,15 @@ public class UserReviewsRequest extends
 				.defaultSessionHeaders();
 		String id = b.getString(BUNDLE_ID);
 		String url = SessionManager.getInstance(c).userReviewsURL(id);
+		if(b.getInt(NearlingsSyncAdapter.LIMIT)>0){
+			int page_number =  (b.getInt(NearlingsSyncAdapter.LIMIT) / (SessionManager.SEARCH_LIMIT))+1;
+			url +=( "?page=" +page_number);
+			url += ("&limit="+ (SessionManager.SEARCH_LIMIT));
 
+		}else {
+			url +=( "?limit=" + (SessionManager.SEARCH_LIMIT));
+			//url +=( "?limit=" + 9999);
+		}
 	//	Log.e("URL", url);
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
 				url, headers);
@@ -55,8 +66,11 @@ public class UserReviewsRequest extends
 		// for now we will write random dummy stuff to the database
 		if (o == null)
 			return false;
-		NearlingsContentProvider
-				.clearSingleTable(new UserReviewDatabaseHelper());
+
+
+			NearlingsContentProvider
+					.clearSingleTable(new UserReviewDatabaseHelper());
+
 
 		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getReviews().size(); i++) {
@@ -74,9 +88,12 @@ public class UserReviewsRequest extends
 			cv.put(UserReviewDatabaseHelper.COLUMN_QUALITY_RATING,
 					tempOffer.getQuality_rating());
 			cv.put(UserReviewDatabaseHelper.COLUMN_TIMELINESS_RATING,
-					tempOffer.getQuality_rating());
+					tempOffer.getTimeliness_rating());
 			cv.put(UserReviewDatabaseHelper.COLUMN_MESSAGE,
 					tempOffer.getMessage());
+
+			cv.put(UserReviewDatabaseHelper.COLUMN_CREATED_BY,
+					tempOffer.getCreator_username());
 			cv.put(DatabaseCommandManager.SQL_INSERT_OR_REPLACE, true);
 			mValueList.add(cv);
 			

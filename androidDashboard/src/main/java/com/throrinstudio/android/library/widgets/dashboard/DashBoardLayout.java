@@ -36,13 +36,17 @@ public class DashBoardLayout extends LinearLayout{
 		this.addView(mContentView);
 	}
 
+
+	public void setAdapter(DashBoardAdapter adapter){
+		mGridDashboard.setAdapter(adapter);
+	}
 	public void addElement(Object img, String libelle, DashBoardElement.OnClickListener listener){
 		((DashBoardAdapter)mGridDashboard.getAdapter()).addElement(img, libelle, listener);
 	}
-	
+
 	public void addElement(DashBoardElement element){
 		((DashBoardAdapter)mGridDashboard.getAdapter()).addElement(element);
 	}
-	
-	
+
+
 }

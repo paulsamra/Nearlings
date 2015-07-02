@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -134,7 +135,7 @@ public class ProfilePageActivity extends NearlingsActivity implements
 
 		try {
 			new PutDataWebTask<JsonPatchUserInfoResponse>(this,
-					JsonPatchUserInfoResponse.class, false).execute(url,
+					JsonPatchUserInfoResponse.class, true).execute(url,
 					MapUtils.mapToString(headers), getJsonRepOfUser()
 							.toString());
 		} catch (Exception e) {
@@ -193,6 +194,7 @@ public class ProfilePageActivity extends NearlingsActivity implements
 				builder.setTitle("Profile Changed");
 				builder.setMessage("Your profile has been successfully changed!");
 				// this.finish();
+				builder.create().show();
 				return;
 			}
 		} else {
@@ -205,6 +207,7 @@ public class ProfilePageActivity extends NearlingsActivity implements
 					});
 			builder.setTitle("Error");
 			builder.setMessage(result.getError());
+			builder.create().show();
 		}
 
 	}
@@ -218,7 +221,7 @@ public class ProfilePageActivity extends NearlingsActivity implements
 				.defaultSessionHeaders();
 
 		new GetDataWebTask<JsonUserDetailsResponse>(this,
-				JsonUserDetailsResponse.class, false).execute(url,
+				JsonUserDetailsResponse.class, true).execute(url,
 				MapUtils.mapToString(headers));
 	}
 

@@ -23,18 +23,14 @@ public class SendRequestStrategyManager {
 		return requestInterface.makeRequest(b);
 	}
 
-	public static boolean executePostRetrieval(
-			SendRequestInterface requestInterface, Context c, Object o, Bundle extras) {
+	public static boolean executePostRetrieval (
+			SendRequestInterface requestInterface, Context c, Object o, Bundle extras)throws Exception {
 		if (requestInterface == null) {
-			Log.e("SendRequestStrategyManager", "No requestInterface specified");
+			Log.e("SendRequestStrategyManager", "No requestInterface");
 			return false;
 		}
-		try{
 		return requestInterface.executePostRetrieval(extras, c, o);
-		}catch (Exception e){
-			e.printStackTrace();
-			return false;
-		}
+
 	}
 
 	public static void executeWriteToDatabase(

@@ -21,7 +21,7 @@ public class UserReviewDatabaseHelper implements DatabaseHelperInterface {
 
 	public static final String TABLE_CREATE_ROUTES = "CREATE TABLE "
 			+ TABLE_NAME + "(" + COLUMN_ID + " TEXT NOT NULL primary key, "
-			+ COLUMN_CREATED_BY + " INTEGER, "
+			+ COLUMN_CREATED_BY + " TEXT NOT NULL, "
 			+ COLUMN_NEED_ID + " INTEGER, "
 			+ COLUMN_EFFORT_RATING + " INTEGER, "
 			+ COLUMN_TIMELINESS_RATING + " INTEGER, "

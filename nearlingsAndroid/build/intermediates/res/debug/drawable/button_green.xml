@@ -6,4 +6,4 @@
     android:angle="270" />
   <corners android:radius="3dp" />
   <stroke android:width="5px" android:color="#eecc68" />
-</shape><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/drawable/button_green.xml -->
+</shape><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/drawable/button_green.xml -->

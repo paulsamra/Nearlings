@@ -19,6 +19,9 @@ protected Context c;
 		String accountType = getDefaultAccountType();
 		String authority = getDefaultAuthority();
 		createAccount(accountName, accountType, authority, false, c);
+
+		ContentResolver.setIsSyncable(mAccount, authority, 1);
+		ContentResolver.setSyncAutomatically(mAccount, authority, true);
 		
 
 	}
@@ -29,6 +32,9 @@ protected Context c;
 		String accountType = getDefaultAccountType();
 		String authority = getDefaultAuthority();
 		createAccount(accountName, accountType, authority, enableSync, c);
+
+		ContentResolver.setIsSyncable(mAccount, authority, 1);
+		ContentResolver.setSyncAutomatically(mAccount, authority, true);
 	
 	}
 
@@ -62,7 +68,6 @@ protected Context c;
 	public void performSync() {
 		Bundle settingsBundle = new Bundle();
 		settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-		settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
 		settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
 		ContentResolver.requestSync(mAccount, mAuthority, settingsBundle);
 	}
@@ -70,7 +75,6 @@ protected Context c;
 	public void performSync(Bundle extras) {
 		Bundle settingsBundle = new Bundle();
 		settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-		settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
 		settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE, true);
 		settingsBundle.putAll(extras);
 		

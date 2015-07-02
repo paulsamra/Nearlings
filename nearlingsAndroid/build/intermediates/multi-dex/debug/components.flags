@@ -1,14 +1,14 @@
--injars /Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/multi-dex/debug/allclasses.jar
--outjars /Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/multi-dex/debug/componentClasses.jar
+-injars /Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/multi-dex/debug/allclasses.jar
+-outjars /Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/multi-dex/debug/componentClasses.jar
 
--libraryjars '/Applications/adt-bundle-mac-x86_64-20140702 copy/sdk/build-tools/22.0.1/lib/shrinkedAndroid.jar'
+-libraryjars /Users/Cygnus/Library/Android/sdk/build-tools/22.0.1/lib/shrinkedAndroid.jar
 
 -forceprocessing
 -dontoptimize
 -dontobfuscate
 -dontpreverify
 -dontwarn
--printconfiguration /Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/multi-dex/debug/components.flags
+-printconfiguration /Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/multi-dex/debug/components.flags
 
 
 -keep class swipe.android.nearlings.NearlingsApplication {
@@ -52,6 +52,10 @@
     <init>();
 }
 
+-keep class swipe.android.nearlings.NotificationsActivity {
+    <init>();
+}
+
 -keep class swipe.android.nearlings.CreateGroupActivity {
     <init>();
 }
@@ -65,6 +69,10 @@
 }
 
 -keep class swipe.android.nearlings.CreateNeedActivity {
+    <init>();
+}
+
+-keep class swipe.android.nearlings.ActivityOwnNeeds {
     <init>();
 }
 

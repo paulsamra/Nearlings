@@ -9,13 +9,17 @@ import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsApplication;
+import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
 import swipe.android.nearlings.discover.options.SearchFilterCategoryOptionsListAdapter;
 import swipe.android.nearlings.discover.options.SearchOptionsFilter;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,8 +28,10 @@ import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,7 +141,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view,
-					int position, long id) {
+									int position, long id) {
 				boolean current = listOfFilter.get(position).isSelected();
 				for (SearchOptionsFilter f : listOfFilter)
 					f.setSelected(false);
@@ -204,7 +210,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+									  int count) {
 				if (!s.toString().equals(current)) {
 					et.removeTextChangedListener(this);
 
@@ -227,7 +233,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+										  int after) {
 				// TODO Auto-generated method stub
 
 			}
@@ -304,7 +310,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 												DiscoverContainerFragment.this
 														.getActivity())
 												.getSearchString());*/
-								requestUpdate();
+								requestUpdate(is_reload_and_blank);
 							}
 						});
 
@@ -322,7 +328,7 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		builder.show();
 	}
 
-	public void requestUpdate() {
+	public  void requestUpdate(int status) {
 		Bundle b = new Bundle();
 		SessionManager sm = SessionManager.getInstance(this.getActivity());
 		Location currentLocation = ((NearlingsApplication) this.getActivity()
@@ -400,8 +406,25 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		 * if(sm.getTimeStart() != sm.DEFAULT_VALUE){
 		 * b.putLong(NeedsDetailsRequest.BUNDLE_TIME_END, sm.getTimeStart()); }
 		 */
-		super.onRefresh(b);
+		b.getInt(NearlingsSyncAdapter.LIMIT, setNumElements());
+		if(status == is_reload_and_blank){
+			footerView.setVisibility(View.VISIBLE);
+			b.putInt(super.STATUS, is_reload_and_blank);
+			super.onRefresh(b, true);
+		}else if(status == is_maintain) {
+			footerView.setVisibility(View.VISIBLE);
+			b.putInt(NearlingsSyncAdapter.LIMIT, setNumElements());
+			b.putInt(super.STATUS, is_maintain);
+			super.onRefresh(b, false);
+		}else{
+			footerView.setVisibility(View.VISIBLE);
+			b.putInt(NearlingsSyncAdapter.LIMIT, setNumElements());
+			b.putInt(super.STATUS, is_loadMore);
+			super.onRefresh(b, false);
+		}
 	}
+
+
 
 	@Override
 	public Fragment mapViewFragment() {
@@ -435,6 +458,20 @@ public class DiscoverContainerFragment extends BaseContainerFragment {
 		helpers.add(SendRequestStrategyManager
 				.getHelper(NeedsExploreRequest.class));
 
+	}
+
+	@Override
+	protected int setNumElements() {
+		String allActiveSearch = "";
+		String[] activeStates = null;
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(NeedsDetailsDatabaseHelper.TABLE_NAME),
+				NeedsDetailsDatabaseHelper.COLUMNS, allActiveSearch,
+				activeStates, NeedsDetailsDatabaseHelper.COLUMN_DUE_DATE + " DESC");
+
+		return cursorLoader.loadInBackground().getCount();
 	}
 
 }

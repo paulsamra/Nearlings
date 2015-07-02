@@ -69,4 +69,4 @@
         android:focusableInTouchMode="true"
         android:background="@color/circle_background" />
 </LinearLayout>
-<!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/layout-land/time_picker_dialog.xml --><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/bundles/debug/res/layout-land/time_picker_dialog.xml -->
+<!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/layout-land/time_picker_dialog.xml --><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/bundles/debug/res/layout-land/time_picker_dialog.xml -->

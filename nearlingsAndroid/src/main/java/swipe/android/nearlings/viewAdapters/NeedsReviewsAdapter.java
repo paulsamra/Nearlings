@@ -68,11 +68,11 @@ public class NeedsReviewsAdapter extends CursorAdapter {
 
 
 		// holder.time_ago.setText(FieldsParsingUtils.getTime(s));
-		holder.timeliness_rating.setRating(cursor.getInt(timeliness_rating_index)/2);
-		holder.quality_rating.setRating(cursor.getInt(quality_rating_index)/2);
+		holder.timeliness_rating.setRating(cursor.getInt(timeliness_rating_index));
+		holder.quality_rating.setRating(cursor.getInt(quality_rating_index));
 		holder.message.setText(cursor.getString(message_index));
-		holder.author.setText(cursor.getString(author_index));
-		holder.effort_rating.setRating(cursor.getInt(effort_index)/2);
+		holder.author.setText("By: " + cursor.getString(author_index));
+		holder.effort_rating.setRating(cursor.getInt(effort_index));
 
 	}
 

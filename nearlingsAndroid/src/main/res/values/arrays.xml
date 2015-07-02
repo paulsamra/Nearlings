@@ -328,6 +328,7 @@ that were present in some languages.
     <string-array name="home_options">
         <item>Alerts</item>
         <item>Explore</item>
+        <item>Your Needs</item>
         <item>Create Need</item>
         <item>Create Event</item>
         <item>Create Group</item>
@@ -338,6 +339,7 @@ that were present in some languages.
     <array name="home_options_icon">
         <item>@drawable/message_icon</item>
         <item>@drawable/explore_icon</item>
+        <item>@drawable/own_needs_icon</item>
         <item>@drawable/create_need_icon</item>
         <item>@drawable/create_event_icon</item>
         <item>@drawable/create_group_icon</item>

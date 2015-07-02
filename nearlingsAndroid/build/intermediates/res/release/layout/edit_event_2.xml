@@ -246,4 +246,4 @@ android:layout_width="match_parent"
 android:contentDescription="@string/accessibility_reminder_privacy"
 android:prompt="@string/privacy_label" />
 </LinearLayout>
-</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/edit_event_2.xml -->
+</LinearLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/edit_event_2.xml -->

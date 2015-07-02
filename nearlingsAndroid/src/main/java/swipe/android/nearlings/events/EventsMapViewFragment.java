@@ -29,7 +29,10 @@ public class EventsMapViewFragment extends BaseMapFragment {
 
 	String MESSAGES_START_FLAG = EventsContainerFragment.MESSAGES_START_FLAG;
 	String MESSAGES_FINISH_FLAG = EventsContainerFragment.MESSAGES_FINISH_FLAG;
-
+	@Override
+	protected int setNumElements() {
+		return 0;
+	}
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
 		// should clear before loading

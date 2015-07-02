@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/apk/res/android">
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -19,19 +19,19 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="ampm_text_color">#8c8c8c</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="blue">#ff33b5e5</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
@@ -41,33 +41,33 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="calendar_header">#ff999999</color>
     <color name="circle_background">#fff2f2f2</color>
     <color name="darker_blue">#ff0099cc</color>
     <color name="date_picker_text_normal">#ff999999</color>
     <color name="date_picker_view_animator">#fff2f2f2</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="done_text_color_disabled">#ffcccccc</color>
     <color name="done_text_color_normal">#ff333333</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
     <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="line_background">#ffcccccc</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="link_text_material_dark">@color/material_deep_teal_200</color>
     <color name="link_text_material_light">@color/material_deep_teal_500</color>
@@ -76,10 +76,10 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="numbers_text_color">#8c8c8c</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -99,7 +99,7 @@
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="transparent_black">#7F000000</color>
     <color name="white">#ffffffff</color>
@@ -128,7 +128,7 @@
     <declare-styleable name="Toolbar"><attr format="reference" name="titleTextAppearance"/><attr format="reference" name="subtitleTextAppearance"/><attr name="title"/><attr name="subtitle"/><attr name="android:gravity"/><attr format="dimension" name="titleMargins"/><attr format="dimension" name="titleMarginStart"/><attr format="dimension" name="titleMarginEnd"/><attr format="dimension" name="titleMarginTop"/><attr format="dimension" name="titleMarginBottom"/><attr name="contentInsetStart"/><attr name="contentInsetEnd"/><attr name="contentInsetLeft"/><attr name="contentInsetRight"/><attr format="dimension" name="maxButtonHeight"/><attr format="reference" name="collapseIcon"/><attr format="string" name="collapseContentDescription"/><attr name="popupTheme"/><attr format="reference" name="navigationIcon"/><attr format="string" name="navigationContentDescription"/><attr name="android:minHeight"/></declare-styleable>
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/><attr format="reference" name="theme"/><attr name="android:theme"/><attr format="color" name="backgroundTint"/><attr name="backgroundTintMode"><enum name="src_over" value="3"/><enum name="src_in" value="5"/><enum name="src_atop" value="9"/><enum name="multiply" value="14"/><enum name="screen" value="15"/></attr></declare-styleable>
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
@@ -190,7 +190,7 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="ampm_label_size">16sp</dimen>
     <dimen name="ampm_left_padding">6dip</dimen>
@@ -200,7 +200,7 @@
     <dimen name="date_picker_view_animator_height">270dip</dimen>
     <dimen name="day_number_select_circle_radius">16dip</dimen>
     <dimen name="day_number_size">16sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -208,7 +208,7 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="done_label_size">14sp</dimen>
     <dimen name="extra_time_label_margin">-30dp</dimen>
@@ -219,12 +219,12 @@
     <dimen name="month_label_size">16sp</dimen>
     <dimen name="month_list_item_header_height">50dip</dimen>
     <dimen name="month_select_circle_radius">45dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_subtext_size">12dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="picker_dimen">270dip</dimen>
     <dimen name="selected_calendar_layout_height">155dip</dimen>
@@ -235,14 +235,14 @@
     <dimen name="time_label_size">60sp</dimen>
     <dimen name="year_label_height">64dip</dimen>
     <dimen name="year_label_text_size">22dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/ids.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/ids.xml -->
     <eat-comment/>
     <item name="animator" type="id">false</item>
     <item name="date_picker_day" type="id">false</item>
@@ -252,13 +252,13 @@
     <item name="date_picker_year" type="id">false</item>
     <item name="day_picker_selected_date_layout" type="id">false</item>
     <item name="done" type="id">false</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="home" type="id"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/ids.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/ids.xml -->
     <eat-comment/>
     <item name="month_text_view" type="id">false</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
@@ -286,12 +286,12 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <item format="float" name="ampm_circle_radius_multiplier" type="string">0.19</item>
     <item format="float" name="circle_radius_multiplier" type="string">0.82</item>
     <item format="float" name="circle_radius_multiplier_24HourMode" type="string">0.85</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="day_of_week_label_typeface" translatable="false">sans-serif</string>
     <string name="day_picker_description">Month grid of days</string>
@@ -300,12 +300,12 @@
     <string name="hour_picker_description">Hours circular slider</string>
     <string name="item_is_selected">%1$s selected</string>
     <string name="minute_picker_description">Minutes circular slider</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <item format="float" name="numbers_radius_multiplier_inner" type="string">0.60</item>
     <item format="float" name="numbers_radius_multiplier_normal" type="string">0.81</item>
     <item format="float" name="numbers_radius_multiplier_outer" type="string">0.83</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="radial_numbers_typeface" translatable="false">sans-serif</string>
     <string name="sans_serif" translatable="false">sans-serif</string>
@@ -313,23 +313,23 @@
     <string name="select_hours">Select hours</string>
     <string name="select_minutes">Select minutes</string>
     <string name="select_year">Select year</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <item format="float" name="selection_radius_multiplier" type="string">0.16</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <item format="float" name="text_size_multiplier_inner" type="string">0.14</item>
     <item format="float" name="text_size_multiplier_normal" type="string">0.17</item>
     <item format="float" name="text_size_multiplier_outer" type="string">0.11</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="time_placeholder" translatable="false">--</string>
     <string name="time_separator" translatable="false">:</string>
     <string name="year_picker_description">Year list</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
@@ -1575,7 +1575,7 @@
     <style name="Widget.AppCompat.TextView.SpinnerItem" parent="Base.Widget.AppCompat.TextView.SpinnerItem"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="ampm_label">
         <item name="android:textSize">@dimen/ampm_label_size</item>

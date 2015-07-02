@@ -4,12 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
 import swipe.android.DatabaseHelpers.NeedsOfferDatabaseHelper;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsRequest;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.JsonNeedsOffersResponse;
 import swipe.android.nearlings.json.needs.needsdetailsoffersresponse.NeedsOffers;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
@@ -32,7 +35,14 @@ public class NeedsOffersRequest extends
 				.defaultSessionHeaders();
 		String id = b.getString(BUNDLE_ID);
 		String url = SessionManager.getInstance(c).needsOffersURL(id);
+		if(b.getInt(NearlingsSyncAdapter.LIMIT)>0){
+			int page_number =  (b.getInt(NearlingsSyncAdapter.LIMIT) / (SessionManager.SEARCH_LIMIT))+1;
+			url +=( "?page=" +page_number);
+			url += ("&limit="+ (SessionManager.SEARCH_LIMIT));
 
+		}else{
+			url +=( "?limit=" + (SessionManager.SEARCH_LIMIT));
+		}
 	//	Log.e("URL", url);
 		Object o = SocketOperator.getInstance(getJSONclass()).getResponse(c,
 				url, headers);
@@ -55,8 +65,9 @@ public class NeedsOffersRequest extends
 		// for now we will write random dummy stuff to the database
 		if (o == null)
 			return false;
-		NearlingsContentProvider
-				.clearSingleTable(new NeedsOfferDatabaseHelper());
+
+			NearlingsContentProvider
+					.clearSingleTable(new NeedsOfferDatabaseHelper());
 
 		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getOffers().size(); i++) {

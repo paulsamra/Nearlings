@@ -6,4 +6,4 @@
     <item android:state_focused="true" android:drawable="@drawable/item_focused"/>
     <item android:state_focused="false" android:state_pressed="false" android:drawable="@android:color/transparent"/>
 </selector>
-<!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/drawable/home_bg.xml -->
+<!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/drawable/home_bg.xml -->

@@ -12,6 +12,10 @@ public class TxnDetails implements Parcelable {
 
 	float earnings;
 
+	//---paypal
+	String paypal_email;
+	float total_amount, amount_deposited;
+
 	public float getEarnings() {
 		return earnings;
 	}
@@ -75,6 +79,15 @@ public class TxnDetails implements Parcelable {
 	public void setTotal_charge(float total_charge) {
 		this.total_charge = total_charge;
 	}
+	public float getAmount_deposited() {
+		return amount_deposited;
+	}
+	public String getPaypal_email(){
+		return paypal_email;
+	}
+	public float getTotal_amount(){
+		return total_amount;
+	}
 
 	private TxnDetails(Parcel in) {
 		readFromParcel(in);
@@ -93,6 +106,11 @@ public class TxnDetails implements Parcelable {
 		total_charge = in.readFloat();
 
 		earnings = in.readFloat();
+
+
+		 paypal_email = in.readString();
+		total_amount = in.readFloat();
+		amount_deposited=in.readFloat();
 	}
 
 	public void writeToParcel(Parcel out, int flags) {
@@ -104,6 +122,9 @@ public class TxnDetails implements Parcelable {
 		out.writeFloat(task_cost);
 		out.writeFloat(fee);
 		out.writeFloat(total_charge);
+		out.writeString(paypal_email);
+		out.writeFloat(total_amount);
+		out.writeFloat(amount_deposited);
 	}
 
 	// Just cut and paste this for now

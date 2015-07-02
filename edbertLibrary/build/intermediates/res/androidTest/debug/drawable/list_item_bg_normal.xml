@@ -6,4 +6,4 @@
         android:endColor="@color/navigation_drawer_pressed_color"
         android:startColor="@color/navigation_drawer_pressed_color" />
 
-</shape><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/edbertLibrary/src/main/res/drawable/list_item_bg_normal.xml --><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/edbertLibrary/build/intermediates/bundles/debug/res/drawable/list_item_bg_normal.xml -->
+</shape><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/edbertLibrary/src/main/res/drawable/list_item_bg_normal.xml --><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/edbertLibrary/build/intermediates/bundles/debug/res/drawable/list_item_bg_normal.xml -->

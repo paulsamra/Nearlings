@@ -13,4 +13,4 @@
         android:layout_height="match_parent" >
     </ListView>
 
-</android.support.v4.widget.SwipeRefreshLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/pull_to_refresh_single_list.xml -->
+</android.support.v4.widget.SwipeRefreshLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/pull_to_refresh_single_list.xml -->

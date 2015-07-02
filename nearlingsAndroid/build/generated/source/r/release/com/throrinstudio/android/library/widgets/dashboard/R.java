@@ -13,18 +13,18 @@ public final class R {
 	}
 	public static final class id {
 		public static final int dashBoardLayout1 = 0x7f0e007b;
-		public static final int dashboard_grid = 0x7f0e019a;
-		public static final int dashboard_item_img = 0x7f0e019b;
-		public static final int dashboard_item_name = 0x7f0e019c;
-		public static final int dashboard_screen = 0x7f0e0199;
-		public static final int selectList = 0x7f0e0107;
+		public static final int dashboard_grid = 0x7f0e019c;
+		public static final int dashboard_item_img = 0x7f0e019d;
+		public static final int dashboard_item_name = 0x7f0e019e;
+		public static final int dashboard_screen = 0x7f0e019b;
+		public static final int selectList = 0x7f0e010b;
 	}
 	public static final class layout {
 		public static final int activity_manually = 0x7f03001b;
 		public static final int activity_programmatically = 0x7f03001c;
-		public static final int main = 0x7f030049;
-		public static final int widget_dashboard = 0x7f03007e;
-		public static final int widget_dashboard_item = 0x7f03007f;
+		public static final int main = 0x7f03004a;
+		public static final int widget_dashboard = 0x7f030080;
+		public static final int widget_dashboard_item = 0x7f030081;
 	}
 	public static final class string {
 		public static final int app_name = 0x7f070075;

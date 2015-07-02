@@ -126,6 +126,7 @@ public class DatabaseCommandManager {
 	}
 
 	public static void register(DatabaseHelperInterface stratFact) {
+		Log.d("register", "register");
 		recipients.add(stratFact);
 	}
 
@@ -154,12 +155,17 @@ public class DatabaseCommandManager {
 							cv.remove(SQL_INSERT_OR_REPLACE);
 						}
 						long newID = 0;
-						if (replaceFlag) {
+					/*	if (replaceFlag) {
 							newID = sqlDB.replaceOrThrow(tableName, null, cv);
 						} else {
 							newID = sqlDB.insertOrThrow(tableName, null, cv);
+						}*/
+						try{
+							newID = sqlDB.insertOrThrow(tableName, null, cv);
+						}catch (Exception e){
+							Log.d("Found, now we replace", "replace");
+							newID = sqlDB.replaceOrThrow(tableName, null, cv);
 						}
-
 						if (newID <= 0) {
 							throw new SQLException("Failed to insert row into "
 									+ uri);
@@ -206,12 +212,14 @@ public class DatabaseCommandManager {
 					values.remove(SQL_INSERT_OR_REPLACE);
 				}
 
-				if (replace) {
+				/*if (replace) {
 				
 					_ID1 = sqlDB.replace(tableName, null, values);
 				} else {
 					_ID1 = sqlDB.insert(tableName, null, values);
-				}
+				}*/
+
+				_ID1 = sqlDB.replace(tableName, null, values);
 
 				// ---if added successfully---
 				if (_ID1 > 0) {
@@ -295,9 +303,12 @@ public class DatabaseCommandManager {
 	}
 
 	public static void upgradeAll(SQLiteDatabase db) {
+		Log.d("Upgrading", "upgrading");
+		Log.d("String", String.valueOf(recipients.size()));
 		for (int i = 0; i < recipients.size(); i++) {
 
 			String TABLE_NAME = recipients.get(i).getTableName();
+			Log.d("Table", TABLE_NAME);
 			try {
 
                 List<String> columns = GetColumns(db, TABLE_NAME);                              
@@ -310,6 +321,7 @@ public class DatabaseCommandManager {
                 
                 columns.retainAll(GetColumns(db, TABLE_NAME));
                 String cols = join(columns, ",");
+				Log.d("Columns", cols);
                 db.execSQL(String.format( "INSERT INTO %s (%s) SELECT %s from temp_%s", TABLE_NAME, cols, cols, TABLE_NAME));
                 db.execSQL("DROP table 'temp_" + TABLE_NAME + "'");
                

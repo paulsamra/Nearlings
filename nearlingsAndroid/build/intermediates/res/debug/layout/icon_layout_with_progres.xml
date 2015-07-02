@@ -17,4 +17,4 @@
 		android:max="100"
 		android:layout_gravity="bottom"
 		style="@style/ProgressBarStyle" />
-</FrameLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/icon_layout_with_progres.xml -->
+</FrameLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/icon_layout_with_progres.xml -->

@@ -507,8 +507,8 @@ public final class R {
 		public static final int mr_ic_play_light = 0x7f0200be;
 		public static final int mr_ic_settings_dark = 0x7f0200bf;
 		public static final int mr_ic_settings_light = 0x7f0200c0;
-		public static final int powered_by_google_dark = 0x7f0200cc;
-		public static final int powered_by_google_light = 0x7f0200cd;
+		public static final int powered_by_google_dark = 0x7f0200cd;
+		public static final int powered_by_google_light = 0x7f0200ce;
 	}
 	public static final class id {
 		public static final int action_bar = 0x7f0e0066;
@@ -528,10 +528,10 @@ public final class R {
 		public static final int adjust_height = 0x7f0e0021;
 		public static final int adjust_width = 0x7f0e0022;
 		public static final int always = 0x7f0e0026;
-		public static final int art = 0x7f0e0115;
+		public static final int art = 0x7f0e0119;
 		public static final int beginning = 0x7f0e001e;
 		public static final int book_now = 0x7f0e0042;
-		public static final int buttons = 0x7f0e0086;
+		public static final int buttons = 0x7f0e0088;
 		public static final int buyButton = 0x7f0e003f;
 		public static final int buy_now = 0x7f0e0043;
 		public static final int buy_with_google = 0x7f0e0044;
@@ -541,10 +541,10 @@ public final class R {
 		public static final int collapseActionView = 0x7f0e0027;
 		public static final int decor_content_parent = 0x7f0e0064;
 		public static final int default_activity_button = 0x7f0e004f;
-		public static final int default_control_frame = 0x7f0e0114;
+		public static final int default_control_frame = 0x7f0e0118;
 		public static final int dialog = 0x7f0e002b;
 		public static final int disableHome = 0x7f0e0016;
-		public static final int disconnect = 0x7f0e0119;
+		public static final int disconnect = 0x7f0e011d;
 		public static final int donate_with_google = 0x7f0e0045;
 		public static final int dropdown = 0x7f0e002c;
 		public static final int edit_query = 0x7f0e0068;
@@ -563,19 +563,19 @@ public final class R {
 		public static final int listMode = 0x7f0e0013;
 		public static final int list_item = 0x7f0e0050;
 		public static final int match_parent = 0x7f0e0041;
-		public static final int media_route_control_frame = 0x7f0e0113;
-		public static final int media_route_list = 0x7f0e010f;
+		public static final int media_route_control_frame = 0x7f0e0117;
+		public static final int media_route_list = 0x7f0e0113;
 		public static final int middle = 0x7f0e0020;
 		public static final int monochrome = 0x7f0e0048;
 		public static final int never = 0x7f0e0029;
 		public static final int none = 0x7f0e0018;
 		public static final int normal = 0x7f0e0014;
-		public static final int play_pause = 0x7f0e0116;
+		public static final int play_pause = 0x7f0e011a;
 		public static final int production = 0x7f0e003b;
 		public static final int progress_circular = 0x7f0e000f;
 		public static final int progress_horizontal = 0x7f0e0010;
 		public static final int radio = 0x7f0e0060;
-		public static final int route_name = 0x7f0e0111;
+		public static final int route_name = 0x7f0e0115;
 		public static final int sandbox = 0x7f0e003c;
 		public static final int satellite = 0x7f0e0024;
 		public static final int search_badge = 0x7f0e006a;
@@ -589,23 +589,23 @@ public final class R {
 		public static final int search_src_text = 0x7f0e006f;
 		public static final int search_voice_btn = 0x7f0e0073;
 		public static final int selectionDetails = 0x7f0e0040;
-		public static final int settings = 0x7f0e0112;
+		public static final int settings = 0x7f0e0116;
 		public static final int shortcut = 0x7f0e005f;
 		public static final int showCustom = 0x7f0e0019;
 		public static final int showHome = 0x7f0e001a;
 		public static final int showTitle = 0x7f0e001b;
 		public static final int slide = 0x7f0e001d;
 		public static final int split_action_bar = 0x7f0e0011;
-		public static final int stop = 0x7f0e011a;
+		public static final int stop = 0x7f0e011e;
 		public static final int strict_sandbox = 0x7f0e003d;
 		public static final int submit_area = 0x7f0e0071;
-		public static final int subtitle = 0x7f0e0118;
+		public static final int subtitle = 0x7f0e011c;
 		public static final int tabMode = 0x7f0e0015;
 		public static final int terrain = 0x7f0e0025;
 		public static final int test = 0x7f0e003e;
-		public static final int text_wrapper = 0x7f0e0117;
+		public static final int text_wrapper = 0x7f0e011b;
 		public static final int title = 0x7f0e0052;
-		public static final int title_bar = 0x7f0e0110;
+		public static final int title_bar = 0x7f0e0114;
 		public static final int up = 0x7f0e0012;
 		public static final int useLogo = 0x7f0e001c;
 		public static final int withText = 0x7f0e002a;
@@ -640,10 +640,10 @@ public final class R {
 		public static final int abc_search_dropdown_item_icons_2line = 0x7f030015;
 		public static final int abc_search_view = 0x7f030016;
 		public static final int abc_simple_dropdown_hint = 0x7f030018;
-		public static final int mr_media_route_chooser_dialog = 0x7f03004e;
-		public static final int mr_media_route_controller_material_dialog_b = 0x7f03004f;
-		public static final int mr_media_route_list_item = 0x7f030050;
-		public static final int support_simple_spinner_dropdown_item = 0x7f030077;
+		public static final int mr_media_route_chooser_dialog = 0x7f03004f;
+		public static final int mr_media_route_controller_material_dialog_b = 0x7f030050;
+		public static final int mr_media_route_list_item = 0x7f030051;
+		public static final int support_simple_spinner_dropdown_item = 0x7f030078;
 	}
 	public static final class raw {
 		public static final int gtm_analytics = 0x7f060000;

@@ -4,4 +4,4 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
   android:src="@drawable/nearlings_logo"
-    android:contentDescription="@string/com_parse_ui_logo_content_description" /><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/com_parse_ui_parse_login_app_logo.xml -->
+    android:contentDescription="@string/com_parse_ui_logo_content_description" /><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/com_parse_ui_parse_login_app_logo.xml -->

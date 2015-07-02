@@ -519,7 +519,7 @@ url_id = assigned_to;
 		}
 		new GetDataWebTask<JsonUserReviewsResponse>(NeedsDetailsActivity.this,
 				JsonUserReviewsResponse.class, false).execute(SessionManager
-						.getInstance(NeedsDetailsActivity.this).userReviewsURL(url_id),
+						.getInstance(NeedsDetailsActivity.this).userReviewsURL(url_id) + "?limit=9999",
 				MapUtils.mapToString(headers));
 		disableFlowButton("Checking for reviews...");
 		//need to send out another request
@@ -529,12 +529,17 @@ url_id = assigned_to;
 			setButtonReviewTask();
 			return;
 		}
+		boolean flag_found = false;
 		for(Review r : response.getReviews()){
 			if(r.getNeed_id() == Integer.valueOf(id)){
-				disableFlowButton("Need is closed.");
-			}else{
-				setButtonReviewTask();
+				flag_found = true;
 			}
+		}
+		if(flag_found){
+			disableFlowButton("Need is closed.");
+
+		}else{
+			setButtonReviewTask();
 		}
 	}
 	public void payNowWithPaypal() {
@@ -674,6 +679,7 @@ public void goToPaypal(double price, String item){
 						public void onClick(DialogInterface dialog, int item) {
 							dialog.cancel();
 							// reload
+
 							NeedsDetailsActivity.this.onRefresh();
 						}
 					});

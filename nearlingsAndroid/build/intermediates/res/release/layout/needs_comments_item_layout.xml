@@ -64,4 +64,4 @@
         android:src="@drawable/ic_popup_sync_1"
         android:visibility="gone" />
 
-</FrameLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/needs_comments_item_layout.xml -->
+</FrameLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/needs_comments_item_layout.xml -->

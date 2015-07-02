@@ -36,4 +36,4 @@
         android:layout_marginRight="8dp"
         android:visibility="gone" />
 
-</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/edbertLibrary/src/main/res/layout/drawer_list_item.xml --><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/edbertLibrary/build/intermediates/bundles/debug/res/layout/drawer_list_item.xml -->
+</RelativeLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/edbertLibrary/src/main/res/layout/drawer_list_item.xml --><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/edbertLibrary/build/intermediates/bundles/debug/res/layout/drawer_list_item.xml -->

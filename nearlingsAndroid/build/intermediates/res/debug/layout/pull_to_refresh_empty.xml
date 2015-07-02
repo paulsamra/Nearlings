@@ -20,4 +20,4 @@
             android:text="No items found!" />
     </ScrollView>
 
-</android.support.v4.widget.SwipeRefreshLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/pull_to_refresh_empty.xml -->
+</android.support.v4.widget.SwipeRefreshLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/pull_to_refresh_empty.xml -->

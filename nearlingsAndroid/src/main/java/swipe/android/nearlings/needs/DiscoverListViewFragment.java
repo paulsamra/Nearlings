@@ -1,15 +1,20 @@
 package swipe.android.nearlings.needs;
 
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
+import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
 import swipe.android.nearlings.NeedsDetailsActivity;
 import swipe.android.nearlings.MessagesSync.NeedsExploreRequest;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
 import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
+import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -66,18 +71,25 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 
 	}
 
-	Cursor c;
 
+	int index = 0;
 	@Override
 	public void reloadData() {
-		getLoaderManager().initLoader(0, null, this);
-		c = generateCursor();
 
-		this.mAdapter = new DiscoverListOfNeedsAdapter(this.getActivity(), c);
 
-		mAdapter.notifyDataSetChanged();
+			index = lView.getFirstVisiblePosition();
+			getLoaderManager().initLoader(0, null, this);
+			c = generateCursor();
+			if(mAdapter == null) {
+				super.mAdapter = new DiscoverListOfNeedsAdapter(this.getActivity(), c);
+				lView.setAdapter(mAdapter);
+			}
+			mAdapter.changeCursor(c);
 
-		lView.setAdapter(mAdapter);
+			mAdapter.notifyDataSetChanged();
+
+			lView.setAdapter(mAdapter);
+
 	}
 
 	@Override
@@ -106,6 +118,12 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 	}
 
 	@Override
+	protected int setNumElements() {
+		return mAdapter.getCount();
+	}
+
+
+	@Override
 	public void reloadAdapter() {
 		// TODO Auto-generated method stub
 
@@ -113,7 +131,33 @@ public class DiscoverListViewFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void onRefresh() {
-		((DiscoverContainerFragment) this.getParentFragment()).requestUpdate();
+		previousAmount = -1;
+		((DiscoverContainerFragment) this.getParentFragment()).requestUpdate(BaseContainerFragment.is_reload_and_blank);
 		// DiscoverContainerFragment.
+	}
+
+	protected void loadMoreArticles(int currentPage) {
+
+		Log.d("Load more", " load more");
+		footerView.setVisibility(View.VISIBLE);
+		// load more but we need to change the base URL this time
+		Bundle data = new Bundle();
+
+
+		// need to put in number of elements
+		int numOflistElements = mAdapter.getCount();
+
+		if (numOflistElements == previousAmount){
+			footerView.setVisibility(View.GONE);
+			return;
+		}
+		data.putInt(NearlingsSyncAdapter.LIMIT,
+				numOflistElements);
+
+
+		previousAmount = numOflistElements;
+		//onRefresh(data, false);
+		((DiscoverContainerFragment) this.getParentFragment()).requestUpdate(BaseContainerFragment.is_loadMore);
+
 	}
 }

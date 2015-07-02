@@ -5,4 +5,4 @@ android:shape="rectangle">
     android:color="#FFFFFF" />
 <corners
 android:radius="5dp"/>
-</shape>     <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/drawable/textinputborder.xml -->
+</shape>     <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/drawable/textinputborder.xml -->

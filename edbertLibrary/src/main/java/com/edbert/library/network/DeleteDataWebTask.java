@@ -26,7 +26,7 @@ public class DeleteDataWebTask<T> extends GetDataWebTask<T> {
 			headers = MapUtils.stringToMap(uri[1]);
 		}
 		return (T) SocketOperator.getInstance(classType).deleteResponse(
-				activity.getApplicationContext(), uri[0], headers);
+				ctx.getApplicationContext(), uri[0], headers);
 
 	}
 

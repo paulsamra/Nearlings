@@ -8,6 +8,7 @@ import swipe.android.nearlings.googleplaces.GoogleParser.PlacesTask;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -39,7 +40,7 @@ public class SearchActivity extends ActionBarActivity implements
 	ListView listOfPlaces;
 	String[] from = new String[] { "description" };
 	int[] to = new int[] { android.R.id.text1 };
-
+public static final int RESULT_CANCELED = 99;
 	SimpleAdapter adapterWithItems;
 	SimpleAdapter adapterWithoutItems;
 
@@ -90,6 +91,7 @@ public class SearchActivity extends ActionBarActivity implements
 						.setSearchString(
 								s);
 				SessionManager.getInstance(SearchActivity.this).commitPendingChanges();
+				SessionManager.getInstance(SearchActivity.this).setActiveSearchChanges(true);
 				finish();
 			}
 

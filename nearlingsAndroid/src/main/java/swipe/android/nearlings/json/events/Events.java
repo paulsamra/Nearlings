@@ -118,8 +118,14 @@ public class Events{
 	public void setCreated_at(long created_at) {
 		this.created_at = created_at;
 	}
+	public String getCreator_username() {
+		return creator_username;
+	}
+	public void setCreator_username(String creator_username) {
+		this.creator_username = creator_username;
+	}
 
-	String id, created_by, group_id, title, description, starttime, status, visibility, category, address1, address2, city, state;
+	String id, creator_username,created_by, group_id, title, description, starttime, status, visibility, category, address1, address2, city, state;
 	double latitude, longitude, fee;
 	int rsvpcount;
 	long startdate,created_at;

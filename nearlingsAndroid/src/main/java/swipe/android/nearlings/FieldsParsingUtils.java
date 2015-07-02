@@ -10,6 +10,7 @@ import java.util.TimeZone;
 
 import android.content.Context;
 import android.net.ParseException;
+import android.util.Log;
 
 public class FieldsParsingUtils {
 	public static String getTime(Context c, long timeSinceEpoch) {
@@ -61,6 +62,7 @@ public class FieldsParsingUtils {
 		return -1;
 	}
 	public static String parsePrice(String price) {
+		/*Log.d("HI", "HI");
 		NumberFormat format = NumberFormat.getCurrencyInstance();
 		try {
 
@@ -68,9 +70,10 @@ public class FieldsParsingUtils {
 
 			return number.toString();
 		} catch (Exception e) {
-
+e.printStackTrace();
 		}
-		return "0";
+		return "0";*/
+return  price.replace("$","");
 	}
 
 	public static String parseSwitchOnlineOffline(boolean b) {

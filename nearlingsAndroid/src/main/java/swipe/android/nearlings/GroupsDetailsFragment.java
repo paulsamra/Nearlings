@@ -142,4 +142,8 @@ public class GroupsDetailsFragment extends NearlingsSwipeToRefreshFragment
 
 		return super.onOptionsItemSelected(item);
 	}
+	@Override
+	protected int setNumElements() {
+		return mAdapter.getCount();
+	}
 }

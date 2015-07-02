@@ -47,7 +47,7 @@ public class EventsDetailAdapter implements
 	private Context context;
 
 	private Cursor cr;
-	public TextView title, event_time_date, rsvp_count, fee, visibility, category, description,location;
+	public TextView title, event_time_date, rsvp_count, fee, visibility, category, description,location,author;
 	// this needs to have a live adapter attached.
 	public ScrollView fullScrollView;
 	public MapFragment mapFragment;
@@ -81,6 +81,7 @@ private Button attend_event_btn, getDirections;
 		description = (TextView) view.findViewById(R.id.event_description );
 		location = (TextView) view.findViewById(R.id.event_location );
 		getDirections = (Button) view.findViewById(R.id.getDirectionsButton);
+		author = (TextView) view.findViewById(R.id.needs_details_author);
 		MapsInitializer.initialize(((Activity) context));
 
 		mapFragment = (MapFragment) ((Activity) this.context)
@@ -150,8 +151,10 @@ private Button attend_event_btn, getDirections;
 				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_LOCATION_LATITUDE);
 		int longitude_index = cursor
 				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_LOCATION_LONGITUDE);
-		
-		
+
+		int author_index = cursor
+				.getColumnIndexOrThrow(EventsDatabaseHelper.COLUMN_USERNAME);
+
 		String titleString = cursor.getString(title_index);
 		String description_string = cursor.getString(description_index);
 		String visibility_string = cursor.getString(visibility_index);
@@ -160,7 +163,8 @@ private Button attend_event_btn, getDirections;
 		String category_string = cursor.getString(category_index);
 		long date_string = cursor.getLong(date_index);
 		String time_string = cursor.getString(time_index);
-		
+
+		String author_string = cursor.getString(author_index);
 		title.setText(titleString);
 		description.setText(description_string);
 		visibility.setText(visibility_string);
@@ -168,7 +172,7 @@ private Button attend_event_btn, getDirections;
 		rsvp_count.setText(String.valueOf(rsvp_count_int));
 		fee.setText(String.valueOf(fee_amount));
 		category.setText(category_string);
-		
+		author.setText(author_string);
 		//MAP
 		//location.setText(cursor.getString(location_name_index));
 		// for now
@@ -204,7 +208,7 @@ private Button attend_event_btn, getDirections;
 			}
 
 		});
-		
+
 		
 		
 		/*

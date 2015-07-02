@@ -12,4 +12,4 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/buttons" />
 
-</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/fragment_frame_with_button.xml -->
+</RelativeLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/fragment_frame_with_button.xml -->

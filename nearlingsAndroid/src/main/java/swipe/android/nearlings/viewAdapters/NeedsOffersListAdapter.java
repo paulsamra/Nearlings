@@ -67,7 +67,8 @@ public class NeedsOffersListAdapter extends CursorAdapter {
 
 		 long NOW = new Date().getTime();
 
-		holder.dateBid.setReferenceTime(NOW - s);
+		holder.dateBid.setReferenceTime(s*1000);
+		//holder.dateBid.setReferenceTime(NOW - s);
 		//holder.dateBid.setText(FieldsParsingUtils.getTime(s));
 		holder.user.setText(cursor.getString(user_index));
 		holder.message.setText(cursor.getString(message_index));

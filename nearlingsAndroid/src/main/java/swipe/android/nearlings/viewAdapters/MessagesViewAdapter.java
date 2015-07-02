@@ -7,6 +7,7 @@ import swipe.android.nearlings.R;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,15 +66,19 @@ public class MessagesViewAdapter extends CursorAdapter {
 	
 		// problem is processing. this should only happen once.
 		long s = cursor.getLong(time_index);
-
-		holder.dateSent.setReferenceTime(NOW - s);
+		holder.dateSent.setReferenceTime(s*1000);
 
 		holder.message.setText(cursor.getString(message_index));
 
 		boolean unreadBroadcast = Boolean.valueOf(cursor
 				.getString(unread_index));
+if(unreadBroadcast) {
+	holder.unread_icon.setVisibility(View.VISIBLE);
+
+}else{
 
 		holder.unread_icon.setVisibility(View.GONE);
+	}
 
 	}
 

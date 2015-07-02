@@ -10,12 +10,16 @@ import swipe.android.nearlings.NearlingsRequest;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.json.alerts.Alerts;
 import swipe.android.nearlings.json.alerts.JsonMessagesResponse;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.edbert.android.library.database.DatabaseManager;
 import com.edbert.library.network.SocketOperator;
+import com.nostra13.universalimageloader.cache.disc.impl.LimitedAgeDiscCache;
 
 public class MessagesRequest extends NearlingsRequest <JsonMessagesResponse>{
 	public MessagesRequest(Context c) {
@@ -30,8 +34,15 @@ public class MessagesRequest extends NearlingsRequest <JsonMessagesResponse>{
 	public JsonMessagesResponse makeRequest(Bundle b) {
 	Map<String, String> headers = SessionManager.getInstance(c)
 				.defaultSessionHeaders();
-		String url = SessionManager.getInstance(c).alertsURL();
-Log.d("URL", url);
+		String url = SessionManager.getInstance(c).alertsURL() ;
+		if(b.getInt(NearlingsSyncAdapter.LIMIT)>0){
+			int page_number =  (b.getInt(NearlingsSyncAdapter.LIMIT) / (SessionManager.SEARCH_LIMIT))+1;
+			url +=( "?page=" +page_number);
+			url += ("&limit="+ (SessionManager.SEARCH_LIMIT));
+
+		}else{
+			url +=( "?limit=" + (SessionManager.SEARCH_LIMIT));
+		}
 		Object o = SocketOperator.getInstance(JsonMessagesResponse.class).getResponse(c, url,
 				headers);
 		if (o == null)
@@ -53,9 +64,10 @@ Log.d("URL", url);
 
 		if (o == null)
 			return false;
-
+if(b.getBoolean(NearlingsSyncAdapter.CLEAR_DB)) {
 		NearlingsContentProvider
 				.clearSingleTable(new MessagesDatabaseHelper());
+}
 		List<ContentValues> mValueList = new LinkedList<ContentValues>();
 		for (int i = 0; i < o.getAlerts().size(); i++) {
 			
@@ -67,8 +79,7 @@ Alerts a = o.getAlerts().get(i);
 			cv.put(MessagesDatabaseHelper.COLUMN_MESSAGE, a.getMessage());
 			cv.put(MessagesDatabaseHelper.COLUMN_DATE, Long.valueOf(a.getTimestamp()));
 	
-			cv.put(MessagesDatabaseHelper.COLUMN_UNREAD, "true");
-
+			cv.put(MessagesDatabaseHelper.COLUMN_UNREAD, "True");
 
 			c.getContentResolver()
 					.insert(NearlingsContentProvider

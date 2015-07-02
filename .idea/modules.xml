@@ -16,7 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/main/main.iml" filepath="$PROJECT_DIR$/main/main.iml" />
       <module fileurl="file://$PROJECT_DIR$/mglibraryandroid/mglibraryandroid.iml" filepath="$PROJECT_DIR$/mglibraryandroid/mglibraryandroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nearlings-android_2.iml" filepath="$PROJECT_DIR$/nearlings-android_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nearlings-android.iml" filepath="$PROJECT_DIR$/nearlings-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/nearlingsAndroid/nearlingsAndroid.iml" filepath="$PROJECT_DIR$/nearlingsAndroid/nearlingsAndroid.iml" />
     </modules>
   </component>

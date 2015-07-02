@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/arrays.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/arrays.xml -->
     <eat-comment/>
     <string-array name="availability">
         <item>Busy</item>
@@ -104,6 +104,7 @@
     <string-array name="home_options">
         <item>Alerts</item>
         <item>Explore</item>
+        <item>Your Needs</item>
         <item>Create Need</item>
         <item>Create Event</item>
         <item>Create Group</item>
@@ -113,6 +114,7 @@
     <array name="home_options_icon">
         <item>@drawable/message_icon</item>
         <item>@drawable/explore_icon</item>
+        <item>@drawable/own_needs_icon</item>
         <item>@drawable/create_need_icon</item>
         <item>@drawable/create_event_icon</item>
         <item>@drawable/create_group_icon</item>
@@ -230,7 +232,7 @@
         <item>"1"</item>
         <item>"2"</item>
     </string-array>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="quick_response_defaults">
 <item>Running just a couple of minutes late.</item>
@@ -238,7 +240,7 @@
 <item>Go ahead and start without me.</item>
 <item>Sorry, I can\'t make it. We\'ll have to reschedule.</item>
 </string-array>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/arrays.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/arrays.xml -->
     <eat-comment/>
     <string-array name="radius">
         <item>.5</item>
@@ -371,12 +373,12 @@
         <item>public</item>
         <item>private</item>
     </string-array>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
     <attr format="boolean" name="isLightTheme"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="mediaRouteButtonStyle"/>
     <attr format="reference" name="mediaRouteConnectingDrawable"/>
@@ -385,7 +387,7 @@
     <attr format="reference" name="mediaRoutePauseDrawable"/>
     <attr format="reference" name="mediaRoutePlayDrawable"/>
     <attr format="reference" name="mediaRouteSettingsDrawable"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="string" name="title"/>
     <bool name="abc_action_bar_embed_tabs">true</bool>
@@ -401,7 +403,7 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="actionbar_color">#3FBA91</color>
     <color name="agenda_day_bar_background_color">#FFFFFFFF</color>
@@ -420,10 +422,10 @@
     <color name="alert_event_other">#FF999999</color>
     <color name="alert_event_title">#FFFFFFFF</color>
     <color name="alert_past_event">#8F999999</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="ampm_text_color">#8c8c8c</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="appwidget_date">#ffEEEEEE</color>
     <color name="appwidget_item_allday_color">#ffffffff</color>
@@ -438,23 +440,23 @@
     <color name="appwidget_where">#ffffffff</color>
     <color name="aqua">#33CCFF</color>
     <color name="background_color">#fafafa</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="background_list_back">#e3e3e3</color>
     <color name="background_list_front">#ffffff</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="black">#000000</color>
     <color name="blue">#00aceb</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
@@ -462,14 +464,14 @@
     <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
     <color name="bright_foreground_material_dark">@android:color/white</color>
     <color name="bright_foreground_material_light">@android:color/black</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="brown">#525964</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="calendar_ampm_label">#ff999999</color>
     <color name="calendar_date_banner_background">#FFEEEEEE</color>
@@ -481,10 +483,10 @@
     <color name="calendar_grid_line_highlight_color">#ff707070</color>
     <color name="calendar_grid_line_inner_horizontal_color">#FFCCCCCC</color>
     <color name="calendar_grid_line_inner_vertical_color">#FFCCCCCC</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="calendar_header">#ff999999</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="calendar_hidden">#ff808080</color>
     <color name="calendar_hour_background">#ffEEEEEE</color>
@@ -495,10 +497,10 @@
     <color name="calendar_view_switch_menu_text_color">#FF666666</color>
     <color name="calendar_view_switch_menu_text_color_light">#FF888888</color>
     <color name="calendar_visible">#ff000000</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="circle_background">#fff2f2f2</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="com_parse_ui_facebook_login_button">#3B5998</color>
     <color name="com_parse_ui_facebook_login_button_focus">#304F8B</color>
@@ -514,7 +516,7 @@
     <color name="com_parse_ui_twitter_login_button">#2DAAE2</color>
     <color name="com_parse_ui_twitter_login_button_focus">#2788BE</color>
     <color name="com_parse_ui_twitter_login_button_push">#2588B5</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/common_colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/common_colors.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_signin_btn_dark_text_default">@android:color/white</color>
@@ -526,34 +528,34 @@
     <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
     <color name="common_signin_btn_light_text_focused">#FF737373</color>
     <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="create_event_date_color">#FF000000</color>
     <color name="create_event_divider_color">#FFDDDDDD</color>
     <color name="create_event_more_details_color">#FF888888</color>
     <color name="dark_grey">#212121</color>
     <color name="dark_grey_bg">#1f1c17</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="darker_blue">#ff0099cc</color>
     <color name="date_picker_text_normal">#ff999999</color>
     <color name="date_picker_view_animator">#fff2f2f2</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="day_clicked_background_color">#FF33B5E5</color>
     <color name="day_event_clicked_background_color">#8033B5E5</color>
     <color name="day_past_background_color">#FFDDDDDD</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="done_text_color_disabled">#ffcccccc</color>
     <color name="done_text_color_normal">#ff333333</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="edit_event_separator">#FFDDDDDD</color>
     <color name="event_background">#ffc3d9ff</color>
@@ -570,23 +572,23 @@
     <color name="green">#00CC00</color>
     <color name="grey">#DBD9D9</color>
     <color name="grid_bck">#627583</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
     <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="item_activated_color">#77CEEE</color>
     <color name="item_border_color">#666666</color>
     <color name="item_default_color">#EEEEEE</color>
     <color name="item_pressed_color">#CCCCCC</color>
     <color name="light_grey">#a5acb0</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="line_background">#ffcccccc</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="link_text_material_dark">@color/material_deep_teal_200</color>
     <color name="link_text_material_light">@color/material_deep_teal_500</color>
@@ -595,7 +597,7 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="mini_month_bg_color">#FFFFFFFF</color>
     <color name="mini_month_today_outline_color">#FF000000</color>
@@ -623,14 +625,14 @@
     <color name="navigation_drawer_text_color">@color/white</color>
     <color name="nearlings_theme">#E96632</color>
     <color name="new_event_hint_text_color">#FFFFFFFF</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="numbers_text_color">#8c8c8c</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="panel_text_foreground">#ffffffff</color>
     <color name="pressed">#330066ff</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -640,49 +642,49 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="recurrence_bubble_text_normal">#ff737373</color>
     <color name="recurrence_picker_background">#fff2f2f2</color>
     <color name="red">#ff0000</color>
     <color name="red_cherry">#C9282D</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="ripple_material_dark">#4dffffff</color>
     <color name="ripple_material_light">#1f000000</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="rsvp_no">#ff0000</color>
     <color name="rsvp_unknown">@android:color/black</color>
     <color name="rsvp_yes">#00CC00</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="selection">@android:color/holo_blue_light</color>
     <color name="silver">#A9A9A9</color>
     <color name="spiritclips_bck">#8AB8E0</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="text_shadow_color">#4D000000</color>
     <color name="titlestrip_background_color">#DEDEDE</color>
     <color name="titlestrip_text_color">#999999</color>
     <color name="today_highlight_color">#0033b5e5</color>
     <color name="translucent_black">#55000000</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <color name="transparent_black">#7F000000</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/res/values/wallet_colors.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/res/values/wallet_colors.xml -->
     <eat-comment/>
     <color name="wallet_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
     <color name="wallet_bright_foreground_holo_dark">#fff3f3f3</color>
@@ -697,7 +699,7 @@
     <color name="wallet_hint_foreground_holo_light">#808080</color>
     <color name="wallet_holo_blue_light">#ff33b5e5</color>
     <color name="wallet_link_text_light">#0000ee</color>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/color.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="week_saturday">#80333333</color>
     <color name="week_sunday">#80333333</color>
@@ -739,7 +741,7 @@
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
     <declare-styleable name="WalletFragmentOptions"><attr format="enum" name="appTheme"><enum name="holo_dark" value="0"/><enum name="holo_light" value="1"/></attr><attr format="enum" name="environment"><enum name="production" value="1"/><enum name="test" value="3"/><enum name="sandbox" value="0"/><enum name="strict_sandbox" value="2"/></attr><attr format="reference" name="fragmentStyle"/><attr format="enum" name="fragmentMode"><enum name="buyButton" value="1"/><enum name="selectionDetails" value="2"/></attr></declare-styleable>
     <declare-styleable name="WalletFragmentStyle"><attr format="dimension" name="buyButtonHeight"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="dimension" name="buyButtonWidth"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="enum" name="buyButtonText"><enum name="buy_with_google" value="1"/><enum name="buy_now" value="2"/><enum name="book_now" value="3"/><enum name="donate_with_google" value="4"/></attr><attr format="enum" name="buyButtonAppearance"><enum name="classic" value="1"/><enum name="grayscale" value="2"/><enum name="monochrome" value="3"/></attr><attr format="reference" name="maskedWalletDetailsTextAppearance"/><attr format="reference" name="maskedWalletDetailsHeaderTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsBackground"/><attr format="reference" name="maskedWalletDetailsButtonTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsButtonBackground"/><attr format="color" name="maskedWalletDetailsLogoTextColor"/><attr format="enum" name="maskedWalletDetailsLogoImageType"><enum name="classic" value="1"/><enum name="monochrome" value="2"/></attr></declare-styleable>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
@@ -801,7 +803,7 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="action_bar_date_text_size">22sp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -809,17 +811,17 @@
     <dimen name="agenda_item_right_margin">4dip</dimen>
     <dimen name="all_day_bottom_margin">8dip</dimen>
     <dimen name="allday_text_size">12sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="ampm_label_size">16sp</dimen>
     <dimen name="ampm_left_padding">6dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="ampm_text_size">10sp</dimen>
     <dimen name="calendar_controls_height">300dip</dimen>
     <dimen name="calendar_controls_width">280dip</dimen>
     <dimen name="color_view_touch_area_increase">16dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens_parse.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens_parse.xml -->
     <eat-comment/>
     <dimen name="com_parse_ui_horizontal_margin">16dp</dimen>
     <dimen name="com_parse_ui_large_vertical_spacing">24dp</dimen>
@@ -828,28 +830,28 @@
     <dimen name="com_parse_ui_vertical_margin">16dp</dimen>
     <dimen name="com_parse_ui_vertical_spacing">16dp</dimen>
     <dimen name="com_parse_ui_xlarge_vertical_spacing">36dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="date_header_text_size">12sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="date_picker_component_width">270dip</dimen>
     <dimen name="date_picker_header_height">30dip</dimen>
     <dimen name="date_picker_header_text_size">14dip</dimen>
     <dimen name="date_picker_view_animator_height">270dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="day_header_bottom_margin">4dip</dimen>
     <dimen name="day_header_height">16dip</dimen>
     <dimen name="day_label_text_size">11sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="day_number_select_circle_radius">16dip</dimen>
     <dimen name="day_number_size">16sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="day_view_event_text_size">12sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -857,10 +859,10 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="done_label_size">14sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="edit_event_view_padding_left">80dip</dimen>
     <dimen name="edit_event_view_padding_right">80dip</dimen>
@@ -873,18 +875,18 @@
     <dimen name="event_min_height">24dip</dimen>
     <dimen name="event_text_horizontal_margin">4dp</dimen>
     <dimen name="event_text_vertical_margin">2dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="extra_time_label_margin">-30dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="font_size_description">15sp</dimen>
     <dimen name="font_size_new_tag">11sp</dimen>
     <dimen name="font_size_title">17sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="header_height">96dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="height_list">90dp</dimen>
     <dimen name="hours_left_margin">20dip</dimen>
@@ -897,7 +899,7 @@
     <dimen name="max_portrait_calendar_controls_width">350dip</dimen>
     <dimen name="min_hours_width">24dip</dimen>
     <dimen name="min_portrait_calendar_controls_width">300dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="minimum_margin_sides">48dip</dimen>
     <dimen name="minimum_margin_top_bottom">24dip</dimen>
@@ -905,48 +907,48 @@
     <dimen name="month_label_size">16sp</dimen>
     <dimen name="month_list_item_header_height">50dip</dimen>
     <dimen name="month_select_circle_radius">45dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="mr_media_route_controller_art_max_height">320dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="new_event_hint_text_size">12sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_subtext_size">12dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="one_day_header_height">0dip</dimen>
     <dimen name="padding_default">8dp</dimen>
     <dimen name="padding_new_tag">3dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="picker_dimen">270dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="radius_default">3dp</dimen>
     <dimen name="recurrence_picker_height">340dp</dimen>
     <dimen name="recurrence_picker_width">300dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="selected_calendar_layout_height">155dip</dimen>
     <dimen name="selected_date_day_size">75dip</dimen>
     <dimen name="selected_date_month_size">30dip</dimen>
     <dimen name="selected_date_year_size">30dip</dimen>
     <dimen name="separator_padding">4dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="size_list_image">64dp</dimen>
     <dimen name="staggered_child_large">310dp</dimen>
     <dimen name="staggered_child_medium">230dp</dimen>
     <dimen name="staggered_child_small">120dp</dimen>
     <dimen name="staggered_child_xlarge">400dp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="time_label_size">60sp</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="title_text_large">24dp</dimen>
     <dimen name="title_text_medium">18dp</dimen>
@@ -957,24 +959,24 @@
     <dimen name="week_view_event_text_size">12sp</dimen>
     <dimen name="widget_day_num_size">36sp</dimen>
     <dimen name="widget_day_num_top_padding">-4dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <dimen name="year_label_height">64dip</dimen>
     <dimen name="year_label_text_size">22dip</dimen>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <item name="animator" type="id">false</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/res/values/cast_ids.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/res/values/cast_ids.xml -->
     <eat-comment/>
     <item name="cast_notification_id" type="id"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <item name="date_picker_day" type="id">false</item>
     <item name="date_picker_header" type="id">false</item>
@@ -983,13 +985,13 @@
     <item name="date_picker_year" type="id">false</item>
     <item name="day_picker_selected_date_layout" type="id">false</item>
     <item name="done" type="id">false</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="home" type="id"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <item name="month_text_view" type="id">false</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
@@ -999,13 +1001,13 @@
     <integer name="abc_config_activityShortDur">150</integer>
     <integer name="abc_max_action_buttons">2</integer>
     <integer name="cancel_button_image_alpha">127</integer>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/version.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/version.xml -->
     <eat-comment/>
     <integer name="google_play_services_version">7571000</integer>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <integer name="status_bar_notification_info_maxnum">999</integer>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <plurals name="N_remaining_events">
 <!-- This is the label for 1 event. -->
@@ -1047,13 +1049,13 @@ minutes is a parameter. -->
 minutes is a parameter. -->
 <item quantity="other"><ns1:g id="count">%d</ns1:g> minutes</item>
 </plurals>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings_parse.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings_parse.xml -->
     <eat-comment/>
     <plurals name="com_parse_ui_password_too_short_toast">
         <item quantity="one">Password must be at least %d character long</item>
         <item quantity="other">Password must be at least %d characters long</item>
     </plurals>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <plurals name="daily">
 <item quantity="one">Daily</item>
@@ -1106,7 +1108,7 @@ string [CHAR LIMIT = 10] -->
 <item quantity="one">Weekly on <ns1:g id="days_of_week">%2$s</ns1:g></item>
 <item quantity="other">Every <ns1:g id="number">%1$d</ns1:g> weeks on <ns1:g id="days_of_week">%2$s</ns1:g></item>
 </plurals>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
@@ -1125,10 +1127,10 @@ string [CHAR LIMIT = 10] -->
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="accept">Accept</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="accessibility_add_attendee">Add attendee</string>
     <string name="accessibility_add_reminder">Add reminder</string>
@@ -1155,10 +1157,10 @@ not be up-to-date.</string>
     <string name="acessibility_recurrence_choose_end_date_description">change end date</string>
     <string name="acessibility_selected_marker_description">Selected event</string>
     <string name="acessibility_snooze_notification">Snooze Notification</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android_2/deletableEditText/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android/deletableEditText/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="add_account">Add account</string>
     <string name="add_event">Add Event</string>
@@ -1169,10 +1171,10 @@ not be up-to-date.</string>
     <string name="agenda_yesterday">YESTERDAY, <ns1:g id="date">%1$s</ns1:g></string>
     <string name="alert_title">Calendar notifications</string>
     <string name="all">All</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <item format="float" name="ampm_circle_radius_multiplier" type="string">0.19</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android_2/mglibraryandroid/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android/mglibraryandroid/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="androidUtil_cancel">Cancel</string>
     <string name="androidUtil_error">Error</string>
@@ -1183,40 +1185,40 @@ not be up-to-date.</string>
     <string name="androidUtil_no">No</string>
     <string name="androidUtil_ok">OK</string>
     <string name="androidUtil_yes">Yes</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_label">Calendar</string>
     <string name="app_name">Nearlings</string>
     <string name="attendees_label">Guests</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/auth_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/auth_strings.xml -->
     <eat-comment/>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
     <string name="auth_google_play_services_client_google_display_name">Google</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="by">By: </string>
     <string name="calendar_color_picker_dialog_title">Calendar Color</string>
     <string name="calendar_refresh"> "Refresh"</string>
     <string name="calendar_square_color_picker_description">Color picker</string>
     <string name="call_label">Call</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/res/values/cast_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/res/values/cast_strings.xml -->
     <eat-comment/>
     <string name="cast_notification_connected_message">Connected to <ns1:g id="name">%1$s</ns1:g></string>
     <string name="cast_notification_connecting_message">Connecting to <ns1:g id="name">%1$s</ns1:g></string>
     <string name="cast_notification_disconnect">Disconnect</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="category_label">Category:</string>
     <string name="change_response_title">Change response</string>
     <string name="choose_event_color_label">Prompt</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <item format="float" name="circle_radius_multiplier" type="string">0.82</item>
     <item format="float" name="circle_radius_multiplier_24HourMode" type="string">0.85</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/com_crashlytics_export_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/com_crashlytics_export_strings.xml -->
     <eat-comment/>
     <string name="com.crashlytics.android.build_id" translatable="false">d9ad82c6-ffd0-4e52-a518-4afd0286d1f3</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings_parse.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings_parse.xml -->
     <eat-comment/>
     <string name="com_parse_ui_confirm_password_input_hint">Re-enter password</string>
     <string name="com_parse_ui_create_account_button_label">Create account</string>
@@ -1268,10 +1270,10 @@ not be up-to-date.</string>
     <string name="com_parse_ui_twitter_login_failed_toast">Twitter login failed</string>
     <string name="com_parse_ui_username_input_hint">Username</string>
     <string name="com_parse_ui_username_taken_toast">Username is already taken, please choose a different one</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="comments">Comments</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/common_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values/common_strings.xml -->
     <eat-comment/>
     <string name="common_android_wear_notification_needs_update_text"><ns1:g id="app_name">%1$s</ns1:g> requires an update to the Android Wear app.</string>
     <string name="common_android_wear_update_text"><ns1:g id="app_name">%1$s</ns1:g> won\'t run unless you update the Android Wear app.</string>
@@ -1305,15 +1307,15 @@ not be up-to-date.</string>
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="copy_db">Send database</string>
     <string name="create_an_account_desc">"Calendar works better with a Google Account.\n\n\u2022 Access it from any web browser\n\u2022 Back up your events securely"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="create_calendar_message">Allow Ad to create a calendar event?</string>
     <string name="create_calendar_title">Create calendar event</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="create_event_date">Event Date</string>
     <string name="create_event_description"> Event Description</string>
@@ -1326,26 +1328,26 @@ not be up-to-date.</string>
     <string name="custom">"Custom"</string>
     <string name="date_label">Date:</string>
     <string name="date_time_fmt">"<ns1:g id="date">%s</ns1:g>, <ns1:g id="time_interval">%s</ns1:g>"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="day_of_week_label_typeface" translatable="false">sans-serif</string>
     <string name="day_picker_description">Month grid of days</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="day_view">"Day"</string>
     <string name="day_view_new_event_hint">+ New event</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="decline">Decline</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="delete_label">"Delete"</string>
     <string name="delete_recurring_event_title">Delete <ns1:g id="eventtitle">%s</ns1:g>?</string>
     <string name="delete_this_event_title">Delete this event?</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="deleted_key"><ns1:g example="4" id="key">%1$s</ns1:g> deleted</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="description">Description</string>
     <string name="description_label">Description</string>
@@ -1354,10 +1356,10 @@ not be up-to-date.</string>
     <string name="dismiss_all_label">"Dismiss all"</string>
     <string name="do_not_check">Do NOT check -></string>
     <string name="does_not_repeat">One-time event</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="done_label">Done</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="due">Due: </string>
     <string name="edit_event_all_day_label"> edit_event_all_day_label</string>
@@ -1390,39 +1392,39 @@ not be up-to-date.</string>
     <string name="gadget_title">Calendar</string>
     <string name="get_directions">Get Directions</string>
     <string name="goto_today">"Today"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android_2/androidDashboard/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android/androidDashboard/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="hello">Hello World!</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android_2/deletableEditText/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android/deletableEditText/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hide_controls">"Hide controls"</string>
     <string name="hint_attendees">"Guests"</string>
     <string name="hint_description">"Description"</string>
     <string name="hint_what">Name</string>
     <string name="hint_where">Location</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="hour_picker_description">Hours circular slider</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="idk_RSVP">Don\'t know</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="item_is_selected">%1$s selected</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.curioustechizen.android-ago/library/1.3.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.curioustechizen.android-ago/library/1.3.0/res/values/values.xml -->
     <eat-comment/>
     <string name="just_now">Just Now</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="loading"> presence_label</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android_2/mglibraryandroid/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android/mglibraryandroid/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="loadingProgressDialog_text">Loading. Please wait ...</string>
     <string name="loadingProgressDialog_title"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="location">Location: </string>
     <string name="login">Login</string>
@@ -1436,10 +1438,10 @@ not be up-to-date.</string>
     <string name="menu_general_preferences">General settings</string>
     <string name="menu_preferences">"Settings"</string>
     <string name="menu_select_visible_calendars">"Calendars to display"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="minute_picker_description">Minutes circular slider</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="modify_all">Change all events in the series</string>
     <string name="modify_all_following">Change this and all future events</string>
@@ -1447,7 +1449,7 @@ not be up-to-date.</string>
     <string name="month_view">"Month"</string>
     <string name="monthly">Monthly</string>
     <string name="monthly_on_day">"Monthly (on day <ns1:g id="day_of_month">%s</ns1:g>)"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="mr_media_route_button_content_description">Cast</string>
     <string name="mr_media_route_chooser_searching">Searching for devices\u2026</string>
@@ -1459,12 +1461,12 @@ not be up-to-date.</string>
     <string name="mr_media_route_controller_stop">Stop casting</string>
     <string name="mr_system_route_name">System</string>
     <string name="mr_user_route_category_name">Devices</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings_nearlings_sync.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings_nearlings_sync.xml -->
     <eat-comment/>
     <string name="nearlings_accountName">NearlingsAccount</string>
     <string name="nearlings_accountType">NearlingsSync</string>
     <string name="nearlings_sync_contentAuthority">swipe.android.nearlings.NearlingsContentProvider</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="need_count">Need Count:</string>
     <string name="network_error">An unknown error occured. Please ensure you are connected to the internet.</string>
@@ -1478,12 +1480,12 @@ not be up-to-date.</string>
     <string name="not_connected_to_internet_title">Check Internet Connection</string>
     <string name="not_synced"> not synced</string>
     <string name="notification_sender_id"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <item format="float" name="numbers_radius_multiplier_inner" type="string">0.60</item>
     <item format="float" name="numbers_radius_multiplier_normal" type="string">0.81</item>
     <item format="float" name="numbers_radius_multiplier_outer" type="string">0.83</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="password">Password</string>
     <string name="prefDefault_alerts_vibrate_true" translatable="false">always</string>
@@ -1530,10 +1532,10 @@ not be up-to-date.</string>
     <string name="quick_response_settings_edit_title">Quick response</string>
     <string name="quick_response_settings_summary">Edit default responses when emailing guests</string>
     <string name="quick_response_settings_title">Edit quick responses</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="radial_numbers_typeface" translatable="false">sans-serif</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="recurrence_dialog_title">Repeat</string>
     <string name="recurrence_dialog_title_never">Never repeats</string>
@@ -1553,10 +1555,10 @@ not be up-to-date.</string>
     <string name="rsvp_count">RSVP Count:</string>
     <string name="rsvp_declined">"Responded no."</string>
     <string name="rsvp_tentative">"Responded maybe."</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="sans_serif" translatable="false">sans-serif</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="save_event">Create</string>
     <string name="save_label">Done</string>
@@ -1565,21 +1567,21 @@ not be up-to-date.</string>
     <string name="search">"Search"</string>
     <string name="search_history_cleared">Search history cleared.</string>
     <string name="search_title">Search my calendars</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="select_day">Select month and day</string>
     <string name="select_hours">Select hours</string>
     <string name="select_minutes">Select minutes</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="select_synced_calendars_button">Calendars to sync</string>
     <string name="select_synced_calendars_title">Calendars to sync</string>
     <string name="select_visible_calendars_title">"Calendars to display"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="select_year">Select year</string>
     <item format="float" name="selection_radius_multiplier" type="string">0.16</item>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="show_controls">"Show controls"</string>
     <string name="show_day_view">"Show day"</string>
@@ -1587,28 +1589,28 @@ not be up-to-date.</string>
     <string name="show_older_events">Touch to view events before <ns1:g id="oldest_search_range">%1$s</ns1:g></string>
     <string name="snooze_all_label">"Snooze all"</string>
     <string name="snooze_label">"Snooze"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="store_picture_message">"Allow Ad to store image in Picture gallery?"</string>
     <string name="store_picture_title">Save image</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="switch_to_list">List View</string>
     <string name="switch_to_map">Map View</string>
     <string name="synced"> synced</string>
     <string name="tardis">TARDIS</string>
     <string name="template_announce_item_index">Event <ns1:g id="item_index">%1$s</ns1:g> of <ns1:g id="item_count">%2$s</ns1:g>.</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <item format="float" name="text_size_multiplier_inner" type="string">0.14</item>
     <item format="float" name="text_size_multiplier_normal" type="string">0.17</item>
     <item format="float" name="text_size_multiplier_outer" type="string">0.11</item>
     <string name="time_placeholder" translatable="false">--</string>
     <string name="time_separator" translatable="false">:</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="timezone_label">Time zone</string>
     <string name="title">Title</string>
@@ -1618,7 +1620,7 @@ not be up-to-date.</string>
     <string name="tomorrow_at_time_fmt">"Tomorrow at <ns1:g id="time_interval">%s</ns1:g>"</string>
     <string name="try_again">Try Again</string>
     <string name="username">Username</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android_2/mglibraryandroid/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/nearlings-android/mglibraryandroid/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="validation_email">\"%1$s\" must be a valid email address</string>
     <string name="validation_match">\"%1$s\" must equal \"%2$s\"</string>
@@ -1626,36 +1628,36 @@ not be up-to-date.</string>
     <string name="validation_phone">\"%1$s\" must consist of digits and spaces only</string>
     <string name="validation_regex">\"%1$s\" does not match the expression \"%2$s\"</string>
     <string name="validation_zipCode">\"%1$s\" must consist of exactly 5 digits</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="view_event_calendar_label">Calendar:</string>
     <string name="view_event_organizer_label">Organizer:</string>
     <string name="view_event_response_label">Attending?</string>
     <string name="visibility">Group Privacy:</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/res/values/wallet_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/res/values/wallet_strings.xml -->
     <eat-comment/>
     <string name="wallet_buy_button_place_holder" translation_description="Text on a button that allows a user to make a payment with Google Wallet [CHAR LIMIT=30]">Buy with Google</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="week_view">"Week"</string>
     <string name="what_label">What</string>
     <string name="when_label">Time</string>
     <string name="where_label">Where</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <string name="year_picker_description">Year list</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="yearly">"Yearly (on <ns1:g id="dates">%s</ns1:g>)"</string>
     <string name="yearly_plain">Yearly</string>
     <string name="yes_RSVP">Yes</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
@@ -1664,7 +1666,7 @@ not be up-to-date.</string>
             backward-compatibility can go here.
         -->
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/nearlings_theme</item>
@@ -1675,7 +1677,7 @@ not be up-to-date.</string>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionBarTabBarStyle">@style/TabBar</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
@@ -2591,7 +2593,7 @@ not be up-to-date.</string>
         <item name="android:scaleType">center</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="ButtonBottom" parent="ParseLoginUI.Button">
   
@@ -2684,7 +2686,7 @@ not be up-to-date.</string>
         <item name="android:textColor">@color/com_parse_ui_parse_login_display_text</item>
         <item name="android:textSize">18sp</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
@@ -2782,10 +2784,10 @@ not be up-to-date.</string>
         <item name="android:autoCompleteTextViewStyle">@style/Widget.AppCompat.Light.AutoCompleteTextView</item>
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="ProgressBarStyle" parent="@android:style/Widget.ProgressBar.Horizontal"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="RtlOverlay.DialogWindowTitle.AppCompat" parent="Base.DialogWindowTitle.AppCompat">
     </style>
@@ -2832,7 +2834,7 @@ not be up-to-date.</string>
     <style name="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:paddingLeft">@dimen/abc_action_bar_navigation_padding_start_material</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="StateText">
         <item name="android:layout_width">0dp</item>
@@ -2850,7 +2852,7 @@ not be up-to-date.</string>
     <style name="TextAppearance.AgendaView_ValueLabel">
         <item name="android:textSize">14sp</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="TextAppearance.AppCompat" parent="Base.TextAppearance.AppCompat"/>
     <style name="TextAppearance.AppCompat.Body1" parent="Base.TextAppearance.AppCompat.Body1"/>
@@ -2908,7 +2910,7 @@ not be up-to-date.</string>
     </style>
     <style name="TextAppearance.AppCompat.Widget.Switch" parent="Base.TextAppearance.AppCompat.Widget.Switch"/>
     <style name="TextAppearance.AppCompat.Widget.TextView.SpinnerItem" parent="Base.TextAppearance.AppCompat.Widget.TextView.SpinnerItem"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TextAppearance.EditEvent">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
@@ -2999,14 +3001,14 @@ not be up-to-date.</string>
     <style name="TextAppearance.SelectCalendar_Name">
         <item name="android:textSize">14sp</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="TextAppearance.StatusBar.EventContent" parent=""/>
     <style name="TextAppearance.StatusBar.EventContent.Info" parent=""/>
     <style name="TextAppearance.StatusBar.EventContent.Line2" parent=""/>
     <style name="TextAppearance.StatusBar.EventContent.Time" parent=""/>
     <style name="TextAppearance.StatusBar.EventContent.Title" parent=""/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TextAppearance.Switch_LabelSmall">
         <item name="android:minHeight">24dip</item>
@@ -3016,7 +3018,7 @@ not be up-to-date.</string>
         <item name="android:paddingLeft">8dip</item>
         <item name="android:paddingRight">8dip</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="TextAppearance.Widget.AppCompat.ExpandedMenu.Item" parent="Base.TextAppearance.Widget.AppCompat.ExpandedMenu.Item">
     </style>
@@ -3046,7 +3048,7 @@ not be up-to-date.</string>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_iap_style.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/res/values/admob_iap_style.xml -->
     <eat-comment/>
     <style name="Theme.IAPTheme" parent="android:Theme">
     <item name="android:windowIsTranslucent">true</item>
@@ -3056,7 +3058,7 @@ not be up-to-date.</string>
     <item name="android:windowIsFloating">true</item>
     <item name="android:backgroundDimEnabled">false</item>
   </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.MediaRouter" parent="">
         <item name="mediaRouteButtonStyle">@style/Widget.MediaRouter.MediaRouteButton</item>
@@ -3078,19 +3080,19 @@ not be up-to-date.</string>
         <item name="mediaRoutePlayDrawable">@drawable/mr_ic_play_light</item>
         <item name="mediaRoutePauseDrawable">@drawable/mr_ic_pause_light</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Dark" parent="Base.ThemeOverlay.AppCompat.Dark"/>
     <style name="ThemeOverlay.AppCompat.Dark.ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Light" parent="Base.ThemeOverlay.AppCompat.Light"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TwoWayViewBase">
         <item name="android:background">#999999</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/res/values/wallet_styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/res/values/wallet_styles.xml -->
     <eat-comment/>
     <style name="WalletFragmentDefaultButtonTextAppearance">
         <item name="android:textColor">@color/wallet_primary_text_holo_light</item>
@@ -3124,7 +3126,7 @@ not be up-to-date.</string>
         <item name="maskedWalletDetailsLogoTextColor">@color/wallet_bright_foreground_holo_dark</item>
         <item name="maskedWalletDetailsLogoImageType">classic</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
     </style>
@@ -3217,7 +3219,7 @@ not be up-to-date.</string>
     <style name="Widget.AppCompat.TextView.SpinnerItem" parent="Base.Widget.AppCompat.TextView.SpinnerItem"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Widget.MediaRouter.Light.MediaRouteButton" parent="Widget.AppCompat.Light.ActionButton">
         <item name="android:minWidth">56dp</item>
@@ -3235,7 +3237,7 @@ not be up-to-date.</string>
         <item name="android:contentDescription">@string/mr_media_route_button_content_description</item>
         <item name="externalRouteEnabledDrawable">@drawable/mr_ic_media_route_mono_dark</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <style name="ampm_label">
         <item name="android:textSize">@dimen/ampm_label_size</item>
@@ -3243,7 +3245,7 @@ not be up-to-date.</string>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="day_of_week_label_condensed"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="formField">
         <item name="android:layout_width">0dip</item>
@@ -3311,7 +3313,7 @@ not be up-to-date.</string>
         <item name="android:background">#00000000</item>
         <item name="android:textSize">20dip</item>
     </style>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values/values.xml -->
     <eat-comment/>
     <style name="time_label">
         <item name="android:textSize">@dimen/time_label_size</item>

@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -412,6 +413,7 @@ public class NeedsDetailsViewAdapter implements
 		// Specify the type of input expected; this, for example, sets the input
 		// as a password, and will mask the text
 		addCommentText.setInputType(InputType.TYPE_CLASS_TEXT);
+		addCommentText.setTextColor(Color.BLACK);
 		builder.setView(addCommentText);
 
 		// Set up the buttons

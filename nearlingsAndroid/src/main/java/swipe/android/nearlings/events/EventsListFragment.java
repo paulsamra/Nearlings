@@ -1,12 +1,15 @@
 package swipe.android.nearlings.events;
 
 import swipe.android.DatabaseHelpers.EventsDatabaseHelper;
+import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.CreateEventActivity;
 import swipe.android.nearlings.EventsDetailsActivity;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
+import swipe.android.nearlings.groups.GroupsContainerFragment;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
 import swipe.android.nearlings.viewAdapters.EventsListAdapter;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,7 +26,10 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	String MESSAGES_START_FLAG = EventsContainerFragment.MESSAGES_START_FLAG;
 	String MESSAGES_FINISH_FLAG = EventsContainerFragment.MESSAGES_FINISH_FLAG;
-
+	@Override
+	protected int setNumElements() {
+		return mAdapter.getCount();
+	}
 	@Override
 	public CursorLoader generateCursorLoader() {
 		CursorLoader cursorLoader = new CursorLoader(
@@ -109,7 +115,8 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void onRefresh() {
-		((EventsContainerFragment) this.getParentFragment()).requestUpdate();
+		previousAmount = -1;
+		((EventsContainerFragment) this.getParentFragment()).requestUpdate(BaseContainerFragment.is_reload_and_blank);
 	}
 
 	@Override
@@ -129,5 +136,31 @@ public class EventsListFragment extends NearlingsSwipeToRefreshFragment {
 
 		startActivity(intent);
 		Log.d("CLICKEd", "CLICKED");
+	}
+
+
+	protected void loadMoreArticles(int currentPage) {
+
+		Log.d("Load more", " load more");
+		footerView.setVisibility(View.VISIBLE);
+		// load more but we need to change the base URL this time
+		Bundle data = new Bundle();
+
+
+		// need to put in number of elements
+		int numOflistElements = mAdapter.getCount();
+
+		if (numOflistElements == previousAmount){
+			footerView.setVisibility(View.GONE);
+			return;
+		}
+		data.putInt(NearlingsSyncAdapter.LIMIT,
+				numOflistElements);
+
+
+		previousAmount = numOflistElements;
+		//onRefresh(data, false);
+		((EventsContainerFragment) this.getParentFragment()).requestUpdate(BaseContainerFragment.is_loadMore);
+
 	}
 }

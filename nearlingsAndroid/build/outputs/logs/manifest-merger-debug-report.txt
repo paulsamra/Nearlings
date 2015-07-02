@@ -1,41 +1,41 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:tools
+		ADDED from AndroidManifest.xml:4:5
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:versionName
 		ADDED from AndroidManifest.xml:6:5
-	xmlns:tools
-		ADDED from AndroidManifest.xml:4:5
 	android:versionCode
 		ADDED from AndroidManifest.xml:5:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:8:5
 MERGED from com.android.support:multidex:1.0.1:18:5
 MERGED from com.github.flavienlaurent.datetimepicker:library:0.0.2:3:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
-MERGED from nearlings-android_2:androidHorizontalListView:unspecified:7:5
-MERGED from nearlings-android_2:main:unspecified:24:5
+MERGED from nearlings-android:androidHorizontalListView:unspecified:7:5
+MERGED from nearlings-android:main:unspecified:24:5
 MERGED from com.android.support:appcompat-v7:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
-MERGED from nearlings-android_2:deletableEditText:unspecified:7:5
+MERGED from nearlings-android:deletableEditText:unspecified:7:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:appcompat-v7:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.github.curioustechizen.android-ago:library:1.3.0:7:5
-MERGED from nearlings-android_2:androidDashboard:unspecified:7:5
-MERGED from nearlings-android_2:endless:unspecified:7:5
-MERGED from nearlings-android_2:edbertLibrary:unspecified:7:5
-MERGED from nearlings-android_2:androidviewbadger:unspecified:7:5
+MERGED from nearlings-android:androidDashboard:unspecified:7:5
+MERGED from nearlings-android:endless:unspecified:7:5
+MERGED from nearlings-android:edbertLibrary:unspecified:7:5
+MERGED from nearlings-android:androidviewbadger:unspecified:7:5
 MERGED from com.android.support:appcompat-v7:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
-MERGED from nearlings-android_2:mglibraryandroid:unspecified:7:5
+MERGED from nearlings-android:mglibraryandroid:unspecified:7:5
 MERGED from com.google.android.gms:play-services:7.5.0:18:5
 MERGED from com.google.android.gms:play-services-ads:7.5.0:23:5
 MERGED from com.google.android.gms:play-services-base:7.5.0:18:5
@@ -315,18 +315,18 @@ ADDED from AndroidManifest.xml:23:5
 application
 ADDED from AndroidManifest.xml:25:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
-MERGED from nearlings-android_2:main:unspecified:28:5
+MERGED from nearlings-android:main:unspecified:28:5
 MERGED from com.android.support:appcompat-v7:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
-MERGED from nearlings-android_2:deletableEditText:unspecified:11:5
+MERGED from nearlings-android:deletableEditText:unspecified:11:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:appcompat-v7:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
-MERGED from nearlings-android_2:androidDashboard:unspecified:11:5
-MERGED from nearlings-android_2:endless:unspecified:11:5
+MERGED from nearlings-android:androidDashboard:unspecified:11:5
+MERGED from nearlings-android:endless:unspecified:11:5
 MERGED from com.android.support:appcompat-v7:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
-MERGED from nearlings-android_2:mglibraryandroid:unspecified:11:5
+MERGED from nearlings-android:mglibraryandroid:unspecified:11:5
 MERGED from com.google.android.gms:play-services:7.5.0:19:5
 MERGED from com.google.android.gms:play-services-ads:7.5.0:24:5
 MERGED from com.google.android.gms:play-services-base:7.5.0:20:5
@@ -499,14 +499,14 @@ MERGED from com.android.support:appcompat-v7:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 	android:label
 		ADDED from AndroidManifest.xml:29:9
-		REJECTED from nearlings-android_2:deletableEditText:unspecified:14:9
-		REJECTED from nearlings-android_2:androidDashboard:unspecified:13:9
+		REJECTED from nearlings-android:deletableEditText:unspecified:14:9
+		REJECTED from nearlings-android:androidDashboard:unspecified:13:9
 	android:allowBackup
 		ADDED from AndroidManifest.xml:27:9
 	android:icon
 		ADDED from AndroidManifest.xml:28:9
-		REJECTED from nearlings-android_2:deletableEditText:unspecified:13:9
-		REJECTED from nearlings-android_2:androidDashboard:unspecified:12:9
+		REJECTED from nearlings-android:deletableEditText:unspecified:13:9
+		REJECTED from nearlings-android:androidDashboard:unspecified:12:9
 	android:theme
 		ADDED from AndroidManifest.xml:31:9
 	tools:replace
@@ -515,10 +515,10 @@ MERGED from com.android.support:support-v4:22.2.0:22:5
 		ADDED from AndroidManifest.xml:26:9
 meta-data#com.crashlytics.ApiKey
 ADDED from AndroidManifest.xml:32:9
-	android:value
-		ADDED from AndroidManifest.xml:34:13
 	android:name
 		ADDED from AndroidManifest.xml:33:13
+	android:value
+		ADDED from AndroidManifest.xml:34:13
 meta-data#com.google.android.gms.version
 ADDED from AndroidManifest.xml:35:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
@@ -575,16 +575,16 @@ MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.5.0:21:9
-	android:value
-		ADDED from AndroidManifest.xml:37:13
 	android:name
 		ADDED from AndroidManifest.xml:36:13
+	android:value
+		ADDED from AndroidManifest.xml:37:13
 meta-data#com.google.android.maps.v2.API_KEY
 ADDED from AndroidManifest.xml:37:9
-	android:value
-		ADDED from AndroidManifest.xml:37:9
 	android:name
 		ADDED from AndroidManifest.xml:38:13
+	android:value
+		ADDED from AndroidManifest.xml:37:9
 uses-library#com.google.android.maps
 ADDED from AndroidManifest.xml:42:9
 	android:name
@@ -655,158 +655,170 @@ ADDED from AndroidManifest.xml:83:9
 		ADDED from AndroidManifest.xml:85:13
 	android:name
 		ADDED from AndroidManifest.xml:84:13
-activity#swipe.android.nearlings.CreateGroupActivity
+activity#swipe.android.nearlings.NotificationsActivity
 ADDED from AndroidManifest.xml:87:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:89:13
 	android:name
 		ADDED from AndroidManifest.xml:88:13
-activity#swipe.android.nearlings.ProfilePageActivity
+activity#swipe.android.nearlings.CreateGroupActivity
 ADDED from AndroidManifest.xml:91:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:93:13
 	android:name
 		ADDED from AndroidManifest.xml:92:13
-activity#swipe.android.nearlings.EventsDetailsActivity
+activity#swipe.android.nearlings.ProfilePageActivity
 ADDED from AndroidManifest.xml:95:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:97:13
 	android:name
 		ADDED from AndroidManifest.xml:96:13
-activity#swipe.android.nearlings.CreateNeedActivity
+activity#swipe.android.nearlings.EventsDetailsActivity
 ADDED from AndroidManifest.xml:100:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:102:13
 	android:name
 		ADDED from AndroidManifest.xml:101:13
-activity#swipe.android.nearlings.AccountBalanceHistory
-ADDED from AndroidManifest.xml:104:14
+activity#swipe.android.nearlings.CreateNeedActivity
+ADDED from AndroidManifest.xml:104:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:106:13
 	android:name
 		ADDED from AndroidManifest.xml:105:13
-activity#swipe.android.nearlings.SubmitReviewOfUserActivity
-ADDED from AndroidManifest.xml:108:9
+activity#swipe.android.nearlings.ActivityOwnNeeds
+ADDED from AndroidManifest.xml:109:9
 	android:screenOrientation
+		ADDED from AndroidManifest.xml:111:13
+	android:name
 		ADDED from AndroidManifest.xml:110:13
-	android:name
-		ADDED from AndroidManifest.xml:109:13
-activity#swipe.android.nearlings.PaymentHistoryListActivity
-ADDED from AndroidManifest.xml:112:9
+activity#swipe.android.nearlings.AccountBalanceHistory
+ADDED from AndroidManifest.xml:113:14
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:114:13
+		ADDED from AndroidManifest.xml:115:13
 	android:name
-		ADDED from AndroidManifest.xml:113:13
-activity#swipe.android.nearlings.SubmitForCompletionActivity
+		ADDED from AndroidManifest.xml:114:13
+activity#swipe.android.nearlings.SubmitReviewOfUserActivity
 ADDED from AndroidManifest.xml:117:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:117:9
+		ADDED from AndroidManifest.xml:119:13
 	android:name
 		ADDED from AndroidManifest.xml:118:13
-activity#swipe.android.nearlings.MakeOfferActivity
-ADDED from AndroidManifest.xml:122:13
+activity#swipe.android.nearlings.PaymentHistoryListActivity
+ADDED from AndroidManifest.xml:121:9
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:122:13
+		ADDED from AndroidManifest.xml:123:13
 	android:name
-		ADDED from AndroidManifest.xml:123:17
-service#swipe.android.nearlings.sync.NearlingsSyncService
+		ADDED from AndroidManifest.xml:122:13
+activity#swipe.android.nearlings.SubmitForCompletionActivity
 ADDED from AndroidManifest.xml:126:9
-	android:exported
-		ADDED from AndroidManifest.xml:128:13
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:126:9
 	android:name
 		ADDED from AndroidManifest.xml:127:13
-intent-filter#android.content.SyncAdapter
-ADDED from AndroidManifest.xml:126:9
-action#android.content.SyncAdapter
-ADDED from AndroidManifest.xml:129:17
+activity#swipe.android.nearlings.MakeOfferActivity
+ADDED from AndroidManifest.xml:131:13
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:131:13
 	android:name
-		ADDED from AndroidManifest.xml:129:25
-meta-data#android.content.SyncAdapter
-ADDED from AndroidManifest.xml:132:13
-	android:resource
-		ADDED from AndroidManifest.xml:134:17
-	android:name
-		ADDED from AndroidManifest.xml:133:17
-service#swipe.android.nearlings.sync.NearlingsAuthenticatorService
-ADDED from AndroidManifest.xml:137:9
-	android:exported
-		ADDED from AndroidManifest.xml:140:13
-	android:name
-		ADDED from AndroidManifest.xml:138:13
-intent-filter#android.accounts.AccountAuthenticator
-ADDED from AndroidManifest.xml:137:9
-action#android.accounts.AccountAuthenticator
+		ADDED from AndroidManifest.xml:132:17
+service#swipe.android.nearlings.sync.NearlingsSyncService
 ADDED from AndroidManifest.xml:135:9
+	android:exported
+		ADDED from AndroidManifest.xml:137:13
 	android:name
 		ADDED from AndroidManifest.xml:136:13
-meta-data#android.accounts.AccountAuthenticator
-ADDED from AndroidManifest.xml:145:9
+intent-filter#android.content.SyncAdapter
+ADDED from AndroidManifest.xml:135:9
+action#android.content.SyncAdapter
+ADDED from AndroidManifest.xml:138:17
+	android:name
+		ADDED from AndroidManifest.xml:138:25
+meta-data#android.content.SyncAdapter
+ADDED from AndroidManifest.xml:141:13
 	android:resource
-		ADDED from AndroidManifest.xml:145:9
+		ADDED from AndroidManifest.xml:143:17
 	android:name
-		ADDED from AndroidManifest.xml:145:19
+		ADDED from AndroidManifest.xml:142:17
+service#swipe.android.nearlings.sync.NearlingsAuthenticatorService
+ADDED from AndroidManifest.xml:146:9
+	android:exported
+		ADDED from AndroidManifest.xml:149:13
+	android:name
+		ADDED from AndroidManifest.xml:147:13
+intent-filter#android.accounts.AccountAuthenticator
+ADDED from AndroidManifest.xml:146:9
+action#android.accounts.AccountAuthenticator
+ADDED from AndroidManifest.xml:144:9
+	android:name
+		ADDED from AndroidManifest.xml:145:13
+meta-data#android.accounts.AccountAuthenticator
+ADDED from AndroidManifest.xml:154:9
+	android:resource
+		ADDED from AndroidManifest.xml:154:9
+	android:name
+		ADDED from AndroidManifest.xml:154:19
 provider#swipe.android.nearlings.NearlingsContentProvider
-ADDED from AndroidManifest.xml:152:9
-	android:authorities
-		ADDED from AndroidManifest.xml:152:9
+ADDED from AndroidManifest.xml:161:9
 	android:syncable
-		ADDED from AndroidManifest.xml:152:9
+		ADDED from AndroidManifest.xml:161:9
 	android:exported
-		ADDED from AndroidManifest.xml:152:9
+		ADDED from AndroidManifest.xml:161:9
+	android:authorities
+		ADDED from AndroidManifest.xml:161:9
 	android:name
-		ADDED from AndroidManifest.xml:152:19
+		ADDED from AndroidManifest.xml:161:19
 service#com.paypal.android.sdk.payments.PayPalService
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:exported
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.PaymentActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.LoginActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.PaymentMethodActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.PaymentConfirmActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.PayPalFuturePaymentActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.FuturePaymentConsentActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.FuturePaymentInfoActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.PayPalProfileSharingActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#com.paypal.android.sdk.payments.ProfileSharingConsentActivity
-ADDED from AndroidManifest.xml:157:1
+ADDED from AndroidManifest.xml:166:1
 	android:name
-		ADDED from AndroidManifest.xml:157:1
+		ADDED from AndroidManifest.xml:166:1
 activity#io.card.payment.CardIOActivity
-ADDED from AndroidManifest.xml:157:9
+ADDED from AndroidManifest.xml:166:9
 	android:configChanges
-		ADDED from AndroidManifest.xml:157:9
+		ADDED from AndroidManifest.xml:166:9
 	android:name
-		ADDED from AndroidManifest.xml:157:19
+		ADDED from AndroidManifest.xml:166:19
 activity#io.card.payment.DataEntryActivity
-ADDED from AndroidManifest.xml:160:1
+ADDED from AndroidManifest.xml:169:1
 	android:name
-		ADDED from AndroidManifest.xml:160:1
+		ADDED from AndroidManifest.xml:169:1
 android:uses-permission#android.permission.READ_PHONE_STATE
 IMPLIED from AndroidManifest.xml:2:1 reason: me.grantland.autofittextview has a targetSdkVersion < 4
 activity#com.google.android.gms.ads.AdActivity
@@ -834,10 +846,10 @@ MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
 MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
 MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
 MERGED from com.google.android.gms:play-services-maps:7.5.0:24:5
-	android:glEsVersion
-		ADDED from com.google.android.gms:play-services-maps:7.5.0:25:8
 	android:required
 		ADDED from com.google.android.gms:play-services-maps:7.5.0:26:8
+	android:glEsVersion
+		ADDED from com.google.android.gms:play-services-maps:7.5.0:25:8
 uses-permission#android.permission.GET_ACCOUNTS
 ADDED from com.google.android.gms:play-services-wallet:7.5.0:21:5
 MERGED from com.google.android.gms:play-services-wallet:7.5.0:21:5
@@ -851,10 +863,10 @@ MERGED from com.google.android.gms:play-services-wallet:7.5.0:22:5
 meta-data#com.google.android.gms.wallet.api.enabled
 ADDED from com.google.android.gms:play-services-wallet:7.5.0:25:9
 MERGED from com.google.android.gms:play-services-wallet:7.5.0:25:9
-	android:value
-		ADDED from com.google.android.gms:play-services-wallet:7.5.0:27:13
 	android:name
 		ADDED from com.google.android.gms:play-services-wallet:7.5.0:26:13
+	android:value
+		ADDED from com.google.android.gms:play-services-wallet:7.5.0:27:13
 receiver#com.google.android.gms.wallet.EnableWalletOptimizationReceiver
 ADDED from com.google.android.gms:play-services-wallet:7.5.0:28:9
 MERGED from com.google.android.gms:play-services-wallet:7.5.0:28:9

@@ -1,15 +1,20 @@
 package swipe.android.nearlings.groups;
 
 import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
+import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.GroupsDetailsActivity;
 import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.NearlingsSwipeToRefreshFragment;
 import swipe.android.nearlings.MessagesSync.GroupsRequest;
+import swipe.android.nearlings.needs.DiscoverContainerFragment;
+import swipe.android.nearlings.sync.NearlingsSyncAdapter;
+import swipe.android.nearlings.viewAdapters.DiscoverListOfNeedsAdapter;
 import swipe.android.nearlings.viewAdapters.GroupsListAdapter;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -24,7 +29,10 @@ public class GroupsListFragment extends NearlingsSwipeToRefreshFragment {
 	String MESSAGES_START_FLAG = GroupsContainerFragment.MESSAGES_START_FLAG;
 	String MESSAGES_FINISH_FLAG = GroupsContainerFragment.MESSAGES_FINISH_FLAG;
 	TextView text;
-
+	@Override
+	protected int setNumElements() {
+		return mAdapter.getCount();
+	}
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -67,11 +75,14 @@ public class GroupsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void reloadData() {
-		getLoaderManager().initLoader(0, null, this);
-		c = generateCursor();
 
-	
-		this.mAdapter = new GroupsListAdapter(this.getActivity(), c);
+			getLoaderManager().restartLoader(0, null, this);
+		c = generateCursor();
+		if(mAdapter == null) {
+			super.mAdapter = new GroupsListAdapter(this.getActivity(), c);
+			lView.setAdapter(mAdapter);
+		}
+		mAdapter.changeCursor(c);
 
 		mAdapter.notifyDataSetChanged();
 
@@ -111,7 +122,35 @@ public class GroupsListFragment extends NearlingsSwipeToRefreshFragment {
 
 	@Override
 	public void onRefresh() {
-		((GroupsContainerFragment) this.getParentFragment()).requestUpdate();
+		previousAmount = -1;
+		((GroupsContainerFragment) this.getParentFragment()).requestUpdate(BaseContainerFragment.is_reload_and_blank);
+
 		// DiscoverContainerFragment.
+	}
+
+
+	protected void loadMoreArticles(int currentPage) {
+
+		Log.d("Load more", " load more");
+		footerView.setVisibility(View.VISIBLE);
+		// load more but we need to change the base URL this time
+		Bundle data = new Bundle();
+
+
+		// need to put in number of elements
+		int numOflistElements = mAdapter.getCount();
+
+		if (numOflistElements == previousAmount){
+			footerView.setVisibility(View.GONE);
+			return;
+		}
+		data.putInt(NearlingsSyncAdapter.LIMIT,
+				numOflistElements);
+
+
+		previousAmount = numOflistElements;
+		//onRefresh(data, false);
+		((GroupsContainerFragment) this.getParentFragment()).requestUpdate(BaseContainerFragment.is_loadMore);
+
 	}
 }

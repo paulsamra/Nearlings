@@ -14,7 +14,9 @@ import android.app.AlertDialog;
 import android.app.LocalActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +34,7 @@ import com.edbert.library.utils.MapUtils;
 public class AccountBalanceHistory extends NearlingsActivity implements
 		AsyncTaskCompleteListener<NearlingsResponse> {
 	Button withdraw;
-	TextView account_balance;
+	TextView account_value,balance_value;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,21 +57,26 @@ public class AccountBalanceHistory extends NearlingsActivity implements
 			}
 
 		});
-		account_balance = (TextView) findViewById(R.id.account_value);
+		account_value = (TextView) findViewById(R.id.account_value);
+		balance_value = (TextView) findViewById(R.id.balance_value);
 		// create the TabHost that will contain the Tabs
-		tabHost = (TabHost) findViewById(R.id.tabhost);
+		tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
 		mlam = new LocalActivityManager(this, false);
 		mlam.dispatchCreate(savedInstanceState);
+		tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
-		tabHost.setup(mlam);
+	//	tabHost.setup(mlam);
 		withdraw.setEnabled(false);
+
+
+		updateTabs();
 		// update account value and history
 		// retrieveAccountValue();
 		retrieveHistory();
 	}
 
 	LocalActivityManager mlam;
-	TabHost tabHost;
+	FragmentTabHost tabHost;
 
 	private void showNumberPicker(String number, int mode) {
 		String nowNumber = "0.00";
@@ -144,9 +151,30 @@ public class AccountBalanceHistory extends NearlingsActivity implements
 		return true;
 	}
 
-	private void updateTabs(ArrayList<PaymentHistory> listProcessed,
-			ArrayList<PaymentHistory> listPending) {
+	private void updateTabs() {
 
+tabHost.clearAllTabs();
+		tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
+
+		Bundle arg1 = new Bundle();
+		arg1.putString("type", "Processed");
+		tabHost.addTab(
+				tabHost.newTabSpec("Processed").setIndicator("Processed", null),
+				FragmentProcessedPaymentList.class, arg1);
+
+		Bundle arg2 = new Bundle();
+		arg2.putString("type", "Pending");
+		tabHost.addTab(
+				tabHost.newTabSpec("Pending").setIndicator("Pending", null).setContent(new Intent().putExtra("type", "Pending")),
+				FragmentProcessedPaymentList.class, arg2);
+
+
+		for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
+		{
+			TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+			tv.setTextColor(Color.parseColor("#000000"));
+		}
+		/*
 		TabSpec tab1 = tabHost.newTabSpec("Processed");
 		TabSpec tab2 = tabHost.newTabSpec("Pending");
 
@@ -165,13 +193,23 @@ public class AccountBalanceHistory extends NearlingsActivity implements
 		tabHost.addTab(tab1);
 		tabHost.addTab(tab2);
 
+		for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
+		{
+			TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+			tv.setTextColor(Color.parseColor("#000000"));
+		}*/
 	}
 
 	private void updateAccountValue() {
-		account_balance
+		account_value
 				.setText("$"
 						+ String.valueOf(SessionManager.getInstance(this)
 								.getBalance()));
+
+		this.balance_value
+				.setText("$"
+						+ String.valueOf(SessionManager.getInstance(this)
+						.getAvailableBalance()));
 	}
 
 	@Override
@@ -186,10 +224,12 @@ public class AccountBalanceHistory extends NearlingsActivity implements
 			if (result instanceof JsonTransactionHistoryResponse) {
 				// insert into our thing
 				JsonTransactionHistoryResponse history = (JsonTransactionHistoryResponse) result;
-				updateTabs(history.getDetails().getPosted(), history
-						.getDetails().getPending());
+				//updateTabs();
 				SessionManager.getInstance(this).setBalance(
 						history.getDetails().getBalance());
+
+				SessionManager.getInstance(this).setAvailableBalance(
+						history.getDetails().getAvailable());
 				withdraw.setEnabled(true);
 				updateAccountValue();
 				return;
@@ -201,10 +241,10 @@ public class AccountBalanceHistory extends NearlingsActivity implements
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int item) {
 								dialog.cancel();
-								retrieveHistory();
+								//retrieveHistory();
 							}
 						});
-				builder.setTitle("Error");
+				builder.setTitle("Success");
 				builder.setMessage("Successfully withdrew!");
 				builder.show();
 

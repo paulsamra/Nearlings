@@ -8,4 +8,4 @@
     <include layout="@layout/date_picker_view_animator" />
     <View android:background="@color/line_background" android:layout_width="fill_parent" android:layout_height="1.0dip" />
     <include layout="@layout/date_picker_done_button" />
-</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/layout-sw600dp/date_picker_dialog.xml -->
+</LinearLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/layout-sw600dp/date_picker_dialog.xml -->

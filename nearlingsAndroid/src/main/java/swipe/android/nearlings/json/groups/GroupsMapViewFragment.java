@@ -29,7 +29,10 @@ public class GroupsMapViewFragment extends BaseMapFragment {
 
 	String MESSAGES_START_FLAG = GroupsContainerFragment.MESSAGES_START_FLAG;
 	String MESSAGES_FINISH_FLAG = GroupsContainerFragment.MESSAGES_FINISH_FLAG;
-
+	@Override
+	protected int setNumElements() {
+		return 0;
+	}
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
 		// should clear before loading

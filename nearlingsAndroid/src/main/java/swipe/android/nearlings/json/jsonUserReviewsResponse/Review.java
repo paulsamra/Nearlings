@@ -2,7 +2,7 @@ package swipe.android.nearlings.json.jsonUserReviewsResponse;
 
 public class Review{
 	int id, created_by, need_id, effort_rating, quality_rating, timeliness_rating;
-	String message;
+	String message, creator_username;
 	public int getId() {
 		return id;
 	}
@@ -45,4 +45,12 @@ public class Review{
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	public String getCreator_username() {
+		return creator_username;
+	}
+	public void setCreator_username(String creator_username) {
+		this.creator_username = creator_username;
+	}
+
 }

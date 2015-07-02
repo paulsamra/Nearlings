@@ -57,16 +57,16 @@ public class PostDataWebTask<T> extends GetDataWebTask<T> {
 		}
 		if (file != null) {
 			return (T) SocketOperator.getInstance(classType).postResponse(
-					activity.getApplicationContext(), uri[0], headers, uri[2],
+					ctx.getApplicationContext(), uri[0], headers, uri[2],
 					file);
 		}
 		if(uri.length >= 3) {
 			return (T) SocketOperator.getInstance(classType).postResponse(
-					activity, uri[0], headers, uri[2]);
+					ctx, uri[0], headers, uri[2]);
 		}
 		else
 			return (T) SocketOperator.getInstance(classType).postResponse(
-					activity, uri[0], headers);
+					ctx, uri[0], headers);
 
 	}
 

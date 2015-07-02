@@ -115,6 +115,7 @@ public abstract class BaseContainerFragment extends
 		// setHasOptionsMenu(true);
 		toggleFilter = (ImageView) actionBarLayout
 				.findViewById(R.id.search_bar_filter);
+		toggleFilter.setVisibility(View.GONE);
 		ImageButton toggleHome = (ImageButton) actionBarLayout
 				.findViewById(R.id.search_actionbar_home);
 		toggleHome.setOnClickListener(new OnClickListener() {
@@ -165,11 +166,21 @@ public abstract class BaseContainerFragment extends
 
 		updateSearchString();
 
-		requestUpdate();
+		if(SessionManager.getInstance(this.getActivity()).getActiveSearchChanges()){
+			SessionManager.getInstance(this.getActivity()).setActiveSearchChanges(false);
+
+			requestUpdate(this.is_reload_and_blank);
+		}else{
+
+			requestUpdate(is_maintain);
+		}
 
 	}
-
-	public abstract void requestUpdate();
+	public static final String STATUS = "status";
+public static final int is_reload_and_blank = 0;
+	public static final int is_maintain = 1;
+	public static final int is_loadMore = 2;
+	public  abstract void requestUpdate(int status);
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

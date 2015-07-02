@@ -7,4 +7,4 @@
         android:showAsAction="always"
         android:title="@string/switch_to_list"/>
 </menu>
-<!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/menu/switch_to_list_view.xml -->
+<!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/menu/switch_to_list_view.xml -->

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/cygnus/Documents/nearlings-android_2/deletableEditText/src/main/assets"/></dataSet><dataSet config="release"><source path="/Users/cygnus/Documents/nearlings-android_2/deletableEditText/src/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/Cygnus/AndroidStudioProjects/nearlings-android/deletableEditText/src/main/assets"/></dataSet><dataSet config="release"><source path="/Users/Cygnus/AndroidStudioProjects/nearlings-android/deletableEditText/src/release/assets"/></dataSet></merger>

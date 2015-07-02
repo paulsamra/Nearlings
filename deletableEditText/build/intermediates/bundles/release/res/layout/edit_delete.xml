@@ -26,4 +26,4 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/hzdl_cancel_n"
         android:visibility="gone" />
-</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/deletableEditText/src/main/res/layout/edit_delete.xml -->
+</RelativeLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/deletableEditText/src/main/res/layout/edit_delete.xml -->

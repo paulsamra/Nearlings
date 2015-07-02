@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 public abstract class SwipeToRefreshFragment extends Fragment implements
 		AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor>,
@@ -115,6 +116,7 @@ public abstract class SwipeToRefreshFragment extends Fragment implements
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
 		if (mAdapter != null) {
 			this.mAdapter.changeCursor(cursor);
+			this.mAdapter.swapCursor(cursor);
 			mAdapter.notifyDataSetChanged();
 		}
 	}

@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.edbert.library.dialog.DialogManager;
 import com.edbert.library.network.AsyncTaskCompleteListener;
@@ -34,6 +35,8 @@ public class CreateGroupActivity extends ActionBarActivity implements
 		getSupportActionBar().setTitle("Create Group");
 
 		setContentView(R.layout.create_group);
+		TextView price_label = (TextView) this.findViewById(R.id.price_label);
+		price_label.setText("Dues");
 		groupFormViewAdapter = new GroupFormViewAdapter(this, getWindow()
 				.getDecorView().findViewById(android.R.id.content),
 				savedInstanceState);

@@ -71,7 +71,7 @@ public class SessionManager {
 	public static final float SEARCH_DEFAULT_NUMERIC = -1;
 	private static final String URL_BASE = "https://nearlings.com/api/2014-10-13";
 
-	public static final int SEARCH_LIMIT = 30;
+	public static final int SEARCH_LIMIT = 10;
 
 	public String loginURL() {
 		return URL_BASE + "/login";
@@ -428,6 +428,16 @@ public static final String BALANCE = "BALANCE";
 		return pref.getFloat(BALANCE, 0.0f);
 	}
 
+	public static final String AVAILABLE = "AVAILABLE";
+	public void setAvailableBalance(float balance) {
+		editor.putFloat(AVAILABLE, balance);
+		editor.commit();
+	}
+	public float getAvailableBalance(){
+		return pref.getFloat(AVAILABLE, 0.0f);
+	}
+
+
 	public String userHistoryURL(String id) {
 		// TODO Auto-generated method stub
 		return URL_BASE + "/user/" + id + "/payments";
@@ -447,4 +457,14 @@ public static final String BALANCE = "BALANCE";
 		return pref.getString(TIME_ZONE, "America/Los_Angeles");
 
 	}
+public static final String SEARCH_CHANGES = "SEARCH_CHANGES";
+	public void setActiveSearchChanges(boolean value) {
+		editor.putBoolean(SEARCH_CHANGES, value);
+		editor.commit();
+	}
+	public boolean getActiveSearchChanges(){
+		return pref.getBoolean(SEARCH_CHANGES, false);
+
+	}
+
 }

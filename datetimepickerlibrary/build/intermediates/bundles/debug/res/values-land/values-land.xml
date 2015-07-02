@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/values-land/dimens.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/values-land/dimens.xml -->
     <eat-comment/>
     <dimen name="dialog_height">200dip</dimen>
     <dimen name="left_side_width">250dip</dimen>

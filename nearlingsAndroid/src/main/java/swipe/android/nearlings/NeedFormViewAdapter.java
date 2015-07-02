@@ -13,9 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
+
 import de.metagear.android.view.ValidatingEditText;
 import de.metagear.android.view.ValidatingView;
 import de.metagear.android.view.validation.textview.MinLengthValidator;
+import de.metagear.android.view.validation.textview.PriceValidator;
 
 // reviewed
 public class NeedFormViewAdapter extends BaseFormAdapter {
@@ -37,7 +40,7 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 
 	private void initializeViews(Bundle savedInstanceState) {
 		price = (EditText) rootView.findViewById(R.id.price);
-		setUpPriceListener(price);
+		//setUpPriceListener(price);
 
 		category = (Button) rootView.findViewById(R.id.category_button);
 		setUpCategory(category, R.array.needs_types);
@@ -52,6 +55,10 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 		ValidatingEditText title = (ValidatingEditText) rootView
 				.findViewById(R.id.title);
 		title.setHint("Need Name");
+		TextView price_label = (TextView) rootView
+				.findViewById(R.id.price_label);
+		price_label.setText("Reward");
+
 	}
 
 	@Override
@@ -71,6 +78,9 @@ public class NeedFormViewAdapter extends BaseFormAdapter {
 					R.string.description, new MinLengthValidator(context, 0));
 			assignValidatorToValidatingView(parentView, R.id.location,
 					R.string.location, new MinLengthValidator(context, 1));
+
+			assignValidatorToValidatingView(parentView, R.id.price,
+					R.string.price, new PriceValidator(context ));
 		}
 	}
 

@@ -3,12 +3,14 @@ package swipe.android.nearlings;
 import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.DatabaseHelpers.UserReviewDatabaseHelper;
 import swipe.android.nearlings.MessagesSync.UserReviewsRequest;
+import swipe.android.nearlings.viewAdapters.MessagesViewAdapter;
 import swipe.android.nearlings.viewAdapters.NeedsReviewsAdapter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +20,15 @@ import android.widget.ListView;
 public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 		implements Refreshable {
 
-	ListView lView;
 	String MESSAGES_START_FLAG = NeedsReviewsFragment.class.getCanonicalName()
 			+ "_MESSAGES_START_FLAG";
 	String MESSAGES_FINISH_FLAG = NeedsReviewsFragment.class.getCanonicalName()
 			+ "_MESSAGES_FINISH_FLAG";
 	String id;
-
+	@Override
+	protected int setNumElements() {
+		return mAdapter.getCount();
+	}
 	@Override
 	public CursorLoader generateCursorLoader() {
 		CursorLoader cursorLoader = new CursorLoader(
@@ -64,7 +68,8 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 
 		swipeView.setOnRefreshListener(this);
 		lView.setOnItemClickListener(this);
-
+		lView.setOnScrollListener(this);
+		setUpFooter(inflater);
 		// reloadData();
 		reloadAdapter();
 		return rootView;
@@ -115,16 +120,31 @@ public class NeedsReviewsFragment extends NearlingsSwipeToRefreshFragment
 		onRefresh();
 	}
 
+	Cursor c;
 	@Override
 	public void reloadAdapter() {
 		getLoaderManager().initLoader(0, null, this);
-
-		Cursor c = generateCursor();
-
-		this.mAdapter = new NeedsReviewsAdapter(this.getActivity(), c);
+		c = generateCursor();
+		if(mAdapter == null) {
+			this.mAdapter = new NeedsReviewsAdapter(this.getActivity(), c);
+			lView.setAdapter(mAdapter);
+		}
+		Log.d("Size", String.valueOf(c.getCount()));
+		mAdapter.changeCursor(c);
 
 		mAdapter.notifyDataSetChanged();
-		lView.setAdapter(mAdapter);
+		Runnable run = new Runnable(){
+			public void run(){
+				//reload content
+                   /*arraylist.clear();
+                   arraylist.addAll(db.readAll());*/
+				mAdapter.notifyDataSetChanged();
+				lView.invalidateViews();
+				// lView.refreshDrawableState();
+			}
+		};
+		this.getActivity().runOnUiThread(run);
+		//lView.setAdapter(mAdapter);
 	}
 
 	String TAG = "NeedBidFragment";

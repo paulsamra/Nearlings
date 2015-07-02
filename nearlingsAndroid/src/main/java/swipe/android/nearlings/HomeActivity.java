@@ -4,18 +4,26 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.throrinstudio.android.library.widgets.dashboard.DashBoardElement.OnClickListener;
 import com.throrinstudio.android.library.widgets.dashboard.DashBoardLayout;
+
+import swipe.android.DatabaseHelpers.MessagesDatabaseHelper;
+import swipe.android.nearlings.core.CustomDashboardAdapter;
 
 public class HomeActivity extends ActionBarActivity {
 	DashBoardLayout dashboard;
@@ -51,6 +59,26 @@ public class HomeActivity extends ActionBarActivity {
 		getSupportActionBar().setCustomView(mCustomView, lp);
 		getSupportActionBar().setDisplayShowCustomEnabled(true);
 	}
+@Override
+public void onResume(){
+	super.onResume();
+	adapter.notifyDataSetInvalidated();
+
+	adapter.notifyDataSetChanged();
+	adapter.notifyDataSetInvalidated();
+	dashboard.refreshDrawableState();
+	dashboard.setAdapter(adapter);
+	this.runOnUiThread(new Runnable() {
+
+		public void run() {
+			adapter.notifyDataSetChanged();
+			adapter.notifyDataSetInvalidated();
+
+		}
+	});
+}
+
+	CustomDashboardAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,7 +91,8 @@ public class HomeActivity extends ActionBarActivity {
 		String[] home_options = res.getStringArray(R.array.home_options);
 		// int[] home_icons = new int[icons.length()];
 		dashboard = (DashBoardLayout) findViewById(R.id.grid);
-
+		 adapter = new CustomDashboardAdapter(this);
+dashboard.setAdapter(adapter);
 		for (int i = 0; i < icons.length(); i++) {
 			// home_icons[i] = icons.getResourceId(i, 0);
 			dashboard.addElement(icons.getResourceId(i, 0), home_options[i],
@@ -86,19 +115,23 @@ public class HomeActivity extends ActionBarActivity {
 			case 1:
 				c = MainActivity.class;
 				break;
-			case 2:
+
+				case 2:
+					c = ActivityOwnNeeds.class;
+					break;
+			case 3:
 				c = CreateNeedActivity.class;
 				break;
-			case 3:
+			case 4:
 				c = CreateEventActivity.class;
 				break;
-			case 4:
+			case 5:
 				c = CreateGroupActivity.class;
 				break;
-			case 5:
+			case 6:
 				c = UserSettingsActivity.class;
 				break;
-			case 6:
+			case 7:
 				HomeActivity.this.logout();
 				break;
 

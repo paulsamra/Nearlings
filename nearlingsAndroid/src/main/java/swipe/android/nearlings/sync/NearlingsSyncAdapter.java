@@ -27,7 +27,8 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 	public static final String SYNC_STARTED_FLAG_ID = "NEARLINGS_SYNC_START";
 
 	public static final String SYNC_FINISHED_FLAG_ID = "NEARLINGS_SYNC_FINISHED";
-
+public static final String CLEAR_DB = "CLEAR_DB";
+	public static final String LIMIT = "LIMIT";
 	public NearlingsSyncAdapter(Context context, boolean autoInitialize) {
 		super(context, autoInitialize);
 
@@ -55,7 +56,7 @@ public class NearlingsSyncAdapter extends AbstractSyncAdapter {
 			} catch (ExpiredSessionException e) {
 				extras.putStringArrayList(HELPER_FLAG_ID, TAG);
 				extras.putBoolean("SESSION_IS_BAD", true);
-
+Log.d("Caught bad session", "Caught bad session");
 				postSync(null);
 				return;
 			}

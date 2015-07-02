@@ -84,6 +84,11 @@ public class EventsDetailsFragment extends NearlingsSwipeToRefreshFragment
 	}
 
 	@Override
+	protected int setNumElements() {
+return mAdapter.getCount();
+	}
+
+	@Override
 	public CursorLoader generateCursorLoader() {
 		String selectionClause = EventsDatabaseHelper.COLUMN_ID + " = ?";
 		String[] mSelectionArgs = { "" };

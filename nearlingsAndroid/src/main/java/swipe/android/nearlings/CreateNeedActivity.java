@@ -38,6 +38,8 @@ public class CreateNeedActivity extends ActionBarActivity implements
 		needFormViewAdapter = new NeedFormViewAdapter(this, getWindow()
 				.getDecorView().findViewById(android.R.id.content),
 				savedInstanceState);
+
+
 		// eventFormViewAdapter.addTextWatcherToAll(textWatcher);
 		// //-------------------
 	}

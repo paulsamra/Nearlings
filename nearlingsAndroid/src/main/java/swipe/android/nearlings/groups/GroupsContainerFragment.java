@@ -8,8 +8,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import swipe.android.DatabaseHelpers.GroupsDatabaseHelper;
+import swipe.android.DatabaseHelpers.NeedsDetailsDatabaseHelper;
 import swipe.android.nearlings.BaseContainerFragment;
 import swipe.android.nearlings.NearlingsApplication;
+import swipe.android.nearlings.NearlingsContentProvider;
 import swipe.android.nearlings.R;
 import swipe.android.nearlings.SessionManager;
 import swipe.android.nearlings.MessagesSync.EventsDetailsRequest;
@@ -25,6 +28,7 @@ import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +50,18 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 	// setup filters! Begin area where we customize. All these functions are for
 	// dynamically adding behavior to the
 	// filter popup.
+	@Override
+	protected int setNumElements() {
+		String allActiveSearch = "";
+		String[] activeStates = null;
+		CursorLoader cursorLoader = new CursorLoader(
+				this.getActivity(),
+				NearlingsContentProvider
+						.contentURIbyTableName(GroupsDatabaseHelper.TABLE_NAME),
+				GroupsDatabaseHelper.COLUMNS, allActiveSearch,
+				activeStates, GroupsDatabaseHelper.COLUMN_DATE + " DESC");
+		return cursorLoader.loadInBackground().getCount();
+	}
 
 	final ArrayList<SearchOptionsFilter> listOfGroupCategoryFilter = new ArrayList();
 	int groupCategoryPosition = -1;
@@ -322,7 +338,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 
 								// Log.d("Search Term", s);
 
-								requestUpdate();
+								requestUpdate(is_reload_and_blank);
 							}
 						});
 
@@ -340,7 +356,7 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 		builder.show();
 	}
 
-	public void requestUpdate() {
+	public void requestUpdate(int status) {
 		/*
 		 * Bundle b = new Bundle(); SessionManager sm =
 		 * SessionManager.getInstance(this.getActivity()); Location
@@ -416,8 +432,16 @@ public class GroupsContainerFragment extends BaseContainerFragment {
 				b.putString(GroupsRequest.BUNDLE_KEYWORDS, s);
 			}
 		}
-
-		super.onRefresh(b);
+		if(status == is_reload_and_blank){
+			b.putInt(super.STATUS, is_reload_and_blank);
+			super.onRefresh(b, true);
+		}else if(status == is_maintain) {
+			b.putInt(super.STATUS, is_maintain);
+			super.onRefresh(b, false);
+		}else{
+			b.putInt(super.STATUS, is_loadMore);
+			super.onRefresh(b, false);
+		}
 	}
 
 	@Override

@@ -7,4 +7,4 @@
    <include layout="@layout/pull_to_refresh_single_list" />
  <include layout="@layout/pull_to_refresh_empty" />
    
-</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/discover_needs_list_layout.xml -->
+</RelativeLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/discover_needs_list_layout.xml -->

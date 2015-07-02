@@ -15,9 +15,9 @@ import android.widget.TextView;
 public class DashBoardAdapter extends BaseAdapter{
 
 	
-	private LayoutInflater 				mInflater;
-	private Context						mContext;
-	private ArrayList<DashBoardElement> mElements;
+	protected LayoutInflater 				mInflater;
+	protected Context						mContext;
+	protected ArrayList<DashBoardElement> mElements;
 	
 	public DashBoardAdapter(Context c){
 		mContext 	= c;
@@ -78,7 +78,7 @@ public class DashBoardAdapter extends BaseAdapter{
 		}
 		
 		holder.text.setText(element.getLibelle());
-		
+
 		return vi;
 	}
 

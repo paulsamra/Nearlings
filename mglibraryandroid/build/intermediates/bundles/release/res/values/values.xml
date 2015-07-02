@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/mglibraryandroid/src/main/res/values/androidutil.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/mglibraryandroid/src/main/res/values/androidutil.xml -->
     <eat-comment/>
     <string name="androidUtil_cancel">Cancel</string>
     <string name="androidUtil_error">Error</string>
@@ -11,11 +11,11 @@
     <string name="androidUtil_no">No</string>
     <string name="androidUtil_ok">OK</string>
     <string name="androidUtil_yes">Yes</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/mglibraryandroid/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/mglibraryandroid/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="loadingProgressDialog_text">Loading. Please wait ...</string>
     <string name="loadingProgressDialog_title"/>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/mglibraryandroid/src/main/res/values/validation.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/mglibraryandroid/src/main/res/values/validation.xml -->
     <eat-comment/>
     <string name="validation_email">\"%1$s\" must be a valid email address</string>
     <string name="validation_match">\"%1$s\" must equal \"%2$s\"</string>

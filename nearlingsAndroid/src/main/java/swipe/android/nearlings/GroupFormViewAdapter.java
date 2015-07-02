@@ -47,7 +47,7 @@ public class GroupFormViewAdapter extends BaseFormAdapter {
 		/*private_public_switch = (Switch) rootView
 				.findViewById(R.id.private_public_switch);*/
 		price = (EditText) rootView.findViewById(R.id.price);
-		setUpPriceListener(price);
+		//setUpPriceListener(price);
 	}
 
 	@Override

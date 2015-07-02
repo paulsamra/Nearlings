@@ -12,4 +12,4 @@
         android:adjustViewBounds="true"
         android:src="@drawable/search_icon" />
 
-</com.example.checkableviews.CheckableLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/search_options_view_item_unsquared.xml -->
+</com.example.checkableviews.CheckableLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/search_options_view_item_unsquared.xml -->

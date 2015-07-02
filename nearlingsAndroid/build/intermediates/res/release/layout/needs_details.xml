@@ -16,6 +16,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dip"
+            android:layout_marginBottom="48dip"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -172,9 +173,10 @@
                 android:id="@+id/needs_details_comments_list"
                 android:layout_width="fill_parent"
                 android:layout_height="200dp"
+                android:background="@drawable/border"
                 android:paddingBottom="10dp" >
             </ListView>
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/src/main/res/layout/needs_details.xml -->
+</RelativeLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/src/main/res/layout/needs_details.xml -->

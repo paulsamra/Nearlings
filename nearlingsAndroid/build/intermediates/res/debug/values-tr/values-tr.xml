@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-tr/values-tr.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values-tr/values-tr.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Ana ekrana git"</string>
     <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Yukarı git"</string>
@@ -15,7 +15,7 @@
     <string msgid="893419373245838918" name="abc_searchview_description_voice">"Sesli arama"</string>
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Şununla paylaş"</string>
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"%s ile paylaş"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values-tr/common_strings.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/res/values-tr/common_strings.xml -->
     <eat-comment/>
     <string msgid="6428604800157361567" name="common_android_wear_notification_needs_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g>, Android Wear uygulamasında güncelleme yapılmasını gerektiriyor."</string>
     <string msgid="2453027084525739603" name="common_android_wear_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g>, Android Wear uygulaması güncellenene kadar çalışmayacak."</string>
@@ -49,7 +49,7 @@
     <string msgid="411506735369601515" name="common_open_on_phone">"Telefonda aç"</string>
     <string msgid="9071884888741449141" name="common_signin_button_text">"Oturum aç"</string>
     <string msgid="2429381841831957106" name="common_signin_button_text_long">"Google\'da oturum aç"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values-tr/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values-tr/values.xml -->
     <eat-comment/>
     <string msgid="3968620852217927702" name="day_picker_description">"Ayın günleri tablosu"</string>
     <string msgid="6908431551612331381" name="deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> silindi"</string>
@@ -57,7 +57,7 @@
     <string msgid="7586639618712934060" name="hour_picker_description">"Saatler için kaydırma çemberi"</string>
     <string msgid="2674929164900463786" name="item_is_selected">"<ns1:g id="ITEM">%1$s</ns1:g> seçildi"</string>
     <string msgid="6024811202872705251" name="minute_picker_description">"Dakikalar için kaydırma çemberi"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values-tr/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/res/values-tr/values.xml -->
     <eat-comment/>
     <string msgid="8327680881775995150" name="mr_media_route_button_content_description">"Yayınla"</string>
     <string msgid="7553005460920830010" name="mr_media_route_chooser_searching">"Cihaz arayın…"</string>
@@ -69,7 +69,7 @@
     <string msgid="5398645111664294430" name="mr_media_route_controller_stop">"Yayını durdur"</string>
     <string msgid="5441529851481176817" name="mr_system_route_name">"Sistem"</string>
     <string msgid="7498112907524977311" name="mr_user_route_category_name">"Cihazlar"</string>
-    <!-- From: file:/Users/cygnus/Documents/nearlings-android_2/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values-tr/values.xml -->
+    <!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/nearlingsAndroid/build/intermediates/exploded-aar/com.github.flavienlaurent.datetimepicker/library/0.0.2/res/values-tr/values.xml -->
     <eat-comment/>
     <string msgid="3973338219107019769" name="select_day">"Ayı ve günü seçin"</string>
     <string msgid="7651068754188418859" name="select_hours">"Saat seçin"</string>

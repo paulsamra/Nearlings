@@ -11,10 +11,12 @@
 -keep class swipe.android.nearlings.SearchActivity { <init>(); }
 -keep class swipe.android.nearlings.CreateEventActivity { <init>(); }
 -keep class swipe.android.nearlings.GroupsDetailsActivity { <init>(); }
+-keep class swipe.android.nearlings.NotificationsActivity { <init>(); }
 -keep class swipe.android.nearlings.CreateGroupActivity { <init>(); }
 -keep class swipe.android.nearlings.ProfilePageActivity { <init>(); }
 -keep class swipe.android.nearlings.EventsDetailsActivity { <init>(); }
 -keep class swipe.android.nearlings.CreateNeedActivity { <init>(); }
+-keep class swipe.android.nearlings.ActivityOwnNeeds { <init>(); }
 -keep class swipe.android.nearlings.AccountBalanceHistory { <init>(); }
 -keep class swipe.android.nearlings.SubmitReviewOfUserActivity { <init>(); }
 -keep class swipe.android.nearlings.PaymentHistoryListActivity { <init>(); }

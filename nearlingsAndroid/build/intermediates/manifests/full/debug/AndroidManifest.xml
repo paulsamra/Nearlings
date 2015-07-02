@@ -91,6 +91,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="swipe.android.nearlings.NotificationsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="swipe.android.nearlings.CreateGroupActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -104,6 +108,10 @@
         </activity>
         <activity
             android:name="swipe.android.nearlings.CreateNeedActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="swipe.android.nearlings.ActivityOwnNeeds"
             android:screenOrientation="portrait" >
         </activity>
         <activity

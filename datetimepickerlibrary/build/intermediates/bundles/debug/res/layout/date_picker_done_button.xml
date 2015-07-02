@@ -15,4 +15,4 @@
         android:minHeight="48dip"
         android:text="@string/done_label"
         style="?android:attr/buttonBarButtonStyle" />
-</LinearLayout><!-- From: file:/Users/cygnus/Documents/nearlings-android_2/datetimepickerlibrary/src/main/res/layout/date_picker_done_button.xml -->
+</LinearLayout><!-- From: file:/Users/Cygnus/AndroidStudioProjects/nearlings-android/datetimepickerlibrary/src/main/res/layout/date_picker_done_button.xml -->

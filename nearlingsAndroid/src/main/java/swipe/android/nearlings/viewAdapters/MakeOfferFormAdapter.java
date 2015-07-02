@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import de.metagear.android.view.validation.textview.PriceValidator;
 import swipe.android.nearlings.BaseFormAdapter;
 import swipe.android.nearlings.FieldsParsingUtils;
 import swipe.android.nearlings.R;
@@ -37,7 +38,7 @@ public class MakeOfferFormAdapter extends BaseFormAdapter {
 	private void initializeViews(Bundle savedInstanceState, String id, String title_string) {
 		
 		price = (EditText) rootView.findViewById(R.id.price);
-		setUpPriceListener(price);
+		//setUpPriceListener(price);
 
 		message = (EditText) rootView.findViewById(R.id.descriptionBox);
 		title = (TextView)rootView.findViewById(R.id.title);
@@ -53,6 +54,8 @@ public class MakeOfferFormAdapter extends BaseFormAdapter {
 		Context context = parentView.getContext();
 
 		synchronized (validatingViews) {
+			assignValidatorToValidatingView(parentView, R.id.price,
+					R.string.price, new PriceValidator(context ));
 /*
 			assignValidatorToValidatingView(parentView, R.id.title,
 					R.string.title, new MinLengthValidator(context, 1));
